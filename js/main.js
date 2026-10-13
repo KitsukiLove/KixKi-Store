@@ -1,30 +1,23 @@
-/**
- * main.js — Punto de entrada de Kixki Store (módulo ES nativo, sin build).
- *
- * Responsabilidades:
- *   1. Conectar el estado (state.js) con el DOM: tema, idioma, modo, búsqueda.
- *   2. Cargar traducciones y catálogo (data.js).
- *   3. Registrar los eventos globales (tema, buscador, teclado).
- *   4. Arrancar los módulos de las siguientes partes (con `ctx`).
- *   5. Registrar el service worker.
- *
- * Los módulos nuevos NO importan main.js (evita ciclos): exportan
- * `init(ctx)` y main.js los llama al final de `boot()`.
- */
-
 import * as state from "./state.js";
 import * as data from "./data.js";
+import * as sprites from "./sprites.js";
+import * as render from "./render.js";
+import * as windows from "./windows.js";
+import * as scenes from "./scenes.js";
+import * as music from "./music.js";
+import * as game from "./game.js";
 
 /* ---------------------------------------------------------------------
-   Los módulos de las siguientes partes se importarán aquí:
-     import * as sprites from "./sprites.js";   // PARTE 2: helper de <use>
-     import * as render  from "./render.js";    // PARTE 2: catálogo y tarjetas
-     import * as windows from "./windows.js";   // PARTE 2: ventanas y barra
+   Arreglo de Módulos Activos que se inicializan al arrancar la web:
    --------------------------------------------------------------------- */
 const MODULES = [
-  // sprites, render, windows, ...
+  sprites,
+  render,
+  windows,
+  scenes,
+  music,
+  game
 ];
-
 /* =====================================================================
    Utilidades DOM
    ===================================================================== */
