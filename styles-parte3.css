@@ -1,0 +1,54 @@
+/* =========================================================================
+   PARTE 3 · añadir AL FINAL de styles.css (después de styles-parte2.css)
+   ========================================================================= */
+
+/* ---------- Pestaña oculta: todas las animaciones en pausa ---------- */
+html.tab-hidden *,html.tab-hidden *::before,html.tab-hidden *::after{animation-play-state:paused!important}
+
+/* ---------- Control de sonido: silencio + volumen ---------- */
+#audio-ctl{position:fixed;right:14px;bottom:calc(112px + env(safe-area-inset-bottom,0px));z-index:44;display:flex;align-items:center;gap:8px;
+  padding:4px 10px 4px 4px;background:var(--surface);color:var(--ink);
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+.dsk #audio-ctl{bottom:62px;right:16px;z-index:5500}
+#audio-ctl .ac-btn{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:var(--surface2);color:var(--ink);cursor:pointer}
+#audio-ctl .ac-btn[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink)}
+#audio-ctl input[type=range]{-webkit-appearance:none;appearance:none;width:96px;height:14px;margin:0 4px;cursor:pointer;
+  background:linear-gradient(90deg,var(--pri) var(--v,50%),var(--surface2) 0);
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+#audio-ctl input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:22px;border:0;border-radius:0;background:var(--ink)}
+#audio-ctl input[type=range]::-moz-range-thumb{width:12px;height:22px;border:0;border-radius:0;background:var(--ink)}
+#audio-ctl input[type=range]:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+
+/* ---------- Ventanas «virus» (bromas de la oveja) ---------- */
+#vwrap{position:fixed;inset:0;z-index:7700;pointer-events:none}
+.vw{position:fixed;width:min(340px,92vw);background:var(--surface);color:var(--ink);pointer-events:auto;--u:4px;--bc:var(--line);
+  box-shadow:0 -4px 0 var(--bc),0 4px 0 var(--bc),-4px 0 0 var(--bc),4px 0 0 var(--bc),0 8px 0 0 var(--sh);
+  animation:vwpop .18s steps(3,end)}
+.vt{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 6px 4px 10px;color:#fff;font-weight:600;font-size:15px;
+  cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;text-shadow:2px 2px 0 rgba(10,5,30,.45);
+  background:linear-gradient(90deg,#8f1020,#e8394d)}
+.vw-alert .vt{background:linear-gradient(90deg,#1a2a8f,#3b6bff)}
+.vw-cow .vt{background:linear-gradient(90deg,#222,#666)}
+.vx{width:30px;height:26px;flex:none;border:2px solid #150c33;background:#e9defc;color:#150c33;font:600 14px monospace;cursor:pointer}
+.vbd{display:flex;gap:12px;align-items:flex-start;padding:14px 14px 6px}
+.vi{flex:none;font-size:34px;line-height:1}
+.vm{min-width:0}
+.vm b{display:block;font-size:17px;line-height:1.25}
+.vm p{margin:6px 0 0;font-size:15px;line-height:1.4}
+.vbar{height:14px;margin-top:10px;background:var(--surface2);box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+.vbar i{display:block;width:0;height:100%;background:var(--pri)}
+.vft{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:12px;padding:10px 14px 16px}
+.vw-cow .vbd{flex-direction:column;align-items:center;text-align:center}
+.vimg{display:block;flex:none;width:min(300px,64vw);height:auto;image-rendering:auto;background:#fff}
+@keyframes vwpop{from{transform:scale(.85);opacity:.4}to{transform:none;opacity:1}}
+
+/* temblor/glitch de la alerta de 500 clics (solo sobre elementos «fixed», sin romper su posición) */
+html.glitch .cat,html.glitch #desk,html.glitch #taskbar,html.glitch #dock{animation:glitch .7s steps(7,end)}
+@keyframes glitch{
+  0%{transform:translate(0)}
+  20%{transform:translate(-6px,2px);filter:hue-rotate(90deg)}
+  40%{transform:translate(5px,-3px)}
+  60%{transform:translate(-4px,0);filter:hue-rotate(200deg) saturate(2)}
+  80%{transform:translate(3px,2px)}
+  100%{transform:none;filter:none}
+}
