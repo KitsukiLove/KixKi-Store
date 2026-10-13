@@ -1,0 +1,37 @@
+{
+  "hero": {
+    "sub": "Pequeña colección de apps para tu Android, con guía básica y para qué sirve cada una."
+  },
+  "search": {
+    "label": "Buscar una app",
+    "placeholder": "Buscar una app…",
+    "empty": "No encontré apps con «{q}». Prueba con otra palabra."
+  },
+  "count": {
+    "desktop": "{total} apps en {folders} carpetas. Abre una desde el escritorio.",
+    "mobile": "{total} apps en {folders} carpetas. Toca una para abrirla."
+  },
+  "unit": {
+    "app": { "one": "app", "other": "apps" }
+  },
+  "filter": { "new": "Novedades" },
+  "badge": {
+    "open-source": "Open source",
+    "closed-source": "Código cerrado",
+    "no-ads": "Sin anuncios",
+    "paid": "De pago",
+    "shizuku": "Compatible con Shizuku"
+  },
+  "app": {
+    "new": "Nueva",
+    "readMore": "Leer más",
+    "readLess": "Ver menos"
+  },
+  "footer": {
+    "by": "Hecho con cariño por KitsukiLove",
+    "note": "Kixki Store · Revisa siempre la fuente de cada app antes de instalarla."
+  },
+  "error": {
+    "catalog": "No se pudo cargar el catálogo. Revisa tu conexión y recarga."
+  }
+}
