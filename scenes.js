@@ -32,7 +32,7 @@ function apply(){
   "s1 s2 s3 s4 g1 g2 g3 a t o c p k".split(" ").forEach((v,j)=>box.style.setProperty("--"+v,P[k][n][j]));
   box.style.setProperty("--so",n||k==="halloween"?1:0);box.style.setProperty("--co",k==="valle"?(n?.45:1):0);
   if(built!==k){built=k;
-    box.innerHTML=`<svg class="top" viewBox="0 0 64 24" preserveAspectRatio="xMidYMin slice" shape-rendering="crispEdges" aria-hidden="true">${SC[k].top}</svg><svg class="bot" viewBox="0 0 64 40" preserveAspectRatio="xMidYMax slice" shape-rendering="crispEdges" aria-hidden="true">${SC[k].bot}</svg>`+(k==="navidad"?Array.from({length:26},(_,j)=>`<i class="snow" style="left:${(j*37+9)%100}%;--d:${9+(j*5)%8}s;--dl:-${(j*3)%9}s;--z:${2+(j%3)}px"></i>`).join(""):"");}
+    box.innerHTML=`<svg class="top" viewBox="0 0 64 24" shape-rendering="crispEdges" aria-hidden="true">${SC[k].top}</svg><svg class="bot" viewBox="0 0 64 40" shape-rendering="crispEdges" aria-hidden="true">${SC[k].bot}</svg>`+(k==="navidad"?Array.from({length:26},(_,j)=>`<i class="snow" style="left:${(j*37+9)%100}%;--d:${9+(j*5)%8}s;--dl:-${(j*3)%9}s;--z:${2+(j%3)}px"></i>`).join(""):"");}
 }
 new MutationObserver(apply).observe(root,{attributes:true,attributeFilter:["data-theme"]});
 window.KXB={label:()=>NAMES[i],next(){i=(i+1)%KEYS.length;try{localStorage.setItem("kixki-bg",JSON.stringify(KEYS[i]));}catch(e){}apply();}};
