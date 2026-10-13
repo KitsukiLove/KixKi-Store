@@ -1,35 +1,22 @@
+try{if(localStorage.getItem("kixki-view")==="pc")document.querySelector("meta[name=viewport]").content="width=1100, viewport-fit=cover";}catch(e){}
 /* Fondos intercambiables en pixel art: Clásico, Valle, Halloween y Navidad.
-   El dibujo se calcula según el tamaño de la pantalla: en móvil los pixeles son pequeños y en un monitor
-   grande hay más colinas, nubes y árboles (en vez de ampliar el mismo dibujo). Cada fondo cambia de colores
-   solo según el tema día/noche. */
+   Cada uno cambia de colores solo según el tema día/noche. */
 (function(){
-const root=document.documentElement,box=document.getElementById("bgx"),KEYS=["","valle","halloween","navidad"],NAMES=["Clásico","Valle","Halloween","Navidad"];
+const root=document.documentElement,box=document.getElementById("bgx"),KEYS=["","valle","halloween","navidad","auto"],NAMES=["Clásico","Valle","Halloween","Navidad","Auto (temporada)"];
 let i=0;try{i=Math.max(0,KEYS.indexOf(JSON.parse(localStorage.getItem("kixki-bg"))||""));}catch(e){}
 const R=(x,y,w,h,c)=>`<rect class="${c}" x="${x}" y="${y}" width="${w}" height="${h}"/>`;
-const rng=s=>()=>((s=(Math.imul(s,1664525)+1013904223)>>>0)/4294967296);
+const hill=(y,a,p,ph,c)=>{let s="";for(let x=0;x<64;x++)s+=R(x,Math.round(y+a*Math.sin(x/p+ph)),1,40,c);return s;};
 const disc=(cx,cy,r,c)=>{let s="";for(let y=-r;y<=r;y++){const w=Math.floor(Math.sqrt(r*r-y*y));s+=R(cx-w,cy+y,2*w+1,1,c);}return s;};
 const cloud=(x,y)=>R(x,y+1,7,2,"c")+R(x+1,y,4,1,"c")+R(x+3,y-1,2,1,"c");
 const pine=(x,y,h)=>{let s=R(x,y+h,1,2,"t");for(let j=0;j<h;j++){const k=(j/2)|0;s+=R(x-k,y+j,1+2*k,1,"p");}return s+R(x,y+3,1,1,"o")+R(x-1,y+7,1,1,"o")+R(x+1,y+6,1,1,"o");};
 const pump=(x,y)=>R(x,y+1,5,3,"o")+R(x+1,y,3,1,"o")+R(x+2,y-1,1,1,"t")+R(x+1,y+2,1,1,"k")+R(x+3,y+2,1,1,"k");
 const bat=(x,y)=>R(x,y,1,1,"k")+R(x+4,y,1,1,"k")+R(x+2,y,1,1,"k")+R(x+1,y+1,3,1,"k");
 const dead=(x,y)=>R(x,y,2,14,"k")+R(x-4,y+3,4,1,"k")+R(x-4,y+1,1,3,"k")+R(x+2,y+5,5,1,"k")+R(x+6,y+2,1,4,"k");
-/* colinas: devuelven la altura de cada columna, así se pueden poner objetos encima */
-const hillF=(Hb,f,a,p,ph)=>x=>Math.round(Hb*f+a*Math.sin(x/p+ph));
-const hill=(W,Hb,fn,c)=>{let s="";for(let x=0;x<W;x++){const y=fn(x);s+=R(x,y,1,Hb-y+1,c);}return s;};
-const stars=(W,Ht)=>{const r=rng(7),n=Math.round(W*Ht/60);let s="";for(let j=0;j<n;j++)s+=R(Math.floor(r()*W),Math.floor(r()*Ht*.85),1,1,"st");return s;};
-const clouds=(W,Ht)=>{const r=rng(11),n=Math.max(3,Math.round(W/18));let s="";for(let j=0;j<n;j++)s+=cloud(Math.round((j+.2+r()*.6)*W/n),Math.round(3+r()*Ht*.5));return s;};
-const bats=(W,Ht)=>{const r=rng(5),n=Math.max(3,Math.round(W/16));let s="";for(let j=0;j<n;j++)s+=bat(Math.round((j+.3+r()*.4)*W/n),Math.round(3+r()*Ht*.45));return s;};
+const ST=[[4,3],[12,8],[20,2],[27,10],[35,4],[44,9],[52,3],[58,11],[8,14],[40,15],[61,6],[31,16]].map(([x,y])=>R(x,y,1,1,"st")).join("");
 const SC={
- valle(W,Ht,Hb){const r=rng(3),f1=hillF(Hb,.5,Hb*.06,7,0),f2=hillF(Hb,.66,Hb*.05,5,2),f3=hillF(Hb,.8,Hb*.04,9,4);
-  let fl="";for(let j=0,n=Math.round(W*Hb/140);j<n;j++){const x=Math.floor(r()*W),y0=f3(x)+1;fl+=R(x,Math.min(Hb-1,y0+Math.floor(r()*(Hb-y0))),1,1,"o");}
-  return{top:stars(W,Ht)+disc(Math.round(W*.5),Math.round(Ht*.3),4,"a")+clouds(W,Ht),bot:hill(W,Hb,f1,"g1")+hill(W,Hb,f2,"g2")+hill(W,Hb,f3,"g3")+fl};},
- halloween(W,Ht,Hb){const r=rng(9),f1=hillF(Hb,.55,Hb*.05,8,1),f2=hillF(Hb,.68,Hb*.04,6,3),f3=hillF(Hb,.8,Hb*.03,10,0);
-  let pk="";for(let j=0,n=Math.max(4,Math.round(W/13));j<n;j++){const x=Math.floor((j+.2+r()*.6)*W/n);pk+=pump(x,f3(x)-2);}
-  const dx=Math.round(W*.5);
-  return{top:stars(W,Ht)+disc(Math.round(W*.26),Math.round(Ht*.42),6,"a")+bats(W,Ht),bot:hill(W,Hb,f1,"g1")+hill(W,Hb,f2,"g2")+hill(W,Hb,f3,"g3")+dead(dx,f1(dx)-13)+pk};},
- navidad(W,Ht,Hb){const r=rng(13),f1=hillF(Hb,.45,Hb*.05,9,0),f2=hillF(Hb,.62,Hb*.04,6,2),f3=hillF(Hb,.78,Hb*.03,8,4);
-  let pn="";for(let x=5;x<W;x+=9+Math.floor(r()*6)){const h=7+Math.floor(r()*6);pn+=pine(x,f1(x)+1-h,h);}
-  return{top:stars(W,Ht)+disc(Math.round(W*.26),Math.round(Ht*.3),3,"a"),bot:hill(W,Hb,f1,"g1")+pn+hill(W,Hb,f2,"g2")+hill(W,Hb,f3,"g3")};}
+ valle:{top:ST+disc(33,7,4,"a")+cloud(6,5)+cloud(20,12)+cloud(44,3),bot:hill(20,2.5,7,0,"g1")+hill(26,2,5,2,"g2")+hill(32,1.5,9,4,"g3")+[[6,34],[13,36],[22,35],[30,37],[41,34],[50,36],[58,35]].map(([x,y])=>R(x,y,1,1,"o")).join("")},
+ halloween:{top:ST+disc(18,9,6,"a")+bat(26,5)+bat(33,12)+bat(40,6),bot:hill(24,2,8,1,"g1")+hill(29,1.5,6,3,"g2")+hill(34,1,10,0,"g3")+dead(32,12)+pump(8,31)+pump(15,33)+pump(24,34)+pump(38,32)},
+ navidad:{top:ST+disc(18,7,3,"a"),bot:hill(26,2,9,0,"g1")+pine(8,18,9)+pine(17,20,8)+pine(29,15,12)+pine(39,21,7)+hill(31,1.5,6,2,"g2")+hill(35,1,8,4,"g3")}
 };
 /* Colores: s1-s4 cielo, g1-g3 colinas, a sol/luna, t tronco, o detalle, c nubes, p pino, k siluetas */
 const P={
@@ -37,26 +24,20 @@ const P={
  halloween:[["#6b2d8f","#a8408f","#ee7a4a","#ffb35c","#4a2466","#35194d","#231235","#ffd36e","#1b0f2e","#ff8a1e","#e9a6c8","#1b0f2e","#1b0f2e"],["#0c0620","#190b3d","#2b1259","#46207a","#2a1648","#1c0f33","#120a24","#ffb347","#07030f","#ff8a1e","#5a3a8a","#07030f","#07030f"]],
  navidad:[["#8cc6f0","#acd8f6","#cbe7fa","#e8f5ff","#ffffff","#e9f2ff","#d3e4fa","#fff3b0","#6b4226","#e8394d","#ffffff","#2f8f5b","#2a1650"],["#070b2a","#0f1b4a","#1b2f6b","#2d4a8f","#cfe0ff","#a9c2ee","#8aa6d8","#fff7d0","#4a2d1a","#ffd36e","#8aa6d8","#1f6b45","#070b2a"]]
 };
-/* tamaño del pixel según la pantalla: ~8px en móvil, hasta 18px en monitores grandes */
-function grid(){const w=innerWidth,h=innerHeight,u=Math.max(7,Math.min(18,Math.round(w/(w<700?48:110))));
-  return{u,W:Math.ceil(w/u)+1,Ht:Math.ceil(h/u*.55),Hb:Math.min(60,Math.ceil(h/u*.5)),h};}
-let built="",G=null;
+let built="";
 function apply(){
-  const k=KEYS[i];
-  if(!k){root.removeAttribute("data-bg");box.innerHTML="";built="";return;}
+  let k=KEYS[i];
+  if(k==="auto"){const d=new Date(),m=d.getMonth()+1,y=d.getDate();k=(m===10&&y>=10)||(m===11&&y<=2)?"halloween":(m===12||(m===1&&y<=6))?"navidad":"valle";}
+  if(!k){root.removeAttribute("data-bg");box.innerHTML="";built="";dispatchEvent(new Event("kixki-bg"));return;}
   root.setAttribute("data-bg",k);
   const n=root.getAttribute("data-theme")==="dark"?1:0;
   "s1 s2 s3 s4 g1 g2 g3 a t o c p k".split(" ").forEach((v,j)=>box.style.setProperty("--"+v,P[k][n][j]));
   box.style.setProperty("--so",n||k==="halloween"?1:0);box.style.setProperty("--co",k==="valle"?(n?.45:1):0);
-  const g=grid();
-  /* en el móvil la barra del navegador cambia la altura sin parar: solo se redibuja si cambia de verdad */
-  if(built===k&&G&&G.u===g.u&&G.W===g.W&&Math.abs(G.h-g.h)/G.h<.15)return;
-  built=k;G=g;const{u,W,Ht,Hb}=g,s=SC[k](W,Ht,Hb);
-  box.innerHTML=`<svg class="top" width="${W*u}" height="${Ht*u}" viewBox="0 0 ${W} ${Ht}" shape-rendering="crispEdges" aria-hidden="true">${s.top}</svg><svg class="bot" width="${W*u}" height="${Hb*u}" viewBox="0 0 ${W} ${Hb}" shape-rendering="crispEdges" aria-hidden="true">${s.bot}</svg>`+
-   (k==="navidad"?Array.from({length:Math.max(18,Math.round(W/3))},(_,j)=>`<i class="snow" style="left:${(j*37+9)%100}%;--d:${9+(j*5)%8}s;--dl:-${(j*3)%9}s;--z:${Math.max(2,Math.round(u*(.22+.1*(j%3))))}px"></i>`).join(""):"");
+  if(built!==k){built=k;
+    box.innerHTML=`<svg class="top" viewBox="0 0 64 24" shape-rendering="crispEdges" aria-hidden="true">${SC[k].top}</svg><svg class="bot" viewBox="0 0 64 40" shape-rendering="crispEdges" aria-hidden="true">${SC[k].bot}</svg>`+(k==="navidad"?Array.from({length:26},(_,j)=>`<i class="snow" style="left:${(j*37+9)%100}%;--d:${9+(j*5)%8}s;--dl:-${(j*3)%9}s;--z:${2+(j%3)}px"></i>`).join(""):"");}
+  dispatchEvent(new Event("kixki-bg"));
 }
 new MutationObserver(apply).observe(root,{attributes:true,attributeFilter:["data-theme"]});
-let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(apply,200);});
 window.KXB={label:()=>NAMES[i],next(){i=(i+1)%KEYS.length;try{localStorage.setItem("kixki-bg",JSON.stringify(KEYS[i]));}catch(e){}apply();}};
 apply();
 })();

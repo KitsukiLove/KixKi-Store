@@ -378,43 +378,37 @@ footer small{display:block;margin:20px auto 0;max-width:40ch;color:var(--muted);
 }
 .ovl canvas{touch-action:manipulation;-webkit-user-select:none;user-select:none}
 
-/* =========================================================
-   Logo, música y fondos intercambiables
-   ========================================================= */
-.brand{--u:3px;--bc:var(--frame);position:absolute;top:14px;left:14px;width:44px;height:44px;z-index:2;background:#fff;
-  image-rendering:auto;box-shadow:0 calc(var(--u)*-1) 0 0 var(--bc),0 var(--u) 0 0 var(--bc),calc(var(--u)*-1) 0 0 0 var(--bc),var(--u) 0 0 0 var(--bc)}
-.brand-f{display:block;width:56px;height:56px;margin:0 auto 10px;background:#fff;
-  box-shadow:0 -3px 0 0 var(--frame),0 3px 0 0 var(--frame),-3px 0 0 0 var(--frame),3px 0 0 0 var(--frame)}
-.blogo{display:block;width:96px;height:96px;margin:0 auto 10px;background:#fff;
-  box-shadow:0 -4px 0 0 #fff,0 4px 0 0 #fff,-4px 0 0 0 #fff,4px 0 0 0 #fff}
+/* Fondos intercambiables */
+#bgx{position:fixed;inset:0;z-index:-1;pointer-events:none;display:none;overflow:hidden;background:linear-gradient(var(--s1),var(--s2) 35%,var(--s3) 65%,var(--s4))}
+html[data-bg] #bgx{display:block}
+html[data-bg] body::before,html[data-bg] body::after,html[data-bg] .bub{display:none}
+#bgx svg{position:absolute;left:50%;transform:translateX(-50%);width:max(100%,640px);height:auto;image-rendering:pixelated}
+#bgx .top{top:0}#bgx .bot{bottom:0}
+#bgx .g1{fill:var(--g1)}#bgx .g2{fill:var(--g2)}#bgx .g3{fill:var(--g3)}#bgx .a{fill:var(--a)}#bgx .t{fill:var(--t)}
+#bgx .o{fill:var(--o)}#bgx .p{fill:var(--p)}#bgx .k{fill:var(--k)}#bgx .c{fill:var(--c);opacity:var(--co)}#bgx .st{fill:var(--a);opacity:var(--so)}
+.snow{position:absolute;top:-12px;width:var(--z);height:var(--z);background:#fff;opacity:.85;animation:fall var(--d) linear infinite;animation-delay:var(--dl)}
+@keyframes fall{to{transform:translate(24px,110vh)}}
+@media (prefers-reduced-motion:reduce){.snow{animation:none}}
+/* Logo */
+.lg{display:block;margin:0 auto;border:3px solid var(--line);border-radius:14px;background:#fff;box-shadow:4px 4px 0 var(--sh)}
+#boot .lg{border-color:#6a52d8;box-shadow:4px 4px 0 #0c0620}
+footer .by .lg{width:36px;height:36px;margin:0;border-width:2px;border-radius:8px;box-shadow:2px 2px 0 var(--sh)}
 
-.tg.on{background:var(--pri);color:var(--pri-ink)}
+.tip[hidden],.sm[hidden]{display:none}
+.tg.rd{top:auto;right:auto;bottom:14px;left:14px;color:var(--ink)}.tg.rd[aria-pressed="true"]{color:var(--acc)}
+/* Ventanas de broma (easter egg de la oveja) */
+.vp{position:fixed;z-index:9600;width:min(280px,calc(100vw - 16px));background:var(--dlg,#fff7e6);color:var(--dlg-ink,#2a1650);border:3px solid #2a1650;box-shadow:5px 5px 0 rgba(0,0,0,.35);font-size:15px;animation:vpin .18s steps(4)}
+.vh{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:5px 8px;background:#d6336c;color:#fff;font-weight:700}
+.vp p{margin:10px;line-height:1.4}.vp small{display:block;margin:0 10px 8px;opacity:.7;font-size:12px}
+.vx,.vb{font:inherit;cursor:pointer;border:2px solid #2a1650;background:#fff;color:#2a1650}.vx{padding:0 6px}.vb{margin:0 10px 10px;padding:4px 12px}
+.vp.cow{text-align:center}.vp.cow img{display:block;margin:10px auto;background:#fff;image-rendering:pixelated}
+@keyframes vpin{from{transform:scale(.6)}to{transform:none}}
 
-/* Fondos: se colocan detrás de todo y se ven en día y noche */
-#bgx{position:fixed;inset:0;z-index:-3;pointer-events:none;overflow:hidden;display:none;
-  background:linear-gradient(var(--s1) 0 22%,var(--s2) 0 44%,var(--s3) 0 66%,var(--s4) 0)}
-:root[data-bg] #bgx{display:block}
-:root[data-bg] body::after,:root[data-bg] body::before,:root[data-bg]::before{display:none}
-#bgx svg{position:absolute;left:0;display:block;max-width:none}
-#bgx .top{top:0}
-#bgx .bot{bottom:0}
-#bgx .st{fill:#fff;opacity:var(--so,0)}
-#bgx .a{fill:var(--a)}#bgx .t{fill:var(--t)}#bgx .o{fill:var(--o)}#bgx .p{fill:var(--p)}#bgx .k{fill:var(--k)}
-#bgx .c{fill:var(--c);opacity:var(--co,0)}
-#bgx .g1{fill:var(--g1)}#bgx .g2{fill:var(--g2)}#bgx .g3{fill:var(--g3)}
-#bgx .snow{position:absolute;top:-8px;width:var(--z,3px);height:var(--z,3px);background:#fff;opacity:.9;
-  animation:snowfall var(--d,10s) steps(48,end) infinite;animation-delay:var(--dl,0s)}
-@keyframes snowfall{to{transform:translate(14px,106vh)}}
-/* el texto suelto sobre un fondo ilustrado lleva una tarjeta para que siempre se lea */
-:root[data-bg] .sub,:root[data-bg] .count,:root[data-bg] footer.wrap .by,:root[data-bg] footer.wrap small,:root[data-bg] .empty{
-  width:fit-content;max-width:100%;margin-left:auto;margin-right:auto;padding:4px 12px;
-  background:color-mix(in srgb,var(--surface) 86%,transparent)}
-:root[data-bg] .sub{margin-bottom:6px}
-@media (prefers-reduced-motion:reduce){#bgx .snow{animation:none}}
-
-/* Contador de toques a la ovejita */
-#pet .cnt{position:absolute;left:4px;top:-26px;padding:2px 8px;background:var(--surface);color:var(--ink);
-  font:600 13px "Pixelify Sans",monospace;white-space:nowrap;pointer-events:none;
-  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
-#pet .cnt.pop{animation:cpop .3s steps(3,end)}
-@keyframes cpop{50%{transform:translateY(-6px)}}
+/* Rendimiento y accesibilidad de movimiento */
+html.pz *,html.pz *::before,html.pz *::after{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* Pestaña PC / móvil y filtros */
+.vwt{position:fixed;right:8px;bottom:calc(env(safe-area-inset-bottom,0px) + 64px);z-index:60;font:inherit;font-size:13px;padding:6px 10px;background:var(--surface);color:var(--ink);border:3px solid var(--line);box-shadow:3px 3px 0 var(--sh);cursor:pointer}
+.chips{display:flex;gap:6px;overflow-x:auto;margin:8px 0 0;padding:2px 2px 4px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}
+.chips .chip{flex:none;cursor:pointer;font:inherit;font-size:13px;color:var(--ink)}.chips .chip[aria-pressed="true"]{outline:2px solid var(--acc)}.chips b{margin-left:5px;opacity:.7}
+.vh span::before{content:"⚠ "}
