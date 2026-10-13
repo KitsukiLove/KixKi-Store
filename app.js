@@ -21,8 +21,7 @@ const META={
 /* ========= LOGOS =========
    Para apps de GitHub se prueba primero el ícono oficial del repositorio (fastlane)
    y después la imagen de perfil del autor. Si nada carga, se muestra la inicial. */
-function logos(a){
-  if(M.logos[slug(a[0])])return [M.logos[slug(a[0])]];
+function logosNet(a){
   if(a[5])return a[5];
   for(const l of a[3]){
     const m=l[1].match(/^https:\/\/github\.com\/([^\/]+)\/([^\/?#]+)/)||l[1].match(/[?&]repo=([^\/&]+)\/([^&]+)/);
@@ -37,6 +36,8 @@ function logos(a){
   }
   return [];
 }
+/* El logo guardado en la web va primero; si falta o falla, se prueban los de internet */
+function logos(a){const l=M.logos[slug(a[0])],n=[].concat(logosNet(a));return l?[l,...n.filter(x=>x!==l)]:n;}
 
 /* ========= SPRITES PIXEL =========
    Cada dibujo es una cuadrícula de letras: h = color de la categoría, s = sombra, l = luz,
@@ -186,7 +187,7 @@ C.forEach(c=>{
       return `<a class="${cls}" href="${l[1]}" target="_blank" rel="noopener noreferrer">${ic}${label}</a>`;
     }).join("");
     h+=`<article class="app" data-s="${nrm(a[0]+" "+a[1]+" "+a[2]).replace(/"/g,"")}">
-      <div class="logo" data-i="${a[0].charAt(0).toUpperCase()}"><img data-k="${k}" alt="" width="56" height="56" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div>
+      <div class="logo" data-i="${a[0].charAt(0).toUpperCase()}"><img data-k="${k}" alt="" width="56" height="56" decoding="async" referrerpolicy="no-referrer"></div>
       <div class="info">
         <div class="line"><h3>${a[0]}</h3><span class="tag">${a[1]}</span></div>
         <p class="desc clamp">${a[2]}</p><button type="button" class="more" aria-expanded="false" hidden>Leer más</button>
@@ -388,7 +389,7 @@ document.addEventListener("click",e=>{
   if(e.target.closest("#st")){sm.hidden=!sm.hidden;return;}
   if(e.target.closest("#smt")){document.getElementById("tg").click();sm.hidden=true;return;}
   if(e.target.closest("#sma")){secs.forEach(s=>setState(s,"min"));topS=null;sm.hidden=true;return;}
-  if(e.target.closest("#pet")){toast("¡Beee! 🐑");return;}
+  if(e.target.closest("#pet")){petHit();return;}
   if(!e.target.closest("#sm"))sm.hidden=true;
 });
 /* Ventanas arrastrables */
@@ -415,6 +416,14 @@ setInterval(()=>{
   if(px>mx){px=mx;dir=-1;}if(px<120){px=120;dir=1;}
   pet.style.transform=`translateX(${px}px)`;pi.style.transform=dir<0?"scaleX(-1)":"";
 },120);
+/* Contador de toques a la oveja (se guarda en este navegador) */
+let pc=0;try{pc=+localStorage.getItem("kixki-pet")||0;}catch(_){}
+pet.insertAdjacentHTML("beforeend",'<span class="cnt" id="pc"></span>');
+const pcE=document.getElementById("pc"),showPc=()=>{pcE.textContent="🐑 ×"+pc.toLocaleString("es");pcE.hidden=!pc;};
+showPc();
+function petHit(){pc++;try{localStorage.setItem("kixki-pet",pc);}catch(_){}showPc();
+  pcE.classList.remove("pop");void pcE.offsetWidth;pcE.classList.add("pop");
+  toast(pc===1?"¡Beee! 🐑 Primer toque":pc%25===0?`¡Beee! ${pc} toques 💜`:"¡Beee! 🐑");}
 /* Burbujas */
 const RING=[".xxx.","x...x","x...x","x...x",".xxx."];
 for(let i=0;i<12;i++)document.body.insertAdjacentHTML("beforeend",`<i class="bub" style="left:${(i*83+11)%97}%;--d:${22+(i*7)%19}s;--dl:-${(i*5)%20}s">${spr(RING,2+(i%3))}</i>`);

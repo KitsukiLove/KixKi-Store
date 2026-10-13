@@ -395,9 +395,9 @@ footer small{display:block;margin:20px auto 0;max-width:40ch;color:var(--muted);
   background:linear-gradient(var(--s1) 0 22%,var(--s2) 0 44%,var(--s3) 0 66%,var(--s4) 0)}
 :root[data-bg] #bgx{display:block}
 :root[data-bg] body::after,:root[data-bg] body::before,:root[data-bg]::before{display:none}
-#bgx svg{position:absolute;left:0;width:100%;display:block}
-#bgx .top{top:0;height:clamp(240px,52vh,620px)}
-#bgx .bot{bottom:0;height:clamp(240px,46vh,560px)}
+#bgx svg{position:absolute;left:0;display:block;max-width:none}
+#bgx .top{top:0}
+#bgx .bot{bottom:0}
 #bgx .st{fill:#fff;opacity:var(--so,0)}
 #bgx .a{fill:var(--a)}#bgx .t{fill:var(--t)}#bgx .o{fill:var(--o)}#bgx .p{fill:var(--p)}#bgx .k{fill:var(--k)}
 #bgx .c{fill:var(--c);opacity:var(--co,0)}
@@ -411,3 +411,10 @@ footer small{display:block;margin:20px auto 0;max-width:40ch;color:var(--muted);
   background:color-mix(in srgb,var(--surface) 86%,transparent)}
 :root[data-bg] .sub{margin-bottom:6px}
 @media (prefers-reduced-motion:reduce){#bgx .snow{animation:none}}
+
+/* Contador de toques a la ovejita */
+#pet .cnt{position:absolute;left:4px;top:-26px;padding:2px 8px;background:var(--surface);color:var(--ink);
+  font:600 13px "Pixelify Sans",monospace;white-space:nowrap;pointer-events:none;
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+#pet .cnt.pop{animation:cpop .3s steps(3,end)}
+@keyframes cpop{50%{transform:translateY(-6px)}}
