@@ -1,4 +1,4 @@
-const V="kixki-v4",SHELL=["./","index.html","styles.css","app.js","scenes.js","music.js","apps.json","manifest.webmanifest?v=3","logo.png","icon-32.png?v=3","icon-180.png?v=3","icon-192.png?v=3","icon-512.png?v=3","icon-maskable-192.png?v=3","icon-maskable-512.png?v=3"];
+const V="kixki-v5",SHELL=["./","index.html","styles.css","app.js","apps.json","manifest.webmanifest","scenes.js","music.js","i18n.js","eggs.js","logo.png","icon-32.png","icon-180.png","icon-192.png","icon-512.png","icon-maskable-192.png","icon-maskable-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.allSettled(SHELL.map(u=>c.add(u)))).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});
 /* Mismo origen: responde al instante desde caché y se actualiza en segundo plano.

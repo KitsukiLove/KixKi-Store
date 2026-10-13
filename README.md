@@ -6,3 +6,7 @@ Al subir `apps.json`, la Action «Sincronizar logos y datos» descarga los logos
 las fuentes y el QR a la propia web, así los visitantes no contactan con terceros.
 
 Probar en local: `python3 -m http.server` y abrir http://localhost:8000
+
+**Novedades:** añade `"added":"2026-10-13"` a una app para que salga como «Nueva» 12 días.
+**Vista:** la pestaña «Modo PC / Modo móvil» (abajo a la derecha) cambia el diseño; sirve para jugar con la oveja desde el móvil.
+**Idioma:** menú Kixki → Idioma (español / English).
