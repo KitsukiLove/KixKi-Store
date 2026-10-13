@@ -16,23 +16,14 @@ import * as state from "./state.js";
 import * as data from "./data.js";
 
 /* ---------------------------------------------------------------------
-   Módulos de interfaz. El ORDEN importa: cada uno usa lo que el anterior
-   dejó listo en el DOM.
-     sprites → iconos estáticos y hoja de sprites
-     render  → catálogo, ventanas, escritorio, barra de tareas, dock y menú
-     windows → ventanas, modales, modo Móvil/PC y aviso de modo escritorio
-     scenes  → fondos, escena de la cabecera, temporada y burbujas
-     music   → música generativa, efectos y control de volumen
-     game    → oveja, clics, bromas y Saltaovejas
+   Los módulos de las siguientes partes se importarán aquí:
+     import * as sprites from "./sprites.js";   // PARTE 2: helper de <use>
+     import * as render  from "./render.js";    // PARTE 2: catálogo y tarjetas
+     import * as windows from "./windows.js";   // PARTE 2: ventanas y barra
    --------------------------------------------------------------------- */
-import * as sprites from "./sprites.js";
-import * as render from "./render.js";
-import * as windows from "./windows.js";
-import * as scenes from "./scenes.js";
-import * as music from "./music.js";
-import * as game from "./game.js";
-
-const MODULES = [sprites, render, windows, scenes, music, game];
+const MODULES = [
+  // sprites, render, windows, ...
+];
 
 /* =====================================================================
    Utilidades DOM

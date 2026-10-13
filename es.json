@@ -12,8 +12,7 @@
     "mobile": "{total} apps en {folders} carpetas. Toca una para abrirla."
   },
   "unit": {
-    "app": { "one": "app", "other": "apps" },
-    "pack": { "one": "pack", "other": "packs" }
+    "app": { "one": "app", "other": "apps" }
   },
   "filter": { "new": "Novedades" },
   "badge": {
@@ -26,110 +25,7 @@
   "app": {
     "new": "Nueva",
     "readMore": "Leer más",
-    "readLess": "Ver menos",
-    "repo": "Repositorio",
-    "needShizuku": "Mejor con Shizuku: instálalo primero →",
-    "fav": "Guardar en favoritas",
-    "unfav": "Quitar de favoritas",
-    "copyExt": "Copiar el enlace de la extensión"
-  },
-  "win": {
-    "min": "Minimizar ventana",
-    "max": "Maximizar ventana",
-    "unmax": "Restaurar tamaño de la ventana",
-    "restore": "Restaurar ventana",
-    "favs": { "short": "Favoritas", "t": "Mis favoritas", "s": "Las apps que marcaste con ☆", "empty": "Toca ☆ en una app para guardarla aquí." },
-    "news": { "short": "Novedades", "t": "Novedades", "s": "Apps nuevas desde tu última visita", "empty": "Sin novedades por ahora. Cuando añada apps nuevas, aparecerán aquí." },
-    "packs": { "short": "Packs", "t": "Packs", "s": "Listas para instalar varias apps de una vez" }
-  },
-  "pack": {
-    "title": "Pack «{t}» de Kixki Store",
-    "copy": "Copiar lista",
-    "privacy": { "t": "Privacidad", "d": "Menos rastreo y más control sobre lo que sale de tu móvil." },
-    "customize": { "t": "Personalizar", "d": "Widgets, fondos y teclado para dejar el móvil a tu gusto." },
-    "start": { "t": "Para empezar", "d": "Lo mínimo para instalar y actualizar apps sin Play Store." },
-    "music": { "t": "Música", "d": "Para escuchar y descargar tu música." }
-  },
-  "menu": {
-    "label": "Menú Kixki",
-    "g": { "open": "Abrir", "look": "Apariencia", "sound": "Sonido", "extras": "Extras", "system": "Sistema" },
-    "theme": "Tema", "themeDark": "Modo noche", "themeLight": "Modo día",
-    "accent": "Color", "bg": "Fondo", "pixel": "Logos pixel", "lang": "Idioma",
-    "sfx": "Efectos", "music": "Música",
-    "run": "Ejecutar… (Ctrl+K)", "game": "Saltaovejas", "suggest": "Sugerir una app", "qr": "Ábrelo en tu móvil",
-    "closeall": "Cerrar ventanas", "sleep": "Apagar"
-  },
-  "accent": { "lilac": "Lila", "mint": "Menta", "rose": "Rosa", "dusk": "Atardecer" },
-  "bg": { "auto": "Auto", "classic": "Clásico", "valle": "Valle", "halloween": "Halloween", "navidad": "Navidad" },
-  "dock": { "label": "Menú", "home": "Inicio", "search": "Buscar", "menu": "Kixki", "favs": "Favoritas", "theme": "Tema" },
-  "desk": { "label": "Escritorio" },
-  "tray": { "by": "Hecho con ♥ por KitsukiLove", "label": "Barra de tareas" },
-  "quick": { "pick": "Hoy te sugiero:" },
-  "view": {
-    "label": "Modo de visualización",
-    "mobile": "Móvil",
-    "pc": "PC",
-    "fail": "Tu navegador no permite este modo. Activa «Sitio de escritorio» en su menú."
-  },
-  "tip": {
-    "title": "Kixki OS se ve mejor en modo escritorio",
-    "body": "Activa «Sitio de escritorio» (o «Versión para ordenador») en el menú de tu navegador para ver las ventanas, la oveja y los secretos. O pruébalo aquí mismo.",
-    "try": "Probar modo PC",
-    "later": "Ahora no",
-    "never": "No volver a mostrar"
-  },
-  "run": { "title": "Ejecutar", "placeholder": "Escribe el nombre de una app…", "empty": "Sin resultados" },
-  "modal": { "close": "Cerrar" },
-  "suggest": { "title": "Sugerencia: " },
-  "toast": {
-    "copyFail": "No se pudo copiar. Cópialo a mano.",
-    "extCopied": "Enlace de la extensión copiado ✓",
-    "listCopied": "Lista copiada ✓",
-    "favOn": "Guardada en favoritas ⭐",
-    "favOff": "Quitada de favoritas",
-    "musicNight": "♪ Música de noche",
-    "musicDay": "♪ Música de día",
-    "musicOff": "Música apagada"
-  },
-  "audio": { "label": "Sonido", "mute": "Silenciar música", "unmute": "Activar música", "volume": "Volumen" },
-  "game": {
-    "first": "¡Beee! 🐑 Primer toque",
-    "every": "¡Beee! {n} toques 💜",
-    "bee": "¡Beee! 🐑",
-    "rain": "¡Lluvia de ovejas! 🐑",
-    "ok": "Aceptar",
-    "closeAll": "Cerrar todo",
-    "v100": {
-      "title": "¡ALERTA DE VIRUS!",
-      "head": "Tu dispositivo podría estar infectado",
-      "text": "Se han detectado 100 toques a la oveja. Es un virus muy contagioso de ternura. 🐑",
-      "scan": "Analizando ovejas… {p} %",
-      "done": "Análisis completo: 0 amenazas reales y 100 % de ternura. Puedes seguir tocando la oveja.",
-      "remove": "Eliminar virus",
-      "removed": "Virus eliminado… o eso creemos 🐑",
-      "ignore": "Ignorar"
-    },
-    "a500": {
-      "title": "Kixki Antivirus Pro™ · Alerta crítica",
-      "head": "¡El virus ha mutado!",
-      "text": "500 toques. La oveja ya no se detiene y el antivirus ha pedido vacaciones. Esto no estaba en el plan.",
-      "yes": "Seguir tocando",
-      "no": "Rendirse",
-      "toast": "Demasiado tarde: la oveja ya es de todos 💜"
-    },
-    "c": {
-      "title": "Kixki.exe · Error",
-      "m1": "Error 🐑: demasiadas ovejas en memoria.",
-      "m2": "beee.exe ha dejado de funcionar.",
-      "m3": "Se han clonado 12 ovejas sin tu permiso.",
-      "m4": "Memoria llena de lana. Vaciando…",
-      "m5": "Descargando más ovejas… 99 %",
-      "m6": "El antivirus se ha quedado dormido.",
-      "m7": "Contador de ovejas desbordado.",
-      "m8": "Alerta: se ha detectado una vaca en el sistema."
-    },
-    "cow": { "head": "¡MUUU!", "text": "Has desbloqueado la vaca. Gracias por tocar la oveja tantas veces 💜", "alt": "Una vaca bailando" },
-    "run": { "hint": "Toca, espacio o ↑ para saltar", "retry": "Toca para reintentar" }
+    "readLess": "Ver menos"
   },
   "footer": {
     "by": "Hecho con cariño por KitsukiLove",

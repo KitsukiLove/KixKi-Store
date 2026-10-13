@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "sub": "A small collection of apps for your Android, with a basic guide and what each one is for."
+  },
+  "search": {
+    "label": "Search for an app",
+    "placeholder": "Search for an app…",
+    "empty": "No apps found for “{q}”. Try another word."
+  },
+  "count": {
+    "desktop": "{total} apps in {folders} folders. Open one from the desktop.",
+    "mobile": "{total} apps in {folders} folders. Tap one to open it."
+  },
+  "unit": {
+    "app": { "one": "app", "other": "apps" }
+  },
+  "filter": { "new": "New" },
+  "badge": {
+    "open-source": "Open source",
+    "closed-source": "Closed source",
+    "no-ads": "No ads",
+    "paid": "Paid",
+    "shizuku": "Works with Shizuku"
+  },
+  "app": {
+    "new": "New",
+    "readMore": "Read more",
+    "readLess": "Show less"
+  },
+  "footer": {
+    "by": "Made with love by KitsukiLove",
+    "note": "Kixki Store · Always check each app's source before installing it."
+  },
+  "error": {
+    "catalog": "Couldn't load the catalog. Check your connection and reload."
+  },
+  "categories": {},
+  "apps": {}
+}
