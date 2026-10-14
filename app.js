@@ -427,6 +427,7 @@ document.getElementById("pick").onclick=()=>{const s=pk.closest(".cat");if(s.cla
 addEventListener("keydown",e=>{if(e.key==="/"&&!/INPUT|TEXTAREA/.test(document.activeElement.tagName)){e.preventDefault();q.focus();}});
 /* Modo PC / móvil */
 function mode(){root.classList.toggle("dsk",DSK());const vw=document.getElementById("vw");if(vw)vw.textContent=DSK()?"Modo móvil":"Modo PC";
+  dispatchEvent(new Event("kixki-mode"));
   document.getElementById("count").textContent=DSK()?`${total} apps en ${C.filter(c=>c.a.length).length} carpetas. Abre una desde el escritorio.`:`${total} apps en ${C.filter(c=>c.a.length).length} carpetas. Toca una para abrirla.`;}
 document.querySelector("header.hero").insertAdjacentElement("afterend",document.getElementById("desk"));
 q.addEventListener("input",()=>{const v=q.value.trim();root.classList.toggle("srch",!!v);if(!v&&!DSK())secs.forEach(x=>setState(x,"min"));});
@@ -548,13 +549,13 @@ $$(".di").forEach(d=>d.addEventListener("click",()=>vib(6)));
 /* --- menú Kixki: extras --- */
 const ACC=["","mint","rose","dusk"],ACN=["Lila","Menta","Rosa","Atardecer"];let ai=Math.max(0,ACC.indexOf(LS.g("kixki-acc","")));
 const setAcc=()=>{ACC[ai]?root.dataset.acc=ACC[ai]:root.removeAttribute("data-acc");LS.s("kixki-acc",ACC[ai]);};
-const lab=()=>{$("#s-lang").textContent="Idioma: "+(KXI.lang==="en"?"English":"Español");$("#s-mus").textContent="Música: "+(KXM.on?"sí":"no");$("#s-bg").textContent="Fondo: "+KXB.label();$("#s-acc").textContent="Color: "+ACN[ai];$("#s-pix").textContent="Logos pixel: "+(PX?"sí":"no");$("#s-snd").textContent="Efectos: "+(SND?"sí":"no");};
-sm.insertAdjacentHTML("beforeend",`<button type="button" class="sm" id="s-run">Ejecutar… (Ctrl+K)</button><button type="button" class="sm" id="s-acc"></button><button type="button" class="sm" id="s-pix"></button><button type="button" class="sm" id="s-snd"></button><button type="button" class="sm" id="s-inst" hidden>Instalar app</button><button type="button" class="sm" id="s-mus"></button><button type="button" class="sm" id="s-bg"></button><button type="button" class="sm" id="s-lang"></button><button type="button" class="sm" id="s-game">Saltaovejas</button><button type="button" class="sm" id="s-sug">Sugerir una app</button><button type="button" class="sm d" id="s-qr">Ábrelo en tu móvil</button><button type="button" class="sm d" id="s-off">Apagar</button>`);
-setAcc();lab();pix();
+const lab=()=>{$("#s-lang").textContent="Idioma: "+(KXI.lang==="en"?"English":"Español");$("#s-view").textContent=DSK()?"Modo móvil":"Modo PC";$("#s-mus").textContent="Música: "+(KXM.on?"sí":"no");$("#s-bg").textContent="Fondo: "+KXB.label();$("#s-acc").textContent="Color: "+ACN[ai];$("#s-pix").textContent="Logos pixel: "+(PX?"sí":"no");$("#s-snd").textContent="Efectos: "+(SND?"sí":"no");};
+sm.insertAdjacentHTML("beforeend",`<button type="button" class="sm" id="s-run">Ejecutar… (Ctrl+K)</button><button type="button" class="sm" id="s-acc"></button><button type="button" class="sm" id="s-pix"></button><button type="button" class="sm" id="s-snd"></button><button type="button" class="sm" id="s-inst" hidden>Instalar app</button><button type="button" class="sm" id="s-mus"></button><button type="button" class="sm" id="s-bg"></button><button type="button" class="sm" id="s-view"></button><button type="button" class="sm" id="s-lang"></button><button type="button" class="sm" id="s-game">Saltaovejas</button><button type="button" class="sm" id="s-sug">Sugerir una app</button><button type="button" class="sm d" id="s-qr">Ábrelo en tu móvil</button><button type="button" class="sm d" id="s-off">Apagar</button>`);
+setAcc();lab();pix();addEventListener("kixki-mode",lab);
 sm.addEventListener("click",e=>{const b=e.target.closest("button[id^=s-]");if(!b)return;const k=b.id;
   if(k==="s-acc"){ai=(ai+1)%ACC.length;setAcc();lab();return;}
   if(k==="s-pix"){PX=!PX;LS.s("kixki-px",PX);pix();lab();return;}
-  if(k==="s-lang"){KXI.set(KXI.lang==="en"?"es":"en");lab();return;}if(k==="s-inst"){if(DP){DP.prompt();DP=null;$("#s-inst").hidden=true;}return;}if(k==="s-mus"){KXM.toggle();rdIc();lab();return;}if(k==="s-bg"){KXB.next();lab();return;}
+  if(k==="s-view"){sm.hidden=true;KX.setView(DSK()?"movil":"pc");return;}if(k==="s-lang"){KXI.set(KXI.lang==="en"?"es":"en");lab();return;}if(k==="s-inst"){if(DP){DP.prompt();DP=null;$("#s-inst").hidden=true;}return;}if(k==="s-mus"){KXM.toggle();rdIc();lab();return;}if(k==="s-bg"){KXB.next();lab();return;}
   if(k==="s-snd"){SND=!SND;LS.s("kixki-snd",SND);rdIc();lab();beep(880,.1);return;}
   sm.hidden=true;
   if(k==="s-run")runOpen();else if(k==="s-game")game();else if(k==="s-qr")qr();else if(k==="s-off")ov("off");

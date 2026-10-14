@@ -14,5 +14,15 @@ function ovFire(n){
 document.addEventListener("click",e=>{const b=e.target.closest(".vx,.vb");if(!b||!b.closest(".vp"))return;b.dataset.all?document.querySelectorAll(".vp").forEach(v=>v.remove()):b.closest(".vp").remove();});
 addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".vp").forEach(v=>v.remove());});
 
+/* Arrastrar cualquier ventana de broma (incluida vaca.exe) desde su barra de título */
+let dg=null;
+document.addEventListener("pointerdown",ev=>{const h=ev.target.closest(".vh");if(!h||ev.target.closest("button"))return;const v=h.closest(".vp");if(!v)return;
+  const r=v.getBoundingClientRect();dg={v,dx:ev.clientX-r.left,dy:ev.clientY-r.top,id:ev.pointerId};
+  document.querySelectorAll(".vp").forEach(x=>x.style.zIndex=9600);v.style.zIndex=9601;v.classList.add("drg");try{h.setPointerCapture(ev.pointerId);}catch(_){}ev.preventDefault();});
+addEventListener("pointermove",ev=>{if(!dg)return;const w=dg.v.offsetWidth,hh=dg.v.offsetHeight;
+  dg.v.style.left=Math.max(0,Math.min(innerWidth-w,ev.clientX-dg.dx))+"px";dg.v.style.top=Math.max(0,Math.min(innerHeight-Math.min(hh,60),ev.clientY-dg.dy))+"px";});
+const dgEnd=()=>{if(dg)dg.v.classList.remove("drg");dg=null;};
+addEventListener("pointerup",dgEnd);addEventListener("pointercancel",dgEnd);
+
 window.KXE={fire:ovFire};
 })();

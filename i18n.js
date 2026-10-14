@@ -44,7 +44,7 @@ const EN={
 "Listas para instalar varias apps de una vez":"Ready-made lists to install several apps at once","Menos rastreo y más control sobre lo que sale de tu móvil.":"Less tracking and more control over what leaves your phone.","Widgets, fondos y teclado para dejar el móvil a tu gusto.":"Widgets, wallpapers and a keyboard to set your phone up your way.","Lo mínimo para instalar y actualizar apps sin Play Store.":"The bare minimum to install and update apps without the Play Store.",
 "Kixki Store · Revisa siempre la fuente de cada app antes de instalarla.":"Kixki Store · Always check each app's source before installing it."
 };
-const CL={Clásico:"Classic",Valle:"Valley",Navidad:"Christmas","Auto (temporada)":"Auto (season)",Lila:"Lilac",Menta:"Mint",Rosa:"Pink",Atardecer:"Sunset"},ST={"sí":"on","no":"off"},LB={"Música":"Music","Efectos":"Effects","Logos pixel":"Pixel logos"};
+const CL={Clásico:"Classic",Valle:"Valley",Navidad:"Christmas",Primavera:"Spring",Verano:"Summer","Otoño":"Autumn",Invierno:"Winter","Auto (temporada)":"Auto (season)",Lila:"Lilac",Menta:"Mint",Rosa:"Pink",Atardecer:"Sunset"},ST={"sí":"on","no":"off"},LB={"Música":"Music","Efectos":"Effects","Logos pixel":"Pixel logos"};
 const RX=[
  [/^(\d+) apps?$/,(m,n)=>`${n} app${n==1?"":"s"}`],[/^(\d+) packs?$/,(m,n)=>`${n} pack${n==1?"":"s"}`],
  [/^(\d+) apps en (\d+) carpetas\. (.*)$/,(m,a,b,c)=>`${a} apps in ${b} folders. ${T(c)}`],
