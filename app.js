@@ -404,6 +404,8 @@ setInterval(()=>{
   if(px>mx){px=mx;dir=-1;}if(px<120){px=120;dir=1;}
   pet.style.transform=`translateX(${px}px)`;pi.style.transform=dir<0?"scaleX(-1)":"";
 },120);
+/* (kixki2.js) x y dirección de la ovejita, para que pueda correr cuando se incendia */
+Object.defineProperties(window.KXPET=window.KXPET||{hold:false},{x:{get:()=>px,set:v=>{px=v;},configurable:true},dir:{get:()=>dir,set:v=>{dir=v;},configurable:true}});
 /* Burbujas */
 const RING=[".xxx.","x...x","x...x","x...x",".xxx."];
 for(let i=0;i<12;i++)document.body.insertAdjacentHTML("beforeend",`<i class="bub" style="left:${(i*83+11)%97}%;--d:${22+(i*7)%19}s;--dl:-${(i*5)%20}s">${spr(RING,2+(i%3))}</i>`);

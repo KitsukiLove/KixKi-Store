@@ -21,13 +21,14 @@ const save=()=>{try{localStorage.setItem(LSK,JSON.stringify(S));}catch(e){}};
 /* ---------- sprites (20×15, miran a la derecha) ----------
    w lana · s sombra de lana · f cara · d oreja · e ojo · g brillo · p nariz · c mejilla · m boca
    a bufanda · b sombra de bufanda · y estrella · l pezuña */
-const TOP=["................y...","...............yyy..","....www.....wwwywww.","..wwwwwww.wwwwwwwww.",".wwwwwwwwwwwwwwwwww.",".wwwwwwwwwwwwwwffff."];
-const R6={open:"wwwwwwwwwwwwwwffgeff",blink:"wwwwwwwwwwwwwwffffff",happy:"wwwwwwwwwwwwwwfffeff"};
-const R7={open:"wwwwwwwwwwwwwwffeeff",blink:"wwwwwwwwwwwwwwffeeff",happy:"wwwwwwwwwwwwwwffefef"};
-const R8="wwwwwwwwwwwwwwfcffpf";
-const R9={idle:"wwwwwwwwwwwaaaaffmf.",open:"wwwwwwwwwwwaaaaffmf."};
-const R10={idle:"swwwwwwwwwwabbbffff.",open:"swwwwwwwwwwabbbffmf."};
-const R11=".swwwwwwwwwwabbfffd.",R12="..ssssssssssabb.dd..";
+const TOP=["................y...","...............yyy..","....www.....wwwywww..".slice(0,20),"..wwwwwww.wwwwwwwww.",".wwwwwwwwwwwwwwwwww.",".wwwwwwwwwwwwwwwwww."];
+/* (parte 2) cara más pequeña: 4×4 px en vez de 6×7, y más lana alrededor */
+const R6={open:"wwwwwwwwwwwwwwdfgef.",blink:"wwwwwwwwwwwwwwdffff.",happy:"wwwwwwwwwwwwwwdffef."};
+const R7={open:"wwwwwwwwwwwwwwdfeef.",blink:"wwwwwwwwwwwwwwdfeef.",happy:"wwwwwwwwwwwwwwdfefe."};
+const R8="wwwwwwwwwwwwwwwcfpf.";
+const R9={idle:"wwwwwwwwwwwaaaaafff.",open:"wwwwwwwwwwwaaaaafmf."};
+const R10={idle:"swwwwwwwwwwwabbbb...",open:"swwwwwwwwwwwabbbb..."};
+const R11=".swwwwwwwwwwwwbb....",R12="..ssssssssssss......";
 const LEG={a:["...ll..ll...........","...ll..ll..........."],b:["..ll....ll..........","..ll....ll.........."],
   c:["....ll..ll..........","....ll..ll.........."],j:["....l....l..........","...................."]};
 const mk=(eye,mouth,leg)=>[...TOP,R6[eye],R7[eye],R8,R9[mouth],R10[mouth],R11,R12,...LEG[leg]];

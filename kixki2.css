@@ -103,3 +103,25 @@
   .kq-toast,.kq-toast.in{transition:none}
   .kq-av svg,.kq-st .kq-new,.kq-dot,.kq-toast.in .kq-ti svg,#pet.kq-talk .pa svg{animation:none}
 }
+
+/* ---------- incendio de verano ---------- */
+.q-k{fill:#8f98ad}.q-l{fill:#c9d0de}.q-x{fill:#ff5a1f}.q-y{fill:#ffd23a}
+#kq-fx{position:fixed;inset:0;z-index:4600;pointer-events:none;overflow:hidden}
+#kq-fx i{position:absolute;display:block}
+.kq-em{width:6px;height:6px;background:var(--c,#ff7a1a);animation:kqem .9s steps(9,end) forwards}
+@keyframes kqem{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--ex,0),-48px);opacity:0}}
+.kq-wd{width:6px;height:8px;background:#4aa3e8;box-shadow:inset 0 0 0 1px #bfe6ff;animation:kqwd .65s steps(7,end) forwards}
+@keyframes kqwd{from{transform:translateY(0);opacity:1}to{transform:translateY(var(--dy,40px));opacity:.15}}
+.kq-bk{transform-origin:50% 100%;animation:kqbk .8s steps(8,end) forwards}
+@keyframes kqbk{0%{transform:translateY(-14px) rotate(0);opacity:1}35%{transform:translateY(0) rotate(0)}65%{transform:rotate(-62deg)}90%{transform:rotate(-62deg);opacity:1}100%{transform:rotate(-62deg);opacity:0}}
+.kq-bk .kq-i{display:block}
+#pet .kq-fire{position:absolute;left:0;bottom:33px;display:flex;align-items:flex-end;pointer-events:none;z-index:2}
+#pet .kq-fl{position:relative;display:block;margin-right:-6px}
+#pet .kq-fl svg{animation:none;display:block}
+#pet .kq-fl .fb{position:absolute;left:0;bottom:0}
+#pet .kq-fl .fa{animation:kqf1 .28s steps(1,end) infinite;animation-delay:var(--d,0s)}
+#pet .kq-fl .fb{animation:kqf2 .28s steps(1,end) infinite;animation-delay:var(--d,0s)}
+@keyframes kqf1{0%{opacity:1}50%{opacity:0}}
+@keyframes kqf2{0%{opacity:0}50%{opacity:1}}
+#pet.kq-burn .pa svg:not(.kq-i){filter:sepia(.55) saturate(1.8) hue-rotate(-20deg);animation:bob .16s steps(1,end) infinite}
+@media (prefers-reduced-motion:reduce){#pet .kq-fl .fa,#pet .kq-fl .fb{animation:none}#pet .kq-fl .fb{display:none}#pet .kq-fl .fa{opacity:1}.kq-em,.kq-wd,.kq-bk{animation-duration:.01s}}

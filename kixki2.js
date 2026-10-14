@@ -38,6 +38,9 @@ const ICON={
  ghost:["..wwwww..",".wwwwwww.",".wewwwew.",".wwwwwww.",".wwwmwww.",".wwwwwww.",".ww.w.ww."],
  jump:["....a....","...aaa...","..aaaaa..",".aaaaaaa.","...aaa...","...aaa...","...aaa...","ooooooooo"],
  tag:["aaaaaa...","aaaaaaa..","aaa.aaaa.","aaaaaaaaa","aaaaaaaa.","aaaaaaa..","aaaaaa..."],
+ bucket:[".kkkkkkk.","kcwcccwck","klllllllk",".klllllk.",".klllllk.","..klllk..","..kkkkk.."],
+ flameA:["....x....","...xx..x.","..xxx.xx.",".xxyxxxx.",".xxyyxxx.","xxyyyyxxx","xxyyyyyxx",".xxyyyxx.","..xxxxx.."],
+ flameB:[".....x...",".x...xx..",".xx.xxx..",".xxxxyxx.",".xxxyyxx.","xxxyyyyxx","xxyyyyyxx",".xxyyyxx.","..xxxxx.."],
  q:["..aaaaa..",".aa...aa.","......aa.",".....aa..","....aa...",".........","....aa..."]
 };
 function ic(name,px,cls){
@@ -124,6 +127,10 @@ a("petchat","sheep","k",["Cotilla de rebaño","Flock gossip"],["Presencia una ch
 a("petchat5","sheep","k",["Rebaño unido","United flock"],["Presencia 5 charlas con la ovejita.","Watch 5 chats with the little sheep."],c=>c.petChats>=5,{pc:1});
 a("pet10","sheep","k",["Lluvia de ovejas","Sheep shower"],["Toca 10 veces a la ovejita que camina abajo.","Tap the walking sheep downstairs 10 times."],c=>c.pet>=10,{pc:1});
 a("pet100","sheep","k",["Ovejita mareada","Dizzy sheep"],["Toca 100 veces a la ovejita.","Tap the little sheep 100 times."],c=>c.pet>=100,{pc:1,big:1});
+a("fire1","bucket","k",["Cuerpo de bomberos","Fire brigade"],["Apaga con agua a la ovejita cuando se incendie (fondo de verano, de día, solo en PC).","Put out the little sheep when she catches fire (summer background, daytime, PC only)."],c=>c.fireUser>=1,
+  {pc:1,big:1,k:["¡Fuego apagado! Eres muy pro, no lo olvides. 🚒","Fire's out! You're so pro, never forget it. 🚒"]});
+a("firefast","bucket","k",["Manguera veloz","Speedy hose"],["Apaga a la ovejita en menos de 6 segundos.","Put the little sheep out in under 6 seconds."],c=>c.fireFast>=1,{pc:1});
+a("firekixki","bucket","k",["Rescatada por Kixki","Rescued by Kixki"],["Deja que Kixki apague el fuego por ti.","Let Kixki put the fire out for you."],c=>c.fireKixki>=1,{pc:1,k:["¡Esta vez me tocó a mí! La próxima, tú. 😉","My turn this time! Yours next. 😉"]});
 /* — Constancia — */
 a("visit3","key","v",["De la casa","Part of the flock"],["Visita la tienda en 3 ocasiones distintas.","Visit the store on 3 different occasions."],c=>c.visits>=3);
 a("visit10","crown","v",["Rebaño fiel","Loyal flock"],["Visita la tienda 10 veces.","Visit the store 10 times."],c=>c.visits>=10,{big:1});
@@ -163,7 +170,7 @@ function boot(){
     favMax:C.favMax|0,
     plays:Math.max(C.plays|0,lsNum("kixki-gp"),lsNum("kixki-rec")>0?1:0),runMax:Math.max(C.runMax|0,lsNum("kixki-rec")),recBroken:!!C.recBroken,
     theme:C.theme|0,night:!!C.night,bgs:(C.bgs||[]).length,acc:C.acc|0,music:!!C.music,lang:!!C.lang,view:!!C.view,qr:!!C.qr,
-    tapFast:!!C.tapFast,tapsK:C.tapsK|0,petChats:C.petChats|0,pet:lsNum("kixki-ov"),
+    tapFast:!!C.tapFast,tapsK:C.tapsK|0,petChats:C.petChats|0,pet:lsNum("kixki-ov"),fireUser:C.fireUser|0,fireFast:C.fireFast|0,fireKixki:C.fireKixki|0,
     visits:S.visits|0,konami:!!C.konami
   });
 
@@ -366,6 +373,7 @@ function boot(){
     {pc:1,t:["A veces bajo a charlar con la ovejita de abajo. ¡Se pone muy graciosa! 🐑","Sometimes I go down to chat with the little sheep downstairs. She gets really funny! 🐑"]},
     {pc:1,t:["Si le haces cosquillas muy rápido a la ovejita de abajo, ¡me asomo a ver qué pasa!","If you tickle the little sheep downstairs really fast, I'll pop down to see what's going on!"]},
     {pc:1,t:["En el menú Kixki puedes pedirme que baje a hablar con la ovejita.","In the Kixki menu you can ask me to go chat with the little sheep."]},
+    {pc:1,t:["En verano, con el sol fuerte, la ovejita de abajo a veces se calienta demasiado… ¡ten el agua lista! 💦","In summer, with the sun blazing, the little sheep downstairs sometimes overheats… keep the water ready! 💦"]},
     {mob:1,t:["En «Más» está «Logros»: ¡mira cuáles llevas y cuáles te faltan! 🏆","“More” has “Achievements”: see which ones you have and which are missing! 🏆"]}
   );
   T.praise.push(
@@ -376,7 +384,7 @@ function boot(){
   /* ---------- pistas ocasionales ---------- */
   let hintAt=now()+rnd(100000,160000);
   setInterval(()=>{
-    if(now()<hintAt||!KK.alive()||K.game||chatting)return;
+    if(now()<hintAt||!KK.alive()||K.game||chatting||fireOn)return;
     const n=nextHint();hintAt=now()+rnd(150000,260000);if(!n)return;
     KK.say([`Psst… te falta «${n.n[0]}»: ${n.d[0]}`,`Psst… you're missing “${n.n[1]}”: ${n.d[1]}`],{p:1,key:"hint",cd:90000});
   },6000);
@@ -492,7 +500,7 @@ function boot(){
   function pint(){
     if(!pcur)return;const m=pcur;clearTimeout(m.t);pcur=null;pb.hidden=true;const p=petEl();if(p)p.classList.remove("kq-talk");m.res(false);
   }
-  function petSay(msg,vars){
+  function petSay(msg,vars,o){
     return new Promise(res=>{
       pint();
       const text=fmt(tx(msg),vars),m={text,res,t:0};pcur=m;
@@ -504,7 +512,7 @@ function boot(){
       let i=0;const n=text.length,spd=RM()?0:26;
       const step=()=>{
         if(pcur!==m)return;
-        if(!spd||i>=n){pbV.textContent=text;m.t=setTimeout(()=>pdone(m,"auto"),clamp(2300+text.length*52,3300,9500));if(p)p.classList.remove("kq-talk");return;}
+        if(!spd||i>=n){pbV.textContent=text;m.t=setTimeout(()=>pdone(m,"auto"),(o&&o.ms)||clamp(2300+text.length*52,3300,9500));if(p)p.classList.remove("kq-talk");return;}
         const ch=text[i];i++;pbV.textContent=text.slice(0,i);
         if(ch!==" "&&i%3===0&&window.KXS)try{KXS.beep(620+((i*41)%260),.03);}catch(e){}
         m.t=setTimeout(step,/[.,!?…]/.test(ch)?170:spd);
@@ -515,9 +523,9 @@ function boot(){
   pb.addEventListener("click",()=>pdone(pcur,"user"));
 
   /* la charla en sí */
-  let chatting=false,nextVisit=now()+rnd(45000,80000),tapTimes=[],lastTickle=0;
+  let fireOn=false,chatting=false,nextVisit=now()+rnd(45000,80000),tapTimes=[],lastTickle=0;
   async function petChat(kind){
-    if(chatting||!isPC()||!KK.ready||!S.on||K.off)return false;
+    if(chatting||fireOn||!isPC()||!KK.ready||!S.on||K.off)return false;
     if(kind==="auto"&&(K.tour||K.talking||K.mode!=="idle"))return false;
     if(!petBox())return false;
     chatting=true;nextVisit=now()+rnd(100000,190000);
@@ -556,12 +564,118 @@ function boot(){
   }
   /* visitas solas de vez en cuando */
   setInterval(()=>{
-    if(!isPC()||!KK.ready||chatting)return;
+    if(!isPC()||!KK.ready||chatting||fireOn)return;
     if(KK.stage==="pet"&&KK.alive()){KK.relocate();return;}/* por si se quedó abajo */
+    if(now()>=nextFire){if(summerDay())petFire();else nextFire=now()+30000;return;}
     if(now()<nextVisit||!KK.alive()||K.game||K.mode!=="idle"||document.activeElement===$("#q"))return;
     petChat("auto");
   },4000);
   addEventListener("kixki-mode",()=>{if(!isPC()){PETS.hold=false;}});
+
+  /* =========================================================
+     INCENDIO DE VERANO: de día y con el fondo de verano, la ovejita de abajo
+     a veces se prende fuego y corre de un lado a otro. Tócala (3 veces) para echarle agua;
+     si tardas, Kixki baja a apagarla.
+     ========================================================= */
+  const fx=mk('<div id="kq-fx" aria-hidden="true"></div>');document.body.append(fx);
+  const summerDay=()=>root.getAttribute("data-bg")==="verano"&&root.getAttribute("data-theme")!=="dark"&&isPC();
+  let nextFire=now()+rnd(60000,130000);
+  const FIRE_LIMIT=14;/* segundos antes de que baje Kixki */
+  const SHOUT=[["¡Beee! ¡Me quemo!","Baaa! I'm burning!"],["¡Aguaaa! ¡Beee!","Waaater! Baaa!"],["¡Que alguien me eche agua!","Somebody throw water on me!"],["¡Tócame para apagarme!","Tap me to put me out!"],["¡Está muy calientee!","It's so hoooot!"]];
+  const fxAt=(x,y,cls,css,ms)=>{const e=document.createElement("i");e.className=cls;e.style.cssText=`left:${Math.round(x)}px;top:${Math.round(y)}px;${css||""}`;fx.append(e);setTimeout(()=>e.remove(),ms||900);return e;};
+  function setFlames(p,n){
+    let box=$(".kq-fire",p);
+    if(n<=0){if(box)box.remove();return;}
+    if(!box){box=document.createElement("div");box.className="kq-fire";p.append(box);}
+    const sc={3:[4,5,4],2:[3,4,3],1:[2,3,2]}[n];
+    box.innerHTML=sc.map((k,i)=>`<span class="kq-fl" style="--d:-${(i*.09).toFixed(2)}s">${ic("flameA",k,"fa")}${ic("flameB",k,"fb")}</span>`).join("");
+  }
+  async function petFire(force){
+    if(fireOn||chatting||!isPC()||!petEl()||!petBox())return false;
+    if(!force&&(!summerDay()||!KK.ready||!S.on||K.off||K.game||K.tour||document.hidden))return false;
+    fireOn=true;nextFire=now()+rnd(200000,420000);
+    const p=petEl(),pi=petPi();
+    let stage=3,t=0,x=typeof PETS.x==="number"?PETS.x:petBox().left,dirp=PETS.dir>=0?1:-1,turn=rnd(.7,1.4),shoutT=.3,shoutI=0,emb=0,rescuing=false,stopping=false,mult=1,finished=false;
+    const tok={};
+    PETS.hold=true;p.classList.add("kq-burn");setFlames(p,3);pint();
+    say(tx(["¡La ovejita se está quemando! Tócala para echarle agua.","The little sheep is on fire! Tap her to splash water on her."]));
+    KK.say(["¡¡La ovejita se está quemando!! ¡Tócala para echarle agua! 💦","The little sheep is on fire!! Tap her to splash water on her! 💦"],{p:3});
+    if(window.KXS)try{KXS.baa();}catch(e){}
+    const SPD={3:250,2:200,1:140};
+    function bucket(){
+      const r=petBox();if(!r)return;const cx=r.left+r.width/2;
+      const b=fxAt(cx-18,r.top-58,"kq-bk","");b.innerHTML=ic("bucket",4);
+      for(let i=0;i<9;i++)setTimeout(()=>{const q=petBox();if(q)fxAt(q.left+q.width/2+rnd(-22,22),q.top-18,"kq-wd",`--dy:${Math.round(rnd(34,60))}px;animation-delay:0s`,650);},200+i*45);
+      if(window.KXS)try{KXS.beep(520,.1);setTimeout(()=>KXS.beep(390,.1),90);}catch(e){}
+    }
+    function splash(who){
+      if(stage<=0||finished)return;
+      stage--;bucket();setFlames(p,stage);
+      if(stage===2)petSay(["¡Más agua!","More water!"],null,{ms:1800});
+      else if(stage===1)petSay(["¡Casi, casi!","Almost there!"],null,{ms:1800});
+      else out(who);
+    }
+    async function out(who){
+      finished=true;stopping=true;
+      const r=petBox();if(r)for(let i=0;i<10;i++)fxAt(r.left+rnd(8,r.width-8),r.top+rnd(-6,10),"kq-em",`--c:#e6edf7;--ex:${Math.round(rnd(-12,12))}px`,1000);
+      p.classList.remove("kq-burn");
+      petFacing=dirp>0?1:-1;
+      petSay(who==="kixki"?["Gracias, Kixki… huelo a lana chamuscada. 😅","Thanks, Kixki… I smell like toasted wool. 😅"]:["¡Ufff! ¡Gracias! Qué alivio. 💦","Phew! Thank you! What a relief. 💦"],null,{ms:3200});
+      if(who!=="kixki")KK.say(["¡Fuego apagado! Eres muy pro, no lo olvides. 🚒","Fire's out! You're so pro, never forget it. 🚒"],{p:3,mood:"happy"});
+      if(who==="user"){inc("fireUser");if(t<6)inc("fireFast");}else if(who==="kixki")inc("fireKixki");
+      save();sweep();
+      await wait(1900);end();
+    }
+    function end(){
+      fireOn=false;finished=true;PETS.hold=false;
+      p.classList.remove("kq-burn");setFlames(p,0);pint();
+      if(pi)pi.style.transform=PETS.dir<0?"scaleX(-1)":"";
+      removeEventListener("pointerdown",down,true);
+    }
+    function down(e){
+      if(!fireOn||rescuing||finished)return;
+      const r=petBox();if(!r)return;const pad=26;
+      if(e.clientX>=r.left-pad&&e.clientX<=r.right+pad&&e.clientY>=r.top-pad-34&&e.clientY<=r.bottom+pad)splash("user");
+    }
+    addEventListener("pointerdown",down,true);
+    async function rescue(){
+      rescuing=true;
+      if(!(KK.ready&&S.on&&!K.off)){/* sin Kixki: lluvia fresca */
+        for(let i=0;i<3&&!finished;i++){bucket();stage--;setFlames(p,stage);await wait(420);}
+        if(!finished)out("auto");return;
+      }
+      K.tour=tok;
+      KK.say(["¡Aguanta, ovejita! ¡Voy yo! 🚒","Hold on, little sheep! I'm coming! 🚒"],{p:3});
+      stopping=true;await wait(RM()?0:650);
+      let ok=false;try{ok=await KK.hop("pet");}catch(e){}
+      if(K.tour!==tok&&!ok){if(!finished){stage=0;setFlames(p,0);out("auto");}return;}
+      for(let i=0;i<3&&!finished;i++){bucket();stage--;setFlames(p,stage);await wait(520);}
+      if(!finished)await out("kixki");
+      KK.say(["¡Listo! Esta vez me tocó a mí. 🚒","Done! My turn this time. 🚒"],{p:3,mood:"happy"});
+      if(K.tour===tok)K.tour=null;
+      setTimeout(()=>{if(!chatting&&KK.stage==="pet")KK.relocate();},900);
+    }
+    let last=performance.now();
+    (function frame(ts){
+      if(!fireOn)return;
+      const dt=Math.min(.05,(ts-last)/1000);last=ts;
+      if(!isPC()||!petEl()){end();return;}
+      if(!document.hidden)t+=dt;
+      if(stopping)mult=Math.max(0,mult-dt*2.8);
+      if(!RM()&&mult>0){
+        x+=dirp*SPD[Math.max(1,stage)]*mult*dt;
+        const mx=innerWidth-130;if(x>mx){x=mx;dirp=-1;turn=rnd(.7,1.5);}if(x<120){x=120;dirp=1;turn=rnd(.7,1.5);}
+        turn-=dt;if(turn<=0){dirp=-dirp;turn=rnd(.6,1.6);}
+      }
+      PETS.x=x;PETS.dir=dirp;p.style.transform=`translateX(${x}px)`;if(pi)pi.style.transform=dirp<0?"scaleX(-1)":"";
+      petFacing=dirp>0?1:-1;if(pcur)playout();
+      emb-=dt;if(emb<=0&&stage>0){emb=.11;const r=petBox();if(r)fxAt(r.left+rnd(6,r.width-10),r.top+rnd(-6,8),"kq-em",`--c:${["#ff7a1a","#ffd23a","#ff5a1f","#7a6a8a"][Math.floor(rnd(0,4))]};--ex:${Math.round(rnd(-10,10))}px`,900);}
+      shoutT-=dt;if(shoutT<=0&&!finished&&!rescuing){shoutT=2.8;petSay(SHOUT[shoutI++%SHOUT.length],null,{ms:2400});}
+      if(t>=FIRE_LIMIT&&!rescuing&&!finished)rescue();
+      requestAnimationFrame(frame);
+    })(performance.now());
+    return true;
+  }
 
   /* ---------- listo: ponerse al día sin avisar y enseñar qué había ---------- */
   const first=!ST.init;ST.init=1;
@@ -578,7 +692,7 @@ function boot(){
     open:openPanel,list:()=>A.map(x=>({id:x.id,name:x.n[0],done:!!ST.u[x.id]})),state:ST,
     grant(id){const x=A.find(y=>y.id===id);if(!x||ST.u[id])return false;const lv0=level(count());ST.u[id]=now();save();announce([x],lv0);refreshMenu();sweep();return true;},
     reset(){ST.u={};ST.c={};ST.seenAt=0;ST.init=1;Object.keys(C).forEach(k=>delete C[k]);save();refreshMenu();if(!panel.hidden)renderPanel();},
-    chat:petChat,confetti,sparks
+    chat:petChat,fire:()=>petFire(true),confetti,sparks
   };
 }
 const run=()=>{try{boot();}catch(e){try{console.warn("Kixki 2:",e);}catch(_){}}};
