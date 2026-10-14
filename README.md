@@ -10,3 +10,10 @@ Probar en local: `python3 -m http.server` y abrir http://localhost:8000
 **Novedades:** añade `"added":"2026-10-13"` a una app para que salga como «Nueva» 12 días.
 **Vista:** la pestaña «Modo PC / Modo móvil» (abajo a la derecha) cambia el diseño; sirve para jugar con la oveja desde el móvil.
 **Idioma:** menú Kixki → Idioma (español / English).
+
+## Kixki, la oveja guía
+
+- `kixki.js` + `kixki.css` (parte 1): Kixki pasea por la barra de búsqueda y las carpetas, habla y reacciona.
+- `kixki2.js` + `kixki2.css` (parte 2): **logros** (menú Kixki / Más → «Logros»), y en PC Kixki baja a charlar con la ovejita que camina abajo.
+- `app.js` avisa a Kixki con los eventos `kixki-ready` y `kixki-game` (start · retry · score · record · over).
+- Los logros se guardan en `localStorage` (`kixki-a`). En la consola: `KXQ.list()`, `KXQ.grant("id")`, `KXQ.reset()`.

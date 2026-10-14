@@ -398,7 +398,7 @@ clock();setInterval(clock,20000);
 /* La oveja pasea de día y duerme de noche */
 const pet=document.getElementById("pet"),pi=pet.firstElementChild;let px=260,dir=1;
 setInterval(()=>{
-  if(document.hidden||!DSK())return;
+  if(document.hidden||!DSK()||(window.KXPET&&KXPET.hold))return;/* KXPET.hold: Kixki está charlando con ella (kixki2.js) */
   if(root.getAttribute("data-theme")==="dark"){pi.style.transform="";return;}
   px+=dir*3;const mx=innerWidth-130;
   if(px>mx){px=mx;dir=-1;}if(px<120){px=120;dir=1;}
@@ -599,14 +599,21 @@ let gAF=0;
 function game(){const g=$("#game");g.hidden=false;const c=g.querySelector("canvas"),x=c.getContext("2d"),cs=getComputedStyle(root);
   const col={w:"#fff7e6",f:"#f2a574",e:"#2b1a5e",p:"#ff8fc7",g:"#cdbdf2"};
   let rec=LS.g("kixki-rec",0),y=0,v=0,o=[{x:340,w:10,h:16}],sc=0,sp=3,dead=false;
-  g._j=()=>{if(dead){y=0;v=0;o=[{x:340,w:10,h:16}];sc=0;sp=3;dead=false;}else if(y===0)v=9;};
+  /* Avisos para Kixki (kixki.js / kixki2.js): start · retry · score · record · over */
+  const ev=(t,d)=>dispatchEvent(new CustomEvent("kixki-game",{detail:Object.assign({t},d)}));
+  let gp=LS.g("kixki-gp",0),first=gp===0,best0=rec,hit=false;
+  const newRun=()=>{gp++;LS.s("kixki-gp",gp);first=gp===1;best0=rec;hit=false;};
+  newRun();ev("start",{rec});
+  g._j=()=>{if(dead){y=0;v=0;o=[{x:340,w:10,h:16}];sc=0;sp=3;dead=false;newRun();ev("retry",{rec});}else if(y===0)v=9;};
   cancelAnimationFrame(gAF);
   let lt=0;(function L(t){if(g.hidden)return;const dt=Math.min(2,lt&&t?(t-lt)/16.67:1);lt=t||0;
     x.fillStyle=cs.getPropertyValue("--surface2");x.fillRect(0,0,320,120);x.fillStyle=cs.getPropertyValue("--line");x.fillRect(0,100,320,20);
     if(!dead){v-=.6*dt;y=Math.max(0,y+v*dt);if(y===0&&v<0)v=0;o.forEach(k=>k.x-=sp*dt);
-      if(o[0]&&o[0].x<-20){o.shift();sc++;sp=Math.min(7,3+sc/6);}
+      if(o[0]&&o[0].x<-20){o.shift();sc++;sp=Math.min(7,3+sc/6);ev("score",{sc,rec});
+        if(!hit&&best0>0&&sc>best0){hit=true;LS.s("kixki-rec",sc);ev("record",{sc});}}
       const l=o[o.length-1];if(!l||(l.x<220&&Math.random()<.025*dt))o.push({x:330,w:8+Math.random()*8|0,h:12+Math.random()*10|0});
-      if(o.some(k=>k.x<66&&k.x+k.w>34&&y<k.h-2)){dead=true;LS.s("kixki-rec",rec);}}
+      if(o.some(k=>k.x<66&&k.x+k.w>34&&y<k.h-2)){dead=true;rec=Math.max(rec,sc);LS.s("kixki-rec",rec);
+        ev("over",{sc,rec,nr:sc>best0&&sc>0,first});}}
     x.fillStyle=cs.getPropertyValue("--ink");o.forEach(k=>x.fillRect(k.x,100-k.h,k.w,k.h));
     SHEEP.forEach((r,j)=>[...r].forEach((ch,i)=>{if(col[ch]){x.fillStyle=col[ch];x.fillRect(30+i*2,100-22-y+j*2,2,2);}}));
     x.fillStyle=cs.getPropertyValue("--ink");x.font="16px monospace";if(sc>rec)rec=sc;x.fillText("🐑 "+sc+" · récord "+rec,150,20);
@@ -694,4 +701,6 @@ function ghShow(r,d){const old=(Date.now()-Date.parse(d.p))/864e5>365,w=old||d.a
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 try{if(DSK()&&!matchMedia("(prefers-reduced-motion:reduce)").matches&&!sessionStorage.getItem("kixki-boot")){sessionStorage.setItem("kixki-boot","1");ov("boot");}}catch(e){}
 })();
+/* Todo listo: Kixki (kixki.js) y sus logros (kixki2.js) arrancan con este aviso */
+window.KXR=1;dispatchEvent(new Event("kixki-ready"));
 })();
