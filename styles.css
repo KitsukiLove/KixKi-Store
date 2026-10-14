@@ -398,7 +398,25 @@ html.pz *,html.pz *::before,html.pz *::after{animation-play-state:paused!importa
 .vh span::before{content:"⚠ "}
 
 /* Botón flotante de vista: solo en modo PC (en móvil está en el menú «Más») */
-:root:not(.dsk) .vwt{display:none}
-.dsk .vwt{right:10px;bottom:60px}
+.vwt{display:none}/* el cambio de vista está en el menú Kixki (PC) y «Más» (móvil) */
 .vh{touch-action:none;cursor:grab}.vh .vx{cursor:pointer}
 .vp.drg{opacity:.95}.vp.drg .vh{cursor:grabbing}
+
+/* Botón discreto de fondo (esquina inferior derecha de la escena) */
+.tg.bgb{top:auto;left:auto;bottom:14px;right:14px;width:32px;height:32px;opacity:.6;color:var(--ink);transition:opacity .15s}
+.tg.bgb:hover,.tg.bgb:focus-visible{opacity:1}
+/* Buscador en PC: se levanta y la lupa se mueve al pasar el cursor (no afecta a pantallas táctiles) */
+@media (hover:hover) and (pointer:fine){
+  .search input{transition:transform .12s steps(3),filter .12s}
+  .search:hover input:not(:focus){transform:translateY(-2px);filter:brightness(1.05)}
+  .search:hover .spr{animation:lupa .5s steps(2) infinite}
+  @keyframes lupa{50%{transform:translateY(-50%) rotate(-14deg)}}
+  /* Etiquetas: barra fina visible y arrastre con el ratón */
+  .chips{scrollbar-width:thin;scrollbar-color:var(--line) transparent;cursor:grab;user-select:none}
+  .chips::-webkit-scrollbar{display:block;height:6px}.chips::-webkit-scrollbar-thumb{background:var(--line)}
+  .chips.drag{cursor:grabbing}
+}
+/* Contador de toques de la oveja */
+#pet .oc{position:absolute;left:50%;top:-30px;transform:translateX(-50%);padding:1px 8px;font:600 13px "Pixelify Sans",monospace;white-space:nowrap;background:var(--surface);color:var(--ink);border:2px solid var(--line);box-shadow:2px 2px 0 var(--sh);pointer-events:none}
+#pet .oc.pop{animation:ocp .25s steps(3)}
+@keyframes ocp{50%{transform:translateX(-50%) scale(1.25)}}

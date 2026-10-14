@@ -450,21 +450,43 @@ const origs=()=>$$("#app .cat:not(#favs):not(#news):not(#packs) .app"),nm=a=>a.q
 const vib=(n=8)=>{try{navigator.vibrate&&navigator.vibrate(n);}catch(e){}};
 const ADDED={};D.categories.forEach(c=>c.apps.forEach(a=>{if(a.added)ADDED[a.name]=a.added;}));/* "added":"2026-10-12" en apps.json → muestra «Nueva» 12 días */
 let SND=LS.g("kixki-snd",false),PX=LS.g("kixki-px",false),AC;
-let lb=0;
-function beep(f=660,d=.07){if(!SND)return;const n=performance.now();if(n-lb<60)return;lb=n;
- try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
-  const PN=[0,2,4,7,9],m=Math.round(69+12*Math.log2(f/440)),r=((m%12)+12)%12,b=m-r;let i=0;
-  PN.forEach((p,j)=>{if(Math.abs(p-r)<Math.abs(PN[i]-r))i=j;});i=Math.max(0,Math.min(4,i+(Math.random()<.4?(Math.random()<.5?-1:1):0)));
-  const fr=440*Math.pow(2,(b+PN[i]-69)/12),t=AC.currentTime,len=Math.max(d,.1)+.12,o=AC.createOscillator(),h=AC.createOscillator(),g=AC.createGain(),hg=AC.createGain(),l=AC.createBiquadFilter();
-  o.type="sine";h.type="triangle";o.frequency.setValueAtTime(fr*.97,t);o.frequency.exponentialRampToValueAtTime(fr,t+.03);h.frequency.value=fr*2;hg.gain.value=.25;
-  l.type="lowpass";l.frequency.value=2200;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.07,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+len);
-  o.connect(g);h.connect(hg);hg.connect(g);g.connect(l);l.connect(AC.destination);o.start(t);h.start(t);o.stop(t+len+.02);h.stop(t+len+.02);}catch(e){}}
-function baa(){if(!SND)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended")AC.resume();
-  const t=AC.currentTime,o=AC.createOscillator(),v=AC.createOscillator(),vg=AC.createGain(),f=AC.createBiquadFilter(),g=AC.createGain(),b=360+Math.random()*80;
-  o.type="sawtooth";o.frequency.setValueAtTime(b*1.15,t);o.frequency.linearRampToValueAtTime(b*.85,t+.5);v.frequency.value=28;vg.gain.value=22;v.connect(vg);vg.connect(o.frequency);
-  f.type="bandpass";f.frequency.value=900;f.Q.value=2.2;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.09,t+.06);g.gain.exponentialRampToValueAtTime(.0001,t+.55);
-  o.connect(f);f.connect(g);g.connect(AC.destination);o.start(t);v.start(t);o.stop(t+.6);v.stop(t+.6);}catch(e){}}
-SPOST.push((s,t)=>beep(t==="min"?330:660));
+let lb=0,ln=-1,lbt=0,win=[],bq=[],FXO;
+/* Efectos: una sola cadena de audio compartida (volumen, filtro y compresor). Solo se crea tras un gesto del usuario,
+   se calla con la pestaña oculta y cambia de escala/timbre según el fondo y la hora (día/noche). */
+const FXP={"":{sc:[0,2,4,7,9],w:"sine"},valle:{sc:[0,2,4,7,9],w:"triangle"},primavera:{sc:[0,2,4,7,9],w:"triangle"},verano:{sc:[0,2,4,7,9],w:"triangle"},
+ otono:{sc:[0,3,5,7,10],w:"sine"},invierno:{sc:[0,2,4,7,9],w:"sine",bell:1},halloween:{sc:[0,3,5,6,7,10],w:"triangle",lo:1},navidad:{sc:[0,2,4,7,9],w:"sine",bell:1}};
+function fxCtx(){if(!SND||document.hidden)return null;
+  if(!AC){if(navigator.userActivation&&!navigator.userActivation.hasBeenActive)return null;
+    try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){return null;}
+    const g=AC.createGain(),l=AC.createBiquadFilter(),c=AC.createDynamicsCompressor();l.type="lowpass";g.connect(l);l.connect(c);c.connect(AC.destination);FXO={g,l};}
+  if(AC.state==="suspended")AC.resume();
+  const night=root.getAttribute("data-theme")==="dark";
+  FXO.g.gain.value=(night?.7:1)*(KXM.on?.55:1);FXO.l.frequency.value=night?1700:2600;return AC;}
+function beep(f=660,d=.07){
+  const n=performance.now();if(n-lb<90)return;
+  win=win.filter(x=>n-x<2500);if(win.length>=6)return;/* nunca más de 6 sonidos cada 2,5 s */
+  const a=fxCtx();if(!a)return;lb=n;win.push(n);
+  try{const P=FXP[root.getAttribute("data-bg")||""]||FXP[""],SC=P.sc,m=Math.round(69+12*Math.log2(f/440)),r=((m%12)+12)%12,b=m-r;let i=0;
+    SC.forEach((p,j)=>{if(Math.abs(p-r)<Math.abs(SC[i]-r))i=j;});
+    let mi=b+SC[i];if(mi===ln&&n-lbt<400){i=Math.max(0,Math.min(SC.length-1,i+(i?-1:1)));mi=b+SC[i];}ln=mi;lbt=n;/* no repite la misma nota seguida */
+    const fr=440*Math.pow(2,((P.lo?mi-12:mi)-69)/12),t=a.currentTime,len=Math.max(d,.1)+.1,o=a.createOscillator(),h=a.createOscillator(),g=a.createGain(),hg=a.createGain();
+    o.type=P.w;h.type=P.bell?"sine":"triangle";o.frequency.setValueAtTime(fr*.985,t);o.frequency.exponentialRampToValueAtTime(fr,t+.025);
+    h.frequency.value=fr*(P.bell?2.76:2);hg.gain.value=P.bell?.14:.22;
+    g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.075,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+len);
+    o.connect(g);h.connect(hg);hg.connect(g);g.connect(FXO.g);o.start(t);h.start(t);o.stop(t+len+.02);h.stop(t+len+.02);}catch(e){}}
+function baa(){
+  const n=performance.now();bq=bq.filter(x=>n-x<4000);
+  if(bq.length&&n-bq[bq.length-1]<450)return;/* tocar muy rápido no apila balidos */
+  if(bq.length>=4&&Math.random()<.6){bq.push(n);return;}
+  const a=fxCtx();if(!a)return;bq.push(n);
+  try{const night=root.getAttribute("data-theme")==="dark",hw=root.getAttribute("data-bg")==="halloween",t=a.currentTime,
+    o=a.createOscillator(),v=a.createOscillator(),vg=a.createGain(),f=a.createBiquadFilter(),f2=a.createBiquadFilter(),g=a.createGain(),
+    b=(360+Math.random()*80)*(night?.88:1)*(hw?.82:1);
+    o.type="sawtooth";o.frequency.setValueAtTime(b*1.15,t);o.frequency.linearRampToValueAtTime(b*.85,t+.5);v.frequency.value=28;vg.gain.value=22;v.connect(vg);vg.connect(o.frequency);
+    f.type="bandpass";f.frequency.value=900;f.Q.value=2.2;f2.type="bandpass";f2.frequency.value=1700;f2.Q.value=3;
+    g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.085,t+.06);g.gain.exponentialRampToValueAtTime(.0001,t+.55);
+    o.connect(f);o.connect(f2);f.connect(g);f2.connect(g);g.connect(FXO.g);o.start(t);v.start(t);o.stop(t+.6);v.stop(t+.6);}catch(e){}}
+SPOST.push((s,t)=>{if(s.dataset.ls===t)return;s.dataset.ls=t;beep(t==="min"?330:660);});/* solo suena si la ventana cambió de estado de verdad */
 function copyTxt(t,msg){const bad=()=>toast("No se pudo copiar. Cópialo a mano.");try{navigator.clipboard.writeText(t).then(()=>toast(msg),bad);}catch(e){bad();}}
 
 /* --- mejoras por app --- */
@@ -609,19 +631,21 @@ addEventListener("keydown",e=>{
   const g=$("#game");if(!g.hidden&&(e.key===" "||e.key==="ArrowUp")){e.preventDefault();g._j&&g._j();}});
 
 /* --- temporadas --- */
-const HATS={halloween:[["...m..","..mm..",".hhhhh","hhhhhh",".hhhhs"],"#ff8a1e"],navidad:[["...ww","..hhw",".hhhh","hhhhh","wwwww"],"#e8394d"],amor:[["p.p.p",".ppp.","..p.."],"#ff8fc7"],valle:[["p.w.p.","mmmmmm"],"#8bdc72"]};
+const HATS={halloween:[["...m..","..mm..",".hhhhh","hhhhhh",".hhhhs"],"#ff8a1e"],navidad:[["...ww","..hhw",".hhhh","hhhhh","wwwww"],"#e8394d"],amor:[["p.p.p",".ppp.","..p.."],"#ff8fc7"],valle:[["p.w.p.","mmmmmm"],"#8bdc72"],primavera:[["p.y.p.","mmmmmm"],"#ff8fc7"],verano:[["..hh..",".hhhh.","yyyyyy"],"#e8b84a"],otono:[["...m..",".hhhh.","hhhhhh"],"#c4560f"],invierno:[["..ww..",".hhhh.","hhhhhh","wwwwww"],"#4a7fd8"]};
 const dt=new Date(),mo=dt.getMonth()+1,dy=dt.getDate();
 const se=new URLSearchParams(location.search).get("temp")||((mo===10&&dy>=10)||(mo===11&&dy<=2)?"halloween":mo===12||(mo===1&&dy<=6)?"navidad":mo===2&&dy>=7&&dy<=14?"amor":"");
 function dress(){document.querySelectorAll("#pet .hat,#scene-art .hatg").forEach(e=>e.remove());
   const k=document.documentElement.getAttribute("data-bg")||se,T=Object.prototype.hasOwnProperty.call(HATS,k)?HATS[k]:null;
-  if(T){$("#pet .pa").insertAdjacentHTML("beforeend",`<span class="hat" style="--h:${T[1]}">${spr(T[0],3)}</span>`);
-    $("#scene-art").insertAdjacentHTML("beforeend",`<g class="hatg" style="--h:${T[1]}">${rects(T[0],49,12)}</g>`);}}
+  if(T){const dh=5-T[0].length;$("#pet .pa").insertAdjacentHTML("beforeend",`<span class="hat" style="--h:${T[1]};top:${-13+dh*3}px">${spr(T[0],3)}</span>`);
+    $("#scene-art").insertAdjacentHTML("beforeend",`<g class="hatg" style="--h:${T[1]}">${rects(T[0],49,12+dh)}</g>`);}}
 dress();addEventListener("kixki-bg",dress);
 let pc=0;
 function rain(){toast("¡Lluvia de ovejas! 🐑");for(let i=0;i<28;i++){const e=document.createElement("i");e.className="rain";e.textContent="🐑";e.style.cssText=`left:${Math.random()*100}%;animation-delay:${Math.random()*1.5}s;font-size:${18+Math.random()*22}px`;document.body.append(e);setTimeout(()=>e.remove(),4200);}}
 let OV=LS.g("kixki-ov",0),OVS=LS.g("kixki-ovs",[]);
 window.KXS={beep,baa};
-$("#pet").addEventListener("click",()=>{baa();OV++;LS.s("kixki-ov",OV);
+$("#pet").insertAdjacentHTML("beforeend",`<b class="oc" aria-hidden="true"></b>`);
+const oc=$("#pet .oc"),ocs=()=>{oc.textContent="🐑 "+OV;oc.classList.remove("pop");void oc.offsetWidth;oc.classList.add("pop");};ocs();
+$("#pet").addEventListener("click",()=>{baa();OV++;LS.s("kixki-ov",OV);ocs();
   if(++pc>=10){pc=0;if(!document.querySelector(".rain"))rain();}
   [100,500,1000].forEach(m=>{if(OV>=m&&!OVS.includes(m)){OVS.push(m);LS.s("kixki-ovs",OVS);KXE.fire(m);}});});
 /* Botón de sonido de la escena: activa o desactiva música y efectos a la vez */
@@ -629,11 +653,24 @@ const ICN=[["...h......","..hh..h...","hhhh...h..","hhhh.h.h..","hhhh.h.h..","hh
 function rdIc(){const on=SND||KXM.on,b=$("#rd");b.innerHTML=ICN[on?0:1];b.setAttribute("aria-pressed",on);}
 $("#rd").addEventListener("click",()=>{const v=!(SND||KXM.on);SND=v;LS.s("kixki-snd",v);if(KXM.on!==v)KXM.toggle();rdIc();lab();if(v)beep(660,.1);});
 rdIc();
+/* Botón discreto para cambiar de fondo */
+const BGI=["hhhhhhhhhh","h.....hh.h","h........h","h...h....h","h..hhh.h.h","h.hhhhhhhh","hhhhhhhhhh"];
+$("#bgb").innerHTML=`<svg viewBox="0 0 10 7" width="20" height="14" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">${BGI.map((l,y)=>[...l].map((c,x)=>c==="h"?`<rect x="${x}" y="${y}" width="1" height="1"/>`:"").join("")).join("")}</svg>`;
+const bgt=()=>{$("#bgb").title="Fondo: "+KXB.label();};bgt();
+$("#bgb").addEventListener("click",()=>{KXB.next();lab();bgt();toast("Fondo: "+KXB.label());});
 /* Filtros por etiqueta (salen de las etiquetas de cada app) */
 const bc={};$$(".bdg span").forEach(x=>{const t=x.textContent;bc[t]=(bc[t]||0)+1;});
 const chips=document.createElement("div");chips.className="chips";chips.setAttribute("role","group");chips.setAttribute("aria-label","Filtros");
 chips.innerHTML=Object.keys(bc).sort((x,y)=>bc[y]-bc[x]).map(t=>`<button type="button" class="chip fl" data-f="${t}" aria-pressed="false"><span>${t}</span><b>${bc[t]}</b></button>`).join("");
 $("#searchbox").insertAdjacentElement("afterend",chips);
+/* Con ratón: rueda y arrastre desplazan las etiquetas (en táctil ya se desliza con el dedo) */
+function hscroll(el){let d=null,mv=0;
+  el.addEventListener("wheel",e=>{if(el.scrollWidth<=el.clientWidth||Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;el.scrollLeft+=e.deltaY;e.preventDefault();},{passive:false});
+  el.addEventListener("pointerdown",e=>{if(e.pointerType!=="mouse"||e.button)return;d={x:e.clientX,l:el.scrollLeft};mv=0;});
+  addEventListener("pointermove",e=>{if(!d)return;const dx=e.clientX-d.x;if(Math.abs(dx)>5){mv=1;el.classList.add("drag");}if(mv)el.scrollLeft=d.l-dx;});
+  addEventListener("pointerup",()=>{d=null;el.classList.remove("drag");});
+  el.addEventListener("click",e=>{if(mv){e.stopPropagation();e.preventDefault();mv=0;}},true);}
+hscroll(chips);const pl=document.getElementById("nav");if(pl)hscroll(pl);
 document.addEventListener("click",e=>{const x=e.target.closest(".bdg span,.chips .fl");if(!x)return;e.stopImmediatePropagation();
   const f=x.dataset.f||KXI.orig(x);q.value=nrm(q.value.trim())===nrm(f)?"":f;q.dispatchEvent(new Event("input",{bubbles:true}));},true);
 q.addEventListener("input",()=>$$(".chip.fl").forEach(c=>c.setAttribute("aria-pressed",nrm(q.value.trim())===nrm(c.dataset.f))));
