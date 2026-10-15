@@ -13,6 +13,8 @@ const META={
   tiendas:["Tiendas","#8b6cf0"],
   importante:["Importante","#f5a524"],
   utilidad:["Utilidad","#3aa6e8"],
+  privacidad:["Privacidad","#2fb8c4"],
+  emulacion:["Emulación","#e5584f"],
   decoracion:["Decoración","#f06aa8"],
   musica:["Música","#36c08e"],
   teclados:["Teclados","#7c8cf5"]
@@ -58,6 +60,32 @@ const ICO={
   utilidad:[
     "............",".hhhhhhhhhh.",".hlhhhhhhhs.",".hlhhhhhwhs.",".hhwhhhwhhs.",".hhhwhwhhhs.",
     ".hhhhwhhhhs.","..hhhhhhhs..","...hhhhhs...","....hhhs....",".....hs.....","............"],
+  privacidad:[
+    "...hhhhhh...",
+    "..hh....hh..",
+    "..h......h..",
+    "..h......h..",
+    ".hhhhhhhhhh.",
+    ".hllhhhhhhs.",
+    ".hlhhhwhhhs.",
+    ".hhhhwwhhhs.",
+    ".hhhhhwhhhs.",
+    ".hhhhhhhhhs.",
+    ".ssssssssss.",
+    "............"],
+  emulacion:[
+    "............",
+    "............",
+    ".hhhhhhhhhs.",
+    "hhhhhhhhhhhs",
+    "hhhwhhhhyhhs",
+    "hhwwwhhhhhhs",
+    "hhhwhhhyhyhs",
+    "hhhhhhhhyhhs",
+    "hhhhhhhhhhhs",
+    "hhhh....hhhs",
+    ".hhs....shh.",
+    "............"],
   decoracion:[
     "............","...hhhhhhh..","..hhhhhhhhhh",".hhyyhhhmmhh",".hhyyhhhmmhh",".hhhhhhhhhhh",
     ".hhhhhwwwhh.",".hhhhhwws...","..hhhhhs....","...hhsss....","............","............"],
@@ -417,7 +445,7 @@ document.querySelectorAll(".app").forEach(a=>{
   if(/sin anuncios/i.test(t))b.push("Sin anuncios");
   if(/de pago/i.test(t))b.push("De pago");
   if(m)b.push("Android "+m[1]+"+");
-  if(/Shizuku/.test(t)&&a.querySelector("h3").textContent!=="Shizuku")b.push("Compatible con Shizuku");
+  if(/Shizuku/.test(t)&&!/^Shizuku/.test(a.querySelector("h3").textContent))b.push("Compatible con Shizuku");
   if(b.length)a.querySelector(".line").insertAdjacentHTML("afterend",`<div class="bdg">${b.map(x=>`<span>${x}</span>`).join("")}</div>`);
 });
 /* App sugerida del día */

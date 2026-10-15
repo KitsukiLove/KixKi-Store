@@ -70,6 +70,35 @@
        "https://github-store.org/app?repo=jksalcedo/librefind"
       ]
      ]
+    },
+    {
+     "name": "ShizuCoreFetch",
+     "tag": "Tienda con Shizuku",
+     "desc": "Tienda de apps que usa Shizuku para instalar, desinstalar y actualizar apps a nivel de sistema, sin root. Explora un repositorio curado con capturas, descripciones e historial de versiones, y trae cartera de APK local, avisos de actualización y 9 idiomas. Los desarrolladores pueden listar sus apps con un archivo shizu_store.json. Código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/elhizazi1/ShizuCoreFetch"
+      ]
+     ],
+     "tip": "Necesita Shizuku instalado y en marcha.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "IzzyOnDroid",
+     "tag": "Cliente de repositorio",
+     "desc": "Cliente no oficial del repositorio de apps libres IzzyOnDroid: interfaz Material con tu color de acento, temas claro y oscuro, categorías, instalador de APK integrado y avisos de actualización. Código abierto (GPL-3.0). Android 7+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/es/packages/in.sunilpaulmathew.izzyondroid/"
+      ]
+     ],
+     "logo": [
+      "https://github.com/sunilpaulmathew.png?size=160"
+     ],
+     "tip": "Ten cuidado: revisa las apps antes de instalarlas.",
+     "added": "2026-10-15"
     }
    ]
   },
@@ -94,6 +123,19 @@
       ]
      ],
      "tip": "Ojo: su desarrollador avisó que pausó el mantenimiento por ahora."
+    },
+    {
+     "name": "ShizukuPlus",
+     "tag": "Shizuku mejorado",
+     "desc": "Versión mejorada del fork de Shizuku, con otro paquete para convivir con el original. Une los modos root, ADB y Dhizuku (Device Owner) y añade registro de actividad, gestión masiva de permisos, un «Service Doctor» para fallos de arranque y arreglos para Android 16/17 y OneUI 8+. Código abierto (Apache-2.0). Android 7+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/thejaustin/ShizukuPlus"
+      ]
+     ],
+     "tip": "Las apps que buscan el Shizuku original pueden necesitar su modo de compatibilidad.",
+     "added": "2026-10-15"
     }
    ]
   },
@@ -126,17 +168,6 @@
      ]
     },
     {
-     "name": "FireWall Blocks",
-     "tag": "Cortafuegos",
-     "desc": "Te deja quitar el acceso a Wi-Fi o a datos móviles app por app, para cortar conexiones que no necesitas.",
-     "links": [
-      [
-       "Abrir",
-       "https://github-store.org/app?repo=shynoiddev/FireWall-Blocks"
-      ]
-     ]
-    },
-    {
      "name": "No More Background",
      "tag": "Segundo plano",
      "desc": "Muestra todas tus apps en una sola pantalla y eliges cuáles pueden correr en segundo plano, para cuidar batería y datos. Funciona con ADB, Shizuku o root; lo configuras una vez y listo, sin «optimizar» cada día.",
@@ -149,6 +180,204 @@
      "tip": "Algunas apps pueden seguir en segundo plano aunque las apagues."
     },
     {
+     "name": "Termux",
+     "tag": "Terminal Linux",
+     "desc": "Terminal para Android con un entorno Linux: instalas paquetes con apt (Python, git, SSH, compiladores…) y trabajas desde la línea de comandos sin root. Código abierto (GPL-3.0). Android 7+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/com.termux"
+      ]
+     ],
+     "logo": [
+      "https://github.com/termux.png?size=160"
+     ],
+     "tip": "Instálalo desde F-Droid y no mezcles fuentes: sus complementos exigen la misma firma. Pide muchos permisos delicados.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "SwitchAI",
+     "tag": "Asistentes de IA",
+     "desc": "Elige y cambia entre más de 40 asistentes de IA (ChatGPT, Claude, Gemini, DeepSeek…) desde el gesto de asistente del sistema. Puedes escoger uno cada vez o fijar uno por defecto, con soporte de voz, widget y ajuste rápido. Código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/WSTxda/SwitchAI"
+      ]
+     ],
+     "tip": "Solo lanza las apps de IA que ya tengas instaladas.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "DeJPEG",
+     "tag": "Mejora de fotos",
+     "desc": "Quita artefactos de compresión, ruido y fondos de tus fotos sin conexión, con modelos ONNX que descargas una vez (FBCNN, SCUNet, RMBG). Trae comparador antes/después y temas OLED, claro, oscuro y dinámico. Código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "Descarga",
+       "https://apt.izzysoft.de/fdroid/index/apk/com.je.dejpeg"
+      ]
+     ],
+     "logo": [
+      "https://github.com/jeeneo.png?size=160"
+     ],
+     "tip": "Solo funciona en arm64.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "TagSpaces",
+     "tag": "Organizador de archivos",
+     "desc": "Organiza, etiqueta y explora tus archivos, fotos y documentos sin nube ni cuentas. Guarda las etiquetas en el nombre del archivo o en archivos auxiliares, busca con tolerancia a errores y trae visores de imágenes, PDF, Markdown, audio y video, además de notas y listas de tareas. Código abierto (AGPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://apt.izzysoft.de/fdroid/index/apk/org.tagspaces.mobileapp"
+      ]
+     ],
+     "logo": [
+      "https://github.com/tagspaces.png?size=160"
+     ],
+     "tip": "Pide acceso a todo el almacenamiento, porque funciona como gestor de archivos.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "My Brain",
+     "tag": "Segundo cerebro",
+     "desc": "App de productividad con tareas (prioridad, subtareas, recordatorios), notas en Markdown, diario con estado de ánimo, marcadores, calendario con widget y un chat de IA que puede usar tus notas y tareas. Es local, no recopila datos y es de código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/com.mhss.app.mybrain"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "LibreFit",
+     "tag": "Entrenamientos",
+     "desc": "Registro de entrenamientos con ejercicios, series, repeticiones y duración, gráficas de progreso, planes personalizables y más de 800 ejercicios con instrucciones e imágenes, filtrables por equipo, músculo o dificultad. Funciona sin internet y guarda tus datos en el móvil. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/LibreFitOrg/LibreFit"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Euria",
+     "tag": "IA suiza",
+     "desc": "Asistente de IA de Infomaniak (Suiza): escribe, traduce, corrige, resume, transcribe audio, extrae texto de imágenes y busca en la web. Organiza los chats por proyecto, los sincroniza y tiene un modo efímero que no deja rastro. La app es de código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/com.infomaniak.euria"
+      ]
+     ],
+     "logo": [
+      "https://github.com/Infomaniak.png?size=160"
+     ],
+     "tip": "Necesita internet y una cuenta (kSuite). Su servicio no es libre y envía informes de fallos anónimos.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "EnforceDoze",
+     "tag": "Ahorro de batería",
+     "desc": "Fuerza el modo Doze en cuanto se apaga la pantalla (o tras un retraso) para ahorrar batería, desactiva los sensores de movimiento y te deja gestionar la lista blanca de Doze. Es un fork de ForceDoze, que ya no se mantiene. Funciona sin root y gana opciones con root. Código abierto (GPL-3.0). Android 6+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/Akylas/EnforceDoze"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "BatStats",
+     "tag": "Estadísticas de batería",
+     "desc": "Monitor de batería con estadísticas avanzadas, como el consumo por app en mAh. Para verlo todo necesitas Shizuku, root o conceder cuatro permisos por ADB. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=mlm-games/BatStats"
+      ]
+     ],
+     "tip": "Algunos datos detallados no están disponibles en todos los móviles.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Obsidian",
+     "tag": "Notas en Markdown",
+     "desc": "Editor de notas en Markdown que guarda todo como archivos en tu móvil y enlaza tus ideas entre sí. Tiene complementos y temas de la comunidad, y una sincronización opcional que se paga aparte. La app es gratis, pero de código cerrado.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=obsidianmd/obsidian-releases"
+      ]
+     ],
+     "logo": [
+      "https://github.com/obsidianmd.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Image Toolbox",
+     "tag": "Editor de imágenes",
+     "desc": "Editor de imágenes muy completo: más de 500 filtros, conversión entre formatos (JPEG, PNG, WEBP, AVIF, HEIC, JXL…), recorte, dibujo, quitar fondo, marcas de agua, collages, edición de EXIF, OCR en más de 120 idiomas, herramientas de PDF y de IA para escalar y quitar ruido. Gratis y de código abierto (Apache-2.0).",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/T8RIN/ImageToolbox"
+      ]
+     ],
+     "tip": "La versión FOSS no lleva analíticas; la de Play sí.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Gander",
+     "tag": "Visor de archivos",
+     "desc": "Abre PDF, Word, Excel, PowerPoint, fotos, video, audio, Markdown, texto y código en una sola app, con búsqueda dentro de los documentos. No pide permisos ni internet, sin anuncios ni cuentas. Código abierto (MIT). Pesa unos 15 MB. Android 8+.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=mokshablr/gander"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "CatSmoker",
+     "tag": "Optimizador de juegos",
+     "desc": "Optimiza juegos compatibles: simula otros modelos de móvil para desbloquear más gráficos y FPS, cambia resolución y DPI, edita archivos de configuración del juego, muestra FPS, CPU, RAM y temperatura, y trae mira en pantalla, optimizador de DNS y biblioteca de juegos. Funciona con root (Magisk, ZygiskNext y LSPosed) o con Shizuku. Android 8+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/catsmoker/com.catsmoker.app"
+      ]
+     ],
+     "tip": "Modificar archivos o falsear el dispositivo puede romper las reglas de algunos juegos y causar baneos. El riesgo es tuyo.",
+     "added": "2026-10-15"
+    }
+   ]
+  },
+  {
+   "id": "privacidad",
+   "e": "🔒",
+   "t": "Privacidad",
+   "s": "Protege tus datos, llamadas y contraseñas",
+   "apps": [
+    {
+     "name": "FireWall Blocks",
+     "tag": "Cortafuegos",
+     "desc": "Te deja quitar el acceso a Wi-Fi o a datos móviles app por app, para cortar conexiones que no necesitas.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=shynoiddev/FireWall-Blocks"
+      ]
+     ]
+    },
+    {
      "name": "PrivacyFlip",
      "tag": "Privacidad",
      "desc": "Al bloquear el móvil apaga Wi-Fi, Bluetooth, datos, ubicación, NFC y hasta cámara y micrófono (Android 12+); al desbloquear reactiva solo lo que elijas. Tiene modos «solo si no se usa», funciona con Shizuku o root y no envía telemetría.",
@@ -158,6 +387,144 @@
        "https://github-store.org/app?repo=dorumrr/privacyFlip"
       ]
      ]
+    },
+    {
+     "name": "Alternate",
+     "tag": "Identificador de llamadas",
+     "desc": "Identifica quién te llama con una base de datos local, sin pasar esos números a tus contactos ni a tus apps de mensajes. Guarda números de forma temporal, valida teléfonos por país, tiene bloqueo biométrico e importa o exporta contactos VCF. Código abierto (MIT), sin anuncios ni rastreadores. Android 7+.",
+     "links": [
+      [
+       "Descarga",
+       "https://apt.izzysoft.de/fdroid/index/apk/com.lulu786.Alternate"
+      ]
+     ],
+     "tip": "Pide acceso al registro de llamadas y a mostrarse sobre otras apps. Solo arm64.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Exodus",
+     "tag": "Detector de rastreadores",
+     "desc": "Muestra qué rastreadores y permisos lleva cada app instalada en tu móvil, usando los informes de la plataforma εxodus, de la ONG francesa Exodus Privacy. Muy útil para revisar apps antes de confiar en ellas. Código abierto (GPL-3.0). Android 6+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/org.eu.exodus_privacy.exodusprivacy"
+      ]
+     ],
+     "logo": [
+      "https://github.com/Exodus-Privacy.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Inure",
+     "tag": "Gestor de apps",
+     "desc": "Administrador de apps muy completo: lista apps instaladas o no, deja ver y tocar sus componentes internos y trae terminal, estadísticas de uso, instalador de APK divididos, VirusTotal y herramientas para quitar bloatware. Funciona con root o Shizuku. Código abierto (GPL-3.0) y con temas Material You.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/Hamza417/Inure"
+      ]
+     ],
+     "tip": "Tiene una prueba de 15 días; después se desbloquea con su versión completa.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Iceraven",
+     "tag": "Navegador",
+     "desc": "Navegador no oficial basado en Firefox (Fenix) con GeckoView. Añade about:config, suspender pestañas para ahorrar memoria, ocultar sitios recientes y menos telemetría. Intenta instalar muchas más extensiones que Firefox, aunque la mayoría no funcionan. Licencia MPL-2.0.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/fork-maintainers/iceraven-browser"
+      ]
+     ],
+     "tip": "Sin garantías de seguridad ni de actualizaciones: sus APK usan clave de depuración, trátalo como software alfa.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Bitwarden",
+     "tag": "Gestor de contraseñas",
+     "desc": "Guarda tus contraseñas y passkeys en una bóveda cifrada de extremo a extremo y las sincroniza entre tus dispositivos. Genera contraseñas seguras, autocompleta, admite verificación en dos pasos y tiene Bitwarden Send para compartir datos con seguridad. Es gratis y de código abierto, con un plan Premium opcional.",
+     "links": [
+      [
+       "Play",
+       "https://play.google.com/store/apps/details?id=com.x8bit.bitwarden"
+      ]
+     ],
+     "logo": [
+      "https://github.com/bitwarden.png?size=160"
+     ],
+     "added": "2026-10-15"
+    }
+   ]
+  },
+  {
+   "id": "emulacion",
+   "e": "🎮",
+   "t": "Emulación",
+   "s": "Juega tus clásicos y más en el móvil",
+   "apps": [
+    {
+     "name": "SeedlessDS",
+     "tag": "Nintendo DS",
+     "desc": "Emulador de Nintendo DS pensado para consolas portátiles y dispositivos de doble pantalla con botones físicos. Trae biblioteca con carátulas, estados guardados, trucos, ajustes por juego, diseños de controles y logros de RetroAchievements. Usa el núcleo propietario DraStic, así que aún no es totalmente libre.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/SapphireRhodonite/SeedlessDS"
+      ]
+     ],
+     "logo": [
+      "https://github.com/SapphireRhodonite.png?size=160"
+     ],
+     "tip": "Está en beta temprana y solo funciona en arm64. No incluye juegos ni BIOS: usa tus propias copias.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "DroidDeck",
+     "tag": "Steam en Android",
+     "desc": "Ejecuta Steam en modo Big Picture en Android y te deja jugar juegos de Windows con Proton ARM64. Añade una tienda de apps Linux (Flathub), integra GOG, Epic y Amazon Games y no necesita root. Es código abierto (GPL-3.0), una creación de la comunidad sin relación con Valve.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=Droid-Deck/DroidDeck"
+      ]
+     ],
+     "tip": "Pide una GPU Adreno 730 o superior (Mali, Xclipse y PowerVR no funcionan) y unos 3 GB libres.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Lemuroid",
+     "tag": "Retro todo en uno",
+     "desc": "Emulador libre basado en Libretro que cubre NES, SNES, Game Boy, Genesis, N64, PlayStation, PSP, Nintendo DS y muchos sistemas más. Es fácil de usar: escanea tus ROMs, guarda y retoma partidas solo, tiene controles táctiles personalizables, mandos, multijugador local, sincronización en la nube y soporte para Android TV. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=Swordfish90/Lemuroid"
+      ]
+     ],
+     "tip": "No incluye juegos: añade tus propias ROMs.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Kimu X64",
+     "tag": "Buscar juegos",
+     "desc": "Página para buscar juegos para tus emuladores, hecha por Kimu X64, creador de contenido en YouTube que también habla de privacidad, Linux en equipos viejos y modding de consolas. Toca «Créditos» para ir a su canal.",
+     "links": [
+      [
+       "Abrir",
+       "https://notkimu.github.io/kimu64/"
+      ],
+      [
+       "Créditos",
+       "https://youtube.com/@kimu_x64"
+      ]
+     ],
+     "logo": [
+      "https://github.com/notkimu.png?size=160"
+     ],
+     "added": "2026-10-15"
     }
    ]
   },
@@ -204,6 +571,34 @@
        "https://github-store.org/app?repo=fibelatti/photo-widget"
       ]
      ]
+    },
+    {
+     "name": "L.L.E",
+     "tag": "Efectos de bloqueo",
+     "desc": "Trae a móviles modernos los efectos clásicos de la pantalla de bloqueo (Legacy Lockscreen Effects): destello de lente, ondas de agua, acuarela, mosaicos, gotas de colores y burbujas brillantes. Es compatible con plegables, con pantalla exterior e interior por separado. Necesita el servicio de accesibilidad y ADB para instalarse.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/Brazzo978/L.L.E-Legacy-Lockscreen-Effects"
+      ]
+     ],
+     "tip": "Está en beta, puede fallar. Usa el APK de 32 bits si tu móvil lo soporta.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Chrono",
+     "tag": "Reloj y alarmas",
+     "desc": "Reloj moderno con alarmas muy configurables (días, fechas, rangos, melodía, vibración, posponer y retos como resolver cálculos o reescribir texto), relojes mundiales, temporizador con preajustes y cronómetro con vueltas. Tiene Material You, temas personalizables y copias de seguridad. Código abierto (GPL-3.0). Android 5+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/com.vicolo.chrono"
+      ]
+     ],
+     "logo": [
+      "https://github.com/vicolo-dev.png?size=160"
+     ],
+     "added": "2026-10-15"
     }
    ]
   },
@@ -242,6 +637,19 @@
       ]
      ],
      "tip": "Primero: en la pestaña Tienda pega el enlace de «Extensión» y luego instala las extensiones con un toque. Si una canción no se encuentra, activa más proveedores en Ajustes > Extensiones. Úsala solo con contenido que puedas descargar legalmente."
+    },
+    {
+     "name": "WEcho",
+     "tag": "Efectos de audio",
+     "desc": "Aplica efectos de audio a todo el sonido del sistema, no solo a un reproductor: ecualizador de 1 a 64 bandas, compresor, refuerzo de graves, reverb, limitador y simulación de otros audífonos con la base AutoEQ. Funciona sin root, y con Shizuku mejora la compatibilidad. Código abierto (GPL-3.0). Android 10+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/qumolangmo/wecho"
+      ]
+     ],
+     "tip": "Solo arm64. El agente de IA «Echo» necesita tu propia clave de un modelo de lenguaje.",
+     "added": "2026-10-15"
     }
    ]
   },

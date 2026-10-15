@@ -132,6 +132,8 @@ const FOLD={
  tiendas:["Tiendas: {n} apps para conseguir más apps. ¡Empieza por {a}!","Stores: {n} apps to get more apps. Start with {a}!"],
  importante:["Importante: lo que hace que otras apps funcionen mejor. Léelo con calma. 👀","Essential: the stuff that makes other apps work better. Read it calmly. 👀"],
  utilidad:["Utilidad: {n} herramientas de seguridad y control. {a} es buena para empezar.","Utilities: {n} tools for security and control. {a} is a good place to start."],
+ privacidad:["Privacidad: {n} apps para cuidar tus datos. {a} es buena para empezar. 🔒","Privacy: {n} apps to look after your data. {a} is a good place to start. 🔒"],
+ emulacion:["Emulación: juega tus clásicos en el móvil. Recuerda usar solo tus propios juegos. 🎮","Emulation: play your classics on your phone. Remember to use only your own games. 🎮"],
  decoracion:["Decoración: fondos y widgets para que tu pantalla luzca linda. 🎨","Decor: wallpapers and widgets to make your screen look cute. 🎨"],
  musica:["Música: para escuchar y descargar tus canciones. 🎵","Music: to play and download your songs. 🎵"],
  teclados:["Teclados: escribe con más estilo y más privacidad. ⌨️","Keyboards: type with more style and more privacy. ⌨️"],
@@ -417,7 +419,7 @@ function boot(){
   const dark=()=>root.getAttribute("data-theme")==="dark";
   function chatter(){
     const w=Math.random();nextChat=now()+rnd(26000,50000);
-    if(w<.2&&(isPC()||!K.game)&&Math.random()<.9){const ids=["tiendas","importante","utilidad","decoracion","musica","teclados","packs"].filter(i=>$(`#desk .di[data-id="${i}"]`));
+    if(w<.2&&(isPC()||!K.game)&&Math.random()<.9){const ids=["tiendas","importante","utilidad","privacidad","emulacion","decoracion","musica","teclados","packs"].filter(i=>$(`#desk .di[data-id="${i}"]`));
       visitFolder(ids[Math.floor(Math.random()*ids.length)],{p:1,key:"chat"});return;}
     const m=w<.55?pickTip():w<.85?pick(T.praise,"praise"):pickMisc();say(m,{p:1,key:"chat"});
   }
