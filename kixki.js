@@ -629,7 +629,9 @@ function boot(){
     tx,fmt,T,wait,visitFolder,usable,relocate,
     /* (parte 2) */
     K,alive,interrupt,brain,dark,rows:FR,el,
-    plat:(id,fn)=>{PLAT[id]=fn;}};
+    plat:(id,fn)=>{PLAT[id]=fn;},
+    /* (parte 3: travesuras y físicas, kixki3.js) */
+    ex:{place,land,setMode,frame,face,stopMove,R,topWin,say,layoutBubble}};
 }
 const run=()=>{try{boot();}catch(e){try{console.warn("Kixki:",e);const x=document.getElementById("kixki");if(x)x.remove();}catch(_){}}};
 window.KXR?run():addEventListener("kixki-ready",run,{once:true});
