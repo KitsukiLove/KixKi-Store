@@ -17,7 +17,12 @@ const META={
   emulacion:["Emulación","#e5584f"],
   decoracion:["Decoración","#f06aa8"],
   musica:["Música","#36c08e"],
-  teclados:["Teclados","#7c8cf5"]
+  teclados:["Teclados","#7c8cf5"],
+  control:["Control","#9bc53d"],
+  pantalla:["Pantalla","#e8883b"],
+  fotos:["Fotos","#b57cf0"],
+  internet:["Internet","#4f7df0"],
+  dia:["Día a día","#d6a84a"]
 };
 
 /* ========= LOGOS =========
@@ -94,7 +99,22 @@ const ICO={
     "..hhh...hhh.",".lhhhh.lhhhh",".hhhhh.hhhhh","..hhh...hhh.","............","............"],
   teclados:[
     "............","............","hhhhhhhhhhhh","hlhlhlhlhlhh","hhhhhhhhhhhh","hlhlhlhlhlhh",
-    "hhhhhhhhhhhh","hhlllllllhhh","ssssssssssss","............","............","............"]
+    "hhhhhhhhhhhh","hhlllllllhhh","ssssssssssss","............","............","............"],
+  control:[
+    "............",".hhhhhhhhhs.",".hhhwwhhhhs.",".hhhwwhhhhs.",".hhhhhhhhhs.","............",
+    ".hhhhhhhhhs.",".hhhhhhwwhs.",".hhhhhhwwhs.",".hhhhhhhhhs.","............","............"],
+  pantalla:[
+    "...hhhhhh...","..hlhhhhhs..","..hhwwwwhs..","..hhwwwwhs..","..hhwwwwhs..","..hhwwwwhs..",
+    "..hhwwwwhs..","..hhwwwwhs..","..hhhhhhhs..","..hhhyyhhs..","...ssssss...","............"],
+  fotos:[
+    "............",".hhhhhhhhhhs",".hwwwwwwwwhs",".hwwwwwyywhs",".hwwwwwyywhs",".hwwwmwwwwhs",
+    ".hwwmmmwmwhs",".hwmmmmmmmhs",".hmmmmmmmmhs",".hhhhhhhhhhs","..ssssssssss","............"],
+  internet:[
+    "...hhhhhh...","..hhhwwhhs..",".hhhhwwhhhhs",".hwwwwwwwwhs",".hhhhwwhhhhs",".hwwwwwwwwhs",
+    ".hhhhwwhhhhs",".hwwwwwwwwhs",".hhhhwwhhhhs","..hhhwwhhs..","...ssssss...","............"],
+  dia:[
+    "............","..h......h..",".hhhhhhhhhhs",".hhhhhhhhhhs",".hwwwwwwwwhs",".hwhwhwhwwhs",
+    ".hwwwwwwwwhs",".hwhwhyywwhs",".hwwwwwwwwhs",".hhhhhhhhhhs","..ssssssssss","............"]
 };
 const UI={
   ext:["...x...","....x..","xxxxxxx","....x..","...x..."],
@@ -385,7 +405,7 @@ document.body.insertAdjacentHTML("beforeend",
 `<nav id="desk" aria-label="Escritorio">${C.map(c=>`<button type="button" class="di" data-id="${c.id}" data-e="${c.e}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],5)}<span>${META[c.id][0]}</span><em>${c.a.length} ${c.a.length===1?"app":"apps"}</em></button>`).join("")}</nav>
 <div id="pet" aria-hidden="true"><div class="pi"><span class="pa">${spr(SHEEP,4)}</span><span class="ps">${spr(SLEEP,4)}</span>${[2,3,4].map((n,i)=>`<i class="zz" style="--zd:-${i*1.2}s">${spr(ZZ,n)}</i>`).join("")}</div></div>
 <div id="sm" hidden>${C.map(c=>`<button type="button" class="sm" data-id="${c.id}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],2)}${c.t}</button>`).join("")}<button type="button" class="sm" id="smt">Día / noche</button><button type="button" class="sm" id="sma">Cerrar todas</button></div>
-<div id="taskbar"><button type="button" class="start" id="st">${spr(SHEEP,2)}Kixki</button>${C.map(c=>`<button type="button" class="tk" data-id="${c.id}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],2)}<span>${META[c.id][0]}</span></button>`).join("")}<div class="tray"><span>Hecho con ♥ por KitsukiLove</span><b id="clk"></b></div></div>`);
+<div id="taskbar"><button type="button" class="start" id="st">${spr(SHEEP,2)}Kixki</button>${C.map(c=>`<button type="button" class="tk" data-id="${c.id}" title="${META[c.id][0]}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],2)}<span>${META[c.id][0]}</span></button>`).join("")}<div class="tray"><span>Hecho con ♥ por KitsukiLove</span><b id="clk"></b></div></div>`);
 const sm=document.getElementById("sm");
 function sync(){secs.forEach(s=>{const on=!s.classList.contains("min");
   document.querySelectorAll(`.tk[data-id="${s.id}"]`).forEach(b=>{b.classList.toggle("on",on);b.classList.toggle("top",on&&s===topS);});});}

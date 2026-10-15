@@ -7,6 +7,8 @@ las fuentes y el QR a la propia web, así los visitantes no contactan con tercer
 
 Probar en local: `python3 -m http.server` y abrir http://localhost:8000
 
+**Categorías:** cada categoría de `apps.json` (`id`, `e`, `t`, `s`) sale como ventana, carpeta del escritorio y botón de la barra. Para mover una app de carpeta, corta su entrada y pégala en `apps` de otra categoría. Para crear una categoría nueva, además de `apps.json` hay que añadir su `id` en `META` (nombre corto y color) e `ICO` (icono pixel) de `app.js`, y su traducción al inglés en `i18n.js`; opcional: una frase en `FOLD` de `kixki.js`.
+
 **Novedades:** añade `"added":"2026-10-13"` a una app para que salga como «Nueva» 12 días.
 **Vista:** la pestaña «Modo PC / Modo móvil» (abajo a la derecha) cambia el diseño; sirve para jugar con la oveja desde el móvil.
 **Idioma:** menú Kixki → Idioma (español / English).

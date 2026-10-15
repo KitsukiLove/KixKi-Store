@@ -46,6 +46,18 @@
      ]
     },
     {
+     "name": "Droid-ify",
+     "tag": "Cliente de F-Droid",
+     "desc": "Cliente moderno para F-Droid y otros repositorios (como IzzyOnDroid): interfaz Material, búsqueda, instalación y avisos de actualización de apps libres. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/Droid-ify/client"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
      "name": "Aurora Store",
      "tag": "Alternativa a Play",
      "desc": "Cliente alternativo de Google Play: descarga apps del catálogo de Play sin iniciar sesión con tu cuenta y sin servicios de Google. Es open source y respeta tu privacidad.",
@@ -99,6 +111,17 @@
      ],
      "tip": "Ten cuidado: revisa las apps antes de instalarlas.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Universal Installer",
+     "tag": "Instalador",
+     "desc": "Instala APK, APKS, XAPK y APKM (con sus OBB). Revisa cada archivo con VirusTotal (puedes usar tu propia clave), te deja ver los permisos que pide y, con Shizuku, instala en silencio. Ayuda a evitar malware.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=pass-with-high-score/universal-installer"
+      ]
+     ]
     }
    ]
   },
@@ -140,22 +163,112 @@
    ]
   },
   {
-   "id": "utilidad",
-   "e": "🛡️",
-   "t": "Utilidad",
-   "s": "Seguridad, control y personalización",
+   "id": "control",
+   "e": "🧩",
+   "t": "Control de apps",
+   "s": "Quita, limita y revisa lo que hacen tus apps",
    "apps": [
     {
-     "name": "Universal Installer",
-     "tag": "Instalador",
-     "desc": "Instala APK, APKS, XAPK y APKM (con sus OBB). Revisa cada archivo con VirusTotal (puedes usar tu propia clave), te deja ver los permisos que pide y, con Shizuku, instala en silencio. Ayuda a evitar malware.",
+     "name": "Canta",
+     "tag": "Quitar bloatware",
+     "desc": "Quita o desactiva las apps del sistema que no usas (bloatware) sin root, gracias a Shizuku. Clasifica cada app por riesgo (recomendada, avanzada, experta o insegura) y te deja reinstalar las que quitaste.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/io.github.samolego.canta"
+      ]
+     ],
+     "logo": [
+      "https://github.com/samolego.png?size=160"
+     ],
+     "tip": "Necesita Shizuku. Quitar apps del sistema puede causar fallos: consulta antes ADL y no toques las marcadas como inseguras.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "ADL",
+     "tag": "Guía anti-bloatware",
+     "desc": "Android Debloat List: wiki siempre disponible sobre las apps preinstaladas de Android. Busca por nombre o paquete para saber si puedes quitar una app antes de hacerlo con Canta. Cada página trae un enlace para abrirla en App Manager.",
      "links": [
       [
        "Abrir",
-       "https://github-store.org/app?repo=pass-with-high-score/universal-installer"
+       "https://adl.muntashir.dev/index.html"
       ]
-     ]
+     ],
+     "logo": [
+      "https://github.com/MuntashirAkon.png?size=160"
+     ],
+     "tip": "Es una web, así que necesita internet. Mírala antes de quitar nada con Canta para no dañar tu móvil.",
+     "added": "2026-10-15"
     },
+    {
+     "name": "App Manager",
+     "tag": "Gestor avanzado",
+     "desc": "Gestor de apps avanzado y gratuito: ve y bloquea componentes (actividades, servicios…), detecta rastreadores y permisos, instala y exporta APK y haz copias de seguridad. Funciona sin root y rinde más con root o ADB. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/es/packages/io.github.muntashirakon.AppManager"
+      ]
+     ],
+     "logo": [
+      "https://github.com/MuntashirAkon.png?size=160"
+     ],
+     "tip": "Bloquear componentes puede romper apps: hazlo con cuidado.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "App Ops",
+     "tag": "Permisos finos",
+     "desc": "Controla los permisos de cada app con más detalle que los ajustes normales de Android (AppOps), incluidos algunos que el sistema oculta. Funciona con Shizuku.",
+     "links": [
+      [
+       "Play",
+       "https://play.google.com/store/apps/details?id=rikka.appops"
+      ]
+     ],
+     "logo": [
+      "https://github.com/RikkaApps.png?size=160"
+     ],
+     "tip": "Necesita Shizuku. Cambiar permisos del sistema puede hacer que algunas apps fallen.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Inure",
+     "tag": "Gestor de apps",
+     "desc": "Administrador de apps muy completo: lista apps instaladas o no, deja ver y tocar sus componentes internos y trae terminal, estadísticas de uso, instalador de APK divididos, VirusTotal y herramientas para quitar bloatware. Funciona con root o Shizuku. Código abierto (GPL-3.0) y con temas Material You.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/Hamza417/Inure"
+      ]
+     ],
+     "tip": "Tiene una prueba de 15 días; después se desbloquea con su versión completa.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "SD Maid SE",
+     "tag": "Limpieza",
+     "desc": "Limpia archivos basura, restos de apps desinstaladas y duplicados, y analiza qué ocupa tu almacenamiento. Limpia más a fondo con root, Shizuku o ADB. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/es/packages/eu.darken.sdmse"
+      ]
+     ],
+     "logo": [
+      "https://github.com/d4rken-org.png?size=160"
+     ],
+     "tip": "Algunas funciones son de pago. Revisa bien qué vas a borrar antes de confirmar.",
+     "added": "2026-10-15"
+    }
+   ]
+  },
+  {
+   "id": "utilidad",
+   "e": "🛡️",
+   "t": "Utilidad",
+   "s": "Automatiza, ajusta y conecta con tu PC",
+   "apps": [
     {
      "name": "Essentials",
      "tag": "Navaja suiza",
@@ -168,16 +281,17 @@
      ]
     },
     {
-     "name": "No More Background",
-     "tag": "Segundo plano",
-     "desc": "Muestra todas tus apps en una sola pantalla y eliges cuáles pueden correr en segundo plano, para cuidar batería y datos. Funciona con ADB, Shizuku o root; lo configuras una vez y listo, sin «optimizar» cada día.",
+     "name": "AutoPie",
+     "tag": "Automatizaciones",
+     "desc": "Centro de comandos y automatizaciones: ejecuta scripts de shell y Python con una interfaz sencilla, con un Termux integrado. Se lanzan a mano, desde Compartir, al aparecer un archivo, por horario o con un acceso directo o widget. Trae un catálogo de comandos listos. Código abierto (Apache-2.0).",
      "links": [
       [
-       "Abrir",
-       "https://github-store.org/app?repo=adil192/no_more_background"
+       "GitHub",
+       "https://github.com/cryptrr/AutoPie"
       ]
      ],
-     "tip": "Algunas apps pueden seguir en segundo plano aunque las apagues."
+     "tip": "Solo funciona en móviles arm64 (la mayoría de los recientes). Para tareas programadas, desactiva la optimización de batería de la app.",
+     "added": "2026-10-15"
     },
     {
      "name": "Termux",
@@ -196,90 +310,58 @@
      "added": "2026-10-15"
     },
     {
-     "name": "SwitchAI",
-     "tag": "Asistentes de IA",
-     "desc": "Elige y cambia entre más de 40 asistentes de IA (ChatGPT, Claude, Gemini, DeepSeek…) desde el gesto de asistente del sistema. Puedes escoger uno cada vez o fijar uno por defecto, con soporte de voz, widget y ajuste rápido. Código abierto (GPL-3.0). Android 8+.",
+     "name": "scrcpy",
+     "tag": "Pantalla en la PC",
+     "desc": "Muestra y controla tu Android desde la computadora por USB o Wi-Fi, sin root y sin instalar nada en el móvil. Funciona en Windows, macOS y Linux. Código abierto (Apache-2.0).",
      "links": [
       [
        "GitHub",
-       "https://github.com/WSTxda/SwitchAI"
+       "https://github.com/Genymobile/scrcpy"
       ]
      ],
-     "tip": "Solo lanza las apps de IA que ya tengas instaladas.",
+     "tip": "Necesita la depuración USB activada en el móvil y se usa desde la PC.",
      "added": "2026-10-15"
     },
     {
-     "name": "DeJPEG",
-     "tag": "Mejora de fotos",
-     "desc": "Quita artefactos de compresión, ruido y fondos de tus fotos sin conexión, con modelos ONNX que descargas una vez (FBCNN, SCUNet, RMBG). Trae comparador antes/después y temas OLED, claro, oscuro y dinámico. Código abierto (GPL-3.0). Android 8+.",
+     "name": "Plain",
+     "tag": "Móvil desde el navegador",
+     "desc": "Maneja tu móvil desde el navegador de otro dispositivo por la red local: archivos, fotos, vídeos, música y más, sin nube. Código abierto.",
      "links": [
       [
        "Descarga",
-       "https://apt.izzysoft.de/fdroid/index/apk/com.je.dejpeg"
+       "https://f-droid.org/es/packages/com.ismartcoding.plain"
       ]
      ],
      "logo": [
-      "https://github.com/jeeneo.png?size=160"
+      "https://github.com/ismartcoding.png?size=160"
      ],
-     "tip": "Solo funciona en arm64.",
+     "tip": "Pide muchos permisos (archivos, contactos…): dale solo los que uses y úsala en una red de confianza.",
      "added": "2026-10-15"
     },
     {
-     "name": "TagSpaces",
-     "tag": "Organizador de archivos",
-     "desc": "Organiza, etiqueta y explora tus archivos, fotos y documentos sin nube ni cuentas. Guarda las etiquetas en el nombre del archivo o en archivos auxiliares, busca con tolerancia a errores y trae visores de imágenes, PDF, Markdown, audio y video, además de notas y listas de tareas. Código abierto (AGPL-3.0).",
+     "name": "Fake Traveler",
+     "tag": "Ubicación falsa",
+     "desc": "Cambia tu ubicación GPS a cualquier punto del mapa. Se activa eligiéndola como «app de ubicación simulada» en las Opciones de desarrollador. Código abierto (GPL-3.0).",
      "links": [
       [
        "Descarga",
-       "https://apt.izzysoft.de/fdroid/index/apk/org.tagspaces.mobileapp"
+       "https://f-droid.org/es/packages/cl.coders.faketraveler"
       ]
      ],
      "logo": [
-      "https://github.com/tagspaces.png?size=160"
+      "https://github.com/mcastillof.png?size=160"
      ],
-     "tip": "Pide acceso a todo el almacenamiento, porque funciona como gestor de archivos.",
+     "tip": "Algunas apps detectan la ubicación falsa y pueden restringir tu cuenta: úsala con cuidado.",
      "added": "2026-10-15"
-    },
-    {
-     "name": "My Brain",
-     "tag": "Segundo cerebro",
-     "desc": "App de productividad con tareas (prioridad, subtareas, recordatorios), notas en Markdown, diario con estado de ánimo, marcadores, calendario con widget y un chat de IA que puede usar tus notas y tareas. Es local, no recopila datos y es de código abierto (GPL-3.0). Android 8+.",
-     "links": [
-      [
-       "Descarga",
-       "https://f-droid.org/en/packages/com.mhss.app.mybrain"
-      ]
-     ],
-     "added": "2026-10-15"
-    },
-    {
-     "name": "LibreFit",
-     "tag": "Entrenamientos",
-     "desc": "Registro de entrenamientos con ejercicios, series, repeticiones y duración, gráficas de progreso, planes personalizables y más de 800 ejercicios con instrucciones e imágenes, filtrables por equipo, músculo o dificultad. Funciona sin internet y guarda tus datos en el móvil. Código abierto (GPL-3.0).",
-     "links": [
-      [
-       "GitHub",
-       "https://github.com/LibreFitOrg/LibreFit"
-      ]
-     ],
-     "added": "2026-10-15"
-    },
-    {
-     "name": "Euria",
-     "tag": "IA suiza",
-     "desc": "Asistente de IA de Infomaniak (Suiza): escribe, traduce, corrige, resume, transcribe audio, extrae texto de imágenes y busca en la web. Organiza los chats por proyecto, los sincroniza y tiene un modo efímero que no deja rastro. La app es de código abierto (GPL-3.0). Android 8+.",
-     "links": [
-      [
-       "Descarga",
-       "https://f-droid.org/en/packages/com.infomaniak.euria"
-      ]
-     ],
-     "logo": [
-      "https://github.com/Infomaniak.png?size=160"
-     ],
-     "tip": "Necesita internet y una cuenta (kSuite). Su servicio no es libre y envía informes de fallos anónimos.",
-     "added": "2026-10-15"
-    },
+    }
+   ]
+  },
+  {
+   "id": "pantalla",
+   "e": "🔋",
+   "t": "Pantalla y batería",
+   "s": "Ahorra batería y controla tu pantalla",
+   "apps": [
     {
      "name": "EnforceDoze",
      "tag": "Ahorro de batería",
@@ -291,6 +373,18 @@
       ]
      ],
      "added": "2026-10-15"
+    },
+    {
+     "name": "No More Background",
+     "tag": "Segundo plano",
+     "desc": "Muestra todas tus apps en una sola pantalla y eliges cuáles pueden correr en segundo plano, para cuidar batería y datos. Funciona con ADB, Shizuku o root; lo configuras una vez y listo, sin «optimizar» cada día.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=adil192/no_more_background"
+      ]
+     ],
+     "tip": "Algunas apps pueden seguir en segundo plano aunque las apagues."
     },
     {
      "name": "BatStats",
@@ -306,56 +400,47 @@
      "added": "2026-10-15"
     },
     {
-     "name": "Obsidian",
-     "tag": "Notas en Markdown",
-     "desc": "Editor de notas en Markdown que guarda todo como archivos en tu móvil y enlaza tus ideas entre sí. Tiene complementos y temas de la comunidad, y una sincronización opcional que se paga aparte. La app es gratis, pero de código cerrado.",
+     "name": "Extinguish",
+     "tag": "Pantalla apagada",
+     "desc": "Apaga la pantalla de verdad (no pone una capa negra) y mantiene el teléfono despierto para que otras apps sigan funcionando, por ejemplo al escuchar vídeos. Sirve en LCD y OLED y ahorra batería. Se controla con botón flotante, teclas de volumen, toque, notificación, ajuste rápido o ADB. Código abierto (GPL-3.0).",
      "links": [
       [
-       "Abrir",
-       "https://github-store.org/app?repo=obsidianmd/obsidian-releases"
+       "Play",
+       "https://play.google.com/store/apps/details?id=own.moderpach.extinguish"
       ]
      ],
      "logo": [
-      "https://github.com/obsidianmd.png?size=160"
+      "https://github.com/Moderpach.png?size=160"
      ],
+     "tip": "En móviles modificados por la marca puede no funcionar bien. Ten a mano cómo volver a encender la pantalla.",
      "added": "2026-10-15"
     },
     {
-     "name": "Image Toolbox",
-     "tag": "Editor de imágenes",
-     "desc": "Editor de imágenes muy completo: más de 500 filtros, conversión entre formatos (JPEG, PNG, WEBP, AVIF, HEIC, JXL…), recorte, dibujo, quitar fondo, marcas de agua, collages, edición de EXIF, OCR en más de 120 idiomas, herramientas de PDF y de IA para escalar y quitar ruido. Gratis y de código abierto (Apache-2.0).",
+     "name": "Display Toggle",
+     "tag": "Pantalla con Shizuku",
+     "desc": "Apaga y enciende la pantalla física sin bloquear el móvil ni detener las apps abiertas. Incluye atajos y un ajuste rápido. Código abierto (MIT). Android 7+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/io.github.ulysseszh.displaytoggle"
+      ]
+     ],
+     "logo": [
+      "https://github.com/UlyssesZh.png?size=160"
+     ],
+     "tip": "Necesita Shizuku.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "OrientationLock",
+     "tag": "Orientación",
+     "desc": "Fuerza la orientación de la pantalla (vertical, horizontal, automática…) aunque una app no te deje girarla.",
      "links": [
       [
        "GitHub",
-       "https://github.com/T8RIN/ImageToolbox"
+       "https://github.com/tuyafeng/OrientationLock"
       ]
      ],
-     "tip": "La versión FOSS no lleva analíticas; la de Play sí.",
-     "added": "2026-10-15"
-    },
-    {
-     "name": "Gander",
-     "tag": "Visor de archivos",
-     "desc": "Abre PDF, Word, Excel, PowerPoint, fotos, video, audio, Markdown, texto y código en una sola app, con búsqueda dentro de los documentos. No pide permisos ni internet, sin anuncios ni cuentas. Código abierto (MIT). Pesa unos 15 MB. Android 8+.",
-     "links": [
-      [
-       "Abrir",
-       "https://github-store.org/app?repo=mokshablr/gander"
-      ]
-     ],
-     "added": "2026-10-15"
-    },
-    {
-     "name": "CatSmoker",
-     "tag": "Optimizador de juegos",
-     "desc": "Optimiza juegos compatibles: simula otros modelos de móvil para desbloquear más gráficos y FPS, cambia resolución y DPI, edita archivos de configuración del juego, muestra FPS, CPU, RAM y temperatura, y trae mira en pantalla, optimizador de DNS y biblioteca de juegos. Funciona con root (Magisk, ZygiskNext y LSPosed) o con Shizuku. Android 8+.",
-     "links": [
-      [
-       "GitHub",
-       "https://github.com/catsmoker/com.catsmoker.app"
-      ]
-     ],
-     "tip": "Modificar archivos o falsear el dispositivo puede romper las reglas de algunos juegos y causar baneos. El riesgo es tuyo.",
      "added": "2026-10-15"
     }
    ]
@@ -364,7 +449,7 @@
    "id": "privacidad",
    "e": "🔒",
    "t": "Privacidad",
-   "s": "Protege tus datos, llamadas y contraseñas",
+   "s": "Protege tus datos, fotos, llamadas y enlaces",
    "apps": [
     {
      "name": "FireWall Blocks",
@@ -417,18 +502,141 @@
      "added": "2026-10-15"
     },
     {
-     "name": "Inure",
-     "tag": "Gestor de apps",
-     "desc": "Administrador de apps muy completo: lista apps instaladas o no, deja ver y tocar sus componentes internos y trae terminal, estadísticas de uso, instalador de APK divididos, VirusTotal y herramientas para quitar bloatware. Funciona con root o Shizuku. Código abierto (GPL-3.0) y con temas Material You.",
+     "name": "Bitwarden",
+     "tag": "Gestor de contraseñas",
+     "desc": "Guarda tus contraseñas y passkeys en una bóveda cifrada de extremo a extremo y las sincroniza entre tus dispositivos. Genera contraseñas seguras, autocompleta, admite verificación en dos pasos y tiene Bitwarden Send para compartir datos con seguridad. Es gratis y de código abierto, con un plan Premium opcional.",
+     "links": [
+      [
+       "Play",
+       "https://play.google.com/store/apps/details?id=com.x8bit.bitwarden"
+      ]
+     ],
+     "logo": [
+      "https://github.com/bitwarden.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "SnapSafe",
+     "tag": "Cámara privada",
+     "desc": "Cámara que guarda las fotos cifradas en el almacenamiento privado de la app y no tiene permiso de internet. Galería con PIN aparte, borra los metadatos al compartir, desenfoca caras y te deja elegir qué ubicación añadir. Trae un PIN trampa que, al usarlo, borra tus fotos. Código abierto (MIT).",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/es/packages/com.darkrockstudios.app.securecamera"
+      ]
+     ],
+     "logo": [
+      "https://github.com/SecureCamera.png?size=160"
+     ],
+     "tip": "Las fotos viven solo dentro de la app y no entran en copias de seguridad: guarda aparte las que quieras conservar.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Tarnhelm",
+     "tag": "Limpia enlaces",
+     "desc": "Limpia los parámetros de rastreo de los enlaces que compartes desde otras apps, de forma natural. Código abierto (GPL-3.0). Android 8.1+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/cn.ac.lz233.tarnhelm"
+      ]
+     ],
+     "logo": [
+      "https://github.com/lz233.png?size=160"
+     ],
+     "tip": "Pide varios permisos (mostrarse sobre otras apps, inicio automático): revísalos al instalar.",
+     "added": "2026-10-15"
+    }
+   ]
+  },
+  {
+   "id": "fotos",
+   "e": "🖼️",
+   "t": "Fotos y archivos",
+   "s": "Edita, organiza y guarda tus archivos",
+   "apps": [
+    {
+     "name": "Image Toolbox",
+     "tag": "Editor de imágenes",
+     "desc": "Editor de imágenes muy completo: más de 500 filtros, conversión entre formatos (JPEG, PNG, WEBP, AVIF, HEIC, JXL…), recorte, dibujo, quitar fondo, marcas de agua, collages, edición de EXIF, OCR en más de 120 idiomas, herramientas de PDF y de IA para escalar y quitar ruido. Gratis y de código abierto (Apache-2.0).",
      "links": [
       [
        "GitHub",
-       "https://github.com/Hamza417/Inure"
+       "https://github.com/T8RIN/ImageToolbox"
       ]
      ],
-     "tip": "Tiene una prueba de 15 días; después se desbloquea con su versión completa.",
+     "tip": "La versión FOSS no lleva analíticas; la de Play sí.",
      "added": "2026-10-15"
     },
+    {
+     "name": "DeJPEG",
+     "tag": "Mejora de fotos",
+     "desc": "Quita artefactos de compresión, ruido y fondos de tus fotos sin conexión, con modelos ONNX que descargas una vez (FBCNN, SCUNet, RMBG). Trae comparador antes/después y temas OLED, claro, oscuro y dinámico. Código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "Descarga",
+       "https://apt.izzysoft.de/fdroid/index/apk/com.je.dejpeg"
+      ]
+     ],
+     "logo": [
+      "https://github.com/jeeneo.png?size=160"
+     ],
+     "tip": "Solo funciona en arm64.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Ente Photos",
+     "tag": "Fotos cifradas",
+     "desc": "Copia de seguridad y álbumes de fotos con cifrado de extremo a extremo, sincronizados entre tus dispositivos y compartibles con quien quieras. Esta versión de F-Droid no usa servicios de Google. Código abierto (AGPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/io.ente.photos.fdroid"
+      ]
+     ],
+     "logo": [
+      "https://github.com/ente-io.png?size=160"
+     ],
+     "tip": "Necesita internet y una cuenta; el espacio gratis es limitado.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "TagSpaces",
+     "tag": "Organizador de archivos",
+     "desc": "Organiza, etiqueta y explora tus archivos, fotos y documentos sin nube ni cuentas. Guarda las etiquetas en el nombre del archivo o en archivos auxiliares, busca con tolerancia a errores y trae visores de imágenes, PDF, Markdown, audio y video, además de notas y listas de tareas. Código abierto (AGPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://apt.izzysoft.de/fdroid/index/apk/org.tagspaces.mobileapp"
+      ]
+     ],
+     "logo": [
+      "https://github.com/tagspaces.png?size=160"
+     ],
+     "tip": "Pide acceso a todo el almacenamiento, porque funciona como gestor de archivos.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Gander",
+     "tag": "Visor de archivos",
+     "desc": "Abre PDF, Word, Excel, PowerPoint, fotos, video, audio, Markdown, texto y código en una sola app, con búsqueda dentro de los documentos. No pide permisos ni internet, sin anuncios ni cuentas. Código abierto (MIT). Pesa unos 15 MB. Android 8+.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=mokshablr/gander"
+      ]
+     ],
+     "added": "2026-10-15"
+    }
+   ]
+  },
+  {
+   "id": "internet",
+   "e": "🌐",
+   "t": "Internet",
+   "s": "Navega, lee y comparte por la red",
+   "apps": [
     {
      "name": "Iceraven",
      "tag": "Navegador",
@@ -443,18 +651,138 @@
      "added": "2026-10-15"
     },
     {
-     "name": "Bitwarden",
-     "tag": "Gestor de contraseñas",
-     "desc": "Guarda tus contraseñas y passkeys en una bóveda cifrada de extremo a extremo y las sincroniza entre tus dispositivos. Genera contraseñas seguras, autocompleta, admite verificación en dos pasos y tiene Bitwarden Send para compartir datos con seguridad. Es gratis y de código abierto, con un plan Premium opcional.",
+     "name": "LibreWolf",
+     "tag": "Navegador de PC",
+     "desc": "Navegador basado en Firefox con privacidad y seguridad reforzadas: sin telemetría y con uBlock Origin incluido. Para Windows, macOS y Linux.",
      "links": [
       [
-       "Play",
-       "https://play.google.com/store/apps/details?id=com.x8bit.bitwarden"
+       "Abrir",
+       "https://librewolf.net/"
       ]
      ],
      "logo": [
-      "https://github.com/bitwarden.png?size=160"
+      "https://www.google.com/s2/favicons?domain=librewolf.net&sz=128"
      ],
+     "tip": "Es para computadora: no tiene versión oficial para Android.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "RedReader",
+     "tag": "Alternativa a Reddit",
+     "desc": "Cliente libre y ligero para leer Reddit, sin anuncios. Puedes entrar con tu cuenta o leer sin ella. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/org.quantumbadger.redreader"
+      ]
+     ],
+     "logo": [
+      "https://github.com/QuantumBadger.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "LocalSend",
+     "tag": "Enviar archivos",
+     "desc": "Envía archivos y mensajes a dispositivos cercanos por tu Wi-Fi, sin internet, cuentas ni servidores, y con cifrado. Funciona en Android, iOS, Windows, macOS y Linux. Código abierto (Apache-2.0).",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=localsend/localsend"
+      ]
+     ],
+     "tip": "Los dispositivos deben estar en la misma red Wi-Fi.",
+     "added": "2026-10-15"
+    }
+   ]
+  },
+  {
+   "id": "dia",
+   "e": "📅",
+   "t": "Día a día",
+   "s": "Notas, IA, reloj y entrenamientos",
+   "apps": [
+    {
+     "name": "Obsidian",
+     "tag": "Notas en Markdown",
+     "desc": "Editor de notas en Markdown que guarda todo como archivos en tu móvil y enlaza tus ideas entre sí. Tiene complementos y temas de la comunidad, y una sincronización opcional que se paga aparte. La app es gratis, pero de código cerrado.",
+     "links": [
+      [
+       "Abrir",
+       "https://github-store.org/app?repo=obsidianmd/obsidian-releases"
+      ]
+     ],
+     "logo": [
+      "https://github.com/obsidianmd.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "My Brain",
+     "tag": "Segundo cerebro",
+     "desc": "App de productividad con tareas (prioridad, subtareas, recordatorios), notas en Markdown, diario con estado de ánimo, marcadores, calendario con widget y un chat de IA que puede usar tus notas y tareas. Es local, no recopila datos y es de código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/com.mhss.app.mybrain"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Chrono",
+     "tag": "Reloj y alarmas",
+     "desc": "Reloj moderno con alarmas muy configurables (días, fechas, rangos, melodía, vibración, posponer y retos como resolver cálculos o reescribir texto), relojes mundiales, temporizador con preajustes y cronómetro con vueltas. Tiene Material You, temas personalizables y copias de seguridad. Código abierto (GPL-3.0). Android 5+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/packages/com.vicolo.chrono"
+      ]
+     ],
+     "logo": [
+      "https://github.com/vicolo-dev.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "LibreFit",
+     "tag": "Entrenamientos",
+     "desc": "Registro de entrenamientos con ejercicios, series, repeticiones y duración, gráficas de progreso, planes personalizables y más de 800 ejercicios con instrucciones e imágenes, filtrables por equipo, músculo o dificultad. Funciona sin internet y guarda tus datos en el móvil. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/LibreFitOrg/LibreFit"
+      ]
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "SwitchAI",
+     "tag": "Asistentes de IA",
+     "desc": "Elige y cambia entre más de 40 asistentes de IA (ChatGPT, Claude, Gemini, DeepSeek…) desde el gesto de asistente del sistema. Puedes escoger uno cada vez o fijar uno por defecto, con soporte de voz, widget y ajuste rápido. Código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/WSTxda/SwitchAI"
+      ]
+     ],
+     "tip": "Solo lanza las apps de IA que ya tengas instaladas.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Euria",
+     "tag": "IA suiza",
+     "desc": "Asistente de IA de Infomaniak (Suiza): escribe, traduce, corrige, resume, transcribe audio, extrae texto de imágenes y busca en la web. Organiza los chats por proyecto, los sincroniza y tiene un modo efímero que no deja rastro. La app es de código abierto (GPL-3.0). Android 8+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/com.infomaniak.euria"
+      ]
+     ],
+     "logo": [
+      "https://github.com/Infomaniak.png?size=160"
+     ],
+     "tip": "Necesita internet y una cuenta (kSuite). Su servicio no es libre y envía informes de fallos anónimos.",
      "added": "2026-10-15"
     }
    ]
@@ -463,7 +791,7 @@
    "id": "emulacion",
    "e": "🎮",
    "t": "Emulación",
-   "s": "Juega tus clásicos y más en el móvil",
+   "s": "Juega tus clásicos y optimiza tus juegos",
    "apps": [
     {
      "name": "SeedlessDS",
@@ -525,6 +853,19 @@
       "https://github.com/notkimu.png?size=160"
      ],
      "added": "2026-10-15"
+    },
+    {
+     "name": "CatSmoker",
+     "tag": "Optimizador de juegos",
+     "desc": "Optimiza juegos compatibles: simula otros modelos de móvil para desbloquear más gráficos y FPS, cambia resolución y DPI, edita archivos de configuración del juego, muestra FPS, CPU, RAM y temperatura, y trae mira en pantalla, optimizador de DNS y biblioteca de juegos. Funciona con root (Magisk, ZygiskNext y LSPosed) o con Shizuku. Android 8+.",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/catsmoker/com.catsmoker.app"
+      ]
+     ],
+     "tip": "Modificar archivos o falsear el dispositivo puede romper las reglas de algunos juegos y causar baneos. El riesgo es tuyo.",
+     "added": "2026-10-15"
     }
    ]
   },
@@ -584,21 +925,6 @@
      ],
      "tip": "Está en beta, puede fallar. Usa el APK de 32 bits si tu móvil lo soporta.",
      "added": "2026-10-15"
-    },
-    {
-     "name": "Chrono",
-     "tag": "Reloj y alarmas",
-     "desc": "Reloj moderno con alarmas muy configurables (días, fechas, rangos, melodía, vibración, posponer y retos como resolver cálculos o reescribir texto), relojes mundiales, temporizador con preajustes y cronómetro con vueltas. Tiene Material You, temas personalizables y copias de seguridad. Código abierto (GPL-3.0). Android 5+.",
-     "links": [
-      [
-       "Descarga",
-       "https://f-droid.org/packages/com.vicolo.chrono"
-      ]
-     ],
-     "logo": [
-      "https://github.com/vicolo-dev.png?size=160"
-     ],
-     "added": "2026-10-15"
     }
    ]
   },
@@ -606,7 +932,7 @@
    "id": "musica",
    "e": "🎧",
    "t": "Música",
-   "s": "Reproducir y descargar",
+   "s": "Reproducir, descargar y crear",
    "apps": [
     {
      "name": "Poweramp",
@@ -649,6 +975,50 @@
       ]
      ],
      "tip": "Solo arm64. El agente de IA «Echo» necesita tu propia clave de un modelo de lenguaje.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "ClassiPod",
+     "tag": "Reproductor retro",
+     "desc": "Reproductor de la música guardada en tu móvil con el diseño del iPod Classic. Código abierto.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/en/packages/com.adeeteya.classipod"
+      ]
+     ],
+     "logo": [
+      "https://github.com/adeeteya.png?size=160"
+     ],
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Helio",
+     "tag": "Crear música",
+     "desc": "Secuenciador musical libre para componer: editor por patrones, instrumentos SoundFont, escalas exóticas y control de versiones para sincronizar tus proyectos entre dispositivos. Código abierto (GPL-3.0). Android 5+.",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/es/packages/fm.helio"
+      ]
+     ],
+     "logo": [
+      "https://github.com/helio-fm.png?size=160"
+     ],
+     "tip": "Sirve para crear música, no para reproducirla.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Ambient Music Mod",
+     "tag": "Ahora suena",
+     "desc": "Lleva «Ahora suena» de los Pixel a otros Android: reconoce la música de fondo con una base de datos local, con historial, favoritos, widget y reconocimiento manual. Puede mostrar la canción en la pantalla de bloqueo. Necesita Shizuku (Android 12+) o el módulo Sui de Magisk (Android 9+). Android 9+ (se recomienda 11+).",
+     "links": [
+      [
+       "GitHub",
+       "https://github.com/KieronQuinn/AmbientMusicMod"
+      ]
+     ],
+     "tip": "Con Shizuku hay que volver a iniciarlo tras cada reinicio. Para mostrar la canción en el bloqueo pide un servicio de accesibilidad.",
      "added": "2026-10-15"
     }
    ]
