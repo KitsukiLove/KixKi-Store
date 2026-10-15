@@ -49,7 +49,7 @@ const RX=[
  [/^(\d+) apps?$/,(m,n)=>`${n} app${n==1?"":"s"}`],[/^(\d+) packs?$/,(m,n)=>`${n} pack${n==1?"":"s"}`],
  [/^(\d+) apps en (\d+) carpetas\. (.*)$/,(m,a,b,c)=>`${a} apps in ${b} folders. ${T(c)}`],
  [/^Abre una desde el escritorio\.$/,()=>"Open one from the desktop."],[/^Toca una para abrirla\.$/,()=>"Tap one to open it."],
- [/^(Música|Efectos|Logos pixel): (sí|no)$/,(m,a,b)=>`${LB[a]}: ${ST[b]}`],[/^Lluvia: (auto|sí|no)$/,(m,a)=>"Rain: "+({auto:"auto","sí":"on",no:"off"})[a]],[/^Color: (.*)$/,(m,c)=>"Color: "+(CL[c]||c)],[/^Fondo: (.*)$/,(m,c)=>"Background: "+(CL[c]||c)],[/^Idioma: (.*)$/,(m,c)=>"Language: "+c],
+ [/^(Música|Efectos|Logos pixel): (sí|no)$/,(m,a,b)=>`${LB[a]}: ${ST[b]}`],[/^Sonido de lluvia: (sí|no)$/,(m,a)=>"Rain sound: "+(a==="sí"?"on":"off")],[/^Lluvia: (auto|sí|no)$/,(m,a)=>"Rain: "+({auto:"auto","sí":"on",no:"off"})[a]],[/^Color: (.*)$/,(m,c)=>"Color: "+(CL[c]||c)],[/^Fondo: (.*)$/,(m,c)=>"Background: "+(CL[c]||c)],[/^Idioma: (.*)$/,(m,c)=>"Language: "+c],
  [/^(Android \d+\+)$/,(m,a)=>a]];
 const T=s=>{if(Object.prototype.hasOwnProperty.call(EN,s))return EN[s];for(const [r,f] of RX){const m=s.match(r);if(m)return f(...m);}return s;};
 const LSK="kixki-lang",ATT=["aria-label","placeholder","title"];let lang=null;

@@ -3,6 +3,7 @@
    - Lluvia pixelada sobre cualquier fondo (capa de atrás con gotas lejanas + capa de delante con gotas cercanas).
    - Si no tocas nada durante un rato, las gotas "chocan" con la pantalla, se quedan pegadas y algunas resbalan.
      Pasa el dedo / el ratón por encima para limpiarlas (o espera a que se sequen).
+   - Sonido relajante de lluvia sintetizado (WebAudio, sin archivos): se activa con el altavoz de la página; menú «Sonido de lluvia: sí / no».
    - Menú: «Lluvia: auto / sí / no». En auto llueve de vez en cuando (no con nieve).
    - API: window.KXRAIN  { on(), raining, mode, set(m), start(ms), stop(), glass(), idle(ms) }
    - Avisa con el evento "kixki-rain" → e.detail = {t:"start"|"stop"|"glass"|"wipe", n}
@@ -221,6 +222,7 @@ function react(w){
     stop:["¡Ya paró la lluvia! 🌈 Huele a hierba mojada.","The rain stopped! 🌈 Smells like wet grass."]
   }[w];
   if(M)try{K.say(M,{p:1,key:"rain-"+w,cd:120000});}catch(e){}
+  if(w==="start"&&rsOn&&!pageSound()&&!sndHinted){sndHinted=true;setTimeout(()=>{try{K.say(["Si activas el sonido (el altavoz), también puedes oír la lluvia. 🎧","If you turn the sound on (the speaker), you can hear the rain too. 🎧"],{p:1,key:"rain-snd",cd:600000});}catch(e){}},7000);}
 }
 addEventListener("kixki-rain",e=>{
   const d=e.detail||{};const K=window.KXK;if(!K||!K.ready||!K.alive||!K.alive())return;
@@ -228,15 +230,90 @@ addEventListener("kixki-rain",e=>{
   if(d.t==="wipe"&&d.n>=8&&!wipe.said){wipe.said=1;try{K.say(["¡Cristal limpio y brillante! ✨","Squeaky clean glass! ✨"],{p:1,key:"rain-wipe",cd:180000});}catch(x){}}
 });
 
+/* ---- sonido de lluvia relajante (sintetizado, sin archivos) ----
+   Capas: «lavado» de ruido rosa en estéreo + murmullo de tejado (ruido marrón grave) + gotitas sueltas muy suaves.
+   Suena solo si el sonido de la página está activo (botón del altavoz / menú Efectos o Música) y «Sonido de lluvia» está en sí.
+   Sube y baja con suavidad según la intensidad de la lluvia. */
+let rsOn=LS.g("kixki-rainsnd",true),au=null,auClose=0,sndHinted=false;
+const pageSound=()=>{const b=document.getElementById("rd");return !!b&&b.getAttribute("aria-pressed")==="true";};
+const wantSound=()=>rsOn&&pageSound()&&!document.hidden&&inten>.02;
+function noiseBuf(ctx,kind){
+  const len=Math.floor(ctx.sampleRate*6),buf=ctx.createBuffer(1,len,ctx.sampleRate),d=buf.getChannelData(0);
+  let l=0,b0=0,b1=0,b2=0;
+  for(let i=0;i<len;i++){const w=Math.random()*2-1;
+    if(kind==="brown"){l=(l+.02*w)/1.02;d[i]=l*3.5;}
+    else{b0=.99765*b0+w*.099046;b1=.963*b1+w*.2965164;b2=.57*b2+w*1.0526913;d[i]=(b0+b1+b2+w*.1848)*.11;}}
+  return buf;
+}
+function buildAudio(){
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw 0;
+  const ctx=new AC(),master=ctx.createGain(),comp=ctx.createDynamicsCompressor(),an=ctx.createAnalyser();
+  master.gain.value=0;an.fftSize=1024;master.connect(comp);comp.connect(ctx.destination);master.connect(an);
+  const pink=noiseBuf(ctx,"pink"),brown=noiseBuf(ctx,"brown"),lows=[];
+  const src=(buf,pan,off)=>{const n=ctx.createBufferSource();n.buffer=buf;n.loop=true;
+    const p=ctx.createStereoPanner?ctx.createStereoPanner():null;if(p)p.pan.value=pan;n.start(0,off);return {n,p};};
+  /* lavado estéreo */
+  [[-.55,0],[.55,2.7]].forEach(([pan,off])=>{
+    const a=src(pink,pan,off),hp=ctx.createBiquadFilter(),lp=ctx.createBiquadFilter(),g=ctx.createGain();
+    hp.type="highpass";hp.frequency.value=260;lp.type="lowpass";lp.frequency.value=5200;lp.Q.value=.4;g.gain.value=.5;lows.push(lp);
+    a.n.connect(hp);hp.connect(lp);lp.connect(g);(a.p?(g.connect(a.p),a.p.connect(master)):g.connect(master));
+  });
+  /* gotas contra el suelo y las hojas: banda media que respira muy despacio */
+  {const a=src(pink,0,1.3),bp=ctx.createBiquadFilter(),g=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();
+    bp.type="bandpass";bp.frequency.value=2300;bp.Q.value=.6;g.gain.value=.2;lfo.frequency.value=.11;lg.gain.value=.07;
+    lfo.connect(lg);lg.connect(g.gain);lfo.start();a.n.connect(bp);bp.connect(g);g.connect(master);}
+  /* murmullo grave de tejado */
+  {const a=src(brown,0,.7),lp=ctx.createBiquadFilter(),g=ctx.createGain();
+    lp.type="lowpass";lp.frequency.value=430;g.gain.value=.55;a.n.connect(lp);lp.connect(g);g.connect(master);}
+  const o={ctx,master,an,lows,on:false,dt:0};
+  /* gotitas sueltas, de tono suave y desafinadas a propósito */
+  o.drip=()=>{
+    if(!au||au!==o||!o.on)return;
+    try{const t=ctx.currentTime,f=rnd(1300,3400),os=ctx.createOscillator(),g=ctx.createGain(),p=ctx.createStereoPanner?ctx.createStereoPanner():null;
+      os.type="sine";os.frequency.setValueAtTime(f,t);os.frequency.exponentialRampToValueAtTime(f*1.35,t+.05);
+      g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(rnd(.006,.016),t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+rnd(.06,.13));
+      os.connect(g);if(p){p.pan.value=rnd(-.8,.8);g.connect(p);p.connect(master);}else g.connect(master);os.start(t);os.stop(t+.16);}catch(e){}
+    o.dt=setTimeout(o.drip,rnd(170,720)/Math.max(.35,inten));
+  };
+  return o;
+}
+function syncSound(){
+  const want=wantSound();
+  if(want){
+    if(!au){if(navigator.userActivation&&!navigator.userActivation.hasBeenActive)return;
+      try{au=buildAudio();}catch(e){au=null;return;}}
+    clearTimeout(auClose);auClose=0;
+    const c=au.ctx;if(c.state==="suspended")try{c.resume();}catch(e){}
+    const night=dark(),v=Math.min(1,inten)*(.3+.1*strength)*(night?.8:1)*(window.KXM&&KXM.on?.7:1);
+    au.master.gain.setTargetAtTime(v,c.currentTime,.9);
+    au.lows.forEach(l=>l.frequency.setTargetAtTime(night?3600:5200,c.currentTime,1));
+    if(!au.on){au.on=true;au.drip();}
+  }else if(au){
+    au.on=false;clearTimeout(au.dt);
+    au.master.gain.setTargetAtTime(0,au.ctx.currentTime,.5);
+    if(!auClose)auClose=setTimeout(()=>{auClose=0;if(!wantSound()&&au){try{au.ctx.close();}catch(e){}au=null;}},3500);
+  }
+}
+setInterval(syncSound,300);
+const rdBtn=()=>document.getElementById("rd");
+addEventListener("click",()=>setTimeout(syncSound,50),true);
+function levelNow(){if(!au)return 0;const a=new Uint8Array(au.an.fftSize);au.an.getByteTimeDomainData(a);let s=0;for(let i=0;i<a.length;i++){const x=(a[i]-128)/128;s+=x*x;}return Math.sqrt(s/a.length);}
+
 /* ---- menú ---- */
 let btn=null;
 const LAB={auto:"Lluvia: auto",on:"Lluvia: sí",off:"Lluvia: no"};
-function label(){if(btn)btn.textContent=LAB[mode];}
+let btnS=null;
+function label(){if(btn)btn.textContent=LAB[mode];if(btnS)btnS.textContent="Sonido de lluvia: "+(rsOn?"sí":"no");}
 function menu(){
   const ref=document.getElementById("s-bg");if(!ref||document.getElementById("s-rain"))return;
   ref.insertAdjacentHTML("afterend",'<button type="button" class="sm" id="s-rain"></button>');
-  btn=document.getElementById("s-rain");label();
+  btn=document.getElementById("s-rain");
+  btn.insertAdjacentHTML("afterend",'<button type="button" class="sm" id="s-rainsnd"></button>');
+  btnS=document.getElementById("s-rainsnd");label();
   btn.addEventListener("click",e=>{e.stopPropagation();setMode(mode==="auto"?"on":mode==="on"?"off":"auto");});
+  btnS.addEventListener("click",e=>{e.stopPropagation();rsOn=!rsOn;LS.s("kixki-rainsnd",rsOn);label();
+    if(rsOn&&!pageSound()){const K=window.KXK;if(K&&K.ready&&K.alive&&K.alive())try{K.say(["Para oír la lluvia activa el sonido: el botón del altavoz. 🔊","To hear the rain, turn the sound on: the speaker button. 🔊"],{p:2,key:"rain-snd",cd:60000});}catch(x){}}
+    syncSound();});
 }
 window.KXR?menu():addEventListener("kixki-ready",menu,{once:true});
 
@@ -244,7 +321,7 @@ window.KXRAIN={
   on:()=>raining&&inten>.3,
   get raining(){return raining;},get mode(){return mode;},get intensity(){return inten;},
   set:setMode,start:(ms,str)=>startRain(ms||0,str),stop:stopRain,
-  glass:gotas,idle(ms){if(ms>=0)idleMs=ms;return idleMs;},
+  sound:()=>({want:wantSound(),on:!!au,state:au&&au.ctx.state,level:levelNow()}),glass:gotas,idle(ms){if(ms>=0)idleMs=ms;return idleMs;},
   drop:(x,y,r)=>{wake();return addDrop(x/S,y/S,r);}
 };
 if(mode==="on")startRain(0,rnd(.8,1));
