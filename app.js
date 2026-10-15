@@ -574,7 +574,7 @@ $$(".di").forEach(d=>d.addEventListener("click",()=>vib(6)));
 const ACC=["","mint","rose","dusk"],ACN=["Lila","Menta","Rosa","Atardecer"];let ai=Math.max(0,ACC.indexOf(LS.g("kixki-acc","")));
 const setAcc=()=>{ACC[ai]?root.dataset.acc=ACC[ai]:root.removeAttribute("data-acc");LS.s("kixki-acc",ACC[ai]);};
 const lab=()=>{$("#s-lang").textContent="Idioma: "+(KXI.lang==="en"?"English":"Español");$("#s-view").textContent=DSK()?"Modo móvil":"Modo PC";$("#s-mus").textContent="Música: "+(KXM.on?"sí":"no");$("#s-bg").textContent="Fondo: "+KXB.label();$("#s-acc").textContent="Color: "+ACN[ai];$("#s-pix").textContent="Logos pixel: "+(PX?"sí":"no");$("#s-snd").textContent="Efectos: "+(SND?"sí":"no");};
-sm.insertAdjacentHTML("beforeend",`<button type="button" class="sm" id="s-run">Ejecutar… (Ctrl+K)</button><button type="button" class="sm" id="s-acc"></button><button type="button" class="sm" id="s-pix"></button><button type="button" class="sm" id="s-snd"></button><button type="button" class="sm" id="s-inst" hidden>Instalar app</button><button type="button" class="sm" id="s-mus"></button><button type="button" class="sm" id="s-bg"></button><button type="button" class="sm" id="s-view"></button><button type="button" class="sm" id="s-lang"></button><button type="button" class="sm" id="s-game">Saltaovejas</button><button type="button" class="sm" id="s-sug">Sugerir una app</button><button type="button" class="sm d" id="s-qr">Ábrelo en tu móvil</button><button type="button" class="sm d" id="s-off">Apagar</button>`);
+sm.insertAdjacentHTML("beforeend",`<button type="button" class="sm" id="s-run">Ejecutar… (Ctrl+K)</button><button type="button" class="sm" id="s-acc"></button><button type="button" class="sm" id="s-pix"></button><button type="button" class="sm" id="s-snd"></button><button type="button" class="sm" id="s-inst" hidden>Instalar app</button><button type="button" class="sm" id="s-mus"></button><button type="button" class="sm" id="s-bg"></button><button type="button" class="sm" id="s-view"></button><button type="button" class="sm" id="s-lang"></button><button type="button" class="sm" id="s-game">Salta Vallas</button><button type="button" class="sm" id="s-sug">Sugerir una app</button><button type="button" class="sm d" id="s-qr">Ábrelo en tu móvil</button><button type="button" class="sm d" id="s-off">Apagar</button>`);
 setAcc();lab();pix();addEventListener("kixki-mode",lab);
 sm.addEventListener("click",e=>{const b=e.target.closest("button[id^=s-]");if(!b)return;const k=b.id;
   if(k==="s-acc"){ai=(ai+1)%ACC.length;setAcc();lab();return;}
@@ -587,7 +587,7 @@ sm.addEventListener("click",e=>{const b=e.target.closest("button[id^=s-]");if(!b
 
 /* --- ventanas emergentes --- */
 document.body.insertAdjacentHTML("beforeend",`<div id="run" class="ovl" hidden><div class="box"><div class="bt">Ejecutar<button type="button" class="x" data-x="run" aria-label="Cerrar">✕</button></div><input id="rq" type="text" placeholder="Escribe el nombre de una app…" autocomplete="off" aria-label="Ejecutar"><ul id="rl"></ul></div></div>
-<div id="game" class="ovl" hidden><div class="box"><div class="bt">saltaovejas.exe<button type="button" class="x" data-x="game" aria-label="Cerrar">✕</button></div><canvas width="320" height="120"></canvas><p class="hint">Toca, espacio o ↑ para saltar</p></div></div>
+<div id="game" class="ovl" hidden><div class="box"><div class="bt">saltavallas.exe<button type="button" class="x" data-x="game" aria-label="Cerrar">✕</button></div><canvas width="480" height="160" aria-label="Salta Vallas"></canvas><p class="hint">Toca, espacio o ↑ para saltar · ↓ para bajar</p></div></div>
 <div id="qr" class="ovl" hidden><div class="box"><div class="bt">Ábrelo en tu móvil<button type="button" class="x" data-x="qr" aria-label="Cerrar">✕</button></div><div id="qrb"></div><p class="hint" id="qrt"></p></div></div><div id="boot" hidden></div>`);
 let ri=0,rr=[];
 function rl(){const v=nrm($("#rq").value.trim());rr=origs().filter(a=>!v||a.dataset.s.includes(v)).slice(0,6);ri=Math.min(ri,rr.length-1);
@@ -597,31 +597,7 @@ const exec=i=>{if(!rr[i])return;$("#run").hidden=true;goto(nm(rr[i]));};
 $("#rq").addEventListener("input",()=>{ri=0;rl();});
 $("#rq").addEventListener("keydown",e=>{if(e.key==="ArrowDown"){ri=Math.min(rr.length-1,ri+1);rl();e.preventDefault();}else if(e.key==="ArrowUp"){ri=Math.max(0,ri-1);rl();e.preventDefault();}else if(e.key==="Enter")exec(ri);});
 $("#rl").addEventListener("click",e=>{const li=e.target.closest("li[data-i]");if(li)exec(+li.dataset.i);});
-let gAF=0;
-function game(){const g=$("#game");g.hidden=false;const c=g.querySelector("canvas"),x=c.getContext("2d"),cs=getComputedStyle(root);
-  const col={w:"#fff7e6",f:"#f2a574",e:"#2b1a5e",p:"#ff8fc7",g:"#cdbdf2"};
-  let rec=LS.g("kixki-rec",0),y=0,v=0,o=[{x:340,w:10,h:16}],sc=0,sp=3,dead=false;
-  /* Avisos para Kixki (kixki.js / kixki2.js): start · retry · score · record · over */
-  const ev=(t,d)=>dispatchEvent(new CustomEvent("kixki-game",{detail:Object.assign({t},d)}));
-  let gp=LS.g("kixki-gp",0),first=gp===0,best0=rec,hit=false;
-  const newRun=()=>{gp++;LS.s("kixki-gp",gp);first=gp===1;best0=rec;hit=false;};
-  newRun();ev("start",{rec});
-  g._j=()=>{if(dead){y=0;v=0;o=[{x:340,w:10,h:16}];sc=0;sp=3;dead=false;newRun();ev("retry",{rec});}else if(y===0)v=9;};
-  cancelAnimationFrame(gAF);
-  let lt=0;(function L(t){if(g.hidden)return;const dt=Math.min(2,lt&&t?(t-lt)/16.67:1);lt=t||0;
-    x.fillStyle=cs.getPropertyValue("--surface2");x.fillRect(0,0,320,120);x.fillStyle=cs.getPropertyValue("--line");x.fillRect(0,100,320,20);
-    if(!dead){v-=.6*dt;y=Math.max(0,y+v*dt);if(y===0&&v<0)v=0;o.forEach(k=>k.x-=sp*dt);
-      if(o[0]&&o[0].x<-20){o.shift();sc++;sp=Math.min(7,3+sc/6);ev("score",{sc,rec});
-        if(!hit&&best0>0&&sc>best0){hit=true;LS.s("kixki-rec",sc);ev("record",{sc});}}
-      const l=o[o.length-1];if(!l||(l.x<220&&Math.random()<.025*dt))o.push({x:330,w:8+Math.random()*8|0,h:12+Math.random()*10|0});
-      if(o.some(k=>k.x<66&&k.x+k.w>34&&y<k.h-2)){dead=true;rec=Math.max(rec,sc);LS.s("kixki-rec",rec);
-        ev("over",{sc,rec,nr:sc>best0&&sc>0,first});}}
-    x.fillStyle=cs.getPropertyValue("--ink");o.forEach(k=>x.fillRect(k.x,100-k.h,k.w,k.h));
-    SHEEP.forEach((r,j)=>[...r].forEach((ch,i)=>{if(col[ch]){x.fillStyle=col[ch];x.fillRect(30+i*2,100-22-y+j*2,2,2);}}));
-    x.fillStyle=cs.getPropertyValue("--ink");x.font="16px monospace";if(sc>rec)rec=sc;x.fillText("🐑 "+sc+" · récord "+rec,150,20);
-    if(dead)x.fillText("Toca para reintentar",90,60);
-    gAF=requestAnimationFrame(L);})();}
-$("#game canvas").addEventListener("pointerdown",()=>$("#game")._j&&$("#game")._j());
+function game(){const g=$("#game");g.hidden=false;if(window.KXG)KXG.open(g);}
 function qr(){$("#qr").hidden=false;const u=location.href.split("#")[0];$("#qrt").textContent=u;
   const draw=()=>{try{const z=qrcode(0,"M");z.addData(u);z.make();const n=z.getModuleCount();let r="";
     for(let i=0;i<n;i++)for(let j=0;j<n;j++)if(z.isDark(i,j))r+=`<rect x="${j+2}" y="${i+2}" width="1" height="1"/>`;

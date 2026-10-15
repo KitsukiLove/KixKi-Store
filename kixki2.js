@@ -1,7 +1,7 @@
 /* =========================================================
    KIXKI · la oveja guía  (parte 2)
    - LOGROS: Kixki te felicita («¡Eres muy pro, no lo olvides!») cuando haces cosas como romper tu récord en el
-     Saltaovejas, abrir todas las carpetas, buscar, guardar favoritas, cambiar de fondo… En PC y en móvil.
+     Salta Vallas, abrir todas las carpetas, buscar, guardar favoritas, cambiar de fondo… En PC y en móvil.
      Aviso con tarjeta arriba + confeti + Kixki celebrando. Se ven en el menú Kixki / Más → «Logros».
    - CHARLA: en PC, Kixki baja a hablar con la ovejita que camina sola abajo (cada rato, o desde el menú,
      o cuando le haces muchas cosquillas a la ovejita). De noche la encuentra dormida.
@@ -66,6 +66,7 @@ const UI={
  close:["Cerrar","Close"],
  lvl:["Nivel","Level"],
  secret:["Secreto","Secret"],
+ hid:["Oculto","Hidden"],
  pc:["Solo en PC","PC only"],
  nw:["¡Nuevo!","New!"],
  locked:["Bloqueado","Locked"],
@@ -77,13 +78,13 @@ const UI={
  offNote:["Kixki está descansando. Enciéndela en el menú Kixki.","Kixki is resting. Turn her on in the Kixki menu."],
  pcOnly:["La ovejita de abajo solo vive en el modo PC. 🐑","The little sheep downstairs only lives in PC mode. 🐑"]
 };
-const CAT={e:["Explorar","Explore"],f:["Favoritas","Favorites"],g:["Saltaovejas","Sheep jump"],s:["A tu estilo","Your style"],k:["Kixki y amigas","Kixki & friends"],v:["Constancia","Loyalty"]};
+const CAT={e:["Explorar","Explore"],f:["Favoritas","Favorites"],g:["Salta Vallas","Fence Jump"],s:["A tu estilo","Your style"],w:["Clima","Weather"],k:["Kixki y amigas","Kixki & friends"],v:["Constancia","Loyalty"]};
 const LV=[["Corderito","Little lamb"],["Oveja curiosa","Curious sheep"],["Oveja lista","Smart sheep"],["Oveja pro","Pro sheep"],["Oveja experta","Expert sheep"],["Oveja suprema","Supreme sheep"]];
 const LV_TH=[0,.1,.3,.55,.8,1];
 
 /* ---------- lista de logros ----------
    a(id, icono, categoría, [nombre es/en], [descripción es/en], condición(ctx), opciones)
-   opciones: secret + h (pista) · pc (solo PC) · big (confeti grande) · quiet (la parte 1 ya habla de eso) · game · k (frase de Kixki) */
+   opciones: hid (oculto del todo hasta desbloquearlo) · secret + h (pista) · pc (solo PC) · big (confeti grande) · quiet (la parte 1 ya habla de eso) · game · k (frase de Kixki) */
 const A=[];
 const a=(id,i,c,n,d,f,o)=>A.push(Object.assign({id,i,c,n,d,f},o||{}));
 /* — Explorar — */
@@ -100,11 +101,11 @@ a("nores","ghost","e",["Misterio sin resolver","Unsolved mystery"],["Busca algo 
 a("fav1","heart","f",["Corazón de lana","Heart of wool"],["Guarda tu primera app favorita.","Save your first favorite app."],c=>c.favMax>=1);
 a("fav5","heart","f",["Buen gusto","Great taste"],["Ten 5 apps en favoritas.","Have 5 apps in favorites."],c=>c.favMax>=5);
 a("fav10","star","f",["Coleccionista","Collector"],["Ten 10 apps en favoritas.","Have 10 apps in favorites."],c=>c.favMax>=10);
-/* — Saltaovejas — */
-a("g1","jump","g",["Primer salto","First jump"],["Juega al Saltaovejas.","Play Sheep jump."],c=>c.plays>=1,{game:1});
+/* — Salta Vallas — */
+a("g1","jump","g",["Primer salto","First jump"],["Juega al Salta Vallas.","Play Fence Jump."],c=>c.plays>=1,{game:1});
 a("g10","jump","g",["Salto olímpico","Olympic jump"],["Llega a 10 saltos en una partida.","Reach 10 jumps in one run."],c=>c.runMax>=10,{game:1,k:["¡10 saltos! Eso es de pro, no lo olvides. 🐑","10 jumps! That's pro stuff, never forget it. 🐑"]});
 a("g25","star","g",["Con alas de lana","Woolly wings"],["Llega a 25 saltos en una partida.","Reach 25 jumps in one run."],c=>c.runMax>=25,{game:1,big:1});
-a("grec","trophy","g",["¡Récord roto!","Record broken!"],["Supera tu propio récord en el Saltaovejas.","Beat your own record in Sheep jump."],c=>c.recBroken,{game:1,big:1,quiet:1});
+a("grec","trophy","g",["¡Récord roto!","Record broken!"],["Supera tu propio récord en el Salta Vallas.","Beat your own record in Fence Jump."],c=>c.recBroken,{game:1,big:1,quiet:1});
 a("gp10","jump","g",["Una más y paro","Just one more"],["Juega 10 partidas.","Play 10 runs."],c=>c.plays>=10,{game:1});
 a("g50","trophy","g",["Leyenda ovina","Sheepy legend"],["Llega a 50 saltos en una partida.","Reach 50 jumps in one run."],c=>c.runMax>=50,
   {game:1,big:1,secret:1,h:["Solo las leyendas llegan tan lejos…","Only legends get this far…"]});
@@ -118,6 +119,11 @@ a("music","note","s",["Ritmo ovino","Sheepy beat"],["Activa la música.","Turn t
 a("lang","globe","s",["Políglota","Polyglot"],["Cambia el idioma de la página.","Change the page language."],c=>c.lang);
 a("view","key","s",["Doble vida","Double life"],["Cambia entre modo móvil y modo PC.","Switch between mobile and PC mode."],c=>c.view);
 a("qr","gift","s",["Pásalo al móvil","Pass it on"],["Abre el código QR de la tienda.","Open the store's QR code."],c=>c.qr,{pc:1});
+/* — Clima — */
+a("rain1","drop","w",["Día de lluvia","Rainy day"],["Ve cómo empieza a llover en la tienda (en el menú: Lluvia).","Watch it start raining in the store (in the menu: Rain)."],c=>c.rain>=1);
+a("glass","drop","w",["Gotas en la pantalla","Drops on the screen"],["Deja la página quieta bajo la lluvia hasta que las gotas lleguen a la pantalla.","Leave the page still in the rain until drops hit the screen."],c=>c.glass);
+a("wipe","drop","w",["Limpiaparabrisas","Windshield wiper"],["Limpia 5 gotas de la pantalla con el dedo o el ratón.","Wipe 5 drops off the screen with your finger or mouse."],c=>c.wiped>=5,{k:["¡Pantalla limpia! Qué manos tan pro. ✨","Clean screen! Such pro hands. ✨"]});
+a("firerain","bucket","w",["Bendita lluvia","Blessed rain"],["Deja que la lluvia apague el fuego de la ovejita de verano.","Let the rain put out the little sheep's summer fire."],c=>c.fireRain>=1,{pc:1,k:["¡La lluvia llegó justo a tiempo! A veces el cielo ayuda. 🌧️","The rain came just in time! Sometimes the sky helps. 🌧️"]});
 /* — Kixki y amigas — */
 a("tap7","sheep","k",["Cosquillas","Tickles"],["Toca a Kixki muchas veces seguidas.","Tap Kixki many times in a row."],c=>c.tapFast,
   {secret:1,h:["A Kixki le encantan los toques rápidos…","Kixki loves quick taps…"],k:["¡Jajaja! ¡Cosquillas! Logro secreto desbloqueado. 🤫","Hahaha! Tickles! Secret achievement unlocked. 🤫"]});
@@ -131,13 +137,15 @@ a("fire1","bucket","k",["Cuerpo de bomberos","Fire brigade"],["Apaga con agua a 
   {pc:1,big:1,k:["¡Fuego apagado! Eres muy pro, no lo olvides. 🚒","Fire's out! You're so pro, never forget it. 🚒"]});
 a("firefast","bucket","k",["Manguera veloz","Speedy hose"],["Apaga a la ovejita en menos de 6 segundos.","Put the little sheep out in under 6 seconds."],c=>c.fireFast>=1,{pc:1});
 a("firekixki","bucket","k",["Rescatada por Kixki","Rescued by Kixki"],["Deja que Kixki apague el fuego por ti.","Let Kixki put the fire out for you."],c=>c.fireKixki>=1,{pc:1,k:["¡Esta vez me tocó a mí! La próxima, tú. 😉","My turn this time! Yours next. 😉"]});
+a("cow","sheep","k",["Rebaño mixto","Mixed herd"],["Haz amistad con la vaca bailarina de vaca.exe.","Make friends with the dancing cow from cow.exe."],c=>c.cow,
+  {hid:1,big:1,k:["¡Somos de rebaños distintos… pero hoy bailamos juntas! 🐄🐑 ¡Logro oculto!","We're from different herds… but today we dance together! 🐄🐑 Hidden achievement!"]});
 /* — Constancia — */
 a("visit3","key","v",["De la casa","Part of the flock"],["Visita la tienda en 3 ocasiones distintas.","Visit the store on 3 different occasions."],c=>c.visits>=3);
 a("visit10","crown","v",["Rebaño fiel","Loyal flock"],["Visita la tienda 10 veces.","Visit the store 10 times."],c=>c.visits>=10,{big:1});
 a("konami","key","v",["Código ovejuno","Sheepy code"],["Introduce el código secreto de los videojuegos.","Enter the classic secret video game code."],c=>c.konami,
   {secret:1,h:["Un clásico de los videojuegos con flechas…","A video game classic with arrow keys…"],k:["¡El código ovejuno! Eso solo lo conocen los pros de verdad. 🎮","The sheepy code! Only true pros know that one. 🎮"]});
-a("half","star","v",["A medio camino","Halfway there"],["Consigue la mitad de los logros.","Earn half of the achievements."],()=>count()>=Math.ceil(A.length/2),{});
-a("pro","crown","v",["Eres muy pro","You're so pro"],["Consigue todos los demás logros.","Earn all the other achievements."],()=>A.every(x=>x.id==="pro"||ST.u[x.id]),
+a("half","star","v",["A medio camino","Halfway there"],["Consigue la mitad de los logros.","Earn half of the achievements."],()=>count()>=Math.ceil(A.filter(x=>!x.hid).length/2),{});
+a("pro","crown","v",["Eres muy pro","You're so pro"],["Consigue todos los demás logros.","Earn all the other achievements."],()=>A.every(x=>x.id==="pro"||x.hid||ST.u[x.id]),
   {big:1,k:["¡¡LOS CONSEGUISTE TODOS!! Eres muy pro, no lo olvides jamás. 👑","YOU GOT THEM ALL!! You're so pro, never forget it. 👑"]});
 
 /* ---------- memoria de los logros ---------- */
@@ -147,10 +155,12 @@ ST.u=ST.u||{};ST.c=ST.c||{};ST.seenAt=+ST.seenAt||0;
 const C=ST.c;
 const save=()=>{try{localStorage.setItem(LSK,JSON.stringify(ST));}catch(e){}};
 const count=()=>A.reduce((n,x)=>n+(ST.u[x.id]?1:0),0);
+/* logros ocultos (hid): no salen en la lista, ni en el total, hasta que se desbloquean */
+const NV=()=>A.reduce((n,x)=>n+(!x.hid||ST.u[x.id]?1:0),0);
 const lsNum=k=>{try{return +JSON.parse(localStorage.getItem(k)||"0")||0;}catch(e){return 0;}};
 const inc=(k,n=1)=>{C[k]=(C[k]|0)+n;};
 const mx=(k,v)=>{if(v>(C[k]|0))C[k]=v;};
-const level=u=>{const f=u/A.length;let i=0;for(let j=0;j<LV_TH.length-1;j++)if(f>=LV_TH[j])i=j;return u>=A.length?LV.length-1:i;};
+const level=u=>{const f=u/NV();let i=0;for(let j=0;j<LV_TH.length-1;j++)if(f>=LV_TH[j])i=j;return u>=NV()?LV.length-1:i;};
 
 /* =========================================================  ARRANQUE  */
 function boot(){
@@ -161,6 +171,7 @@ function boot(){
   const tx=m=>Array.isArray(m)?m[L()]:m;
   const fmt=(s,v)=>v?s.replace(/\{(\w+)\}/g,(x,k)=>v[k]!=null?v[k]:x):s;
   const isPC=()=>KK.isPC();
+  const rainOn=()=>!!(window.KXRAIN&&KXRAIN.on());
   const pick=l=>l[Math.floor(Math.random()*l.length)];
 
   /* ---------- contexto: todo lo que miden las condiciones ---------- */
@@ -171,7 +182,8 @@ function boot(){
     plays:Math.max(C.plays|0,lsNum("kixki-gp"),lsNum("kixki-rec")>0?1:0),runMax:Math.max(C.runMax|0,lsNum("kixki-rec")),recBroken:!!C.recBroken,
     theme:C.theme|0,night:!!C.night,bgs:(C.bgs||[]).length,acc:C.acc|0,music:!!C.music,lang:!!C.lang,view:!!C.view,qr:!!C.qr,
     tapFast:!!C.tapFast,tapsK:C.tapsK|0,petChats:C.petChats|0,pet:lsNum("kixki-ov"),fireUser:C.fireUser|0,fireFast:C.fireFast|0,fireKixki:C.fireKixki|0,
-    visits:S.visits|0,konami:!!C.konami
+    visits:S.visits|0,konami:!!C.konami,
+    rain:C.rainSeen|0,glass:!!C.glass,wiped:C.wiped|0,fireRain:C.fireRain|0,cow:!!C.cow
   });
 
   /* ---------- DOM: tarjeta de aviso, confeti, ventana de logros, charla ---------- */
@@ -265,9 +277,9 @@ function boot(){
   /* ---------- ventana «Logros» ---------- */
   let lastFocus=null;
   const dateOf=t=>{try{return new Date(t).toLocaleDateString(lang(),{day:"numeric",month:"short"});}catch(e){return"";}};
-  function nextHint(){return A.find(x=>!ST.u[x.id]&&!x.secret&&x.id!=="pro"&&x.id!=="half");}
+  function nextHint(){return A.find(x=>!ST.u[x.id]&&!x.secret&&!x.hid&&x.id!=="pro"&&x.id!=="half");}
   function kixkiLine(u){
-    const N=A.length;
+    const N=NV();
     if(u>=N)return["¡TODOS! Eres muy pro, no lo olvides jamás. 👑","ALL of them! You're so pro, never forget it. 👑"];
     if(u===0)return["Aún no tienes logros. ¡Abre una carpeta y empezamos! 🐑","No achievements yet. Open a folder and let's get started! 🐑"];
     const n=nextHint();
@@ -275,17 +287,18 @@ function boot(){
     return[`Llevas ${u} de ${N}. Siguiente reto: «${n.n[0]}»: ${n.d[0]}`,`You have ${u} of ${N}. Next challenge: “${n.n[1]}”: ${n.d[1]}`];
   }
   function renderPanel(){
-    const u=count(),N=A.length,lv=level(u),prev=+ST._prevSeen||0;
+    const u=count(),N=NV(),lv=level(u),prev=+ST._prevSeen||0;
     pTitle.textContent=tx(UI.title);pX.setAttribute("aria-label",tx(UI.close));pX.textContent="✕";
     pAv.innerHTML=sprite(KK.rows.happy,3);
     const cells=20,on=Math.round(u/N*cells);
     pLv.innerHTML=`<span class="kq-lt">${tx(UI.lvl)}</span> <b>${tx(LV[lv])}</b><span class="kq-num">${u} / ${N} · ${Math.round(u/N*100)}%</span><span class="kq-bar" role="img" aria-label="${u}/${N}">${Array.from({length:cells},(_,i)=>`<i class="${i<on?"on":""}"></i>`).join("")}</span>`;
     pSay.textContent=tx(kixkiLine(u));
     pList.innerHTML=Object.keys(CAT).map(k=>{
-      const list=A.filter(x=>x.c===k),got=list.filter(x=>ST.u[x.id]).length;
+      const list=A.filter(x=>x.c===k&&(!x.hid||ST.u[x.id])),got=list.filter(x=>ST.u[x.id]).length;
+      if(!list.length)return "";
       return `<section class="kq-g"><h3>${tx(CAT[k])}<small>${got}/${list.length}</small></h3><ul>${list.map(x=>{
         const un=!!ST.u[x.id],hide=x.secret&&!un,fresh=un&&ST.u[x.id]>prev;
-        return `<li class="kq-it ${un?"on":"off"}${fresh?" nw":""}"><span class="kq-ic">${ic(hide?"q":x.i,4)}</span><span class="kq-in"><b>${hide?"???":tx(x.n)}</b><small>${hide?tx(x.h||UI.secret):tx(x.d)}</small></span><span class="kq-st">${un?(fresh?`<em class="kq-new">${tx(UI.nw)}</em>`:"")+"✓ "+dateOf(ST.u[x.id]):""}${!un&&x.pc?`<em class="kq-pc">${tx(UI.pc)}</em>`:""}${hide&&!x.pc?`<em class="kq-sc">${tx(UI.secret)}</em>`:""}</span></li>`;}).join("")}</ul></section>`;}).join("");
+        return `<li class="kq-it ${un?"on":"off"}${fresh?" nw":""}"><span class="kq-ic">${ic(hide?"q":x.i,4)}</span><span class="kq-in"><b>${hide?"???":tx(x.n)}</b><small>${hide?tx(x.h||UI.secret):tx(x.d)}</small></span><span class="kq-st">${un?(fresh?`<em class="kq-new">${tx(UI.nw)}</em>`:"")+"✓ "+dateOf(ST.u[x.id]):""}${!un&&x.pc?`<em class="kq-pc">${tx(UI.pc)}</em>`:""}${hide&&!x.pc?`<em class="kq-sc">${tx(UI.secret)}</em>`:""}${un&&x.hid?`<em class="kq-sc">${tx(UI.hid)}</em>`:""}</span></li>`;}).join("")}</ul></section>`;}).join("");
   }
   function openPanel(){
     lastFocus=document.activeElement;
@@ -317,7 +330,7 @@ function boot(){
   function refreshMenu(){
     if(!btnA)return;
     const fresh=A.some(x=>ST.u[x.id]>ST.seenAt);
-    btnA.innerHTML=`${ic("trophy",2)}<span>${tx(UI.menu)} ${count()}/${A.length}</span>${fresh?'<i class="kq-dot" aria-hidden="true"></i>':""}`;
+    btnA.innerHTML=`${ic("trophy",2)}<span>${tx(UI.menu)} ${count()}/${NV()}</span>${fresh?'<i class="kq-dot" aria-hidden="true"></i>':""}`;
     btnP.textContent=tx(UI.petMenu);
   }
   refreshMenu();
@@ -344,6 +357,11 @@ function boot(){
     else if(d.t==="score")mx("runMax",d.sc|0);
     else if(d.t==="record")C.recBroken=1;
     else if(d.t==="over"){mx("runMax",d.sc|0);if(d.nr&&!d.first&&d.sc>0)C.recBroken=1;setTimeout(flushSay,1700);}
+    save();sweep();
+  });
+  addEventListener("kixki-rain",e=>{
+    const d=e.detail||{};
+    if(d.t==="start")inc("rainSeen");else if(d.t==="glass")C.glass=1;else if(d.t==="wipe")mx("wiped",d.n|0);
     save();sweep();
   });
   /* clics que la parte 1 no avisa (en captura para ir antes que app.js) */
@@ -373,6 +391,8 @@ function boot(){
     {pc:1,t:["A veces bajo a charlar con la ovejita de abajo. ¡Se pone muy graciosa! 🐑","Sometimes I go down to chat with the little sheep downstairs. She gets really funny! 🐑"]},
     {pc:1,t:["Si le haces cosquillas muy rápido a la ovejita de abajo, ¡me asomo a ver qué pasa!","If you tickle the little sheep downstairs really fast, I'll pop down to see what's going on!"]},
     {pc:1,t:["En el menú Kixki puedes pedirme que baje a hablar con la ovejita.","In the Kixki menu you can ask me to go chat with the little sheep."]},
+    {t:["Si llueve en la tienda, ¡deja la página quieta y verás cómo chocan las gotas con la pantalla! 💧","If it rains in the store, leave the page still and watch the drops hit the screen! 💧"]},
+    {pc:1,t:["Si la ovejita se incendia y empieza a llover, ¡la lluvia la apaga solita! 🌧️","If the little sheep catches fire and it starts to rain, the rain puts her out by itself! 🌧️"]},
     {pc:1,t:["En verano, con el sol fuerte, la ovejita de abajo a veces se calienta demasiado… ¡ten el agua lista! 💦","In summer, with the sun blazing, the little sheep downstairs sometimes overheats… keep the water ready! 💦"]},
     {mob:1,t:["En «Más» está «Logros»: ¡mira cuáles llevas y cuáles te faltan! 🏆","“More” has “Achievements”: see which ones you have and which are missing! 🏆"]}
   );
@@ -418,6 +438,11 @@ function boot(){
     ["k","Seguro. Y si no sabe cuál, para eso estoy yo.","Sure. And if they can't decide, that's what I'm here for."],
     ["p","Y yo para pasear de fondo y dar ambiente.","And I'm here to stroll in the background and set the mood."],
     ["k","¡Ambiente de primera! 🎶","First-class mood! 🎶"]]},
+   {id:"lluvia",when:()=>rainOn(),l:[
+    ["p","¡Llueve! Mi lana huele a oveja mojada… beee.","It's raining! My wool smells like wet sheep… baaa."],
+    ["k","A mí me encanta el sonido de la lluvia. ¡Es como música! 🌧️","I love the sound of rain. It's like music! 🌧️"],
+    ["p","Pues a mí me encoge la lana.","Well, it shrinks my wool."],
+    ["k","Jajaja. Luego te secamos al solecito. ☀️","Hahaha. We'll dry you in the sun later. ☀️"]]},
    {id:"toques",when:c=>c.pet>=5,l:[
     ["p","Me han tocado {n} veces. ¡Alguien me quiere mucho!","I've been tapped {n} times. Someone really likes me!"],
     ["k","Es que eres adorable. Yo también me sé el truco de las cosquillas.","That's because you're adorable. I know the tickle trick too."],
@@ -429,7 +454,7 @@ function boot(){
     ["k","Tiempo al tiempo. Cada quien explora a su ritmo.","All in good time. Everyone explores at their own pace."],
     ["p","Pues que se apure, que quiero conocer la de Música. 🎵","Well, tell them to hurry up, I want to see the Music one. 🎵"]]},
    {id:"juego",l:[
-    ["k","¿Has probado el Saltaovejas? Es nuestro juego.","Have you tried Sheep jump? It's our game."],
+    ["k","¿Has probado el Salta Vallas? Es nuestro juego.","Have you tried Fence Jump? It's our game."],
     ["p","¡Yo salto mejor que tú!","I jump better than you!"],
     ["k","Eso habrá que verlo. 😏","We'll have to see about that. 😏"],
     ["p","Pero primero mi siesta.","But first, my nap."],
@@ -540,7 +565,7 @@ function boot(){
       /* la ovejita se gira hacia Kixki */
       petFacing=KK.dark()?1:-petSide;if(pi&&!KK.dark())pi.style.transform=petFacing<0?"scaleX(-1)":"";
       await wait(RM()?0:380);
-      const sc=pickScript(kind),c=ctx(),vars={n:c.pet,f:c.folders,t:c.total,a:count(),N:A.length,h:new Date().toLocaleTimeString(lang(),{hour:"2-digit",minute:"2-digit"})};
+      const sc=pickScript(kind),c=ctx(),vars={n:c.pet,f:c.folders,t:c.total,a:count(),N:NV(),h:new Date().toLocaleTimeString(lang(),{hour:"2-digit",minute:"2-digit"})};
       for(const [who,es,en] of sc.l){
         if(K.tour!==tok||K.off||!S.on)return false;
         const ok2=who==="k"?await KK.say([es,en],{p:2,vars}):await petSay([es,en],vars);
@@ -566,7 +591,7 @@ function boot(){
   setInterval(()=>{
     if(!isPC()||!KK.ready||chatting||fireOn)return;
     if(KK.stage==="pet"&&KK.alive()){KK.relocate();return;}/* por si se quedó abajo */
-    if(now()>=nextFire){if(summerDay())petFire();else nextFire=now()+30000;return;}
+    if(now()>=nextFire){if(summerDay()&&!rainOn())petFire();else nextFire=now()+30000;return;}
     if(now()<nextVisit||!KK.alive()||K.game||K.mode!=="idle"||document.activeElement===$("#q"))return;
     petChat("auto");
   },4000);
@@ -592,10 +617,10 @@ function boot(){
   }
   async function petFire(force){
     if(fireOn||chatting||!isPC()||!petEl()||!petBox())return false;
-    if(!force&&(!summerDay()||!KK.ready||!S.on||K.off||K.game||K.tour||document.hidden))return false;
+    if(!force&&(!summerDay()||rainOn()||!KK.ready||!S.on||K.off||K.game||K.tour||document.hidden))return false;
     fireOn=true;nextFire=now()+rnd(200000,420000);
     const p=petEl(),pi=petPi();
-    let stage=3,t=0,x=typeof PETS.x==="number"?PETS.x:petBox().left,dirp=PETS.dir>=0?1:-1,turn=rnd(.7,1.4),shoutT=.3,shoutI=0,emb=0,rescuing=false,stopping=false,mult=1,finished=false;
+    let stage=3,t=0,x=typeof PETS.x==="number"?PETS.x:petBox().left,dirp=PETS.dir>=0?1:-1,turn=rnd(.7,1.4),shoutT=.3,shoutI=0,emb=0,rescuing=false,stopping=false,mult=1,finished=false,by="",rainT=0;
     const tok={};
     PETS.hold=true;p.classList.add("kq-burn");setFlames(p,3);pint();
     say(tx(["¡La ovejita se está quemando! Tócala para echarle agua.","The little sheep is on fire! Tap her to splash water on her."]));
@@ -616,13 +641,14 @@ function boot(){
       else out(who);
     }
     async function out(who){
-      finished=true;stopping=true;
+      finished=true;stopping=true;by=who;
       const r=petBox();if(r)for(let i=0;i<10;i++)fxAt(r.left+rnd(8,r.width-8),r.top+rnd(-6,10),"kq-em",`--c:#e6edf7;--ex:${Math.round(rnd(-12,12))}px`,1000);
       p.classList.remove("kq-burn");
       petFacing=dirp>0?1:-1;
-      petSay(who==="kixki"?["Gracias, Kixki… huelo a lana chamuscada. 😅","Thanks, Kixki… I smell like toasted wool. 😅"]:["¡Ufff! ¡Gracias! Qué alivio. 💦","Phew! Thank you! What a relief. 💦"],null,{ms:3200});
-      if(who!=="kixki")KK.say(["¡Fuego apagado! Eres muy pro, no lo olvides. 🚒","Fire's out! You're so pro, never forget it. 🚒"],{p:3,mood:"happy"});
-      if(who==="user"){inc("fireUser");if(t<6)inc("fireFast");}else if(who==="kixki")inc("fireKixki");
+      petSay(who==="rain"?["¡Llueve! ¡Ufff, qué alivio! 🌧️","It's raining! Phew, what a relief! 🌧️"]:who==="kixki"?["Gracias, Kixki… huelo a lana chamuscada. 😅","Thanks, Kixki… I smell like toasted wool. 😅"]:["¡Ufff! ¡Gracias! Qué alivio. 💦","Phew! Thank you! What a relief. 💦"],null,{ms:3200});
+      if(who==="rain")KK.say(["¡La lluvia apagó el fuego solita! 🌧️ Qué suerte tiene esta ovejita.","The rain put the fire out all by itself! 🌧️ Lucky little sheep."],{p:3,mood:"happy"});
+      else if(who!=="kixki")KK.say(["¡Fuego apagado! Eres muy pro, no lo olvides. 🚒","Fire's out! You're so pro, never forget it. 🚒"],{p:3,mood:"happy"});
+      if(who==="user"){inc("fireUser");if(t<6)inc("fireFast");}else if(who==="kixki")inc("fireKixki");else if(who==="rain")inc("fireRain");
       save();sweep();
       await wait(1900);end();
     }
@@ -651,7 +677,7 @@ function boot(){
       if(K.tour!==tok&&!ok){if(!finished){stage=0;setFlames(p,0);out("auto");}return;}
       for(let i=0;i<3&&!finished;i++){bucket();stage--;setFlames(p,stage);await wait(520);}
       if(!finished)await out("kixki");
-      KK.say(["¡Listo! Esta vez me tocó a mí. 🚒","Done! My turn this time. 🚒"],{p:3,mood:"happy"});
+      if(by==="kixki")KK.say(["¡Listo! Esta vez me tocó a mí. 🚒","Done! My turn this time. 🚒"],{p:3,mood:"happy"});
       if(K.tour===tok)K.tour=null;
       setTimeout(()=>{if(!chatting&&KK.stage==="pet")KK.relocate();},900);
     }
@@ -671,11 +697,98 @@ function boot(){
       petFacing=dirp>0?1:-1;if(pcur)playout();
       emb-=dt;if(emb<=0&&stage>0){emb=.11;const r=petBox();if(r)fxAt(r.left+rnd(6,r.width-10),r.top+rnd(-6,8),"kq-em",`--c:${["#ff7a1a","#ffd23a","#ff5a1f","#7a6a8a"][Math.floor(rnd(0,4))]};--ex:${Math.round(rnd(-10,10))}px`,900);}
       shoutT-=dt;if(shoutT<=0&&!finished&&!rescuing){shoutT=2.8;petSay(SHOUT[shoutI++%SHOUT.length],null,{ms:2400});}
+      if(rainOn()&&!finished){rainT+=dt;if(rainT>1.4){stage=0;setFlames(p,0);out("rain");}}else rainT=0;
       if(t>=FIRE_LIMIT&&!rescuing&&!finished)rescue();
       requestAnimationFrame(frame);
     })(performance.now());
     return true;
   }
+
+  /* =========================================================
+     VACA.EXE (easter egg de los 1000 toques): Kixki sube a la ventana de la vaca y charlan.
+     Si la acaricias 3 veces, o dejas que acabe la charla, se desbloquea un logro OCULTO
+     (no aparece en la lista hasta que lo consigues).
+     ========================================================= */
+  const cowEl=()=>document.querySelector(".vp.cow");
+  KK.plat("cow",()=>{
+    const v=cowEl();if(!v)return null;const r=v.getBoundingClientRect();if(r.width<60)return null;
+    const a=r.left+34;
+    return {a,b:Math.max(a,r.right-34),y:()=>{const q=v.getBoundingClientRect();return q.top-2;}};
+  });
+  const COW=[
+    ["k","¿¿Una VACA?? ¡Eh! Aquí las estrellas de la pantalla somos las ovejas. 🐑","A COW?? Hey! Around here the screen stars are the sheep. 🐑"],
+    ["c","¡Muuu! 🐄","Moooo! 🐄"],
+    ["k","Vaya… ¿tú eres la famosa vaca.exe? Nadie me avisó de que venías.","Wow… are you the famous cow.exe? Nobody told me you were coming."],
+    ["c","Muuu. (Llevo horas bailando y nadie me aplaude.)","Moo. (I've been dancing for hours and nobody applauds.)"],
+    ["k","¡Pues yo sí! ¡Bravo! 👏 Acaríciala y verás cómo se alegra.","Well I do! Bravo! 👏 Pet her and watch her cheer up."],
+    ["c","¡Mu-mu-música! 🎶","Mu-mu-music! 🎶"]
+  ];
+  const PATS=[["¡Muuu! 💕","Moooo! 💕"],["¡Muu-muuu! 🎶","Moo-mooo! 🎶"],["¡MUUUUU! ✨","MOOOOO! ✨"]];
+  let cowBusy=false,pats=0;
+  const cowBeep=()=>{if(window.KXS)try{KXS.beep(130,.22);setTimeout(()=>KXS.beep(104,.28),170);}catch(e){}};
+  function cowHeart(v){
+    if(RM())return;const r=v.getBoundingClientRect(),i=document.createElement("i");i.className="kq-ht";
+    i.style.cssText=`left:${Math.round(r.width/2+rnd(-60,60))}px;top:${Math.round(r.height*.5)}px`;i.innerHTML=ic("heart",3);
+    v.append(i);setTimeout(()=>i.remove(),1300);
+  }
+  function cowSay(v,msg){
+    return new Promise(res=>{
+      const b=$(".kq-cb",v);if(!b){res(false);return;}
+      const text=tx(msg);b.textContent=text;b.classList.add("in");say("🐄: "+text);cowBeep();
+      const ms=RM()?900:clamp(1900+text.length*45,2300,5200);
+      const iv=setInterval(()=>{if(!v.isConnected){clearTimeout(t);clearInterval(iv);res(false);}},200);
+      const t=setTimeout(()=>{clearInterval(iv);b.classList.remove("in");res(true);},ms);
+    });
+  }
+  function befriend(){if(C.cow)return;C.cow=1;save();sweep();}
+  async function cowChat(v){
+    if(cowBusy)return;cowBusy=true;
+    const tok={};let i=0,fails=0;
+    try{
+      while((chatting||fireOn)&&v.isConnected)await wait(600);
+      await wait(RM()?0:700);
+      while(i<COW.length&&v.isConnected&&fails<4){
+        if(!(KK.ready&&S.on&&!K.off))return;
+        /* (re)sube a la ventana de la vaca; si algo la interrumpe, espera un poco y sigue donde iba */
+        if(K.tour!==tok||KK.stage!=="cow"){
+          K.tour=tok;KK.interrupt();
+          const ok=await KK.hop("cow");
+          if(!ok||K.tour!==tok){fails++;await wait(1800);continue;}
+          await wait(RM()?0:300);
+        }
+        if(KK.el)KK.el.classList.add("kq-cowtop");/* por encima de las ventanas de broma */
+        const [who,es,en]=COW[i];
+        const r=who==="k"?await KK.say([es,en],{p:2}):await cowSay(v,[es,en]);
+        if(!r||K.tour!==tok){if(!v.isConnected)return;fails++;await wait(1800);continue;}
+        i++;await wait(RM()?0:240);
+      }
+      if(i>=COW.length&&v.isConnected)befriend();
+    }finally{cowBusy=false;if(K.tour===tok)K.tour=null;setTimeout(()=>{if(!cowBusy&&KK.el)KK.el.classList.remove("kq-cowtop");},2500);}
+  }
+  function cowGone(){
+    const was=C.cow;pats=0;
+    if(!(KK.ready&&S.on&&!K.off))return;
+    setTimeout(()=>{if(KK.stage==="cow"&&!cowEl())KK.relocate();},350);
+    setTimeout(()=>{try{KK.say(was?["¡Adiós, vaca.exe! Fue un placer bailar contigo. 👋","Bye, cow.exe! It was a pleasure dancing with you. 👋"]:["¡Ey, se fue la vaca! Bueno… ¡adiós! 👋","Hey, the cow left! Oh well… bye! 👋"],{p:2,key:"cow-bye",cd:20000});}catch(e){}},700);
+  }
+  new MutationObserver(ms=>{
+    for(const m of ms){
+      m.addedNodes.forEach(n=>{
+        if(n.nodeType!==1||!n.matches||!n.matches(".vp.cow")||n.querySelector(".kq-cb"))return;
+        const img=n.querySelector("img");
+        if(img)img.insertAdjacentHTML("afterend",'<div class="kq-cb" aria-live="off"></div>');
+        pats=0;cowChat(n);
+      });
+      m.removedNodes.forEach(n=>{if(n.nodeType===1&&n.matches&&n.matches(".vp.cow"))cowGone();});
+    }
+  }).observe(document.body,{childList:true});
+  document.addEventListener("click",e=>{
+    const im=e.target&&e.target.closest&&e.target.closest(".vp.cow img");if(!im)return;
+    const v=im.closest(".vp.cow");cowHeart(v);cowBeep();
+    const b=$(".kq-cb",v);if(b&&!b.classList.contains("in")){b.textContent=tx(PATS[Math.min(pats,PATS.length-1)]);b.classList.add("in");clearTimeout(b._t);b._t=setTimeout(()=>b.classList.remove("in"),1700);}
+    pats++;if(pats>=3)befriend();
+  });
+  window.addEventListener("pointerup",()=>{if(cowEl())dispatchEvent(new Event("resize"));});/* Kixki sigue a la ventana si la arrastras */
 
   /* ---------- listo: ponerse al día sin avisar y enseñar qué había ---------- */
   const first=!ST.init;ST.init=1;
@@ -689,10 +802,10 @@ function boot(){
   refreshMenu();
 
   window.KXQ={
-    open:openPanel,list:()=>A.map(x=>({id:x.id,name:x.n[0],done:!!ST.u[x.id]})),state:ST,
+    open:openPanel,list:()=>A.filter(x=>!x.hid||ST.u[x.id]).map(x=>({id:x.id,name:x.n[0],done:!!ST.u[x.id]})),state:ST,
     grant(id){const x=A.find(y=>y.id===id);if(!x||ST.u[id])return false;const lv0=level(count());ST.u[id]=now();save();announce([x],lv0);refreshMenu();sweep();return true;},
     reset(){ST.u={};ST.c={};ST.seenAt=0;ST.init=1;Object.keys(C).forEach(k=>delete C[k]);save();refreshMenu();if(!panel.hidden)renderPanel();},
-    chat:petChat,fire:()=>petFire(true),confetti,sparks
+    chat:petChat,fire:()=>petFire(true),cow:()=>window.KXE&&KXE.fire(1000),confetti,sparks
   };
 }
 const run=()=>{try{boot();}catch(e){try{console.warn("Kixki 2:",e);}catch(_){}}};

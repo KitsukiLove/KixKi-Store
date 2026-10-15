@@ -125,3 +125,14 @@
 @keyframes kqf2{0%{opacity:0}50%{opacity:1}}
 #pet.kq-burn .pa svg:not(.kq-i){filter:sepia(.55) saturate(1.8) hue-rotate(-20deg);animation:bob .16s steps(1,end) infinite}
 @media (prefers-reduced-motion:reduce){#pet .kq-fl .fa,#pet .kq-fl .fb{animation:none}#pet .kq-fl .fb{display:none}#pet .kq-fl .fa{opacity:1}.kq-em,.kq-wd,.kq-bk{animation-duration:.01s}}
+
+/* vaca.exe: globito de la vaca, corazones y logro oculto */
+.vp.cow{position:fixed}
+.kq-cb{margin:0 10px 8px;min-height:32px;padding:6px 8px;border:2px solid #2a1650;background:#fff;color:#2a1650;font-size:14px;line-height:1.3;text-align:center;opacity:0;transition:opacity .15s steps(2);box-sizing:border-box}
+.kq-cb.in{opacity:1}
+.vp.cow img{cursor:pointer}
+.kq-ht{position:absolute;z-index:3;pointer-events:none;animation:kqht 1.2s steps(10) forwards}
+.kq-ht svg{display:block}
+@keyframes kqht{from{transform:translateY(0);opacity:1}to{transform:translateY(-90px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.kq-ht{display:none}.kq-cb{transition:none}}
+#kixki.kq-cowtop{z-index:9700}

@@ -1,7 +1,7 @@
 /* =========================================================
    KIXKI · la oveja guía  (parte 1)
    - Vive en la página y se pasea por: la barra de búsqueda, las carpetas del escritorio (PC),
-     la fila de carpetas y la barra inferior (móvil), las ventanas abiertas (PC) y el Saltaovejas.
+     la fila de carpetas y la barra inferior (móvil), las ventanas abiertas (PC) y el Salta Vallas.
    - Habla (español / English) con globos retro: consejos, ánimos y reacciones a lo que haces.
    - Guarda su memoria en localStorage ("kixki-k"). Se apaga desde el menú Kixki / Más.
    - Para la parte 2 (logros): avisa de todo con el evento  "kixki-evt"  → e.detail = {t:"folder"|"search"|…}
@@ -72,7 +72,7 @@ const T={
   {t:["En «Packs» hay listas de apps para instalar varias de una vez.","“Packs” has app lists to install several at once."]},
   {t:["Las apps «Compatible con Shizuku» rinden mejor si instalas Shizuku primero.","Apps marked “Works with Shizuku” run better if you install Shizuku first."]},
   {t:["En «Novedades» salen las apps nuevas desde tu última visita.","“New” shows the apps added since your last visit."]},
-  {t:["¿Has probado el Saltaovejas? Está en el menú. ¡A ver cuánto saltas!","Tried Sheep jump yet? It's in the menu. Let's see how high you score!"]},
+  {t:["¿Has probado el Salta Vallas? Está en el menú. ¡A ver cuánto saltas!","Tried Fence Jump yet? It's in the menu. Let's see how high you score!"]},
   {t:["El fondo «Auto» cambia solo según la temporada y la hora del día.","The “Auto” background changes by itself with the season and time of day."]},
   {t:["Si tu navegador lo permite, puedes instalar Kixki Store como app desde el menú.","If your browser allows it, you can install Kixki Store as an app from the menu."]},
   {t:["Antes de instalar algo, revisa siempre la fuente de la app. ¡Los pros lo hacen!","Before installing anything, always check the app's source. Pros do!"]}
