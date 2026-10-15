@@ -136,3 +136,19 @@
 @keyframes kqht{from{transform:translateY(0);opacity:1}to{transform:translateY(-90px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.kq-ht{display:none}.kq-cb{transition:none}}
 #kixki.kq-cowtop{z-index:9700}
+
+/* =========================================================
+   EASTER EGG · Modo Hacker (F12 / inspector): Kixki con lentes y sudadera con capucha
+   Colores nuevos del sprite: h/i/j = tela de la sudadera (base/sombra/borde), v = cristal, n/t = brillo verde
+   ========================================================= */
+.k-h{fill:#3b3660}.k-i{fill:#272344}.k-j{fill:#6a62a0}.k-v{fill:#0b1118}.k-n{fill:#39ff88}.k-t{fill:#b8ffd9}
+#kixki.kk-hk .kk-flip{filter:drop-shadow(0 0 3px rgba(57,255,136,.55))}
+/* su globo de texto se vuelve una mini terminal */
+#kixki.kk-hk .kk-bub{background:#0b1118;color:#39ff88;font:500 13px/1.35 ui-monospace,"Cascadia Mono",Consolas,monospace;
+  box-shadow:0 -3px 0 0 #1f9a5c,0 3px 0 0 #1f9a5c,-3px 0 0 0 #1f9a5c,3px 0 0 0 #1f9a5c,0 6px 0 0 rgba(0,0,0,.35)}
+#kixki.kk-hk .kk-nm{font-size:0;letter-spacing:0;text-transform:none}
+#kixki.kk-hk .kk-nm::before{content:"kixki@root:~$";font-size:11px;color:#8cffc0}
+#kixki.kk-hk .kk-x{color:#1f9a5c}
+#kixki.kk-hk .kk-x:hover,#kixki.kk-hk .kk-x:focus-visible{color:#39ff88}
+#kixki.kk-hk .kk-tl .o{fill:#1f9a5c}
+#kixki.kk-hk .kk-tl .i{fill:#0b1118}
