@@ -6,6 +6,8 @@
    - CHARLA: en PC, Kixki baja a hablar con la ovejita que camina sola abajo (cada rato, o desde el menú,
      o cuando le haces muchas cosquillas a la ovejita). De noche la encuentra dormida.
    - PISTAS: de vez en cuando Kixki te susurra qué logro te queda más cerca.
+   - PARAGUAS: cuando empieza a llover, Kixki baja a ver a la ovejita de abajo (solo PC) y le baja un paraguas para que no se moje.
+     Se queda sobre ella mientras llueva y se recoge solo al parar. Probar: KXQ.umbrella(true) (hace llover) / KXQ.umbrella(false)
    - EASTER EGG «Modo Hacker»: si abres la consola (F12, Ctrl+Shift+I/J/C, Cmd+Opt+I/J/C) o el inspector, Kixki se pone lentes y
      sudadera con capucha y te saluda en su globo. Al cerrar el inspector, vuelve a ser la de siempre. Probar: KXQ.hacker(true/false)
    - Todo se guarda en localStorage ("kixki-a"). API para pruebas en la consola: KXQ.list(), KXQ.grant("id"), KXQ.reset()
@@ -440,7 +442,11 @@ function boot(){
     ["k","Seguro. Y si no sabe cuál, para eso estoy yo.","Sure. And if they can't decide, that's what I'm here for."],
     ["p","Y yo para pasear de fondo y dar ambiente.","And I'm here to stroll in the background and set the mood."],
     ["k","¡Ambiente de primera! 🎶","First-class mood! 🎶"]]},
-   {id:"lluvia",when:()=>rainOn(),l:[
+   {id:"paraguas",when:()=>rainOn()&&UMB.on,l:[
+    ["p","¡Con el paraguas de Kixki ni una gotita! Beee.","Not a single drop with Kixki's umbrella! Baaa."],
+    ["k","Cuidar de mi rebaño es lo mío. ☂️","Looking after my flock is what I do. ☂️"],
+    ["p","Pues tu rebaño te lo agradece. Beee. 💜","Well, your flock thanks you. Baaa. 💜"]]},
+   {id:"lluvia",when:()=>rainOn()&&!UMB.on,l:[
     ["p","¡Llueve! Mi lana huele a oveja mojada… beee.","It's raining! My wool smells like wet sheep… baaa."],
     ["k","A mí me encanta el sonido de la lluvia. ¡Es como música! 🌧️","I love the sound of rain. It's like music! 🌧️"],
     ["p","Pues a mí me encoge la lana.","Well, it shrinks my wool."],
@@ -598,6 +604,72 @@ function boot(){
     petChat("auto");
   },4000);
   addEventListener("kixki-mode",()=>{if(!isPC()){PETS.hold=false;}});
+
+  /* =========================================================
+     PARAGUAS DE KIXKI: en cuanto llueve (y si estamos en modo PC), Kixki baja a ver a la ovejita de abajo y le baja un paraguas.
+     El paraguas es hijo de #pet: la acompaña al pasear, y se recoge solo cuando la lluvia para.
+     ========================================================= */
+  const UMB={on:false,busy:false,el:null,next:0};
+  const wet=()=>!!(window.KXRAIN&&KXRAIN.raining);
+  const UMBR=[".......bbbbbbb.......","....bawwwaaawwwab....","..baaawwwaaawwwaaab..",".baaaawwwaaawwwaaaab.","bwaaaawwwaaawwwaaaawb","bwaaaawwwaaawwwaaaawb","bwaaaawwwaaawwwaaaawb","bwaaaawwwaaawwwaaaawb","b....b....b....b....b","..........l..........","..........l..........","..........l..........","..........l..........","..........l..........","..........l.........."];
+  const UMBL={
+    day:[
+      ["¡Ovejita, está lloviendo! Espera, te bajo un paraguas. ☂️","Little sheep, it's raining! Hold on, I'm lowering an umbrella for you. ☂️"],
+      ["¡Beee! ¡Gracias, Kixki! Ahora mi lana sigue esponjosa. ☂️","Baaa! Thanks, Kixki! Now my wool stays fluffy. ☂️"],
+      ["Para eso estamos las amigas. ¡Y ojo con los charcos! 💦","That's what friends are for. And watch out for puddles! 💦"]
+    ],
+    night:[
+      ["Shhh… llueve y tú dormida sin paraguas. Te bajo uno. ☂️","Shhh… it's raining and you're asleep without an umbrella. Lowering one for you. ☂️"],
+      ["Zzz… qué calentita… gracias, Kixki… zzz…","Zzz… so cozy… thanks, Kixki… zzz…"],
+      ["Dulces sueños bajo la lluvia. 🌧️💤","Sweet dreams in the rain. 🌧️💤"]
+    ]
+  };
+  function umbShow(){
+    const p=petEl();if(!p||UMB.el)return;
+    const e=document.createElement("div");e.className="kq-umb";e.innerHTML=sprite(UMBR,3);
+    p.append(e);p.classList.add("kq-rainy");UMB.el=e;UMB.on=true;
+  }
+  function umbHide(quick){
+    const e=UMB.el,p=petEl();UMB.on=false;UMB.el=null;
+    if(p)p.classList.remove("kq-rainy");
+    if(!e)return;
+    if(quick||RM()){e.remove();return;}
+    e.classList.add("out");setTimeout(()=>e.remove(),600);
+  }
+  async function umbLend(){
+    if(UMB.busy||UMB.on||chatting||fireOn||!isPC()||!wet()||!KK.ready||!KK.alive()||K.game||!petBox())return null;/* null = aún no es buen momento: reintenta pronto */
+    UMB.busy=true;chatting=true;nextVisit=now()+rnd(100000,190000);
+    const tok={};K.tour=tok;/* igual que en la charla: mientras ocurre, el cerebro de Kixki no la manda a otro sitio */
+    const dog=setInterval(()=>{if(K.tour!==tok||K.off||!S.on)pint();},250);
+    const p=petEl(),pi=petPi(),night=KK.dark(),L=night?UMBL.night:UMBL.day;
+    try{
+      PETS.hold=true;KK.interrupt();
+      if(p)p.classList.add("kq-chat");
+      const ok=await KK.hop("pet");
+      if(!ok||K.tour!==tok)return false;
+      petFacing=night?1:-petSide;if(pi&&!night)pi.style.transform=petFacing<0?"scaleX(-1)":"";
+      await wait(RM()?0:300);
+      if(!(await KK.say(L[0],{p:2}))||K.tour!==tok)return false;
+      if(!wet())return false;                           /* escampó mientras hablaba: no hace falta */
+      umbShow();                                        /* el paraguas baja hasta la ovejita */
+      await wait(RM()?0:800);
+      if(K.tour!==tok||K.off||!S.on)return false;
+      if(!(await petSay(L[1]))||K.tour!==tok)return false;
+      await wait(RM()?0:240);
+      await KK.say(L[2],{p:2});
+      return true;
+    }finally{
+      clearInterval(dog);pint();
+      PETS.hold=false;if(p)p.classList.remove("kq-chat","kq-talk");if(pi)pi.style.transform="";
+      chatting=false;UMB.busy=false;if(K.tour===tok)K.tour=null;
+      if(KK.stage==="pet"&&!K.off&&S.on)setTimeout(()=>{if(!chatting&&KK.stage==="pet")KK.relocate();},400);
+    }
+  }
+  setInterval(()=>{
+    if(document.hidden||UMB.busy)return;
+    if(UMB.on&&!wet()){umbHide();return;}                /* dejó de llover: recoge el paraguas */
+    if(!UMB.on&&wet()&&isPC()&&now()>=UMB.next)umbLend().then(ok=>{if(ok===false)UMB.next=now()+25000;});/* false = se interrumpió: espera un poco antes de insistir */
+  },1500);
 
   /* =========================================================
      INCENDIO DE VERANO: de día y con el fondo de verano, la ovejita de abajo
@@ -904,6 +976,7 @@ function boot(){
     grant(id){const x=A.find(y=>y.id===id);if(!x||ST.u[id])return false;const lv0=level(count());ST.u[id]=now();save();announce([x],lv0);refreshMenu();sweep();return true;},
     reset(){ST.u={};ST.c={};ST.seenAt=0;ST.init=1;Object.keys(C).forEach(k=>delete C[k]);save();refreshMenu();if(!panel.hidden)renderPanel();},
     chat:petChat,fire:()=>petFire(true),cow:()=>window.KXE&&KXE.fire(1000),confetti,sparks,
+    umbrella(v){if(v===false){UMB.next=now()+3e4;umbHide(true);return false;}UMB.next=0;if(!wet()&&window.KXRAIN)KXRAIN.start(90000);return true;},
     hacker(v){HK.key=v==null?!HK.on:!!v;hkEval();setTimeout(hkEval,350);setTimeout(hkEval,1200);return HK.on;}
   };
 }

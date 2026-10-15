@@ -152,3 +152,16 @@
 #kixki.kk-hk .kk-x:hover,#kixki.kk-hk .kk-x:focus-visible{color:#39ff88}
 #kixki.kk-hk .kk-tl .o{fill:#1f9a5c}
 #kixki.kk-hk .kk-tl .i{fill:#0b1118}
+
+/* =========================================================
+   PARAGUAS de Kixki para la ovejita de abajo cuando llueve (kixki2.js · «PARAGUAS DE KIXKI»)
+   Cuelga de #pet, así que la acompaña al pasear. El sprite usa la paleta de Kixki (a = color de acento, w = blanco, b = sombra, l = varilla)
+   ========================================================= */
+#pet .kq-umb{position:absolute;left:50%;top:-44px;margin-left:-32px;pointer-events:none;z-index:2;animation:kqui .7s steps(7) both}
+#pet .kq-umb svg{display:block}
+#pet .kq-umb.out{animation:kquo .55s steps(5) forwards}
+@keyframes kqui{from{transform:translateY(-90px);opacity:0}30%{opacity:1}to{transform:none;opacity:1}}
+@keyframes kquo{from{transform:none;opacity:1}to{transform:translateY(-90px);opacity:0}}
+#pet.kq-rainy .oc{top:-74px}
+:root[data-theme="dark"] #pet .kq-umb{margin-top:17px}
+@media (prefers-reduced-motion:reduce){#pet .kq-umb,#pet .kq-umb.out{animation:none}}
