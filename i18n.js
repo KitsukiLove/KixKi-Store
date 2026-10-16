@@ -207,7 +207,15 @@ const EN={
 "Día a día.exe":"Daily.exe",
 "Notas, IA, reloj y entrenamientos":"Notes, AI, clock and workouts",
 "Juega tus clásicos y optimiza tus juegos":"Play your classics and optimize your games",
-"Reproducir, descargar y crear":"Play, download and create"
+"Reproducir, descargar y crear":"Play, download and create",
+"Mensajería privada":"Private messaging",
+"Mensajería privada con cifrado de extremo a extremo por defecto: chats, notas de voz, llamadas y videollamadas (grupos de hasta 1.000 personas y llamadas grupales de hasta 50). Tiene mensajes que desaparecen e historias de 24 horas. Es de código abierto, sin anuncios y se financia con donaciones.":"Private messaging with end-to-end encryption by default: chats, voice notes, calls and video calls (groups of up to 1,000 people and group calls of up to 50). It has disappearing messages and 24-hour stories. It is open source, ad-free and funded by donations.",
+"Para registrarte necesita un número de teléfono; después puedes ocultarlo a los demás con un nombre de usuario en Ajustes.":"You need a phone number to sign up; afterwards you can hide it from others with a username in Settings.",
+"Mensajería privada y de código abierto que no pide número de teléfono ni correo: te registras solo con un ID de cuenta. Sus mensajes viajan por una red descentralizada con enrutamiento cebolla, pensada para proteger tu IP y con quién hablas. Tiene chats, grupos, comunidades de más de 100 personas y mensajes temporales, y no recopila ni vende tus datos.":"Open source private messaging that asks for no phone number or email: you sign up with just an Account ID. Its messages travel through a decentralized onion-routed network, designed to protect your IP and who you talk to. It has chats, groups, communities of 100+ people and disappearing messages, and it doesn't collect or sell your data.",
+"Tu cuenta se guarda con una frase de recuperación: anótala en un lugar seguro, porque sin ella no se puede recuperar.":"Your account is kept with a recovery phrase: write it down somewhere safe, because without it the account can't be recovered.",
+"Protege tus datos, mensajes, llamadas y enlaces":"Protect your data, messages, calls and links",
+"Mensajes privados":"Private messages",
+"Chatea con cifrado de extremo a extremo, con o sin número de teléfono.":"Chat with end-to-end encryption, with or without a phone number."
 };
 const CL={Clásico:"Classic",Valle:"Valley",Navidad:"Christmas",Primavera:"Spring",Verano:"Summer","Otoño":"Autumn",Invierno:"Winter","Auto (temporada)":"Auto (season)",Lila:"Lilac",Menta:"Mint",Rosa:"Pink",Atardecer:"Sunset"},ST={"sí":"on","no":"off"},LB={"Música":"Music","Efectos":"Effects","Logos pixel":"Pixel logos"};
 const RX=[

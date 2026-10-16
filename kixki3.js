@@ -5,6 +5,7 @@
      y «cierra» una ventana al azar (a veces estando ella encima…).
    - Físicas: puedes agarrar a Kixki y moverla por toda la página; al soltarla cae y rebota.
      Si está sobre una ventana y la mueves o la cierras, se cae y se enfada.
+   - Cuenta los lanzamientos con impulso (evento «throw»): a los 10 aparece la cancha secreta de básquet (basket.js).
    - Se apoya en kixki.js (KXK) y kixki2.js. Memoria propia en localStorage («kixki-k3»).
    - En la consola: KXK3.bg() · KXK3.close() · KXK3.scene("gossip"|"conspi"|"code"|"plan"|"sass") · KXK3.state
    ========================================================= */
@@ -15,7 +16,7 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rnd=(a,b)=>a+Math.random()*(b-a),
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 
 /* ---------- memoria ---------- */
-const LSK="kixki-k3",D0={v:1,pr:true,plan:0,grabs:0,drops:0,closed:0,bgs:0};
+const LSK="kixki-k3",D0={v:1,pr:true,plan:0,grabs:0,drops:0,closed:0,bgs:0,throws:0};
 let S3;try{S3=Object.assign({},D0,JSON.parse(localStorage.getItem(LSK)||"{}"));}catch(e){S3=Object.assign({},D0);}
 const save=()=>{try{localStorage.setItem(LSK,JSON.stringify(S3));}catch(e){}};
 
@@ -346,7 +347,10 @@ function boot(){
     const s=H.samples,L=s[s.length-1];let vx=0,vy=0;
     if(s.length>=2&&performance.now()-L.t<90){const a=s[0],dt=(L.t-a.t)/1000;if(dt>.01){vx=(L.x-a.x)/dt;vy=(L.y-a.y)/dt;}}
     vx=clamp(vx,-1500,1500);vy=clamp(vy,-1200,900);
-    startFall({vx,vy,thrown:Math.hypot(vx,vy)>850,reason:"release"});
+    const thrown=Math.hypot(vx,vy)>850;
+    /* cada lanzamiento de verdad se cuenta: a los 10 aparece la pestañita de la cancha de básquet (basket.js) */
+    if(thrown){const n=S3.throws=(S3.throws|0)+1;save();KK.emit("throw",{n});}
+    startFall({vx,vy,thrown,reason:"release"});
   }
 
   /* ---- caer ---- */

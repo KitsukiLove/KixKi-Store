@@ -337,22 +337,6 @@
      ],
      "tip": "Pide muchos permisos (archivos, contactos…): dale solo los que uses y úsala en una red de confianza.",
      "added": "2026-10-15"
-    },
-    {
-     "name": "Fake Traveler",
-     "tag": "Ubicación falsa",
-     "desc": "Cambia tu ubicación GPS a cualquier punto del mapa. Se activa eligiéndola como «app de ubicación simulada» en las Opciones de desarrollador. Código abierto (GPL-3.0).",
-     "links": [
-      [
-       "Descarga",
-       "https://f-droid.org/es/packages/cl.coders.faketraveler"
-      ]
-     ],
-     "logo": [
-      "https://github.com/mcastillof.png?size=160"
-     ],
-     "tip": "Algunas apps detectan la ubicación falsa y pueden restringir tu cuenta: úsala con cuidado.",
-     "added": "2026-10-15"
     }
    ]
   },
@@ -449,7 +433,7 @@
    "id": "privacidad",
    "e": "🔒",
    "t": "Privacidad",
-   "s": "Protege tus datos, fotos, llamadas y enlaces",
+   "s": "Protege tus datos, mensajes, llamadas y enlaces",
    "apps": [
     {
      "name": "FireWall Blocks",
@@ -517,6 +501,44 @@
      "added": "2026-10-15"
     },
     {
+     "name": "Signal",
+     "tag": "Mensajería privada",
+     "desc": "Mensajería privada con cifrado de extremo a extremo por defecto: chats, notas de voz, llamadas y videollamadas (grupos de hasta 1.000 personas y llamadas grupales de hasta 50). Tiene mensajes que desaparecen e historias de 24 horas. Es de código abierto, sin anuncios y se financia con donaciones.",
+     "links": [
+      [
+       "Play",
+       "https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms"
+      ],
+      [
+       "APK",
+       "https://signal.org/android/apk/"
+      ],
+      [
+       "GitHub",
+       "https://github.com/signalapp/Signal-Android"
+      ]
+     ],
+     "tip": "Para registrarte necesita un número de teléfono; después puedes ocultarlo a los demás con un nombre de usuario en Ajustes.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Session",
+     "tag": "Mensajería privada",
+     "desc": "Mensajería privada y de código abierto que no pide número de teléfono ni correo: te registras solo con un ID de cuenta. Sus mensajes viajan por una red descentralizada con enrutamiento cebolla, pensada para proteger tu IP y con quién hablas. Tiene chats, grupos, comunidades de más de 100 personas y mensajes temporales, y no recopila ni vende tus datos.",
+     "links": [
+      [
+       "Abrir",
+       "https://getsession.org/"
+      ],
+      [
+       "GitHub",
+       "https://github.com/session-foundation/session-android"
+      ]
+     ],
+     "tip": "Tu cuenta se guarda con una frase de recuperación: anótala en un lugar seguro, porque sin ella no se puede recuperar.",
+     "added": "2026-10-15"
+    },
+    {
      "name": "SnapSafe",
      "tag": "Cámara privada",
      "desc": "Cámara que guarda las fotos cifradas en el almacenamiento privado de la app y no tiene permiso de internet. Galería con PIN aparte, borra los metadatos al compartir, desenfoca caras y te deja elegir qué ubicación añadir. Trae un PIN trampa que, al usarlo, borra tus fotos. Código abierto (MIT).",
@@ -546,6 +568,22 @@
       "https://github.com/lz233.png?size=160"
      ],
      "tip": "Pide varios permisos (mostrarse sobre otras apps, inicio automático): revísalos al instalar.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Fake Traveler",
+     "tag": "Ubicación falsa",
+     "desc": "Cambia tu ubicación GPS a cualquier punto del mapa. Se activa eligiéndola como «app de ubicación simulada» en las Opciones de desarrollador. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Descarga",
+       "https://f-droid.org/es/packages/cl.coders.faketraveler"
+      ]
+     ],
+     "logo": [
+      "https://github.com/mcastillof.png?size=160"
+     ],
+     "tip": "Algunas apps detectan la ubicación falsa y pueden restringir tu cuenta: úsala con cuidado.",
      "added": "2026-10-15"
     }
    ]

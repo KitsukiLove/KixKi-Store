@@ -404,7 +404,7 @@ secs.forEach(s=>{s.dataset.e=C.find(c=>c.id===s.id).e;});
 document.body.insertAdjacentHTML("beforeend",
 `<nav id="desk" aria-label="Escritorio">${C.map(c=>`<button type="button" class="di" data-id="${c.id}" data-e="${c.e}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],5)}<span>${META[c.id][0]}</span><em>${c.a.length} ${c.a.length===1?"app":"apps"}</em></button>`).join("")}</nav>
 <div id="pet" aria-hidden="true"><div class="pi"><span class="pa">${spr(SHEEP,4)}</span><span class="ps">${spr(SLEEP,4)}</span>${[2,3,4].map((n,i)=>`<i class="zz" style="--zd:-${i*1.2}s">${spr(ZZ,n)}</i>`).join("")}</div></div>
-<div id="sm" hidden>${C.map(c=>`<button type="button" class="sm" data-id="${c.id}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],2)}${c.t}</button>`).join("")}<button type="button" class="sm" id="smt">Día / noche</button><button type="button" class="sm" id="sma">Cerrar todas</button></div>
+<div id="sm" hidden><button type="button" class="sm" id="smt">Día / noche</button><button type="button" class="sm" id="sma">Cerrar todas</button></div>
 <div id="taskbar"><button type="button" class="start" id="st">${spr(SHEEP,2)}Kixki</button>${C.map(c=>`<button type="button" class="tk" data-id="${c.id}" title="${META[c.id][0]}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],2)}<span>${META[c.id][0]}</span></button>`).join("")}<div class="tray"><span>Hecho con ♥ por KitsukiLove</span><b id="clk"></b></div></div>`);
 const sm=document.getElementById("sm");
 function sync(){secs.forEach(s=>{const on=!s.classList.contains("min");
@@ -569,10 +569,11 @@ function fill(id,list,empty,ic){const p=secOf(id).querySelector(".panel");p.quer
 const favs=()=>LS.g("kixki-fav",[]);
 function rf(){const f=favs();fill("favs",origs().filter(a=>f.includes(nm(a))),"Toca ☆ en una app para guardarla aquí.","☆");
   $$(".star").forEach(b=>{const on=f.includes(b.dataset.n);b.textContent=on?"★":"☆";b.setAttribute("aria-pressed",on);b.classList.toggle("on",on);});}
-const PACKS=[["🛡️","Privacidad","Menos rastreo y más control sobre lo que sale de tu móvil.",["Aurora Store","F-Droid","FireWall Blocks","PrivacyFlip","No More Background","LeanType"]],
+const PACKS=[["🛡️","Privacidad","Menos rastreo y más control sobre lo que sale de tu móvil.",["Aurora Store","F-Droid","FireWall Blocks","PrivacyFlip","No More Background","LeanType","Exodus","Bitwarden"]],
+["💬","Mensajes privados","Chatea con cifrado de extremo a extremo, con o sin número de teléfono.",["Signal","Session"]],
 ["🎨","Personalizar","Widgets, fondos y teclado para dejar el móvil a tu gusto.",["Widgets Pro","Photo Widget","GIF Live Wallpaper","Essentials","LeanType"]],
-["🚀","Para empezar","Lo mínimo para instalar y actualizar apps sin Play Store.",["F-Droid","Aurora Store","Komi Store","Universal Installer","Shizuku"]],
-["🎧","Música","Para escuchar y descargar tu música.",["Poweramp","SpotiFLAC"]]];
+["🚀","Para empezar","Lo mínimo para instalar y actualizar apps sin Play Store.",["F-Droid","Droid-ify","Aurora Store","Komi Store","Universal Installer","Shizuku"]],
+["🎧","Música","Para escuchar y descargar tu música.",["Poweramp","SpotiFLAC","ClassiPod"]]];
 (function(){const p=secOf("packs").querySelector(".panel"),by={};origs().forEach(a=>by[nm(a)]=a);
   PACKS.forEach(([ic,t,d,l])=>{const ok=l.filter(n=>by[n]);
     const txt=`Pack «${t}» de Kixki Store\n`+ok.map(n=>{const a=by[n].querySelector(".links a");return"• "+n+(a?": "+a.href:"");}).join("\n");

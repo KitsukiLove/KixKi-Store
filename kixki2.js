@@ -143,6 +143,11 @@ a("firefast","bucket","k",["Manguera veloz","Speedy hose"],["Apaga a la ovejita 
 a("firekixki","bucket","k",["Rescatada por Kixki","Rescued by Kixki"],["Deja que Kixki apague el fuego por ti.","Let Kixki put the fire out for you."],c=>c.fireKixki>=1,{pc:1,k:["¡Esta vez me tocó a mí! La próxima, tú. 😉","My turn this time! Yours next. 😉"]});
 a("cow","sheep","k",["Rebaño mixto","Mixed herd"],["Haz amistad con la vaca bailarina de vaca.exe.","Make friends with the dancing cow from cow.exe."],c=>c.cow,
   {hid:1,big:1,k:["¡Somos de rebaños distintos… pero hoy bailamos juntas! 🐄🐑 ¡Logro oculto!","We're from different herds… but today we dance together! 🐄🐑 Hidden achievement!"]});
+a("throw10","sheep","k",["Oveja voladora","Flying sheep"],["Lanza a Kixki 10 veces.","Throw Kixki 10 times."],c=>c.throws>=10,
+  {secret:1,h:["A Kixki le va el vuelo… si la lanzas con ganas.","Kixki loves to fly… if you really throw her."],quiet:1});
+a("hoop1","trophy","k",["¡Canasta!","Basket!"],["Mete a Kixki en la canasta secreta.","Get Kixki into the secret hoop."],c=>c.hoops>=1,
+  {secret:1,h:["Busca una pestañita en el borde de la pantalla…","Look for a little tab on the edge of the screen…"],quiet:1});
+a("hoop10","trophy","k",["Estrella de la NBA (ovina)","Woolly NBA star"],["Anota 10 canastas con Kixki.","Score 10 baskets with Kixki."],c=>c.hoops>=10,{big:1,quiet:1});
 /* — Constancia — */
 a("visit3","key","v",["De la casa","Part of the flock"],["Visita la tienda en 3 ocasiones distintas.","Visit the store on 3 different occasions."],c=>c.visits>=3);
 a("visit10","crown","v",["Rebaño fiel","Loyal flock"],["Visita la tienda 10 veces.","Visit the store 10 times."],c=>c.visits>=10,{big:1});
@@ -187,7 +192,8 @@ function boot(){
     theme:C.theme|0,night:!!C.night,bgs:(C.bgs||[]).length,acc:C.acc|0,music:!!C.music,lang:!!C.lang,view:!!C.view,qr:!!C.qr,
     tapFast:!!C.tapFast,tapsK:C.tapsK|0,petChats:C.petChats|0,pet:lsNum("kixki-ov"),fireUser:C.fireUser|0,fireFast:C.fireFast|0,fireKixki:C.fireKixki|0,
     visits:S.visits|0,konami:!!C.konami,
-    rain:C.rainSeen|0,glass:!!C.glass,wiped:C.wiped|0,fireRain:C.fireRain|0,cow:!!C.cow
+    rain:C.rainSeen|0,glass:!!C.glass,wiped:C.wiped|0,fireRain:C.fireRain|0,cow:!!C.cow,
+    throws:C.throws|0,hoops:C.hoops|0
   });
 
   /* ---------- DOM: tarjeta de aviso, confeti, ventana de logros, charla ---------- */
@@ -350,6 +356,8 @@ function boot(){
       case "music":if(d.on)C.music=1;break;
       case "lang":C.lang=1;refreshMenu();if(!panel.hidden)renderPanel();break;
       case "tap":inc("tapsK");if((d.n|0)>=7)C.tapFast=1;break;
+      case "throw":mx("throws",d.n|0);break;
+      case "hoop":inc("hoops");break;
       case "visit":{const h=new Date().getHours();if(!d.again&&(h>=23||h<5))C.night=1;break;}
       default:break;
     }
