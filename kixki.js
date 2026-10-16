@@ -16,7 +16,7 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),rnd=(a,b)=>a+Math.random()*(b-a),
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 
 /* ---------- memoria ---------- */
-const LSK="kixki-k",S0={v:1,on:true,visits:0,first:0,last:0,opened:[],fc:{},allDone:0};
+const LSK="kixki-k",S0={v:1,on:true,visits:0,first:0,last:0,opened:[],fc:{},allDone:0,mode:"normal"};
 let S;try{S=Object.assign({},S0,JSON.parse(localStorage.getItem(LSK)||"{}"));}catch(e){S=Object.assign({},S0);}
 const save=()=>{try{localStorage.setItem(LSK,JSON.stringify(S));}catch(e){}};
 
@@ -45,134 +45,14 @@ function svg(rows,name){
 }
 
 /* ---------- lo que dice Kixki: [español, English] ---------- */
-const T={
- praise:[
-  ["¡Eres muy pro, no lo olvides! ✨","You're super pro, never forget it! ✨"],
-  ["Mirar la fuente antes de instalar… eso es de pro.","Checking the source before installing? That's a pro move."],
-  ["¡Qué buen ojo! Se nota que sabes lo que buscas.","Sharp eyes! You clearly know what you're after."],
-  ["Hoy vas genial. ¡Un balido de aplauso! 🐑👏","You're doing great today. A round of baas! 🐑👏"],
-  ["Cada app bien elegida es lana de calidad. 🧶","Every well-picked app is quality wool. 🧶"],
-  ["No lo olvides: tú mandas en tu móvil. 💪","Don't forget: you're the boss of your phone. 💪"],
-  ["Nivel oveja pro desbloqueado. Eso no lo logra cualquiera.","Pro sheep level unlocked. Not just anyone gets there."],
-  ["Me encanta cómo exploras. Curiosidad de pro. 🔍","I love how you explore. Pro-level curiosity. 🔍"],
-  ["Si algo no sale a la primera, tranqui: hasta las ovejas tropiezan.","If it doesn't work first try, relax: even sheep trip."],
-  ["Gracias por pasarte por la tienda. ¡Eres de las buenas! 💜","Thanks for dropping by the store. You're one of the good ones! 💜"],
-  ["Eres muy pro, y lo digo en serio. ¡No lo olvides!","You're very pro, and I mean it. Don't forget it!"],
-  ["Un móvil bien cuidado es un móvil feliz. Tú lo sabes. 📱","A well-kept phone is a happy phone. You know it. 📱"]
- ],
- tips:[
-  {pc:1,t:["Pulsa «/» y escribes directo en el buscador.","Press “/” and you'll type straight into the search box."]},
-  {pc:1,t:["Ctrl + K abre «Ejecutar»: escribe el nombre de una app y listo.","Ctrl + K opens “Run”: type an app name and you're there."]},
-  {pc:1,t:["Arrastra las ventanas por su barra de título para ordenarlas a tu gusto.","Drag windows by their title bar to arrange them your way."]},
-  {pc:1,t:["Desde el menú Kixki (abajo a la izquierda) cambias fondo, colores e idioma.","From the Kixki menu (bottom left) you can change background, colors and language."]},
-  {pc:1,t:["Dicen que si tocas muchas veces a mi amiga la ovejita de abajo… pasan cosas. 👀","They say if you tap my friend the little sheep downstairs many times… things happen. 👀"]},
-  {mob:1,t:["Toca una carpeta para abrirla. Para cerrarla, desliza hacia abajo desde su barra.","Tap a folder to open it. To close it, swipe down from its title bar."]},
-  {mob:1,t:["¿Te gusta más la vista de escritorio? Usa el botón «Modo PC».","Prefer the desktop look? Use the “PC mode” button."]},
-  {mob:1,t:["En «Más» cambias el fondo, los colores y el idioma. ¡Y hay sorpresas! 🎁","In “More” you can change the background, colors and language. And there are surprises! 🎁"]},
-  {t:["Toca la ☆ de una app para guardarla en Favoritas.","Tap the ☆ on an app to save it to Favorites."]},
-  {t:["Las etiquetas (Open source, Sin anuncios…) filtran el catálogo con un toque.","The tags (Open source, No ads…) filter the catalog with one tap."]},
-  {t:["En «Packs» hay listas de apps para instalar varias de una vez.","“Packs” has app lists to install several at once."]},
-  {t:["Las apps «Compatible con Shizuku» rinden mejor si instalas Shizuku primero.","Apps marked “Works with Shizuku” run better if you install Shizuku first."]},
-  {t:["En «Novedades» salen las apps nuevas desde tu última visita.","“New” shows the apps added since your last visit."]},
-  {t:["¿Has probado el Salta Vallas? Está en el menú. ¡A ver cuánto saltas!","Tried Fence Jump yet? It's in the menu. Let's see how high you score!"]},
-  {t:["El fondo «Auto» cambia solo según la temporada y la hora del día.","The “Auto” background changes by itself with the season and time of day."]},
-  {t:["Si tu navegador lo permite, puedes instalar Kixki Store como app desde el menú.","If your browser allows it, you can install Kixki Store as an app from the menu."]},
-  {t:["Antes de instalar algo, revisa siempre la fuente de la app. ¡Los pros lo hacen!","Before installing anything, always check the app's source. Pros do!"]}
- ],
- facts:[
-  ["Dato ovejuno: las ovejas ven casi todo a su alrededor sin girar la cabeza. ¡A mí no se me escapa nada!","Sheep fact: sheep can see almost all around them without turning their heads. Nothing escapes me!"],
-  ["Dato ovejuno: las ovejas pueden recordar caras durante años. ¡Yo ya conozco la tuya!","Sheep fact: sheep can remember faces for years. I already know yours!"],
-  ["Dato ovejuno: un grupo de ovejas se llama rebaño. Aquí somos un rebaño de apps. 🐑","Sheep fact: a group of sheep is called a flock. Here we're a flock of apps. 🐑"],
-  ["Contar ovejas no siempre sirve para dormir, pero dicen que ayuda. 😴","Counting sheep doesn't always put you to sleep, but they say it helps. 😴"]
- ],
- tap:[
-  ["¡Beee! ¿Me llamabas?","Baaa! Did you call me?"],
-  ["Aquí estoy, tu guía de lana. 🐑","Here I am, your woolly guide. 🐑"],
-  ["¡Cosquillas! Jeje.","Tickles! Hehe."],
-  ["¿Necesitas ayuda? Pregúntame con un toque.","Need help? Just tap me and I'll tell you something."]
- ],
- dizzy:["¡Ya, ya! Me mareo… 😵","Okay, okay! I'm getting dizzy… 😵"],
- late:["Es tarde… ¿no deberías descansar un poco? 🌙","It's late… shouldn't you get some rest? 🌙"],
- wake:["¡Oh! Me quedé dormida un ratito. 😴","Oh! I dozed off for a bit. 😴"],
- back:["¡Volviste! Te estaba esperando. 🐑","You're back! I was waiting for you. 🐑"],
- focus:["¿Qué app buscamos hoy? 🔍","Which app are we looking for today? 🔍"],
- noRes:["Mmm, no encuentro «{q}». Prueba con otra palabra o con una etiqueta.","Hmm, I can't find “{q}”. Try another word or a tag."],
- oneRes:["¡Solo hay una y es {a}! Directo al grano. 🎯","Only one, and it's {a}! Straight to the point. 🎯"],
- manyRes:["{n} resultados para «{q}». ¡Qué buen ojo!","{n} results for “{q}”. Sharp eyes!"],
- fav1:["¡Tu primera favorita! Ya empezaste tu colección. ⭐","Your first favorite! Your collection has begun. ⭐"],
- fav5:["¡{n} favoritas! Se nota que sabes elegir. Eres muy pro.","{n} favorites! You really know how to choose. You're so pro."],
- favAdd:["¡A favoritas! Buen ojo. ⭐","Added to favorites! Good eye. ⭐"],
- favDel:["Quitada. A veces toca ordenar el armario.","Removed. Sometimes you just have to tidy the closet."],
- night:["Modo noche… ¡salieron las estrellas! 🌙","Night mode… the stars are out! 🌙"],
- day:["¡Buenos días, sol! ☀️","Good morning, sunshine! ☀️"],
- musOn:["¡Música! 🎵 Esto ya es otro nivel.","Music! 🎵 Now we're talking."],
- musOff:["Shhh… silencio. A veces también viene bien.","Shhh… silence. Sometimes that's nice too."],
- allDone:["¡Abriste TODAS las carpetas! Eres muy pro, no lo olvides. 🏆","You opened ALL the folders! You're so pro, never forget it. 🏆"],
- prog:["Ya abriste {k} de {n} carpetas. ¡Sigue explorando!","You've opened {k} of {n} folders. Keep exploring!"],
- bg:{
-  "":["¡El clásico! Nunca falla.","The classic! Never fails."],
-  valle:["El Valle, uno de mis favoritos. 🌄","The Valley, one of my favorites. 🌄"],
-  primavera:["¡Primavera! 🌸 Todo huele a flores.","Spring! 🌸 Everything smells like flowers."],
-  verano:["¡Verano! ☀️🌻 ¡Que no falte la sombra!","Summer! ☀️🌻 Don't forget the shade!"],
-  otono:["Otoño… 🍂 Qué bonito se ve todo.","Autumn… 🍂 Everything looks so pretty."],
-  invierno:["Brrr… ❄️ ¡Qué frío! Dame mi bufanda.","Brrr… ❄️ So cold! Pass me my scarf."],
-  halloween:["¡Halloween! 🎃 Cuidado con los murciélagos.","Halloween! 🎃 Watch out for the bats."],
-  navidad:["¡Navidad! 🎄 ¿Ya hiciste tu lista de apps?","Christmas! 🎄 Did you make your app wish list yet?"],
-  auto:["Fondo Auto: cambio con la temporada y la hora, yo solita. 🌦️","Auto background: I'll follow the season and time of day on my own. 🌦️"]
- },
- lang:{es:"¡Hola! Ahora hablo español. 🐑",en:"Hello! I'll speak English now. 🐑"},
- gStart:["¡A saltar! Espacio, ↑ o toca la pantalla. 🐑","Let's jump! Space, ↑ or tap the screen. 🐑"],
- gStartRec:["Tu récord es {rec}. ¿Lo rompes hoy? 🐑","Your record is {rec}. Will you break it today? 🐑"],
- gRecord:["¡¡NUEVO RÉCORD!! Eres muy pro. ⭐","NEW RECORD!! You're so pro. ⭐"],
- gOverRec:["¡Récord de {sc}! Eso es de pro, no lo olvides. 🏆","A record of {sc}! That's pro, never forget it. 🏆"],
- gOverFirst:["{sc} saltos en tu primera partida. ¡Ya tienes un récord que batir!","{sc} jumps in your first game. Now you have a record to beat!"],
- gOverZero:["¡Ups! A la próxima salta antes. 😅","Oops! Jump a bit earlier next time. 😅"],
- gOverNear:["¡Casi! {sc} saltos. Una más y lo logras.","So close! {sc} jumps. One more try and you'll get it."],
- gOver:["{sc} saltos. ¡Buen intento!","{sc} jumps. Nice try!"]
-};
-const FOLD={
- tiendas:["Tiendas: {n} apps para conseguir más apps. ¡Empieza por {a}!","Stores: {n} apps to get more apps. Start with {a}!"],
- importante:["Importante: lo que hace que otras apps funcionen mejor. Léelo con calma. 👀","Essential: the stuff that makes other apps work better. Read it calmly. 👀"],
- utilidad:["Utilidad: {n} herramientas para automatizar, ajustar y conectar con tu PC. {a} es buena para empezar.","Utilities: {n} tools to automate, tweak and connect with your PC. {a} is a good place to start."],
- control:["Control de apps: quita, limita y revisa lo que hacen tus apps. Mira ADL antes de quitar nada. 🧩","App control: remove, limit and check what your apps do. Check ADL before removing anything. 🧩"],
- pantalla:["Pantalla y batería: {n} apps para ahorrar batería y controlar tu pantalla. 🔋","Screen & battery: {n} apps to save battery and control your screen. 🔋"],
- fotos:["Fotos y archivos: {n} apps para editar, organizar y guardar. {a} es buena para empezar. 🖼️","Photos & files: {n} apps to edit, organize and store. {a} is a good place to start. 🖼️"],
- internet:["Internet: navegadores, Reddit y compartir por Wi-Fi. 🌐","Internet: browsers, Reddit and Wi-Fi sharing. 🌐"],
- dia:["Día a día: notas, IA, reloj y entrenamientos. 📅","Daily: notes, AI, clock and workouts. 📅"],
- privacidad:["Privacidad: {n} apps para cuidar tus datos. {a} es buena para empezar. 🔒","Privacy: {n} apps to look after your data. {a} is a good place to start. 🔒"],
- emulacion:["Emulación: juega tus clásicos en el móvil. Recuerda usar solo tus propios juegos. 🎮","Emulation: play your classics on your phone. Remember to use only your own games. 🎮"],
- decoracion:["Decoración: fondos y widgets para que tu pantalla luzca linda. 🎨","Decor: wallpapers and widgets to make your screen look cute. 🎨"],
- musica:["Música: para escuchar y descargar tus canciones. 🎵","Music: to play and download your songs. 🎵"],
- teclados:["Teclados: escribe con más estilo y más privacidad. ⌨️","Keyboards: type with more style and more privacy. ⌨️"],
- packs:["Packs: listas para instalar varias apps de una vez. 🎁","Packs: ready-made lists to install several apps at once. 🎁"]
-};
-const GREET={
- night:["¿Todavía despierta? Yo hago guardia contigo. 🌙","Still up? I'll keep watch with you. 🌙"],
- morning:["¡Buenos días! ☀️ ¿Qué buscamos hoy?","Good morning! ☀️ What are we looking for today?"],
- afternoon:["¡Buenas tardes! 🐑 ¿Qué app buscamos?","Good afternoon! 🐑 Which app are we after?"],
- evening:["¡Buenas noches! 🌙 Qué gusto verte por aquí.","Good evening! 🌙 So nice to see you here."],
- away:["¡Volviste! Hace {d} días que no te veía. 🥹","You're back! I haven't seen you in {d} days. 🥹"],
- news1:["Hay 1 novedad en «Novedades». 🆕","There's 1 new app in “New”. 🆕"],
- newsN:["Hay {n} novedades en «Novedades». 🆕","There are {n} new apps in “New”. 🆕"]
-};
-const TOUR_PC=[
- [null,["¡Hola! Soy Kixki, la guía de la tienda. 🐑 Te enseño todo en un momentito.","Hi! I'm Kixki, the store's guide. 🐑 Let me show you around in a moment."]],
- ["desk:tiendas",["Estas carpetas son tu escritorio: ábrelas con un clic para ver sus apps.","These folders are your desktop: click one to see its apps."]],
- ["search",["Aquí buscas cualquier app. Truco: pulsa «/» para escribir al instante.","Search any app here. Tip: press “/” to start typing instantly."]],
- [null,["Si quieres un consejo, tócame. ¡Eres muy pro, no lo olvides! ✨","Want a tip? Just tap me. You're very pro, don't forget it! ✨"]]
-];
-const TOUR_MOB=[
- [null,["¡Hola! Soy Kixki, la guía de la tienda. 🐑 Te enseño todo en un momentito.","Hi! I'm Kixki, the store's guide. 🐑 Let me show you around in a moment."]],
- ["tiles0",["Cada carpeta agrupa apps por tema. ¡Tócala para abrirla!","Each folder groups apps by theme. Tap one to open it!"]],
- ["search",["Y aquí buscas cualquier app por su nombre o etiqueta.","And here you can search any app by name or tag."]],
- ["dock",["Abajo tienes Inicio, Buscar y Favoritas. ¡Y «Más» tiene sorpresas! 🎁","Down here you have Home, Search and Favorites. And “More” has surprises! 🎁"]],
- [null,["Tócame cuando quieras un consejo. ¡Eres muy pro, no lo olvides! ✨","Tap me whenever you want a tip. You're very pro, don't forget it! ✨"]]
-];
+const KXD=window.KXD||{};
+const {T,FOLD,GREET,TOUR_PC,TOUR_MOB,MIC,FAST}=KXD;   /* los textos viven en dialogs.js */
 const UI={
  aria:["Kixki, tu guía. Tócala para que te hable.","Kixki, your guide. Tap her and she'll talk to you."],
  close:["Cerrar","Close"],
  tip:["Pedirle un consejo a Kixki","Ask Kixki for a tip"],
- onT:["Kixki: sí","Kixki: on"],offT:["Kixki: no","Kixki: off"]
+ onT:["Kixki: sí","Kixki: on"],offT:["Kixki: no","Kixki: off"],
+ modeT:{chat:["Kixki: charlatana 🗣️","Kixki: chatty 🗣️"],normal:["Kixki: normal 🐑","Kixki: normal 🐑"],quiet:["Kixki: calladita 🤐","Kixki: quiet 🤐"]}
 };
 
 /* =========================================================  ARRANQUE  */
@@ -184,6 +64,24 @@ function boot(){
   const lang=()=>window.KXI&&KXI.lang==="en"?"en":"es";
   const tx=m=>Array.isArray(m)?m[lang()==="en"?1:0]:m;
   const fmt=(s,v)=>v?s.replace(/\{(\w+)\}/g,(a,k)=>v[k]!=null?v[k]:a):s;
+  /* variables de contexto: {hora} {app} {carpeta} valen en cualquier frase (se calculan solo si la frase las usa) */
+  const pad2=n=>String(n).padStart(2,"0");
+  function randApp(){
+    const hs=$$("#app .cat:not(#favs):not(#news):not(#packs) .app h3");if(!hs.length)return null;
+    const h=hs[Math.floor(Math.random()*hs.length)],c=h.closest(".cat"),t=c&&c.querySelector(".tbt");
+    return {app:h.textContent.trim(),carpeta:t?t.textContent.replace(/\.exe$/i,"").trim():""};
+  }
+  function ctxVars(raw,v){
+    const o=Object.assign({},v);
+    if(o.a!=null&&o.app==null)o.app=o.a;
+    if(/\{hora\}/.test(raw)&&o.hora==null){const d=new Date();o.hora=pad2(d.getHours())+":"+pad2(d.getMinutes());}
+    if(/\{(app|carpeta)\}/.test(raw)&&(o.app==null||o.carpeta==null)){
+      const r=randApp(),en=lang()==="en";
+      if(o.app==null)o.app=r?r.app:en?"an app":"una app";
+      if(o.carpeta==null)o.carpeta=r&&r.carpeta?r.carpeta:en?"some folder":"alguna carpeta";
+    }
+    return o;
+  }
   const emit=(t,d)=>dispatchEvent(new CustomEvent("kixki-evt",{detail:Object.assign({t},d)}));
 
   /* ---------- DOM ---------- */
@@ -199,7 +97,11 @@ function boot(){
   /* ---------- estado ---------- */
   const K={x:0,y:-80,dir:1,mode:"idle",frame:"idle",stage:null,talking:false,off:true,ready:false,tour:null,hl:null,dis:0,game:false,pend:null};
   let cur=null,raf=0,mv=null,brainT=0,lastAct=now(),nextChat=now()+rnd(16000,26000);
-  const Q=[],cd={},recent=[];
+  const Q=[],cd={};
+  /* (parte 2) memoria de no repetir: las últimas 30 frases, guardadas en localStorage (antes 14 y se perdían al recargar) */
+  const RECK="kixki-k-rec",RECN=30;
+  const recent=(()=>{try{const a=JSON.parse(localStorage.getItem(RECK)||"[]");return Array.isArray(a)?a.filter(x=>typeof x==="string").slice(-RECN):[];}catch(e){return[];}})();
+  let recT=0;const saveRec=()=>{clearTimeout(recT);recT=setTimeout(()=>{try{localStorage.setItem(RECK,JSON.stringify(recent));}catch(e){}},400);};
   const setMode=m=>{K.mode=m;el.dataset.m=m;};
   const frame=f=>{if(K.frame!==f){K.frame=f;el.dataset.f=f;}};
   const face=d=>{K.dir=d;el.style.setProperty("--kd",d);};
@@ -317,7 +219,43 @@ function boot(){
      - El enfriamiento (key + cd) solo se gasta cuando la frase se dice de verdad.
      - interrupt(ctx) corta el globo y limpia la cola de ese contexto (sin ctx: toda la cola).
      - KXK.debug = true → línea de tiempo de cada frase en la consola; KXK.timeline() la devuelve. */
-  const DLG={budget:5,win:60000,sp:[],gap:{sp:15000},last:{}};
+  const DLG={budget:5,win:60000,sp:[],gap:{sp:15000,mic:1400},last:{}};
+  /* (parte 2) modo de charla: cambia el presupuesto de espontáneas, la pausa entre ellas y cada cuánto charla sola */
+  const MODES={
+   chat:{budget:9,gap:8000,chat:.55,amb:true,words:true},
+   normal:{budget:5,gap:15000,chat:1,amb:true,words:true},
+   quiet:{budget:1,gap:45000,chat:2.5,amb:false,words:false}
+  };
+  const MD=()=>MODES[S.mode]||MODES.normal;
+  function applyMode(){const m=MD();DLG.budget=m.budget;DLG.gap.sp=m.gap;DLG.sp=[];}
+  applyMode();
+  /* (parte 2) no hablar mientras escribes, arrastras una ventana o juegas */
+  const U={typeAt:0,win:false};
+  const typing=()=>now()-U.typeAt<1500;
+  const busy=()=>typing()||U.win||K.game;
+  /* ¿esta frase debe callarse ahora? (los eventos físicos y las respuestas directas con p ≥ 3 nunca) */
+  function blocked(m){
+    if(m.always)return false;
+    const soft=m.cat==="sp"||m.cat==="amb"||m.cat==="mic"||m.opt||(m.cat==="ui"&&m.p<3);
+    if(!soft)return false;
+    if(busy())return true;
+    const md=MD();
+    if(!md.amb&&(m.cat==="amb"||m.opt))return true;
+    return false;
+  }
+  const idle0=()=>{if(cur&&(cur.cat==="sp"||cur.cat==="amb"||cur.cat==="mic"||cur.opt)&&!cur.always)done(cur,"busy");};
+  addEventListener("keydown",e=>{
+    const t=e.target;if(!t||!t.closest||e.ctrlKey||e.metaKey||e.altKey||e.key==="Shift"||e.key==="Escape")return;
+    if(t.closest("input,textarea,[contenteditable=true]")){U.typeAt=now();idle0();}
+  },true);
+  addEventListener("pointerdown",e=>{
+    if(!e.target||!e.target.closest)return;
+    if(!e.target.closest("input,textarea"))U.typeAt=0;            /* un clic fuera del campo = ya no estás escribiendo */
+    if(!isPC()||e.button)return;
+    const tb=e.target.closest(".cat .tb");if(tb&&!e.target.closest(".wb")){U.win=true;idle0();}
+  },true);
+  const winUp=()=>{U.win=false;};
+  addEventListener("pointerup",winUp,true);addEventListener("pointercancel",winUp,true);
   const DBG={on:false},LOG=[];let mid=0;
   try{DBG.on=/[?&]kxdebug(=1)?(&|$)/.test(location.search)||localStorage.getItem("kixki-dbg")==="1";}catch(e){}
   function lg(ev,m,x){
@@ -351,6 +289,7 @@ function boot(){
     setMode("talk");
     const g=geo(K.stage);if(g&&g.face)face(g.face);
     if(m.hl){K.hl=m.hl;m.hl.classList.add("kk-pt");}
+    bub.classList.toggle("mic",!!m.micro);
     gh.textContent=m.text;vi.textContent="";bub.hidden=false;
     if(m.sr)sr.textContent=m.text;
     measure();layoutBubble();
@@ -386,7 +325,7 @@ function boot(){
     lg("typed",m,Math.round(performance.now()-m.t0));
     frame(m.mood==="happy"?"happy":"idle");
     if(m.mood==="happy"&&!RM())el.classList.add("kk-cheer");
-    m.t=setTimeout(()=>done(m,"auto"),m.cat==="ev"?clamp(1800+m.text.length*40,2600,6000):clamp(2200+m.text.length*50,3200,9500));
+    m.t=setTimeout(()=>done(m,"auto"),m.micro?clamp(700+m.text.length*60,900,1400):m.cat==="ev"?clamp(1800+m.text.length*40,2600,6000):clamp(2200+m.text.length*50,3200,9500));
   }
   function teardown(c){
     clearTimeout(c.t);cur=null;K.talking=false;bub.hidden=true;
@@ -412,10 +351,12 @@ function boot(){
     Q.push(m);lg("queue",m,Q.length);
     m.tq=setTimeout(()=>{const i=Q.indexOf(m);if(i<0)return;Q.splice(i,1);lg("drop",m,"ttl");m.res(false);},m.ttl);
   }
+  let flushT=0;
   function flushQ(){
     if(K.talking||K.off||K.mode==="hop")return;
     while(Q.length){
-      let bi=0;for(let i=1;i<Q.length;i++)if(Q[i].p>Q[bi].p)bi=i;       /* la de más prioridad; a igualdad, la más antigua */
+      let bi=-1;for(let i=0;i<Q.length;i++)if(!blocked(Q[i])&&(bi<0||Q[i].p>Q[bi].p))bi=i;   /* la de más prioridad; a igualdad, la más antigua */
+      if(bi<0){clearTimeout(flushT);flushT=setTimeout(flushQ,600);return;}      /* todas esperan a que dejes de escribir/arrastrar */
       const m=Q.splice(bi,1)[0];clearTimeout(m.tq);
       if(m.key&&(cd[m.key]||0)>now()){lg("drop",m,"cd");m.res(false);continue;}
       begin(m);return;
@@ -424,12 +365,16 @@ function boot(){
   const spent=()=>{const t=now();DLG.sp=DLG.sp.filter(x=>t-x<DLG.win);return DLG.sp.length>=DLG.budget;};
   function say(msg,o={}){
     return new Promise(res=>{
-      const p=o.p||1,cat=o.cat||(p===1?"amb":"ui"),ev=cat==="ev";
-      const m={id:++mid,text:fmt(tx(msg),o.vars),p,cat,ctx:o.ctx||cat,key:o.key,cdMs:o.cd||0,mood:o.mood,hl:o.hl,sr:p>1,res,
-        ttl:o.ttl!=null?o.ttl:ev?600:12000,instant:o.instant!=null?!!o.instant:ev,replace:o.replace!=null?!!o.replace:ev,t0:performance.now(),onStart:o.onStart};
+      /* una clave con varias frases (lista de pares): elige una sin repetir las recientes */
+      if(Array.isArray(msg)&&Array.isArray(msg[0]))msg=pick(msg,"l-"+(o.key||"x"));
+      const mic=!!o.micro,p=o.p||1,cat=mic?"mic":o.cat||(p===1?"amb":"ui"),ev=cat==="ev";
+      const m={id:++mid,text:(()=>{const raw=tx(msg);return fmt(raw,ctxVars(raw,o.vars));})(),p,cat,ctx:o.ctx||cat,key:o.key,cdMs:o.cd||0,mood:o.mood,hl:o.hl,sr:p>1&&!mic,res,micro:mic,opt:!!o.opt,always:!!o.always,
+        ttl:o.ttl!=null?o.ttl:mic?300:ev?600:12000,instant:o.instant!=null?!!o.instant:ev||mic,replace:o.replace!=null?!!o.replace:ev,t0:performance.now(),onStart:o.onStart};
       const no=why=>{lg("reject",m,why);res(false);};
       if(!S.on||K.off||!K.ready&&!o.force)return no("off");
       if(m.key&&(cd[m.key]||0)>now())return no("cd");
+      if(blocked(m))return no(busy()?"busy-user":"quiet");
+      if(mic&&K.mode==="hop")return no("hop");
       const gp=DLG.gap[cat];if(gp&&now()-(DLG.last[cat]||0)<gp)return no("cat-cd");
       if(cat==="sp"&&spent())return no("budget");
       lg("req",m);
@@ -446,13 +391,18 @@ function boot(){
   const idOf=m=>Array.isArray(m)?m[0]:m.t[0];
   function pick(list,key){
     const ok=list.filter(m=>!recent.includes(key+":"+idOf(m))),pool=ok.length?ok:list,m=pool[Math.floor(Math.random()*pool.length)];
-    recent.push(key+":"+idOf(m));if(recent.length>14)recent.shift();return m;
+    recent.push(key+":"+idOf(m));if(recent.length>RECN)recent.shift();saveRec();return m;
   }
+  const praise=()=>Math.random()<.4&&KXD.gen?KXD.gen("praise"):pick(T.praise,"praise");
   const pickTip=()=>pick(T.tips.filter(t=>(!t.pc||isPC())&&(!t.mob||!isPC())),"tip").t;
   function pickMisc(){
     const h=new Date().getHours(),list=[...T.facts],bg=root.getAttribute("data-bg");
-    if(h>=23||h<5)list.push(T.late);
-    if(bg==="halloween"||bg==="navidad")list.push(T.bg[bg]);
+    if(h>=23||h<5)list.push(...T.late);
+    /* (parte 3) frases según la franja horaria y con una app/carpeta reales */
+    const slot=h<5||h>=22?"night":h<12?"morning":h<19?"afternoon":"evening";
+    list.push(...(T.tod&&T.tod[slot]||[]));
+    if(randApp())list.push(...(T.appTips||[]));
+    if(bg==="halloween"||bg==="navidad")list.push(...[].concat(T.bg[bg]));
     const pk=$("#pick b");if(pk)list.push(["Hoy te sugiero «"+pk.textContent+"». ¿Le echas un vistazo?","Today I suggest “"+pk.textContent+"”. Want to take a look?"]);
     return pick(list,"misc");
   }
@@ -479,6 +429,7 @@ function boot(){
     if(i>=0&&usable(sid)){const g=geo(sid),r=g.tiles[i%3];await hop(sid,r?r.left+r.width/2:undefined);}
     return say(line,o);
   }
+  const searching=()=>{const x=$("#q");return !!x&&(x.value.trim().length>=2||typing());};
   function onFolder(id,st){
     S.fc[id]=(S.fc[id]||0)+1;
     const first=!S.opened.includes(id);if(first)S.opened.push(id);
@@ -487,6 +438,7 @@ function boot(){
     K.tour=null;
     if(S.opened.length>=total&&!S.allDone){S.allDone=1;save();emit("allfolders",{total});say(T.allDone,{p:3,mood:"happy"});return;}
     if(!isPC()&&st==="max"){K.pend=id;return;}
+    if(searching())return;                  /* (parte 2) buscar abre todas las ventanas: no saltar de carpeta en carpeta */
     if(S.fc[id]<=2||Math.random()<.18)visitFolder(id,{p:first?2:1,key:"fold:"+id,cd:30000});
   }
 
@@ -495,13 +447,13 @@ function boot(){
   function brain(ms){clearTimeout(brainT);brainT=setTimeout(think,ms==null?rnd(2600,6200):ms);}
   const dark=()=>root.getAttribute("data-theme")==="dark";
   function chatter(){
-    const w=Math.random();nextChat=now()+rnd(26000,50000);
+    const w=Math.random();nextChat=now()+rnd(26000,50000)*MD().chat;
     if(w<.2&&(isPC()||!K.game)&&Math.random()<.9){const ids=["tiendas","importante","control","utilidad","pantalla","privacidad","fotos","internet","dia","emulacion","decoracion","musica","teclados","packs"].filter(i=>$(`#desk .di[data-id="${i}"]`));
       visitFolder(ids[Math.floor(Math.random()*ids.length)],{p:1,key:"chat",cat:"sp"});return;}
-    const m=w<.55?pickTip():w<.85?pick(T.praise,"praise"):pickMisc();say(m,{p:1,key:"chat",cat:"sp"});
+    const m=w<.55?pickTip():w<.85?praise():pickMisc();say(m,{p:1,key:"chat",cat:"sp"});
   }
   async function think(){
-    if(!alive()){brain(2500);return;}
+    if(!alive()||K.still){brain(2500);return;}                 /* K.still = true: quieta del todo (para pruebas automáticas) */
     const idle=now()-lastAct;
     if(K.mode==="sleep"){brain(6000);return;}
     if(dark()&&idle>150000&&K.mode==="idle"){setMode("sleep");frame("sleep");brain(6000);return;}
@@ -541,7 +493,7 @@ function boot(){
     await say(m,{p:2});
     const nn=cnt("news");if(nn>0){await wait(350);say(nn===1?GREET.news1:T_fmt(GREET.newsN,{n:nn}),{p:2});}
   }
-  const T_fmt=(pair,v)=>[fmt(pair[0],v),fmt(pair[1],v)];
+  const T_fmt=(pair,v)=>{if(Array.isArray(pair[0]))pair=pick(pair,"tf");return [fmt(pair[0],v),fmt(pair[1],v)];};
 
   /* ---------- reacciones a lo que haces ---------- */
   const q=$("#q");let sT=0;
@@ -550,10 +502,15 @@ function boot(){
     const apps=$$("#app .cat:not(#favs):not(#news):not(#packs) .app:not([hidden])"),n=apps.length,a=n?apps[0].querySelector("h3").textContent.trim():"";
     emit("search",{q:v,n});
     if(!S.on||K.off)return;
-    if(usable("search")&&K.stage!=="search"&&alive())await hop("search");
-    say(n===0?T_fmt(T.noRes,{q:v}):n===1?T_fmt(T.oneRes,{a}):T_fmt(T.manyRes,{n,q:v}),{p:2,key:"search",cd:7000});
+    /* (parte 2) ya no espera a llegar a la barra: salta sin esperar y la frase sale al aterrizar (o ya, si está cerca) */
+    if(usable("search")&&K.stage!=="search"&&alive())hop("search");
+    say(n===0?T_fmt(T.noRes,{q:v}):n===1?T_fmt(T.oneRes,{a}):T_fmt(T.manyRes,{n,q:v}),{p:2,key:"search",cd:2500,ctx:"search",ttl:2500,always:true});
   }
-  q.addEventListener("input",()=>{clearTimeout(sT);K.tour=null;sT=setTimeout(onSearch,850);});
+  q.addEventListener("input",()=>{
+    clearTimeout(sT);K.tour=null;
+    clearQ("search");if(cur&&cur.ctx==="search")done(cur,"stale");      /* la respuesta a una búsqueda vieja ya no sirve */
+    sT=setTimeout(onSearch,420);
+  });
   q.addEventListener("focus",async()=>{
     if(!S.on||K.off||!K.ready)return;
     if(usable("search")&&K.stage!=="search"&&alive())await hop("search");
@@ -572,7 +529,7 @@ function boot(){
   new MutationObserver(()=>{
     const t=root.getAttribute("data-theme");if(t===prevTheme)return;prevTheme=t;emit("theme",{dark:t==="dark"});
     if(K.mode==="sleep"){setMode("idle");frame("idle");}
-    if(K.ready)say(t==="dark"?T.night:T.day,{p:1,key:"theme",cd:8000});
+    if(K.ready)say(t==="dark"?T.night:T.day,{p:2,cat:"ui",opt:true,key:"theme",cd:8000,ttl:2500});
   }).observe(root,{attributes:true,attributeFilter:["data-theme"]});
   let prevBg=window.KXB?KXB.label():"";
   addEventListener("kixki-bg",()=>{
@@ -590,9 +547,9 @@ function boot(){
     emit("game",d);
     if(!S.on)return;
     if(d.t==="start"||d.t==="retry"){
-      K.game=true;el.classList.add("kk-top");K.tour=null;
+      K.game=true;el.classList.add("kk-top");K.tour=null;idle0();
       if(d.t==="start")setTimeout(async()=>{if(!K.game)return;if(K.stage!=="game"&&usable("game"))await hop("game");
-        say(d.rec>0?T_fmt(T.gStartRec,{rec:d.rec}):T.gStart,{p:2,key:"gstart",cd:15000});},350);
+        say(d.rec>0?T_fmt(T.gStartRec,{rec:d.rec}):T.gStart,{p:2,key:"gstart",cd:15000,always:true});},350);
     }else if(d.t==="record")say(T.gRecord,{p:3,mood:"happy",key:"grec",cd:6000});
     else if(d.t==="over"){
       const m=d.nr&&!d.first?T_fmt(T.gOverRec,{sc:d.sc}):d.first&&d.sc>0?T_fmt(T.gOverFirst,{sc:d.sc}):d.sc===0?T.gOverZero:d.sc>=d.rec*.8&&d.rec>2?T_fmt(T.gOverNear,{sc:d.sc}):T_fmt(T.gOver,{sc:d.sc});
@@ -603,16 +560,66 @@ function boot(){
   function labels(){
     const L=lang()==="en"?1:0;
     body.setAttribute("aria-label",UI.aria[L]);bx.setAttribute("aria-label",UI.close[L]);
-    const t=$("#s-kx-tip"),o=$("#s-kx-on");if(t)t.textContent=UI.tip[L];if(o)o.textContent=(S.on?UI.onT:UI.offT)[L];
+    const t=$("#s-kx-tip"),o=$("#s-kx-on"),md=$("#s-kx-mode");if(t)t.textContent=UI.tip[L];if(o)o.textContent=(S.on?UI.onT:UI.offT)[L];
+    if(md){md.textContent=UI.modeT[S.mode in MODES?S.mode:"normal"][L];md.hidden=!S.on;}
   }
   if(window.KXI&&!KXI._kk){KXI._kk=1;const o=KXI.set;KXI.set=function(l){o.call(KXI,l);labels();emit("lang",{lang:l});interrupt();if(K.ready)say(T.lang[l==="en"?"en":"es"],{p:2,key:"lang",cd:2500});};}
   /* volver a la pestaña */
   let hiddenAt=0;
   document.addEventListener("visibilitychange",()=>{
     if(document.hidden){hiddenAt=Date.now();return;}
-    if(hiddenAt&&Date.now()-hiddenAt>90000&&K.ready){say(T.back,{p:1,key:"back",cd:60000});}
+    const away=hiddenAt?Date.now()-hiddenAt:0;
+    if(K.ready&&away>=25000)say(T.back,{p:2,cat:"ui",opt:true,key:"back",cd:60000,ttl:3000});
+    else if(K.ready&&away>=6000)micro("back",{key:"backm",cd:20000});
     resync();
   });
+
+  /* ---------- (parte 2) microreacciones y reacciones rápidas ---------- */
+  const hasWord=t=>/\p{L}/u.test(t);
+  /* kind → MIC[kind]; en modo «calladita» solo salen las de emoji; devuelve la promesa de say() */
+  function micro(kind,o={}){
+    let pool=MIC[kind];if(!pool)return Promise.resolve(false);
+    if(!MD().words)pool=pool.filter(m=>!hasWord(m[0]));
+    if(!pool.length)return Promise.resolve(false);
+    return say(pick(pool,"mic-"+kind),Object.assign({p:1,micro:true,cd:0},o));
+  }
+  const appName=a=>{const h=a&&a.querySelector("h3");return h?h.textContent.trim():"";};
+  /* clic en «Descarga»/«APK» o en la fuente (GitHub, Repositorio…) */
+  document.addEventListener("click",e=>{
+    const b=e.target.closest&&e.target.closest(".app .links a.btn,.app .links button.btn");if(!b||!S.on||!K.ready)return;
+    const t=b.textContent.trim(),a=appName(b.closest(".app"));
+    const kind=/^(descarga|apk|play|google play)/i.test(t)?"dl":/github|gitlab|repositorio|fuente|source|cr[eé]ditos/i.test(t)?"src":"";
+    if(!kind)return;
+    emit("click-"+kind,{a});
+    say(pick(FAST[kind],"fast-"+kind),{p:2,cat:"ui",opt:true,key:"fast-"+kind,cd:6000,ttl:2500,vars:{a}});
+  },true);
+  /* ratón 3 s sobre la misma app (solo con ratón) */
+  if(matchMedia("(hover:hover)").matches){
+    let hv=null;
+    const clearHv=()=>{if(hv){clearTimeout(hv.t);hv=null;}};
+    document.addEventListener("pointerover",e=>{
+      if(e.pointerType==="touch")return;
+      const c=e.target.closest&&e.target.closest("#app .app");
+      if(!c){clearHv();return;}
+      if(hv&&hv.c===c)return;
+      clearHv();
+      hv={c,t:setTimeout(()=>{
+        const c0=hv&&hv.c;hv=null;
+        if(!c0||!S.on||K.off||!K.ready||!c0.isConnected||c0.hidden)return;
+        say(pick(FAST.hov,"fast-hov"),{p:1,cat:"sp",key:"hover",cd:25000,ttl:1500,vars:{a:appName(c0)||"esta app"}});
+      },3000)};
+    },true);
+    document.addEventListener("pointerdown",clearHv,true);
+    addEventListener("blur",clearHv);
+  }
+  /* muchas ventanas abiertas a la vez (solo PC) */
+  let manyShown=false;
+  function checkWins(){
+    if(!isPC()||searching()){manyShown=false;return;}
+    const n=$$("#app .cat:not(.min):not(.max)").filter(x=>!x.hidden).length;
+    if(n>=5&&!manyShown){manyShown=true;if(K.ready&&S.on&&!K.off)say(pick(FAST.wins,"fast-wins"),{p:2,cat:"ui",opt:true,key:"manywin",cd:90000,ttl:3000,vars:{n}});}
+    else if(n<=3)manyShown=false;
+  }
 
   /* ---------- tocar a Kixki ---------- */
   let taps=[];
@@ -622,7 +629,7 @@ function boot(){
     if(taps.length>=7){taps=[];say(T.dizzy,{p:3,key:"dizzy",cd:9000});setTimeout(()=>{if(alive()){const c=candidates().filter(i=>i!==K.stage);if(c.length)hop(c[0]);}},2600);return;}
     if(cur)done(cur,"user");
     const r=Math.random();
-    say(r<.5?pickTip():r<.78?pick(T.tap,"tap"):pick(T.praise,"praise"),{p:2});
+    say(r<.5?pickTip():r<.78?pick(T.tap,"tap"):praise(),{p:2});
   });
   bub.addEventListener("click",()=>{if(cur&&!finishTyping(cur))done(cur,"user");});
   if(matchMedia("(hover:hover)").matches){
@@ -644,14 +651,23 @@ function boot(){
   const sm=KX.sm||$("#sm");
   if(sm){
     const ref=$("#s-sug",sm);
-    const html=`<button type="button" class="sm" id="s-kx-tip"></button><button type="button" class="sm" id="s-kx-on"></button>`;
+    const html=`<button type="button" class="sm" id="s-kx-tip"></button><button type="button" class="sm" id="s-kx-mode"></button><button type="button" class="sm" id="s-kx-on"></button>`;
     ref?ref.insertAdjacentHTML("beforebegin",html):sm.insertAdjacentHTML("beforeend",html);
     sm.addEventListener("click",e=>{
-      const b=e.target.closest("#s-kx-tip,#s-kx-on");if(!b)return;
-      if(b.id==="s-kx-on"){S.on=!S.on;save();applyOn();labels();if(S.on)setTimeout(()=>say(pick(T.praise,"praise"),{p:2}),700);}
+      const b=e.target.closest("#s-kx-tip,#s-kx-on,#s-kx-mode");if(!b)return;
+      if(b.id==="s-kx-mode"){setTalk(null);return;}
+      if(b.id==="s-kx-on"){S.on=!S.on;save();applyOn();labels();if(S.on)setTimeout(()=>say(praise(),{p:2}),700);}
       else if(S.on){setTimeout(()=>say(pickTip(),{p:3}),250);}
       else{S.on=true;save();applyOn();labels();setTimeout(()=>say(pickTip(),{p:3}),700);}
     });
+  }
+  /* charlatana → normal → calladita (m = nombre para fijarlo; null = siguiente) */
+  function setTalk(m){
+    const order=["chat","normal","quiet"];
+    S.mode=m&&MODES[m]?m:order[(order.indexOf(S.mode)+1)%3];
+    save();applyMode();labels();emit("mode",{mode:S.mode});
+    nextChat=now()+rnd(8000,16000)*MD().chat;
+    if(S.on&&K.ready&&!K.off)say(FAST.mode[S.mode],{p:3,key:"modemsg",cd:0});
   }
   function applyOn(){
     if(!S.on){interrupt();stopMove();el.classList.add("kk-gone");}
@@ -666,7 +682,10 @@ function boot(){
     $$("#app .cat").forEach(s=>{
       const st=s.classList.contains("min")?"min":s.classList.contains("max")?"max":"normal",p=prevSt[s.id];prevSt[s.id]=st;
       if(p==="min"&&st!=="min"&&K.ready)onFolder(s.id,st);
+      /* el usuario cierra una ventana: micro (si Kixki no iba encima y no es una travesura suya) */
+      else if(p&&p!=="min"&&st==="min"&&K.ready&&S.on&&!K.off&&K.stage!=="w:"+s.id&&now()>=(K.noMic||0))micro("close",{key:"micro-close",cd:900});
     });
+    checkWins();
     const gameOpen=!!($("#game")&&!$("#game").hidden);
     if(K.game&&!gameOpen){K.game=false;el.classList.remove("kk-top");if(K.ready&&S.on)relocate();}
     const off=!S.on||!!$(".cat.max")||!!$("#boot:not([hidden])")||!!$("#run:not([hidden])")||!!$("#qr:not([hidden])");
@@ -714,6 +733,10 @@ function boot(){
     /* presupuesto de frases espontáneas por minuto (y pausa mínima entre ellas, en ms); al cambiarlo se vacía el recuento */
     budget:(n,gap)=>{if(n!=null){DLG.budget=Math.max(0,n|0);DLG.sp=[];}if(gap!=null)DLG.gap.sp=Math.max(0,gap|0);return DLG.budget;},
     plat:(id,fn)=>{PLAT[id]=fn;},
+    /* (parte 3) textos, variables y generador por piezas */
+    D:KXD,ctxVars,randApp,
+    /* (parte 2) modo de charla y microreacciones */
+    get mode(){return S.mode;},setTalk,micro,busy,busyWhy:()=>({typing:typing(),win:U.win,game:!!K.game}),recentList:()=>recent.slice(),
     /* (parte 3: travesuras y físicas, kixki3.js) */
     ex:{place,land,setMode,frame,face,stopMove,R,topWin,say,layoutBubble}};
 }

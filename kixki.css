@@ -69,3 +69,6 @@
 @keyframes kkpt{50%{outline-offset:-6px}}
 
 @media (max-width:420px){.kk-bub{font-size:14px}}
+/* (parte 2) microreacciones: globo pequeño, sin nombre ni botón de cerrar */
+.kk-bub.mic{min-width:0;padding:5px 11px 7px}
+.kk-bub.mic .kk-nm,.kk-bub.mic .kk-x{display:none}
