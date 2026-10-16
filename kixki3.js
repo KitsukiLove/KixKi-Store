@@ -118,18 +118,27 @@ const TX={
   ["Nota mental: las ovejas no vuelan. Nota mental 2: vengarme. 📝","Note to self: sheep don't fly. Note to self 2: revenge. 📝"],
   ["Auch. Lo he sentido hasta en los rizos. 🌀","Ouch. I felt that in my curls. 🌀"]
  ],
+ /* al aterrizar tras un lanzamiento (el 1.º y el 3.º son de siempre) */
  thrown:[
-  ["¡¡WIIIIII!! 🚀 …otra vez, otra vez. Mentira. No.","WHEEEE!! 🚀 …again, again. Lie. No."],
-  ["¿Me has lanzado? ¡ME HAS LANZADO! Esto es denunciable. 😤","Did you throw me? YOU THREW ME! This is reportable. 😤"],
-  ["Ni Superman aterriza así de mal. 🦸","Not even Superman lands this badly. 🦸"]
+  ["Ni Superman aterriza así de mal. 🦸","Not even Superman lands this badly. 🦸"],
+  ["Aterrizaje… por llamarlo de alguna manera. Lo anoto. 📝","Landing… if we can call it that. Noted. 📝"],
+  ["Cinco segundos de silencio por mi dignidad. 🕯️","Five seconds of silence for my dignity. 🕯️"],
+  ["Estoy bien. Que nadie me mire los rizos. 🌀","I'm fine. Nobody look at my curls. 🌀"],
+  ["Vuelo cancelado. Reclamación en curso. 📨","Flight cancelled. Complaint filed. 📨"],
+  ["Ni una disculpa. Ni un «¿estás bien?». Anotado. 📝","Not an apology. Not even an “are you okay?”. Noted. 📝"],
+  ["Ese trayecto no incluía seguro de lana. ⚖️","That trip didn't include wool insurance. ⚖️"],
+  ["Punto para ti. Solo uno. Mi lista tiene muchas filas. 😌","One point for you. Just one. My list has many rows. 😌"]
  ],
+ /* en el aire, al soltarla con fuerza (salen en < 400 ms; las dos primeras son las de siempre) */
  flying:[
-  ["¡¡BEEEEE!! 🚀","BAAAAA!! 🚀"],
-  ["¡Aaaaah! ¡Voy volandooo! 😱","Aaaaah! I'm flyiiiing! 😱"],
-  ["¡Me han lanzado! ¡Avisen a Kitsuki! 📣","I've been thrown! Somebody call Kitsuki! 📣"],
-  ["¡Wiiiii! …no, ¡aaaah! …wiiii! 🎢","Wheee! …no, aaah! …wheee! 🎢"],
-  ["¡Lana al aire! 🐑💨","Wool in the air! 🐑💨"],
-  ["¡Esto va directo a mi lista de venganzas! 📝","This goes straight on my revenge list! 📝"]
+  ["¿Me has lanzado? ¡ME HAS LANZADO! Esto es denunciable. 😤","Did you throw me? YOU THREW ME! This is reportable. 😤"],
+  ["¡¡WIIIIII!! 🚀 …otra vez, otra vez. Mentira. No.","WHEEEE!! 🚀 …again, again. Lie. No."],
+  ["¡Las ovejas dignas no vuelan! ¡Me niego! 🙅‍♀️","Dignified sheep don't fly! I refuse! 🙅‍♀️"],
+  ["Vuelo sin billete, sin maleta y sin consentimiento. 🧳","Flight with no ticket, no luggage and no consent. 🧳"],
+  ["¡Testigos! ¡Que alguien tome nota de esto! 📝","Witnesses! Somebody take notes on this! 📝"],
+  ["Esto va directo a mi lista de venganzas. ⏱️📝","This goes straight on my revenge list. ⏱️📝"],
+  ["¡Mi lana! ¡Se me va a despeinar toda la lana! 💨","My wool! My whole fleece is going to get messy! 💨"],
+  ["Primera clase sería de agradecer… ¡¡AAAH!! ✈️","First class would've been nice… AAAH!! ✈️"]
  ],
  onSearch:[["Aterrizaje en la barra de búsqueda. Si buscas «ayuda», ya la encontré. 🔍","Landed on the search bar. If you're searching for “help”, I found it. 🔍"]],
  onWin:[["Qué cómoda esta ventana. Gracias por el transporte. 💺","This window is comfy. Thanks for the lift. 💺"]],
@@ -430,7 +439,7 @@ function boot(){
     if(now()<H.madUntil)return;
     if(F.thrown){
       /* si ya gritó en el aire, al aterrizar solo a veces remata (y sin pisar el grito); si no pudo, se queja ahora */
-      if(F.fly&&F.fly.said){if(Math.random()<.4)say(pk(imp>1000||h>320?TX.hard:TX.thrown,"k3th2"),Object.assign(o,{replace:false}));}
+      if(F.fly&&F.fly.said){if(Math.random()<.75)say(pk(imp>1000||h>320?TX.hard:TX.thrown,"k3th2"),Object.assign(o,{replace:false}));}
       else say(pk(TX.thrown,"k3th2"),o);
     }
     else if(imp>1000||h>320)say(pk(TX.hard,"k3hd"),o);
