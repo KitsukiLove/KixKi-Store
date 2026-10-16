@@ -4,6 +4,8 @@
      la fila de carpetas y la barra inferior (móvil), las ventanas abiertas (PC) y el Salta Vallas.
    - Habla (español / English) con globos retro: consejos, ánimos y reacciones a lo que haces.
    - Guarda su memoria en localStorage ("kixki-k"). Se apaga desde el menú Kixki / Más.
+   - Todas sus frases pasan por un gestor único (prioridad, categorías, caducidad, enfriamiento, presupuesto):
+     ver la sección «gestor de diálogos» más abajo. Depurar: KXK.debug = true · KXK.timeline().
    - Para la parte 2 (logros): avisa de todo con el evento  "kixki-evt"  → e.detail = {t:"folder"|"search"|…}
    Depende de: app.js (avisa con "kixki-ready" y "kixki-game"), i18n.js y music.js.
    ========================================================= */
@@ -305,69 +307,139 @@ function boot(){
     });
   }
 
-  /* ---------- globo de diálogo ---------- */
+  /* ---------- gestor de diálogos ----------
+     say(mensaje,{p,key,cd,mood,hl,vars, cat,ctx,ttl,replace,instant,force}) → promesa: true si se dijo entera, false si no.
+     - cat: «ev» eventos físicos (agarrar, lanzar, caer, ventana) · «sp» charla espontánea (con presupuesto por minuto)
+            · «amb» reacciones de fondo (p1) · «ui» respuestas a lo que haces (p2-p3).
+     - Un «ev» REEMPLAZA el globo actual en vez de esperar su turno, se escribe de golpe y, si no puede salir en
+       600 ms (ttl), se descarta: una frase vieja es peor que ninguna.
+     - Las demás con p ≥ 2 hacen cola (máx. 4) y también caducan (12 s). Sale primero la de más prioridad.
+     - El enfriamiento (key + cd) solo se gasta cuando la frase se dice de verdad.
+     - interrupt(ctx) corta el globo y limpia la cola de ese contexto (sin ctx: toda la cola).
+     - KXK.debug = true → línea de tiempo de cada frase en la consola; KXK.timeline() la devuelve. */
+  const DLG={budget:5,win:60000,sp:[],gap:{sp:15000},last:{}};
+  const DBG={on:false},LOG=[];let mid=0;
+  try{DBG.on=/[?&]kxdebug(=1)?(&|$)/.test(location.search)||localStorage.getItem("kixki-dbg")==="1";}catch(e){}
+  function lg(ev,m,x){
+    const r={t:Math.round(performance.now()),ev};
+    if(m){r.id=m.id;r.cat=m.cat;r.p=m.p;if(m.key)r.key=m.key;r.txt=m.text.slice(0,28);}
+    if(x!==undefined)r.x=x;
+    LOG.push(r);if(LOG.length>400)LOG.shift();
+    if(DBG.on)try{console.log("[kixki] "+r.t+"ms "+ev+" #"+(r.id||"-")+" "+(r.cat||"")+" "+(r.key||"")+" "+(x!==undefined?x:"")+" "+(r.txt||""));}catch(e){}
+  }
+  /* tamaño del globo: se mide UNA vez por frase (no en cada fotograma); el texto fantasma reserva el sitio entero */
+  let bw=0,bh=0;const lb={l:null,t:null,b:null};
+  function measure(){bw=bub.offsetWidth;bh=bub.offsetHeight;lb.l=lb.t=lb.b=null;}
+  addEventListener("resize",()=>{bw=0;});
   function layoutBubble(){
     if(bub.hidden)return;
-    const bw=bub.offsetWidth,bh=bub.offsetHeight,hx=K.x+K.dir*16;
-    const left=clamp(hx-bw/2,8,Math.max(8,innerWidth-8-bw));
-    bub.style.left=(left-K.x)+"px";bub.style.setProperty("--tx",clamp(hx-left,16,bw-16)+"px");
-    bub.classList.toggle("below",K.y-45-14-bh<6);
+    if(!bw)measure();
+    const hx=K.x+K.dir*16,left=clamp(hx-bw/2,8,Math.max(8,innerWidth-8-bw));
+    const l=Math.round(left-K.x),t=Math.round(clamp(hx-left,16,bw-16)),b=K.y-45-14-bh<6;
+    if(l!==lb.l){lb.l=l;bub.style.left=l+"px";}
+    if(t!==lb.t){lb.t=t;bub.style.setProperty("--tx",t+"px");}
+    if(b!==lb.b){lb.b=b;bub.classList.toggle("below",b);}
   }
+  const PUN=/[.,!?…:;]/;
+  const beep=f=>{if(window.KXS)try{KXS.beep(f,.03);}catch(e){}};
   function begin(m){
-    cur=m;K.talking=true;stopMove();
+    cur=m;K.talking=true;stopMove();clearTimeout(m.tq);
+    if(m.key)cd[m.key]=now()+m.cdMs;                 /* el enfriamiento se gasta aquí, no antes */
+    if(m.cat==="sp")DLG.sp.push(now());
+    DLG.last[m.cat]=now();
     if(K.mode==="sleep")frame("idle");
     setMode("talk");
     const g=geo(K.stage);if(g&&g.face)face(g.face);
     if(m.hl){K.hl=m.hl;m.hl.classList.add("kk-pt");}
     gh.textContent=m.text;vi.textContent="";bub.hidden=false;
     if(m.sr)sr.textContent=m.text;
-    layoutBubble();
-    let i=0;const n=m.text.length,spd=RM()?0:24;
+    measure();layoutBubble();
+    lg("begin",m,Math.round(performance.now()-m.t0));
+    if(m.onStart)try{m.onStart();}catch(e){}
+    const cs=Array.from(m.text),n=cs.length,hurry=m.instant||Q.length>0;
+    m.cs=cs;m.i=0;
+    if(RM()||!n){m.i=n;vi.textContent=m.text;typed(m);return;}
+    if(m.instant){                                    /* con prisa: la frase entera de golpe, con un parpadeo de boca */
+      m.i=n;vi.textContent=m.text;frame(m.mood==="happy"?"happy":"talk");beep(620);
+      m.t=setTimeout(()=>typed(m),180);return;
+    }
+    const spd=hurry?8:14;
     const step=()=>{
       if(cur!==m)return;
-      if(!spd||i>=n){vi.textContent=m.text;typed(m);return;}
-      const ch=m.text[i];i++;vi.textContent=m.text.slice(0,i);
-      if(ch!==" "){frame(i%6<3?"talk":(m.mood==="happy"?"happy":"idle"));if(i%3===0&&window.KXS)try{KXS.beep(500+((i*37)%240),.03);}catch(e){}}
-      m.t=setTimeout(step,/[.,!?…]/.test(ch)?170:spd);
+      if(m.i>=n){vi.textContent=m.text;typed(m);return;}
+      const ch=cs[m.i++];vi.textContent=cs.slice(0,m.i).join("");
+      if(ch!==" "){frame(m.i%6<3?"talk":(m.mood==="happy"?"happy":"idle"));if(m.i%3===0)beep(500+((m.i*37)%240));}
+      /* pausa corta solo al final de una oración o cláusula: nunca por cada signo repetido («…», «?!») */
+      let w=spd;
+      if(PUN.test(ch)&&cs[m.i]===" ")w=/[.!?…]/.test(ch)?(hurry?40:90):(hurry?20:50);
+      m.t=setTimeout(step,w);
     };
     step();
   }
+  /* mostrar la frase entera ya (clic en el globo mientras escribe) */
+  function finishTyping(m){
+    if(cur!==m||!m.cs||m.i>=m.cs.length)return false;
+    clearTimeout(m.t);m.i=m.cs.length;vi.textContent=m.text;typed(m);return true;
+  }
   function typed(m){
     if(cur!==m)return;
+    lg("typed",m,Math.round(performance.now()-m.t0));
     frame(m.mood==="happy"?"happy":"idle");
     if(m.mood==="happy"&&!RM())el.classList.add("kk-cheer");
-    m.t=setTimeout(()=>done(m,"auto"),clamp(2200+m.text.length*50,3200,9500));
+    m.t=setTimeout(()=>done(m,"auto"),m.cat==="ev"?clamp(1800+m.text.length*40,2600,6000):clamp(2200+m.text.length*50,3200,9500));
   }
-  function done(m,how){
-    if(cur!==m)return;
-    clearTimeout(m.t);cur=null;K.talking=false;bub.hidden=true;
+  function teardown(c){
+    clearTimeout(c.t);cur=null;K.talking=false;bub.hidden=true;
     if(K.hl){K.hl.classList.remove("kk-pt");K.hl=null;}
     if(K.mode==="talk")setMode("idle");
     frame("idle");el.classList.remove("kk-cheer");
+  }
+  function done(m,how){
+    if(cur!==m)return;
+    teardown(m);lg("done",m,how);
     if(how==="user"){if(++K.dis>=3){K.dis=0;nextChat=now()+120000;}}else K.dis=0;
     m.res(true);
-    setTimeout(flushQ,420);brain(rnd(1800,3800));
+    setTimeout(flushQ,140);brain(rnd(1800,3800));
   }
-  function interrupt(){
-    if(!cur)return;const c=cur;clearTimeout(c.t);cur=null;K.talking=false;bub.hidden=true;
-    if(K.hl){K.hl.classList.remove("kk-pt");K.hl=null;}
-    el.classList.remove("kk-cheer");if(K.mode==="talk")setMode("idle");frame("idle");c.res(false);
+  function clearQ(ctx){
+    for(let i=Q.length-1;i>=0;i--){const q=Q[i];if(ctx&&q.ctx!==ctx)continue;Q.splice(i,1);clearTimeout(q.tq);lg("drop",q,"clear");q.res(false);}
   }
-  function flushQ(){if(K.talking||K.off||!Q.length||K.mode==="hop")return;begin(Q.shift());}
-  /* say(mensaje, {p: prioridad 1-3, key, cd, mood, hl, vars}) → promesa true si se dijo */
+  function interrupt(ctx){
+    const c=cur;if(c){teardown(c);lg("stop",c,"interrupt");c.res(false);}
+    clearQ(ctx);
+  }
+  function enq(m){
+    Q.push(m);lg("queue",m,Q.length);
+    m.tq=setTimeout(()=>{const i=Q.indexOf(m);if(i<0)return;Q.splice(i,1);lg("drop",m,"ttl");m.res(false);},m.ttl);
+  }
+  function flushQ(){
+    if(K.talking||K.off||K.mode==="hop")return;
+    while(Q.length){
+      let bi=0;for(let i=1;i<Q.length;i++)if(Q[i].p>Q[bi].p)bi=i;       /* la de más prioridad; a igualdad, la más antigua */
+      const m=Q.splice(bi,1)[0];clearTimeout(m.tq);
+      if(m.key&&(cd[m.key]||0)>now()){lg("drop",m,"cd");m.res(false);continue;}
+      begin(m);return;
+    }
+  }
+  const spent=()=>{const t=now();DLG.sp=DLG.sp.filter(x=>t-x<DLG.win);return DLG.sp.length>=DLG.budget;};
   function say(msg,o={}){
     return new Promise(res=>{
-      if(!S.on||K.off||!K.ready&&!o.force){res(false);return;}
-      const key=o.key;if(key&&(cd[key]||0)>now()){res(false);return;}
-      const p=o.p||1,m={text:fmt(tx(msg),o.vars),p,mood:o.mood,hl:o.hl,sr:p>1,res};
-      if(key)cd[key]=now()+(o.cd||0);
+      const p=o.p||1,cat=o.cat||(p===1?"amb":"ui"),ev=cat==="ev";
+      const m={id:++mid,text:fmt(tx(msg),o.vars),p,cat,ctx:o.ctx||cat,key:o.key,cdMs:o.cd||0,mood:o.mood,hl:o.hl,sr:p>1,res,
+        ttl:o.ttl!=null?o.ttl:ev?600:12000,instant:o.instant!=null?!!o.instant:ev,replace:o.replace!=null?!!o.replace:ev,t0:performance.now(),onStart:o.onStart};
+      const no=why=>{lg("reject",m,why);res(false);};
+      if(!S.on||K.off||!K.ready&&!o.force)return no("off");
+      if(m.key&&(cd[m.key]||0)>now())return no("cd");
+      const gp=DLG.gap[cat];if(gp&&now()-(DLG.last[cat]||0)<gp)return no("cat-cd");
+      if(cat==="sp"&&spent())return no("budget");
+      lg("req",m);
       if(K.talking){
-        if(p>cur.p){interrupt();begin(m);}
-        else if(p>=2&&Q.length<4)Q.push(m);
-        else res(false);
+        if(m.replace||p>cur.p){const c=cur;teardown(c);lg("stop",c,"replaced");c.res(false);begin(m);}
+        else if(p>=2&&Q.length<4&&!(m.key&&Q.some(q=>q.key===m.key)))enq(m);
+        else no("busy");
         return;
       }
-      if(K.mode==="hop"){if(Q.length<4)Q.push(m);else res(false);return;}
+      if(K.mode==="hop"){if(Q.length<4)enq(m);else no("full");return;}
       begin(m);
     });
   }
@@ -425,8 +497,8 @@ function boot(){
   function chatter(){
     const w=Math.random();nextChat=now()+rnd(26000,50000);
     if(w<.2&&(isPC()||!K.game)&&Math.random()<.9){const ids=["tiendas","importante","control","utilidad","pantalla","privacidad","fotos","internet","dia","emulacion","decoracion","musica","teclados","packs"].filter(i=>$(`#desk .di[data-id="${i}"]`));
-      visitFolder(ids[Math.floor(Math.random()*ids.length)],{p:1,key:"chat"});return;}
-    const m=w<.55?pickTip():w<.85?pick(T.praise,"praise"):pickMisc();say(m,{p:1,key:"chat"});
+      visitFolder(ids[Math.floor(Math.random()*ids.length)],{p:1,key:"chat",cat:"sp"});return;}
+    const m=w<.55?pickTip():w<.85?pick(T.praise,"praise"):pickMisc();say(m,{p:1,key:"chat",cat:"sp"});
   }
   async function think(){
     if(!alive()){brain(2500);return;}
@@ -552,7 +624,7 @@ function boot(){
     const r=Math.random();
     say(r<.5?pickTip():r<.78?pick(T.tap,"tap"):pick(T.praise,"praise"),{p:2});
   });
-  bub.addEventListener("click",()=>{if(cur)done(cur,"user");});
+  bub.addEventListener("click",()=>{if(cur&&!finishTyping(cur))done(cur,"user");});
   if(matchMedia("(hover:hover)").matches){
     bub.addEventListener("mouseenter",()=>{if(cur&&cur.t&&K.talking&&bub.hidden===false&&vi.textContent===cur.text)clearTimeout(cur.t);});
     bub.addEventListener("mouseleave",()=>{if(cur&&vi.textContent===cur.text){const c=cur;clearTimeout(c.t);c.t=setTimeout(()=>done(c,"auto"),1800);}});
@@ -582,7 +654,7 @@ function boot(){
     });
   }
   function applyOn(){
-    if(!S.on){interrupt();Q.length=0;stopMove();el.classList.add("kk-gone");}
+    if(!S.on){interrupt();stopMove();el.classList.add("kk-gone");}
     else{el.classList.remove("kk-gone");if(K.ready){const g=geo(K.stage);if(!g||!usable(K.stage))relocate(true);else resync();}}
   }
   labels();
@@ -600,7 +672,7 @@ function boot(){
     const off=!S.on||!!$(".cat.max")||!!$("#boot:not([hidden])")||!!$("#run:not([hidden])")||!!$("#qr:not([hidden])");
     if(off!==wasOff){
       wasOff=off;K.off=off;
-      if(off){interrupt();Q.length=0;stopMove();el.classList.add("kk-off");}
+      if(off){interrupt();stopMove();el.classList.add("kk-off");}
       else if(K.ready){
         el.classList.remove("kk-off");
         const g=geo(K.stage);if(!g||!usable(K.stage)&&!free(K.stage))relocate(true);else resync();
@@ -608,7 +680,7 @@ function boot(){
         brain(2500);
       }
     }
-    if(isPC()!==prevPC){prevPC=isPC();K.tour=null;if(K.ready){interrupt();Q.length=0;K.stage=null;relocate(true);}}
+    if(isPC()!==prevPC){prevPC=isPC();K.tour=null;if(K.ready){interrupt();K.stage=null;relocate(true);}}
     if(S.opened.length&&false)save();
   }
   new MutationObserver(()=>{if(!scanQ)scanQ=requestAnimationFrame(scan);}).observe(document.body,{subtree:true,attributes:true,attributeFilter:["class","hidden"]});
@@ -636,6 +708,11 @@ function boot(){
     tx,fmt,T,wait,visitFolder,usable,relocate,
     /* (parte 2) */
     K,alive,interrupt,brain,dark,rows:FR,el,
+    /* (parte 4: gestor de diálogos) */
+    get debug(){return DBG.on;},set debug(v){DBG.on=!!v;try{localStorage.setItem("kixki-dbg",v?"1":"0");}catch(e){}},
+    timeline:()=>LOG.slice(),clearTimeline:()=>{LOG.length=0;},
+    /* presupuesto de frases espontáneas por minuto (y pausa mínima entre ellas, en ms); al cambiarlo se vacía el recuento */
+    budget:(n,gap)=>{if(n!=null){DLG.budget=Math.max(0,n|0);DLG.sp=[];}if(gap!=null)DLG.gap.sp=Math.max(0,gap|0);return DLG.budget;},
     plat:(id,fn)=>{PLAT[id]=fn;},
     /* (parte 3: travesuras y físicas, kixki3.js) */
     ex:{place,land,setMode,frame,face,stopMove,R,topWin,say,layoutBubble}};

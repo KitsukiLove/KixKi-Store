@@ -123,6 +123,14 @@ const TX={
   ["¿Me has lanzado? ¡ME HAS LANZADO! Esto es denunciable. 😤","Did you throw me? YOU THREW ME! This is reportable. 😤"],
   ["Ni Superman aterriza así de mal. 🦸","Not even Superman lands this badly. 🦸"]
  ],
+ flying:[
+  ["¡¡BEEEEE!! 🚀","BAAAAA!! 🚀"],
+  ["¡Aaaaah! ¡Voy volandooo! 😱","Aaaaah! I'm flyiiiing! 😱"],
+  ["¡Me han lanzado! ¡Avisen a Kitsuki! 📣","I've been thrown! Somebody call Kitsuki! 📣"],
+  ["¡Wiiiii! …no, ¡aaaah! …wiiii! 🎢","Wheee! …no, aaah! …wheee! 🎢"],
+  ["¡Lana al aire! 🐑💨","Wool in the air! 🐑💨"],
+  ["¡Esto va directo a mi lista de venganzas! 📝","This goes straight on my revenge list! 📝"]
+ ],
  onSearch:[["Aterrizaje en la barra de búsqueda. Si buscas «ayuda», ya la encontré. 🔍","Landed on the search bar. If you're searching for “help”, I found it. 🔍"]],
  onWin:[["Qué cómoda esta ventana. Gracias por el transporte. 💺","This window is comfy. Thanks for the lift. 💺"]],
  onFloor:[["Al suelo, como las ovejas decentes. 🌱","On the ground, like decent sheep. 🌱"]],
@@ -302,7 +310,7 @@ function boot(){
   addEventListener("click",e=>{
     const t=e.target;if(!t||!t.closest||!t.closest(".kk-body"))return;
     if(now()-H.just<160){e.stopPropagation();e.preventDefault();return;}
-    if(now()<H.madUntil){e.stopPropagation();e.preventDefault();say(pk(TX.madTap,"k3mt"),{p:3,key:"k3madtap",cd:1200});}
+    if(now()<H.madUntil){e.stopPropagation();e.preventDefault();say(pk(TX.madTap,"k3mt"),{p:3,cat:"ev",key:"k3madtap",cd:1200});}
   },true);
 
   function startHold(e){
@@ -314,8 +322,8 @@ function boot(){
     H.ox=clamp(K.x-e.clientX,-26,26);H.oy=clamp(K.y-e.clientY,10,44);
     if(window.KXS)try{KXS.baa();}catch(_){}
     const n=++S3.grabs;save();KK.emit("grab",{n});
-    if(n>=4&&n%4===0)say(F2(pk(TX.many,"k3many"),{n}),{p:3,key:"k3grab",cd:0});
-    else say(pk(TX.grab,"k3grab"),{p:3,key:"k3grab",cd:2500});
+    if(n>=4&&n%4===0)say(F2(pk(TX.many,"k3many"),{n}),{p:3,cat:"ev",key:"k3grab",cd:0});
+    else say(pk(TX.grab,"k3grab"),{p:3,cat:"ev",key:"k3grab",cd:2500});
     requestAnimationFrame(heldLoop);
   }
   function moveHold(e){
@@ -328,7 +336,7 @@ function boot(){
     const dx=Math.sign(e.movementX||0);
     if(dx&&H.lastDx&&dx!==H.lastDx&&Math.abs(e.movementX)>3){
       if(now()-H.shakeT>1200)H.shakeN=0;H.shakeT=now();
-      if(++H.shakeN>=6){H.shakeN=0;say(pk(TX.shake,"k3shake"),{p:3,key:"k3shake",cd:6000});}
+      if(++H.shakeN>=6){H.shakeN=0;say(pk(TX.shake,"k3shake"),{p:3,cat:"ev",key:"k3shake",cd:6000});}
     }
     if(dx)H.lastDx=dx;
   }
@@ -338,8 +346,8 @@ function boot(){
     const v=H.samples.length>1?(H.samples[H.samples.length-1].x-H.samples[0].x)/Math.max(.016,(H.samples[H.samples.length-1].t-H.samples[0].t)/1000):0;
     if(!RM())setTilt(v*.014);
     const t=now();
-    if(t>H.holdT&&!K.talking&&H.holdN<4){H.holdN++;H.holdT=t+rnd(3600,5600);say(pk(TX.holding,"k3hold"),{p:2,key:"k3hold",cd:2500});}
-    if(t-H.holdAt>10000&&!H.longSaid){H.longSaid=true;say(pk(TX.longHold,"k3long"),{p:3,key:"k3long",cd:0});}
+    if(t>H.holdT&&!K.talking&&H.holdN<4){H.holdN++;H.holdT=t+rnd(3600,5600);say(pk(TX.holding,"k3hold"),{p:2,cat:"ev",replace:false,instant:false,ttl:900,key:"k3hold",cd:2500});}
+    if(t-H.holdAt>10000&&!H.longSaid){H.longSaid=true;say(pk(TX.longHold,"k3long"),{p:3,cat:"ev",key:"k3long",cd:0});}
     requestAnimationFrame(heldLoop);
   }
   function release(){
@@ -347,20 +355,24 @@ function boot(){
     const s=H.samples,L=s[s.length-1];let vx=0,vy=0;
     if(s.length>=2&&performance.now()-L.t<90){const a=s[0],dt=(L.t-a.t)/1000;if(dt>.01){vx=(L.x-a.x)/dt;vy=(L.y-a.y)/dt;}}
     vx=clamp(vx,-1500,1500);vy=clamp(vy,-1200,900);
-    const thrown=Math.hypot(vx,vy)>850;
-    /* cada lanzamiento de verdad se cuenta: a los 10 aparece la pestañita de la cancha de básquet (basket.js) */
-    if(thrown){const n=S3.throws=(S3.throws|0)+1;save();KK.emit("throw",{n});}
-    startFall({vx,vy,thrown,reason:"release"});
+    const thrown=Math.hypot(vx,vy)>THROW_V,fly={said:false};
+    /* cada lanzamiento de verdad se cuenta (a los 10 aparece la cancha de básquet, basket.js) y TAMBIÉN se comenta:
+       misma condición, sin importar la altura ni la dirección, y la frase sale al soltarla, no al aterrizar */
+    if(thrown){
+      const n=S3.throws=(S3.throws|0)+1;save();KK.emit("throw",{n});
+      if(now()>=H.madUntil)say(pk(TX.flying,"k3fly"),{p:3,cat:"ev",key:"k3th",cd:1500,onStart:()=>{fly.said=true;}});
+    }
+    startFall({vx,vy,thrown,fly,reason:"release"});
   }
 
   /* ---- caer ---- */
-  const G=1900;
+  const G=1900,THROW_V=850;                         /* px/s: a partir de aquí soltarla es «lanzarla» */
   function startFall(o){
     cancelFall();
     H.held=false;K.tour=H;K.stage="air";
     el.classList.add("kk-air");el.classList.remove("kk-held");
     EX.setMode("idle");
-    const F=H.fall={vx:o.vx||0,vy:o.vy||0,y0:K.y,thrown:!!o.thrown,reason:o.reason||"release",bounced:false,raf:0,imp:0};
+    const F=H.fall={vx:o.vx||0,vy:o.vy||0,y0:K.y,thrown:!!o.thrown,fly:o.fly||null,reason:o.reason||"release",bounced:false,raf:0,imp:0};
     if(RM()){const b=fallback();if(b)settle(b,F);else abortAll();return;}
     let last=performance.now();
     const tick=t=>{
@@ -414,9 +426,13 @@ function boot(){
     KK.brain(rnd(2200,4200));
   }
   function landLines(id,h,imp,F){
-    const o={p:2,key:"k3land",cd:3500};
+    const o={p:2,cat:"ev",key:"k3land",cd:3500};
     if(now()<H.madUntil)return;
-    if(F.thrown&&h>120)say(pk(TX.thrown,"k3th"),o);
+    if(F.thrown){
+      /* si ya gritó en el aire, al aterrizar solo a veces remata (y sin pisar el grito); si no pudo, se queja ahora */
+      if(F.fly&&F.fly.said){if(Math.random()<.4)say(pk(imp>1000||h>320?TX.hard:TX.thrown,"k3th2"),Object.assign(o,{replace:false}));}
+      else say(pk(TX.thrown,"k3th2"),o);
+    }
     else if(imp>1000||h>320)say(pk(TX.hard,"k3hd"),o);
     else if(Math.random()<.5){
       const sp=id==="search"?TX.onSearch:id.startsWith("w:")?TX.onWin:id==="floor"?TX.onFloor:null;
@@ -446,7 +462,7 @@ function boot(){
     else if(n>=3&&n%3===0)m=F2(pk(TX.dropMany,"k3dm"),{n});
     else m=pk(TX.dragged,"k3dr");
     if(why!=="close"||!self)bumpPlan(1);
-    say(m,{p:3,key:"k3drop",cd:0,mood:undefined});
+    say(m,{p:3,cat:"ev",key:"k3drop",cd:0,mood:undefined});
     startFall({vx:rnd(-90,90),vy:-120,thrown:false,reason:why});
   }
   function bumpPlan(n){S3.plan=Math.min(99,(S3.plan|0)+n);save();}
@@ -578,7 +594,7 @@ function boot(){
   prLabel();
   if(window.KXI&&!KXI._k3){KXI._k3=1;const o=KXI.set;KXI.set=function(l){o.call(KXI,l);prLabel();};}
 
-  window.KXK3={state:S3,
+  window.KXK3={state:S3,THROW_V,
     bg:()=>canAct()?bgPrank():Promise.resolve(false),
     close:()=>canAct()?closePrank():Promise.resolve(false),
     scene:t=>scene((SC[t]||SC[pickType()])()),
