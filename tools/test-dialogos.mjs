@@ -31,12 +31,14 @@ const br=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||undefi
 const ctx=await br.newContext(mobile?{viewport:{width:390,height:844}}:{viewport:{width:1280,height:800}});
 const page=await ctx.newPage();
 const errs=[];
+const ACH=(()=>{try{return [...fs.readFileSync(path.join(ROOT,"kixki2.js"),"utf8").matchAll(/^a\("([\w-]+)"/gm)].map(m=>m[1]);}catch(e){return [];}})();
 page.on("pageerror",e=>errs.push("PAGEERR "+e.message));
-await page.addInitScript(view=>{
+await page.addInitScript(([view,ach])=>{
   /* visitante que ya conoce la tienda (sin tour) */
   localStorage.setItem("kixki-k",'{"v":1,"on":true,"visits":5,"first":1,"last":1,"opened":[],"fc":{},"allDone":0}');
   localStorage.setItem("kixki-k3",'{"v":1,"pr":false,"plan":0,"grabs":0,"drops":0,"closed":0,"bgs":0,"throws":0}');
   localStorage.setItem("kixki-view",view);
+  localStorage.setItem("kixki-a",JSON.stringify({u:Object.fromEntries(ach.map(i=>[i,1])),c:{},seenAt:Date.now()}));   /* logros ya conseguidos: sus frases no estorban lo que se mide */
   sessionStorage.setItem("kixki-k-s","1");
   /* contar lecturas de layout sobre el globo (offsetWidth/offsetHeight) */
   window.__rd=0;
@@ -45,11 +47,12 @@ await page.addInitScript(view=>{
     Object.defineProperty(HTMLElement.prototype,k,{get(){if(this.classList&&this.classList.contains("kk-bub"))window.__rd++;return d.get.call(this);}});
   }
   addEventListener("pointerup",()=>{window.__up=performance.now();},true);
-},mobile?"movil":"pc");
+},[mobile?"movil":"pc",ACH]);
 await page.goto(URL_);
 await page.waitForFunction(()=>window.KXK&&KXK.ready&&window.KXK3,null,{timeout:20000});
 await page.waitForTimeout(2500);
-const reset=async()=>{await page.evaluate(()=>{KXK.interrupt();KXK.clearTimeline();KXK.budget(5,15000);});await page.waitForTimeout(300);};
+await page.evaluate(()=>{KXK.K.still=true;});     /* sin paseos ni travesuras espontáneas: las pruebas no dependen del azar */
+const reset=async()=>{await page.evaluate(()=>{KXK.interrupt();KXK.clearTimeline();KXK.budget(5,15000);});await waitIdle();await page.waitForTimeout(300);};
 
 /* ---------- 1) latencia soltar → frase ---------- */
 console.log(`\n1) Latencia al soltar a Kixki (${mobile?"móvil":"PC"})`);
@@ -106,7 +109,7 @@ let r=await page.evaluate(async()=>{
   KXK.interrupt();
   return {shown,ms:Math.round(performance.now()-t0),log:KXK.timeline().map(e=>e.ev+":"+(e.x??""))};
 });
-ok(r.shown==="EVENTO","un evento reemplaza al globo actual y sale entero al instante ("+r.ms+" ms)");
+ok(r.shown==="EVENTO","un evento reemplaza al globo actual y sale entero al instante ("+r.ms+" ms)"+(r.shown==="EVENTO"?"":" "+JSON.stringify(r)));
 ok(r.log.includes("stop:replaced"),"el globo anterior queda marcado como reemplazado");
 ok(r.log.includes("drop:clear"),"interrupt() limpia la cola");
 
@@ -172,6 +175,187 @@ await page.emulateMedia({reducedMotion:"no-preference"});
 await reset();
 r=await page.evaluate(async()=>{KXK.debug=true;KXK.say(["debug","x"],{p:2,key:"dbg"});await new Promise(r=>setTimeout(r,500));KXK.debug=false;return KXK.timeline().map(e=>e.ev);});
 ok(["req","begin","typed"].every(x=>r.includes(x)),"KXK.debug / KXK.timeline(): "+r.join(" → "));
+
+/* ---------- 3) parte 2: microreacciones, modos, «no molestar», reacciones rápidas, memoria ---------- */
+console.log("\n3) Parte 2: microreacciones, modos y reacciones al entorno");
+await page.evaluate(()=>{KXK.setTalk("normal");});
+await reset();
+await waitIdle();
+r=await page.evaluate(async()=>{
+  KXK.budget(5,0);KXK.clearTimeline();
+  const p0=performance.now();KXK.micro("grab",{cd:0});
+  await new Promise(r=>setTimeout(r,60));
+  const b=document.querySelector("#kixki .kk-bub"),txt=b.querySelector(".v").textContent,isMic=b.classList.contains("mic"),vis=!b.hidden;
+  await new Promise(r=>setTimeout(r,1700));
+  return {txt,isMic,vis,hidden:document.querySelector("#kixki .kk-bub").hidden,words:txt.trim().split(/\s+/).length,ms:Math.round(performance.now()-p0)};
+});
+ok(r.vis&&r.isMic&&r.words<=3&&r.hidden,"microreacción «"+r.txt+"»: sale al instante, ≤ 3 palabras y se va sola (~1 s)");
+
+await reset();
+r=await page.evaluate(async()=>{
+  KXK.setTalk("quiet");const b=KXK.budget();
+  const seen=[];
+  for(let i=0;i<4;i++){KXK.interrupt();await new Promise(r=>setTimeout(r,1500));
+    KXK.micro("close",{cd:0});await new Promise(r=>setTimeout(r,60));
+    const bb=document.querySelector("#kixki .kk-bub");if(!bb.hidden&&bb.classList.contains("mic"))seen.push(bb.querySelector(".v").textContent);}
+  const bt=document.querySelector("#s-kx-mode");
+  const spQuiet=await KXK.say(["amb en calladita","x"],{p:1});
+  KXK.setTalk("chat");const bc=KXK.budget();
+  const lbl=bt?bt.textContent:"";
+  KXK.setTalk("normal");
+  return {b,bc,seen,lbl,spQuiet,bn:KXK.budget(),mode:KXK.mode};
+});
+ok(r.b===1&&r.bc===9&&r.bn===5&&r.mode==="normal","modos de charla: calladita=1/min · charlatana=9/min · normal=5/min");
+ok(r.seen.length>0&&r.seen.every(t=>!/\p{L}/u.test(t)),"en «calladita» las microreacciones son solo emoji ("+r.seen.join(" ")+")");
+ok(r.spQuiet===false,"en «calladita» no salen las reacciones de fondo (p1)");
+ok(!!r.lbl,"el menú tiene el botón de modo: «"+r.lbl+"»");
+
+await reset();
+if(!mobile){
+  r=await page.evaluate(async()=>{
+    KXK.budget(5,0);const tb=document.querySelector("#app .cat:not(.min):not(.max) .tb");
+    if(!tb)return {skip:true};
+    tb.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true,button:0,pointerType:"mouse"}));
+    const during=KXK.busy(),said=await KXK.say(["charla mientras arrastro","x"],{p:1,cat:"sp",replace:true});
+    const evOk=await KXK.say(["evento sí","x"],{p:3,cat:"ev",key:"drag-ev",cd:0});
+    addEventListener("pointerup",()=>{},true);
+    document.dispatchEvent(new PointerEvent("pointerup",{bubbles:true}));window.dispatchEvent(new PointerEvent("pointerup"));
+    return {during,said,evOk,after:KXK.busy()};
+  });
+  ok(r.skip||(r.during&&r.said===false&&r.evOk===true&&!r.after),"no habla mientras arrastras una ventana (los eventos físicos sí) "+JSON.stringify(r));
+}
+await reset();
+await page.focus("#q");await waitIdle();await page.waitForTimeout(400);    /* al enfocar la barra, Kixki salta hasta ella */
+r=await page.evaluate(async()=>{
+  KXK.interrupt();KXK.budget(5,0);KXK.clearTimeline();
+  document.querySelector("#q").dispatchEvent(new KeyboardEvent("keydown",{key:"a",bubbles:true}));
+  const a=await KXK.say(["charla mientras escribo","x"],{p:1,cat:"sp"});
+  KXK.say(["respuesta directa","x"],{p:2,always:true,key:"alw",cd:0});
+  await new Promise(r=>setTimeout(r,80));
+  const f=KXK.timeline().some(e=>e.ev==="begin"&&e.key==="alw");
+  KXK.interrupt();await new Promise(r=>setTimeout(r,1700));
+  KXK.say(["ya no escribo","x"],{p:1,cat:"sp",replace:true,key:"after-type",cd:0});
+  await new Promise(r=>setTimeout(r,80));
+  const c=KXK.timeline().some(e=>e.ev==="begin"&&e.key==="after-type");
+  KXK.interrupt();
+  return {a,f,c,rj:KXK.timeline().filter(e=>e.ev==="reject").map(e=>e.key+":"+e.x).slice(-4),why:KXK.busyWhy()};
+});
+ok(r.a===false&&r.f===true&&r.c===true,"no habla mientras escribes y retoma 1,5 s después de la última tecla "+JSON.stringify(r));
+await page.evaluate(()=>{document.querySelector("#q").blur();});
+
+await reset();
+r=await page.evaluate(async()=>{
+  localStorage.removeItem("kixki-k-rec");
+  for(let i=0;i<40;i++)KXK.pick([["rec-"+i,"x"]],"tst");
+  await new Promise(r=>setTimeout(r,700));
+  const st=JSON.parse(localStorage.getItem("kixki-k-rec")||"[]");
+  return {mem:KXK.recentList().length,st:st.length};
+});
+ok(r.mem===30&&r.st===30,"memoria de no repetir: últimas 30 frases, guardadas en localStorage ("+r.mem+"/"+r.st+")");
+
+/* búsqueda: ya no espera 850 ms */
+await reset();await waitIdle();
+await page.evaluate(()=>{KXK.budget(5,0);window.__ti=0;document.querySelector("#q").addEventListener("input",()=>{window.__ti=performance.now();},{once:false});});
+await page.focus("#q");await page.keyboard.type("ab");await page.waitForTimeout(6500);   /* calentamiento: los logros de la primera búsqueda también hablan */
+await page.evaluate(()=>{KXK.interrupt();KXK.budget(5,0);});await page.fill("#q","");await page.waitForTimeout(800);
+await page.evaluate(()=>{KXK.interrupt();KXK.clearTimeline();});
+await page.keyboard.type("zq");
+await page.waitForTimeout(2200);
+r=await page.evaluate(()=>{const b=KXK.timeline().find(e=>e.ev==="begin"&&e.key==="search");return b?{ms:Math.round(b.t-window.__ti)}:{tl:KXK.timeline().slice(-8).map(e=>e.ev+":"+(e.key||"")+":"+(e.x??""))};});
+ok(r&&r.ms<1500,"búsqueda: la frase sale "+(r&&r.ms!=null?r.ms:"nunca "+JSON.stringify(r))+" ms después de la última tecla (antes ≥ 850 + salto)");
+await page.fill("#q","");await page.evaluate(()=>{document.querySelector("#q").blur();KXK.interrupt();});
+
+/* clic en Descarga / fuente */
+await reset();
+r=await page.evaluate(async()=>{
+  KXK.budget(5,0);
+  const stop=e=>e.preventDefault();document.addEventListener("click",stop);
+  const find=re=>[...document.querySelectorAll(".app .links a.btn,.app .links button.btn")].find(b=>re.test(b.textContent.trim()));
+  const dl=find(/^(descarga|apk)/i),sr=find(/github|repositorio/i);
+  const out={dl:!!dl,src:!!sr};
+  if(dl){KXK.clearTimeline();dl.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}));dl.click();await new Promise(r=>setTimeout(r,200));out.dlSaid=KXK.timeline().some(e=>e.ev==="begin"&&e.key==="fast-dl");if(!out.dlSaid)out.tl=KXK.timeline().slice(-5).map(e=>e.ev+":"+(e.key||"")+":"+(e.x??""));out.why=KXK.busyWhy();KXK.interrupt();}
+  await new Promise(r=>setTimeout(r,300));
+  if(sr){KXK.clearTimeline();sr.dispatchEvent(new PointerEvent("pointerdown",{bubbles:true}));sr.click();await new Promise(r=>setTimeout(r,200));out.srcSaid=KXK.timeline().some(e=>e.ev==="begin"&&e.key==="fast-src");KXK.interrupt();}
+  document.removeEventListener("click",stop);return out;
+});
+ok((!r.dl||r.dlSaid)&&(!r.src||r.srcSaid),"reacciona al clic en «Descarga» y en la fuente "+JSON.stringify(r));
+
+/* ratón 3 s sobre una app */
+await reset();
+const card=await page.evaluate(()=>{
+  const c=[...document.querySelectorAll("#app .app")].find(a=>{const r=a.getBoundingClientRect();return r.width>40&&r.height>20&&r.top>60&&r.bottom<innerHeight-60&&getComputedStyle(a).visibility!=="hidden";});
+  if(!c)return null;const r=c.getBoundingClientRect();return {x:r.left+r.width/2,y:r.top+r.height/2};
+});
+if(card){
+  await page.evaluate(()=>{KXK.budget(5,0);KXK.clearTimeline();});
+  await page.mouse.move(card.x,card.y);await page.mouse.move(card.x+3,card.y+2);
+  await page.waitForTimeout(3600);
+  r=await page.evaluate(()=>KXK.timeline().some(e=>(e.ev==="begin"||e.ev==="req")&&e.key==="hover"));
+  ok(r,"pasar el cursor 3 s sobre una app → Kixki comenta");
+  await page.mouse.move(2,2);await page.evaluate(()=>KXK.interrupt());
+}else console.log("  (sin tarjetas visibles: se omite la prueba del cursor)");
+
+/* cerrar una ventana y muchas ventanas (solo PC) */
+if(!mobile){
+  await reset();await waitIdle();
+  r=await page.evaluate(async()=>{
+    KXK.budget(5,0);KXK.K.noMic=0;
+    const w=[...document.querySelectorAll("#app .cat:not(.min):not(.max)")].find(s=>s.querySelector(".wmin"));
+    if(!w)return {skip:true};
+    KXK.clearTimeline();w.querySelector(".wmin").click();await new Promise(r=>setTimeout(r,300));
+    return {micro:KXK.timeline().some(e=>e.key==="micro-close"&&(e.ev==="begin"||e.ev==="req"))};
+  });
+  ok(r.skip||r.micro,"al cerrar una ventana, Kixki hace una microreacción "+JSON.stringify(r));
+  await reset();
+  r=await page.evaluate(async()=>{
+    KXK.budget(5,0);const all=[...document.querySelectorAll("#app .cat")];if(all.length<6)return {skip:true};
+    const was=all.map(s=>s.className);
+    all.forEach(s=>{s.classList.remove("max");s.classList.add("min");});await new Promise(r=>setTimeout(r,400));KXK.clearTimeline();
+    all.slice(0,6).forEach(s=>{s.classList.remove("min","max");s.hidden=false;});
+    await new Promise(r=>setTimeout(r,400));
+    const said=KXK.timeline().some(e=>e.key==="manywin"&&(e.ev==="begin"||e.ev==="req"||e.ev==="queue"));
+    all.forEach((s,i)=>{s.className=was[i];});return {said,info:said?0:{off:KXK.K.off,q:document.querySelector("#q").value,n:[...document.querySelectorAll("#app .cat:not(.min):not(.max)")].filter(x=>!x.hidden).length,why:KXK.busyWhy(),keys:[...new Set(KXK.timeline().map(e=>e.key||e.ev))].slice(0,8)}};
+  });
+  ok(r.skip||r.said,"con muchas ventanas abiertas, Kixki lo comenta "+JSON.stringify(r));
+}
+
+/* ---------- 4) parte 3: textos en dialogs.js, listas, variables, generador y ánimo ---------- */
+console.log("\n4) Parte 3: dialogs.js, variables, generador y ánimo");
+await reset();
+r=await page.evaluate(async()=>{
+  const out={};
+  out.loaded=!!(window.KXD&&KXD.T&&KXD.TX&&KXK.D===KXD);
+  KXK.budget(5,0);KXK.clearTimeline();
+  /* una clave con varias frases (lista) se resuelve sola */
+  KXK.say(KXK.T.dizzy,{p:3,key:"t-list",instant:true});await new Promise(r=>setTimeout(r,80));
+  out.list=document.querySelector("#kixki .kk-bub .v").textContent;
+  KXK.interrupt();
+  /* variables de contexto */
+  KXK.say(["Son las {hora}: «{app}» en «{carpeta}»","It's {hora}: “{app}” in “{carpeta}”"],{p:3,key:"t-vars",instant:true});await new Promise(r=>setTimeout(r,80));
+  out.vars=document.querySelector("#kixki .kk-bub .v").textContent;
+  KXK.interrupt();
+  /* generador por piezas: tres frases, distintas entre sí */
+  const g=[...Array(6)].map(()=>KXD.gen("praise")),gd=[...Array(6)].map(()=>KXD.gen("grudge"));
+  out.gen=new Set(g.map(x=>x[0])).size;out.genPair=g.every(x=>x.length===2&&x[0]&&x[1]);out.grudge=new Set(gd.map(x=>x[0])).size;
+  /* ánimo según cuánto la lanzas */
+  const k3=window.KXK3,p0=k3.plan();k3.plan(0);const m0=k3.mood();k3.plan(5);const m1=k3.mood();k3.plan(14);const m2=k3.mood();k3.plan(p0);
+  out.mood=[m0,m1,m2];
+  /* ninguna llave suelta tras probar una tanda de frases de todo tipo */
+  const bad=[];
+  for(const k of ["tap","praise","dizzy","late","wake","back","focus","favAdd","favDel","fav1","night","day","musOn","musOff"]){
+    KXK.interrupt();await new Promise(r=>setTimeout(r,20));
+    KXK.say(KXK.T[k],{p:3,key:"t-"+k});await new Promise(r=>setTimeout(r,60));
+    const tx=document.querySelector("#kixki .kk-bub .v").textContent;if(/[{}]/.test(tx))bad.push(k+":"+tx);
+  }
+  out.bad=bad;KXK.interrupt();
+  return out;
+});
+ok(r.loaded,"dialogs.js carga antes que Kixki y expone KXD");
+ok(r.list&&!/\[object/.test(r.list)&&r.list.length>5,"una clave con varias frases (lista) se resuelve sola: «"+(r.list||"").slice(0,40)+"»");
+ok(/\d\d:\d\d/.test(r.vars)&&!/[{}]/.test(r.vars),"variables {hora} {app} {carpeta} resueltas: «"+(r.vars||"").slice(0,60)+"»");
+ok(r.gen>=4&&r.genPair&&r.grudge>=4,"generador por piezas: "+r.gen+"/6 elogios y "+r.grudge+"/6 quejas distintos");
+ok(r.mood[0]===0&&r.mood[1]===1&&r.mood[2]===2,"ánimo: plan 0 → tranquila, 5 → pícara, 14 → vengativa ("+r.mood.join(",")+")");
+ok(r.bad.length===0,"ninguna frase deja llaves sueltas"+(r.bad.length?": "+r.bad.join(" | "):""));
 
 ok(errs.length===0,"sin errores en la página"+(errs.length?": "+errs.join(" | "):""));
 await br.close();server.close();
