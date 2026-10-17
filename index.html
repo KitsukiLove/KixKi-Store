@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kixki Store</title>
+<meta name="description" content="Pequeña colección de apps para tu Android, con guía básica y para qué sirve cada una.">
+<meta name="theme-color" content="#150c33" id="tc">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-PJ9tzt4qzAQLFqG7+PVB0uNKEki8TheQnBu76EFOq98=' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta property="og:title" content="Kixki Store">
+<meta property="og:description" content="Pequeña colección de apps para tu Android, con guía básica y para qué sirve cada una.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+<!-- fonts:start -->
+<link rel="stylesheet" href="fonts/fonts.css">
+<!-- fonts:end -->
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="kixki.css">
+<link rel="stylesheet" href="kixki2.css">
+<link rel="stylesheet" href="kixki3.css">
+<link rel="stylesheet" href="lluvia.css">
+<link rel="stylesheet" href="basket.css">
+<link rel="stylesheet" href="consejos.css">
+<link rel="stylesheet" href="vacaboss.css">
+<script>
+/* Tema: usa el guardado, o el del sistema. Se aplica antes de pintar para evitar parpadeos. */
+(function(){
+  var t=null;
+  try{t=localStorage.getItem("kixki-theme");}catch(e){}
+  if(t!=="dark"&&t!=="light"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";}
+  document.documentElement.setAttribute("data-theme",t);
+  var m=document.getElementById("tc");if(m)m.setAttribute("content",t==="dark"?"#150c33":"#efe6ff");
+})();
+</script>
+<!-- «Cambiar estilo» (modo XP): va aquí, sin defer y DESPUÉS de todos los CSS, para estrenar el estilo sin parpadeo -->
+<script src="xpmode.js"></script>
+</head>
+<body>
+<div id="bgx" aria-hidden="true"></div>
+<button type="button" id="vw" class="vwt" aria-label="Cambiar entre modo móvil y modo PC">Modo PC</button>
+<div class="wrap">
+  <header class="hero">
+    <div class="scene">
+      <svg class="art" id="scene-art" viewBox="0 0 64 34" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Una ovejita en una colina bajo el cielo"></svg>
+      <button type="button" class="tg" id="tg" aria-label="Cambiar entre modo claro y oscuro"></button>
+      <button type="button" class="tg rd" id="rd" aria-pressed="false" aria-label="Activar o desactivar los sonidos"></button>
+      <button type="button" class="tg bgb" id="bgb" aria-label="Cambiar el fondo"></button>
+    </div>
+    <h1><span class="sr">Kixki Store</span><svg class="wm" viewBox="-1 -1 54 28" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><g class="gl" style="animation-delay:-0.0s"><path class="sh" d="M2 2h2v2h-2zM10 2h2v2h-2zM2 4h2v2h-2zM8 4h2v2h-2zM2 6h2v2h-2zM6 6h2v2h-2zM2 8h4v2h-4zM2 10h2v2h-2zM6 10h2v2h-2zM2 12h2v2h-2zM8 12h2v2h-2zM2 14h2v2h-2zM10 14h2v2h-2z"/><path class="m" d="M0 0h2v2h-2zM8 0h2v2h-2zM0 2h2v2h-2zM6 2h2v2h-2zM0 4h2v2h-2zM4 4h2v2h-2zM0 6h4v2h-4zM0 8h2v2h-2zM4 8h2v2h-2zM0 10h2v2h-2zM6 10h2v2h-2zM0 12h2v2h-2zM8 12h2v2h-2z"/></g><g class="gl" style="animation-delay:-0.3s"><path class="sh" d="M14 6h4v2h-4zM16 8h2v2h-2zM16 10h2v2h-2zM16 12h2v2h-2zM14 14h6v2h-6zM16 2h2v2h-2z"/><path class="m" d="M12 4h4v2h-4zM14 6h2v2h-2zM14 8h2v2h-2zM14 10h2v2h-2zM12 12h6v2h-6z"/><path class="dt" d="M14 0h2v2h-2z"/></g><g class="gl" style="animation-delay:-0.6s"><path class="sh" d="M22 6h2v2h-2zM30 6h2v2h-2zM24 8h2v2h-2zM28 8h2v2h-2zM26 10h2v2h-2zM24 12h2v2h-2zM28 12h2v2h-2zM22 14h2v2h-2zM30 14h2v2h-2z"/><path class="m" d="M20 4h2v2h-2zM28 4h2v2h-2zM22 6h2v2h-2zM26 6h2v2h-2zM24 8h2v2h-2zM22 10h2v2h-2zM26 10h2v2h-2zM20 12h2v2h-2zM28 12h2v2h-2z"/></g><g class="gl" style="animation-delay:-0.9s"><path class="sh" d="M34 2h2v2h-2zM42 2h2v2h-2zM34 4h2v2h-2zM40 4h2v2h-2zM34 6h2v2h-2zM38 6h2v2h-2zM34 8h4v2h-4zM34 10h2v2h-2zM38 10h2v2h-2zM34 12h2v2h-2zM40 12h2v2h-2zM34 14h2v2h-2zM42 14h2v2h-2z"/><path class="m" d="M32 0h2v2h-2zM40 0h2v2h-2zM32 2h2v2h-2zM38 2h2v2h-2zM32 4h2v2h-2zM36 4h2v2h-2zM32 6h4v2h-4zM32 8h2v2h-2zM36 8h2v2h-2zM32 10h2v2h-2zM38 10h2v2h-2zM32 12h2v2h-2zM40 12h2v2h-2z"/></g><g class="gl" style="animation-delay:-1.2s"><path class="sh" d="M46 6h4v2h-4zM48 8h2v2h-2zM48 10h2v2h-2zM48 12h2v2h-2zM46 14h6v2h-6zM48 2h2v2h-2z"/><path class="m" d="M44 4h4v2h-4zM46 6h2v2h-2zM46 8h2v2h-2zM46 10h2v2h-2zM44 12h6v2h-6z"/><path class="dt" d="M46 0h2v2h-2z"/></g><g class="gl" style="animation-delay:-1.5s"><path class="sh" d="M12 18h4v1h-4zM11 19h1v1h-1zM11 20h1v1h-1zM12 21h3v1h-3zM15 22h1v1h-1zM15 23h1v1h-1zM11 24h4v1h-4z"/><path class="m" d="M11 17h4v1h-4zM10 18h1v1h-1zM10 19h1v1h-1zM11 20h3v1h-3zM14 21h1v1h-1zM14 22h1v1h-1zM10 23h4v1h-4z"/></g><g class="gl" style="animation-delay:-1.8s"><path class="sh" d="M19 18h1v1h-1zM18 19h3v1h-3zM19 20h1v1h-1zM19 21h1v1h-1zM19 22h1v1h-1zM19 23h1v1h-1zM21 23h1v1h-1zM20 24h1v1h-1z"/><path class="m" d="M18 17h1v1h-1zM17 18h3v1h-3zM18 19h1v1h-1zM18 20h1v1h-1zM18 21h1v1h-1zM18 22h1v1h-1zM20 22h1v1h-1zM19 23h1v1h-1z"/></g><g class="gl" style="animation-delay:-2.1s"><path class="sh" d="M25 20h3v1h-3zM24 21h1v1h-1zM28 21h1v1h-1zM24 22h1v1h-1zM28 22h1v1h-1zM24 23h1v1h-1zM28 23h1v1h-1zM25 24h3v1h-3z"/><path class="m" d="M24 19h3v1h-3zM23 20h1v1h-1zM27 20h1v1h-1zM23 21h1v1h-1zM27 21h1v1h-1zM23 22h1v1h-1zM27 22h1v1h-1zM24 23h3v1h-3z"/></g><g class="gl" style="animation-delay:-2.4s"><path class="sh" d="M31 20h1v1h-1zM33 20h2v1h-2zM31 21h2v1h-2zM31 22h1v1h-1zM31 23h1v1h-1zM31 24h1v1h-1z"/><path class="m" d="M30 19h1v1h-1zM32 19h2v1h-2zM30 20h2v1h-2zM30 21h1v1h-1zM30 22h1v1h-1zM30 23h1v1h-1z"/></g><g class="gl" style="animation-delay:-2.7s"><path class="sh" d="M39 20h3v1h-3zM38 21h1v1h-1zM42 21h1v1h-1zM38 22h5v1h-5zM38 23h1v1h-1zM39 24h4v1h-4z"/><path class="m" d="M38 19h3v1h-3zM37 20h1v1h-1zM41 20h1v1h-1zM37 21h5v1h-5zM37 22h1v1h-1zM38 23h4v1h-4z"/></g><rect class="dt" x="2" y="19" width="3" height="1"/><rect class="dt" x="1" y="20" width="1" height="1"/><rect class="dt" x="5" y="20" width="1" height="1"/><rect class="dt" x="1" y="21" width="1" height="1"/><rect class="dt" x="5" y="21" width="1" height="1"/><rect class="dt" x="1" y="22" width="1" height="1"/><rect class="dt" x="5" y="22" width="1" height="1"/><rect class="dt" x="2" y="23" width="3" height="1"/><rect class="dt" x="47" y="19" width="3" height="1"/><rect class="dt" x="46" y="20" width="1" height="1"/><rect class="dt" x="50" y="20" width="1" height="1"/><rect class="dt" x="46" y="21" width="1" height="1"/><rect class="dt" x="50" y="21" width="1" height="1"/><rect class="dt" x="46" y="22" width="1" height="1"/><rect class="dt" x="50" y="22" width="1" height="1"/><rect class="dt" x="47" y="23" width="3" height="1"/></svg></h1>
+    <p class="sub">Pequeña colección de apps para tu Android, con guía básica y para qué sirve cada una.</p>
+    <p class="count" id="count"></p>
+    <label class="search" id="searchbox">
+      <input id="q" type="search" placeholder="Buscar una app…" aria-label="Buscar una app" autocomplete="off" enterkeyhint="search">
+    </label>
+  </header>
+  <aside class="tip" id="mnote" hidden><span>En el móvil se recomienda activar «Sitio de escritorio» en el menú de tu navegador para ver la página con más comodidad.</span><button type="button" class="vx" id="mnx" aria-label="Cerrar aviso">✕</button></aside>
+</div>
+
+<div class="bar"><nav class="pills" id="nav" aria-label="Categorías"></nav></div>
+
+<main class="wrap">
+  <div id="app"></div>
+  <p class="empty" id="empty" hidden></p>
+  <noscript><p class="empty">Activa JavaScript para ver el catálogo de apps.</p></noscript>
+</main>
+
+<footer class="wrap">
+  <div class="by"><img class="lg" src="logo.png" width="36" height="36" alt="Logo de Kixki Store"><span id="heart"></span>Hecho con cariño por KitsukiLove</div>
+  <small>Kixki Store · Revisa siempre la fuente de cada app antes de instalarla.</small>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script defer src="i18n.js"></script>
+<script defer src="scenes.js"></script>
+<script defer src="music.js"></script>
+<script defer src="eggs.js"></script>
+<script defer src="app.js"></script>
+<script defer src="vallas.js"></script>
+<script defer src="lluvia.js"></script>
+<script defer src="dialogs.js"></script>
+<script defer src="kixki.js"></script>
+<script defer src="kixki2.js"></script>
+<script defer src="kixki3.js"></script>
+<script defer src="basket.js"></script>
+<script defer src="consejos.js"></script>
+<script defer src="vacaboss.js"></script>
+</body>
+</html>
