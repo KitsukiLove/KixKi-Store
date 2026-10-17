@@ -1,0 +1,28 @@
+/* Colina XP (parte 7): viento en el pasto, nubes y clima. Solo actúa con data-bg="xp". */
+@property --xw{syntax:"<number>";inherits:true;initial-value:1}
+@property --xg{syntax:"<number>";inherits:true;initial-value:1}
+html[data-bg="xp"] #bgx{--xw:1;--xg:1;transition:--xw 4s ease,--xg 4s ease}
+html[data-bg="xp"] #bgx.xp-wet{--xw:2.3;--xg:2.6}
+html[data-bg="xp"] #bgx::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 4s ease;
+  background:linear-gradient(rgba(58,72,96,.62),rgba(58,72,96,.2) 70%,rgba(30,50,40,.14))}
+html[data-bg="xp"] #bgx.xp-wet::after{opacity:1}
+.xp-grass .gt,.xp-grass .gb{transform-box:fill-box;transform-origin:50% 100%}
+.xp-grass .gt{animation:xpgu 7s ease-in-out infinite;animation-delay:calc(var(--x)*.075s - 9s)}
+.xp-grass .gb{animation:xpsw 2.6s ease-in-out infinite alternate;animation-delay:calc(var(--r)*-2.6s)}
+.xp-grass .l1{fill:var(--g1)}.xp-grass .l2{fill:var(--g2)}
+@keyframes xpgu{0%,60%,100%{transform:skewX(0)}30%{transform:skewX(calc(var(--xg)*-10deg))}}
+@keyframes xpsw{from{transform:rotate(calc(var(--xw)*-2.5deg))}to{transform:rotate(calc(var(--xw)*2.5deg))}}
+.xp-pd ellipse{fill:rgba(160,205,245,.5);opacity:0;transition:opacity 6s ease}
+#bgx.xp-wet .xp-pd ellipse{opacity:1}
+.xp-r{fill:none;stroke:rgba(235,246,255,.85);stroke-width:1;vector-effect:non-scaling-stroke;transform-box:fill-box;transform-origin:center;animation:xprip 1.3s ease-out forwards}
+@keyframes xprip{from{transform:scale(.25);opacity:.9}to{transform:scale(2.4);opacity:0}}
+html[data-bg="xp"] #bgx .top .c{animation:xpcl 70s ease-in-out infinite alternate;transition:fill 4s ease}
+html[data-bg="xp"] #bgx .top .c:nth-of-type(2){animation-duration:95s;animation-direction:alternate-reverse}
+html[data-bg="xp"] #bgx .top .c:nth-of-type(3){animation-duration:120s}
+html[data-bg="xp"] #bgx.xp-wet .top .c{fill:#aeb8c6}
+@keyframes xpcl{to{transform:translateX(6px)}}
+#bgx.kv-pause .xp-grass *,#bgx.kv-pause .c{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){
+  html[data-bg="xp"] #bgx .c,.xp-grass .gt,.xp-grass .gb,.xp-r{animation:none!important}
+  html[data-bg="xp"] #bgx,html[data-bg="xp"] #bgx::after{transition:none}
+}

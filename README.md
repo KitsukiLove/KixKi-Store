@@ -169,3 +169,14 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 - **Memoria:** `kixki-xp` ("1" = XP) y `kixki-xp-seen` (ya viste la pastilla). Al recargar, el estilo se aplica antes de pintar (sin parpadeo). Si se pierde el premio (`KXV.reset()`), vuelve solo al pixel; no se puede activar a mano sin haber ganado.
 - **Eventos y consola:** `kixki-style` (`{style: "xp" | "pixel"}`) cuando cambia · `KXXP.set(true|false)` · `KXXP.toggle()` · `KXXP.unlocked()` · `KXXP.on`. Los minijuegos XP avisan con el evento `xpgames` (win, lose, match…) por si algún día quieres enchufarles sonidos o logros.
 - **Si pierdes** contra la vaca no cambia nada del estilo: se activa el fondo «¡Vacas!» (ver parte 6) y se quita con «Restaurar fondo».
+
+
+## Kixki: parte 7 — Colina XP viva (pasto con viento y lluvia XP)
+
+**Archivos nuevos:** `xpbg.js` + `xpbg.css` (en `index.html` y en `SHELL` de `sw.js`, caché `kixki-v21`). Cambios en `lluvia.js` y `lluvia.css`.
+
+- **Pasto:** ~150 matas de pasto en vectores propios sobre las dos crestas y la colina de delante (colores de las variables `--g1/--g2`, así siguen día/noche). Cada mata se mece y una ráfaga cruza la colina de izquierda a derecha cada 7 s. Las nubes van a la deriva.
+- **Con lluvia:** el viento se intensifica (`--xw`, `--xg`), el cielo y las nubes se ponen grises, salen charcos y ondas sobre la colina, y las gotas caen/salpican sobre la colina. Al parar, todo vuelve poco a poco.
+- **Lluvia XP:** con `data-style="xp"` o `data-bg="xp"` la lluvia deja de ser pixelada: trazos azul Luna, gotas de cristal con brillo y salpicaduras en forma de ondas. Al volver al pixel vuelve la lluvia pixelada sin recargar.
+- **Accesibilidad:** con movimiento reducido no hay animaciones; `KXB.pause()` congela el pasto y las nubes.
+- **Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXG.wet(true/false)` · `KXG.rebuild()`.
