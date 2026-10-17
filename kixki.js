@@ -328,7 +328,7 @@ function boot(){
     m.t=setTimeout(()=>done(m,"auto"),m.micro?clamp(700+m.text.length*60,900,1400):m.cat==="ev"?clamp(1800+m.text.length*40,2600,6000):clamp(2200+m.text.length*50,3200,9500));
   }
   function teardown(c){
-    clearTimeout(c.t);cur=null;K.talking=false;bub.hidden=true;
+    clearTimeout(c.t);cur=null;K.talking=false;bub.hidden=true;K.endAt=now();
     if(K.hl){K.hl.classList.remove("kk-pt");K.hl=null;}
     if(K.mode==="talk")setMode("idle");
     frame("idle");el.classList.remove("kk-cheer");
@@ -338,7 +338,8 @@ function boot(){
     teardown(m);lg("done",m,how);
     if(how==="user"){if(++K.dis>=3){K.dis=0;nextChat=now()+120000;}}else K.dis=0;
     m.res(true);
-    setTimeout(flushQ,140);brain(rnd(1800,3800));
+    /* un respiro entre un globo y el siguiente: si cierras el globo tú, enseguida; si se cierra solo, una pausa visible */
+    setTimeout(flushQ,how==="user"?140:420);brain(rnd(1800,3800));
   }
   function clearQ(ctx){
     for(let i=Q.length-1;i>=0;i--){const q=Q[i];if(ctx&&q.ctx!==ctx)continue;Q.splice(i,1);clearTimeout(q.tq);lg("drop",q,"clear");q.res(false);}
@@ -375,7 +376,7 @@ function boot(){
       if(m.key&&(cd[m.key]||0)>now())return no("cd");
       if(blocked(m))return no(busy()?"busy-user":"quiet");
       if(mic&&K.mode==="hop")return no("hop");
-      const gp=DLG.gap[cat];if(gp&&now()-(DLG.last[cat]||0)<gp)return no("cat-cd");
+      const gp=DLG.gap[cat];if(gp&&!o.nogap&&now()-(DLG.last[cat]||0)<gp)return no("cat-cd");   /* nogap: un evento físico (soltarla) no espera a la pausa entre micros */
       if(cat==="sp"&&spent())return no("budget");
       lg("req",m);
       if(K.talking){
@@ -417,8 +418,10 @@ function boot(){
     if(id==="news")return n?[`¡Novedades! Hay ${n} app${n===1?"":"s"} nueva${n===1?"":"s"} desde tu última visita. 🆕`,`News! There ${n===1?"is":"are"} ${n} new app${n===1?"":"s"} since your last visit. 🆕`]:["Sin novedades por ahora. Cuando haya apps nuevas, las verás aquí.","Nothing new for now. When new apps arrive, you'll see them here."];
     const f=FOLD[id];return f?[fmt(f[0],{n,a}),fmt(f[1],{n,a})]:null;
   }
+  /* o.line = frase propia (p. ej. un consejo de la parte 4); si no, la frase de siempre de esa carpeta */
   async function visitFolder(id,o={}){
-    const line=folderLine(id);if(!line)return false;
+    const line=o.line||folderLine(id);if(!line)return false;
+    if(o.line){o=Object.assign({},o);delete o.line;}
     if(isPC()){
       const di=$(`#desk .di[data-id="${id}"]`);
       if(!usable("desk:"+id))return say(line,o);
@@ -727,6 +730,8 @@ function boot(){
     tx,fmt,T,wait,visitFolder,usable,relocate,
     /* (parte 2) */
     K,alive,interrupt,brain,dark,rows:FR,el,
+    /* (etapa 4) vaciar la cola de un contexto sin cortar el globo; ms desde que se cerró el último globo (0 si habla); el globo actual */
+    clearQ,quietFor:()=>K.talking?0:now()-(K.endAt||0),get cur(){return cur;},
     /* (parte 4: gestor de diálogos) */
     get debug(){return DBG.on;},set debug(v){DBG.on=!!v;try{localStorage.setItem("kixki-dbg",v?"1":"0");}catch(e){}},
     timeline:()=>LOG.slice(),clearTimeline:()=>{LOG.length=0;},

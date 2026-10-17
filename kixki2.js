@@ -95,6 +95,10 @@ const a=(id,i,c,n,d,f,o)=>A.push(Object.assign({id,i,c,n,d,f},o||{}));
 a("fold1","folder","e",["Primer paso","First step"],["Abre tu primera carpeta.","Open your first folder."],c=>c.folders>=1);
 a("fold5","folder","e",["Curiosidad en marcha","Curiosity in motion"],["Abre 5 carpetas distintas.","Open 5 different folders."],c=>c.folders>=5);
 a("foldall","crown","e",["Mapa completo","Full map"],["Abre TODAS las carpetas.","Open ALL the folders."],c=>c.allDone||(c.total>0&&c.folders>=c.total),{big:1,quiet:1});
+a("adv3","sheep","e",["Consejera","Advice seeker"],["Pídele ayuda a Kixki en 3 carpetas distintas (mantén pulsada una carpeta).","Ask Kixki for help in 3 different folders (hold a folder down)."],c=>c.adv>=3,
+  {k:["¡Ya van 3 carpetas con mis consejos! Esto de aconsejar se me da de maravilla. 🐑💡","That's 3 folders with my advice already! I'm a natural at this. 🐑💡"]});
+a("advall","crown","e",["Sabelotodo","Know-it-all"],["Pídele ayuda a Kixki en todas las carpetas.","Ask Kixki for help in all the folders."],c=>c.advAll,
+  {big:1,k:["¡Me has preguntado por TODAS las carpetas! Ya no me queda ni un consejo… es broma, me quedan muchos. 🧠👑","You asked me about ALL the folders! I'm out of advice… kidding, I have plenty left. 🧠👑"]});
 a("search1","search","e",["Con lupa","Magnifier in hand"],["Busca una app por su nombre.","Search for an app by name."],c=>c.searches>=1);
 a("search10","search","e",["Ojo de lince","Eagle eye"],["Haz 10 búsquedas.","Run 10 searches."],c=>c.searches>=10);
 a("tag","tag","e",["Filtro maestro","Filter master"],["Usa una etiqueta para filtrar el catálogo.","Use a tag to filter the catalog."],c=>c.tags>=1);
@@ -193,7 +197,8 @@ function boot(){
     tapFast:!!C.tapFast,tapsK:C.tapsK|0,petChats:C.petChats|0,pet:lsNum("kixki-ov"),fireUser:C.fireUser|0,fireFast:C.fireFast|0,fireKixki:C.fireKixki|0,
     visits:S.visits|0,konami:!!C.konami,
     rain:C.rainSeen|0,glass:!!C.glass,wiped:C.wiped|0,fireRain:C.fireRain|0,cow:!!C.cow,
-    throws:C.throws|0,hoops:C.hoops|0
+    throws:C.throws|0,hoops:C.hoops|0,
+    adv:(C.adv||[]).length,advAll:$$("#app .cat").length>0&&$$("#app .cat").every(s=>(C.adv||[]).includes(s.id))
   });
 
   /* ---------- DOM: tarjeta de aviso, confeti, ventana de logros, charla ---------- */
@@ -358,6 +363,7 @@ function boot(){
       case "tap":inc("tapsK");if((d.n|0)>=7)C.tapFast=1;break;
       case "throw":mx("throws",d.n|0);break;
       case "hoop":inc("hoops");break;
+      case "advice":{C.adv=C.adv||[];if(d.id&&!C.adv.includes(d.id))C.adv.push(d.id);break;}
       case "visit":{const h=new Date().getHours();if(!d.again&&(h>=23||h<5))C.night=1;break;}
       default:break;
     }

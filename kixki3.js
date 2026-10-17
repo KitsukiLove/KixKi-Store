@@ -186,12 +186,17 @@ function boot(){
     const v=H.samples.length>1?(H.samples[H.samples.length-1].x-H.samples[0].x)/Math.max(.016,(H.samples[H.samples.length-1].t-H.samples[0].t)/1000):0;
     if(!RM())setTilt(v*.014);
     const t=now();
-    if(t>H.holdT&&!K.talking&&H.holdN<4){H.holdN++;H.holdT=t+rnd(3600,5600);say(pk(TX.holding,"k3hold"),{p:2,cat:"ev",replace:false,instant:false,ttl:900,key:"k3hold",cd:2500});}
+    /* (etapa 4) respiro entre líneas: no empieza otra mientras no pasen ~1,6 s desde que se cerró el globo anterior
+       (antes salían una tras otra sin pausa y la de soltarla se encontraba el globo ocupado) */
+    if(t>H.holdT&&!K.talking&&KK.quietFor()>1600&&H.holdN<4){H.holdN++;H.holdT=t+rnd(3600,5600);say(pk(TX.holding,"k3hold"),{p:2,cat:"ev",ctx:"hold",replace:false,instant:false,ttl:900,key:"k3hold",cd:2500});}
     if(t-H.holdAt>10000&&!H.longSaid){H.longSaid=true;say(pk(TX.longHold,"k3long"),{p:3,cat:"ev",key:"k3long",cd:0});}
     requestAnimationFrame(heldLoop);
   }
   function release(){
     H.held=false;H.longSaid=false;
+    /* (etapa 4) al soltarla, lo que dijo mientras la llevabas ya no vale: se cierra ese globo y se descartan sus frases en cola.
+       Así hay un respiro limpio y la frase de soltarla/aterrizar nunca se encuentra el globo ocupado. */
+    KK.interrupt("hold");
     const s=H.samples,L=s[s.length-1];let vx=0,vy=0;
     if(s.length>=2&&performance.now()-L.t<90){const a=s[0],dt=(L.t-a.t)/1000;if(dt>.01){vx=(L.x-a.x)/dt;vy=(L.y-a.y)/dt;}}
     vx=clamp(vx,-1500,1500);vy=clamp(vy,-1200,900);
@@ -265,25 +270,39 @@ function boot(){
     KK.emit("land",{id:hit.id,h:Math.round(h)});
     KK.brain(rnd(2200,4200));
   }
+  /* (etapa 4) soltarla SIN lanzarla ahora siempre reacciona (antes: una frase entera de cada 6, y la microreacción
+     se descartaba si el globo de «agarrar» seguía en pantalla o no habían pasado 1,4 s desde la anterior).
+     Reglas: es un evento físico (reemplaza el globo, sin esperar), sin pausa entre micros y con su propia lista de frases. */
+  const PLACED_H=140;                                /* caída de hasta 140 px = «dejada con cuidado» (sin rebote) */
+  const quietMode=()=>KK.mode==="quiet";
+  const fullGap=()=>now()-(H.lastFull||0)>4500;       /* nunca dos frases largas seguidas: entre medias, una micro */
   function landLines(id,h,imp,F){
-    const o={p:2,cat:"ev",key:"k3land",cd:3500};
     if(now()<H.madUntil)return;
+    const o={p:2,cat:"ev",key:"k3land",cd:3500,ctx:"land"};
     if(F.thrown){
       /* si ya gritó en el aire, al aterrizar solo a veces remata (y sin pisar el grito); si no pudo, se queja ahora */
       if(F.fly&&F.fly.said){if(Math.random()<.75)say(imp>1000||h>320?pk(TX.hard,"k3th2"):thrownLine(),Object.assign(o,{replace:false}));}
       else say(thrownLine(),o);
     }
     else if(imp>1000||h>320){
-      if(Math.random()<.35)say(pk(TX.hard,"k3hd"),o);
-      else KK.micro("hard",{key:"k3land",cd:2500});
+      /* caída desde muy alto, sin lanzarla */
+      if(!quietMode()&&fullGap()&&Math.random()<.5){H.lastFull=now();say(pk(TX.hard,"k3hd"),Object.assign(o,{cd:0}));}
+      else KK.micro("hard",{key:"k3land",cd:0,replace:true,nogap:true});
     }
-    else{
-      /* caída suave (la más frecuente): micro casi siempre; frase entera cada 6 caídas o, a veces, si cae en un sitio con gracia */
-      const sp=id==="search"?TX.onSearch:id.startsWith("w:")?TX.onWin:id==="floor"?TX.onFloor:null;
-      H.softN=(H.softN|0)+1;
-      if(H.softN%6===0||(sp&&Math.random()<.2))say(sp&&Math.random()<.55?pk(sp,"k3sp"):pk(TX.soft,"k3sf"),o);
-      else if(Math.random()<.7)KK.micro("soft",{key:"k3land",cd:2500});
+    else gentleLines(id,h);
+  }
+  function gentleLines(id,h){
+    const placed=h<=PLACED_H,md=KK.mode;
+    const spot=id==="search"?TX.onSearch:id.startsWith("w:")?TX.onWin:id==="floor"?TX.onFloor:id.startsWith("tiles")?TX.onTiles:id==="dock"?TX.onDock:null;
+    H.softN=(H.softN|0)+1;
+    /* probabilidad de frase entera: «calladita» nunca (solo emojis), «charlatana» casi siempre, normal: 80 % si la dejas con cuidado, 60 % si cayó un poco */
+    const chance=md==="quiet"?0:md==="chat"?.92:placed?.8:.6;
+    if(fullGap()&&Math.random()<chance){
+      H.lastFull=now();
+      const m=spot&&Math.random()<.35?pk(spot,"k3sp"):placed?mpk("placed","k3pl"):mpk("soft","k3sf");
+      say(m,{p:2,cat:"ev",key:"k3land",cd:0,ctx:"land"});
     }
+    else KK.micro(placed?"placed":"soft",{key:"k3land",cd:0,replace:true,nogap:true});
   }
 
   /* ---- enfadarse ---- */
