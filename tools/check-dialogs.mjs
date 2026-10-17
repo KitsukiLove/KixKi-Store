@@ -54,7 +54,18 @@ function walk(p,x){
     walk(p+"."+k,v);
   }
 }
-for(const g of ["T","FOLD","GREET","TOUR_PC","TOUR_MOB","MIC","FAST","TX","GEN"])walk(g,D[g]);
+for(const g of ["T","FOLD","GREET","TOUR_PC","TOUR_MOB","MIC","FAST","TX","GEN","EMO"])walk(g,D[g]);
+/* (parte 4b) EMO = solo emoji: nada de letras, y español e inglés iguales (las usa el modo «calladita»; con letras se «oiría» a Kixki) */
+for(const [k,list] of Object.entries(D.EMO||{}))for(const [es,en] of list){
+  if(/\p{L}/u.test(es)||/\p{L}/u.test(en))err(`EMO.${k}: lleva letras (debe ser solo emoji) → «${es}»`);
+  if(es!==en)err(`EMO.${k}: español e inglés deben ser iguales → «${es}» / «${en}»`);
+}
+/* (parte 4b) básquet: cada fase con lista base (≥ 6) + pícara (P) + vengativa (V) */
+for(const f of ["Start","Throw","Miss","Score","Streak","Last","Win","Lose","End"]){
+  for(const [suf,min] of [["",6],["P",3],["V",3]]){
+    const l=D.TX["bk"+f+suf];if(!l||l.length<min)err(`TX.bk${f}${suf}: faltan variantes (${l?l.length:0} < ${min})`);
+  }
+}
 console.log(`\n${total} frases revisadas en ${Object.keys(counts).length} claves · ${errs} errores · ${warns} avisos`);
 const low=Object.entries(counts).filter(([,n])=>n<15&&!/^(FOLD|TOUR|GEN|FAST\.mode)/.test(""+0)).length;
 if(process.argv.includes("--tabla")){for(const [k,n] of Object.entries(counts).sort((a,b)=>a[1]-b[1]))console.log(String(n).padStart(4)+"  "+k);}
