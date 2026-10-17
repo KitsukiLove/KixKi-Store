@@ -77,3 +77,11 @@
 @media (prefers-reduced-motion:reduce){
   #bk-tab{transition:none}#bk-tab.new,.bk-net.sw,.bk-pop.on{animation:none}.bk-pop.on{opacity:1}
 }
+
+/* ---------- (parte 4b) entrada con caída y partida de 5 tiros ---------- */
+.bk-hud{flex-wrap:wrap}
+.bk-k.in{animation:bkfade .15s linear 1}
+@keyframes bkfade{from{opacity:0}to{opacity:1}}
+.bk-poof{width:6px;height:6px;background:#ffc23a;pointer-events:none;animation:bkpoof .55s steps(5,end) forwards}
+@keyframes bkpoof{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--px,0),-26px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.bk-poof{display:none}}

@@ -148,7 +148,7 @@ function boot(){
   addEventListener("click",e=>{
     const t=e.target;if(!t||!t.closest||!t.closest(".kk-body"))return;
     if(now()-H.just<160){e.stopPropagation();e.preventDefault();return;}
-    if(now()<H.madUntil){e.stopPropagation();e.preventDefault();say(pk(TX.madTap,"k3mt"),{p:3,cat:"ev",key:"k3madtap",cd:1200});}
+    if(now()<H.madUntil){e.stopPropagation();e.preventDefault();say(pk(TX.madTap,"k3mt"),{p:3,cat:"ev",key:"k3madtap",cd:1200,words:true});   /* tocarla = permiso para hablar (4b) */}
   },true);
 
   function startHold(e){
@@ -429,7 +429,7 @@ function boot(){
   setInterval(()=>{
     if(document.hidden)return;
     bgIdle+=4000;clIdle+=4000;sess+=4000;
-    if(!canAct())return;
+    if(!canAct()||KK.mode==="quiet")return;          /* (4b) «calladita»: ni travesuras ni escenas espontáneas */
     const t=now(),idle=t-lastAct;
     if(S3.pr&&t>gapUntil&&sess>=180000){
       if(bgIdle>=thrBg&&Math.random()<.5){gapUntil=t+100000;bgIdle=0;bgPrank().catch(()=>{P.busy=false;});return;}

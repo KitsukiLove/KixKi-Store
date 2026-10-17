@@ -6,6 +6,9 @@
    - Guarda su memoria en localStorage ("kixki-k"). Se apaga desde el menú Kixki / Más.
    - Todas sus frases pasan por un gestor único (prioridad, categorías, caducidad, enfriamiento, presupuesto):
      ver la sección «gestor de diálogos» más abajo. Depurar: KXK.debug = true · KXK.timeline().
+   - (parte 4b) «Kixki: no» = se DUERME (se acuesta donde no estorba, sin hablar ni pasear; si la tocan se despierta un instante con 😠/😴).
+     Modo «calladita» = SOLO EMOJIS: ningún globo lleva texto salvo que la toquen o le pidan ayuda (opción words:true de say()).
+     enter(id,{fall}) = la coreografía de entrar en la ventana de un minijuego (subir al borde, o caerse dentro en el básquet).
    - Para la parte 2 (logros): avisa de todo con el evento  "kixki-evt"  → e.detail = {t:"folder"|"search"|…}
    Depende de: app.js (avisa con "kixki-ready" y "kixki-game"), i18n.js y music.js.
    ========================================================= */
@@ -47,11 +50,14 @@ function svg(rows,name){
 /* ---------- lo que dice Kixki: [español, English] ---------- */
 const KXD=window.KXD||{};
 const {T,FOLD,GREET,TOUR_PC,TOUR_MOB,MIC,FAST}=KXD;   /* los textos viven en dialogs.js */
+const EMO=KXD.EMO||{ui:[["🐑","🐑"]]};                /* (parte 4b) respuestas de solo emoji por situación */
 const UI={
  aria:["Kixki, tu guía. Tócala para que te hable.","Kixki, your guide. Tap her and she'll talk to you."],
  close:["Cerrar","Close"],
  tip:["Pedirle un consejo a Kixki","Ask Kixki for a tip"],
- onT:["Kixki: sí","Kixki: on"],offT:["Kixki: no","Kixki: off"],
+ onT:["Kixki: sí","Kixki: on"],offT:["Kixki: durmiendo 💤","Kixki: sleeping 💤"],
+ zzAria:["Kixki está durmiendo. Tócala y se despierta un momento.","Kixki is sleeping. Tap her and she wakes up for a moment."],
+ zzSr:["Kixki está durmiendo","Kixki is sleeping"],
  modeT:{chat:["Kixki: charlatana 🗣️","Kixki: chatty 🗣️"],normal:["Kixki: normal 🐑","Kixki: normal 🐑"],quiet:["Kixki: calladita 🤐","Kixki: quiet 🤐"]}
 };
 
@@ -87,7 +93,7 @@ function boot(){
   /* ---------- DOM ---------- */
   const el=document.createElement("div");
   el.id="kixki";el.dataset.f="idle";el.dataset.m="idle";el.classList.add("kk-off");
-  el.innerHTML=`<div class="kk-sh"></div><button type="button" class="kk-body"><span class="kk-flip">${Object.keys(FR).map(k=>svg(FR[k],k)).join("")}</span><span class="kk-zz" aria-hidden="true">z<i style="font-style:normal">Z</i></span></button>`+
+  el.innerHTML=`<div class="kk-sh"></div><button type="button" class="kk-body"><span class="kk-flip">${Object.keys(FR).map(k=>svg(FR[k],k)).join("")}</span><span class="kk-zz" aria-hidden="true">z<i style="font-style:normal">Z</i></span><span class="kk-stars" aria-hidden="true"><i>★</i><i>✦</i><i>★</i></span></button>`+
    `<div class="kk-bub" hidden><span class="kk-nm">Kixki</span><button type="button" class="kk-x">✕</button><p class="kk-tx"><span class="g" aria-hidden="true"></span><span class="v" aria-hidden="true"></span></p>`+
    `<svg class="kk-tl" viewBox="0 0 8 4" width="24" height="12" shape-rendering="crispEdges" aria-hidden="true"><path class="o" d="M0 0h8v1H0zM1 1h6v1H1zM2 2h4v1H2zM3 3h2v1H3z"/><path class="i" d="M1 0h6v1H1zM2 1h4v1H2zM3 2h2v1H3z"/></svg></div>`+
    `<div class="kk-sr" role="status" aria-live="polite"></div>`;
@@ -95,7 +101,7 @@ function boot(){
   const body=$(".kk-body",el),bub=$(".kk-bub",el),gh=$(".g",bub),vi=$(".v",bub),sr=$(".kk-sr",el),bx=$(".kk-x",el);
 
   /* ---------- estado ---------- */
-  const K={x:0,y:-80,dir:1,mode:"idle",frame:"idle",stage:null,talking:false,off:true,ready:false,tour:null,hl:null,dis:0,game:false,pend:null};
+  const K={x:0,y:-80,dir:1,mode:"idle",frame:"idle",stage:null,talking:false,off:true,ready:false,tour:null,hl:null,dis:0,game:false,pend:null,snooze:false,poking:false,enter:null};
   let cur=null,raf=0,mv=null,brainT=0,lastAct=now(),nextChat=now()+rnd(16000,26000);
   const Q=[],cd={};
   /* (parte 2) memoria de no repetir: las últimas 30 frases, guardadas en localStorage (antes 14 y se perdían al recargar) */
@@ -116,7 +122,7 @@ function boot(){
     if(sg[i+1]&&x<sg[i+1].a){const u=(x-sg[i].b)/(sg[i+1].a-sg[i].b);return sg[i].y+(sg[i+1].y-sg[i].y)*u;}}return sg[sg.length-1].y;};
   const topWin=()=>{let best=null,bz=-1;$$("#app .cat:not(.min):not(.max)").forEach(e=>{if(e.hidden)return;const z=+getComputedStyle(e).zIndex||0;if(z>=bz){bz=z;best=e;}});return best;};
   /* (parte 2) plataformas extra que registran otros módulos, p. ej. «pet» = la ovejita de abajo */
-  const PLAT={},free=id=>id==="dock"||id==="game"||!!PLAT[id];
+  const PLAT={},free=id=>id==="dock"||id==="game"||id==="bask"||!!PLAT[id];
   function geo(id){
     if(!id)return null;
     if(PLAT[id]){try{return PLAT[id]()||null;}catch(e){return null;}}
@@ -138,7 +144,8 @@ function boot(){
       const rx=Math.max(...row.map(q=>q.right))+34;
       return {a:rx,b:rx,y:()=>r.top+86,face:-1,hl:di};
     }
-    if(id==="game"){const g=$("#game");if(!g||g.hidden)return null;const r=R("#game .box");if(!r)return null;const a=r.left+34;return {a,b:Math.max(a,r.right-34),y:()=>r.top-3};}
+    /* ventanas de minijuego: borde superior de la caja (Salta Vallas «game» y cancha de básquet «bask») */
+    if(id==="game"||id==="bask"){const sel=id==="game"?"#game":"#bask",g=$(sel);if(!g||g.hidden)return null;const bx=sel+" .box",r=R(bx);if(!r)return null;const a=r.left+34;return {a,b:Math.max(a,r.right-34),y:()=>((R(bx)||r).top-3)};}
     return null;
   }
   const usable=id=>{const g=geo(id);if(!g)return false;const y=g.y(g.a);
@@ -150,12 +157,12 @@ function boot(){
 
   /* ---------- movimiento: caminar por la plataforma o saltar a otra ---------- */
   function stopMove(){cancelAnimationFrame(raf);raf=0;if(mv){const r=mv.res;mv=null;r&&r();}}
-  function walk(tx){
+  function walk(tx,sp){
     return new Promise(res=>{
       let g=geo(K.stage);if(!g||RM()){res();return;}
       tx=clamp(tx,g.a,g.b);if(Math.abs(tx-K.x)<4){res();return;}
       stopMove();setMode("walk");face(tx>K.x?1:-1);
-      let last=performance.now(),acc=0,st=0;const SP=36;mv={res};
+      let last=performance.now(),acc=0,st=0;const SP=sp||36;mv={res};
       const end=()=>{raf=0;mv=null;if(K.mode==="walk"){setMode("idle");frame("idle");}res();};
       const tick=t=>{
         if(document.hidden){last=t;raf=requestAnimationFrame(tick);return;}
@@ -171,7 +178,7 @@ function boot(){
     if(RM())return;
     [[-10,-8],[0,0],[10,8]].forEach(([dx,mx])=>{const d=document.createElement("i");d.className="kk-d";d.style.setProperty("--dx",dx+"px");d.style.setProperty("--mx",mx+"px");el.append(d);setTimeout(()=>d.remove(),560);});
   }
-  function land(id,x,g){K.stage=id;K.x=x;K.y=g.y(x);setMode("idle");frame("idle");place();}
+  function land(id,x,g){K.stage=id;K.x=x;K.y=g.y(x);if(K.snooze){setMode("sleep");frame("sleep");}else{setMode("idle");frame("idle");}place();}
   function hop(id,tx){
     return new Promise(res=>{
       const g=geo(id);if(!g){res(false);return;}
@@ -364,15 +371,41 @@ function boot(){
     }
   }
   const spent=()=>{const t=now();DLG.sp=DLG.sp.filter(x=>t-x<DLG.win);return DLG.sp.length>=DLG.budget;};
+  /* ---------- (parte 4b) modo «calladita»: SOLO EMOJIS ----------
+     En «calladita» ningún globo lleva texto salvo que (a) la toquen o (b) le pidan ayuda (words:true en say()).
+     Lo demás: las frases espontáneas y de ambiente se descartan; las respuestas a lo que haces (agarrar, lanzar, buscar,
+     juegos, logros, eventos especiales…) se cambian por un emoji de la situación (EMO.<situación>, en dialogs.js).
+     Con emo:"kind" el sitio que llama dice qué emoji quiere; si no, se deduce de la clave (EKEY). */
+  const EKEY=[[/^k3(grab|many|long)/,"grab"],[/^k3hold/,"held"],[/^k3shake/,"shake"],[/^k3th/,"fly"],[/^k3land/,"placed"],[/^k3(drop|madtap)/,"mad"],[/^k3pr/,"pr"],
+   [/^(search|focus)/,"search"],[/^fav/,"fav"],[/^theme/,"theme"],[/^bg/,"bg"],[/^mus/,"music"],[/^gstart/,"gstart"],[/^grec/,"grec"],[/^gover/,"gover"],
+   [/^fold:/,"folder"],[/^fast-dl/,"dl"],[/^fast-src/,"src"],[/^manywin/,"wins"],[/^back/,"back"],[/^lang/,"lang"],[/^modemsg/,"mode"],[/^hk/,"hk"],
+   [/^zz-/,"sleep"],[/^bkclose/,"bkEnd"],[/^bkunlock/,"big"]];
+  const kindOf=o=>{const k=o.key||"";for(const [re,v] of EKEY)if(re.test(k))return v;return (o.p||1)>=3?"big":"ui";};
+  const LETTERS=/\p{L}/u;
+  function wordsGate(msg,o){
+    if(S.mode!=="quiet"||o.words||o.micro)return [msg,o];
+    let kind=typeof o.emo==="string"?o.emo:"";
+    if(!kind){
+      if(o.cat==="sp"||o.cat==="amb"||o.opt||(!o.cat&&(o.p||1)<2))return null;   /* espontánea o de ambiente: en silencio */
+      kind=kindOf(o);
+    }
+    return [pick(EMO[kind]||EMO.ui,"emo-"+kind),Object.assign({},o,{emoji:true,opt:false})];
+  }
+  const emo=(kind,o)=>say(pick(EMO[kind]||EMO.ui,"emo-"+kind),Object.assign({p:1,micro:true,always:true,nogap:true,cd:0,replace:true},o));
   function say(msg,o={}){
     return new Promise(res=>{
+      const gt=wordsGate(msg,o);
+      if(!gt){lg("reject",{id:++mid,cat:o.cat,p:o.p,key:o.key,text:""},"quiet");res(false);return;}
+      msg=gt[0];o=gt[1];
       /* una clave con varias frases (lista de pares): elige una sin repetir las recientes */
       if(Array.isArray(msg)&&Array.isArray(msg[0]))msg=pick(msg,"l-"+(o.key||"x"));
-      const mic=!!o.micro,p=o.p||1,cat=mic?"mic":o.cat||(p===1?"amb":"ui"),ev=cat==="ev";
-      const m={id:++mid,text:(()=>{const raw=tx(msg);return fmt(raw,ctxVars(raw,o.vars));})(),p,cat,ctx:o.ctx||cat,key:o.key,cdMs:o.cd||0,mood:o.mood,hl:o.hl,sr:p>1&&!mic,res,micro:mic,opt:!!o.opt,always:!!o.always,
-        ttl:o.ttl!=null?o.ttl:mic?300:ev?600:12000,instant:o.instant!=null?!!o.instant:ev||mic,replace:o.replace!=null?!!o.replace:ev,t0:performance.now(),onStart:o.onStart};
+      const mic=!!o.micro,p=o.p||1,cat=o.cat||(mic?"mic":p===1?"amb":"ui"),ev=cat==="ev",em=!!o.emoji;
+      const m={id:++mid,text:(()=>{const raw=tx(msg);return fmt(raw,ctxVars(raw,o.vars));})(),p,cat,ctx:o.ctx||cat,key:o.key,cdMs:o.cd||0,mood:o.mood,hl:o.hl,sr:p>1&&!mic&&!em,res,micro:mic||em,opt:!!o.opt,always:!!o.always,words:!!o.words,
+        ttl:o.ttl!=null?o.ttl:mic?300:em?(ev?600:2500):ev?600:12000,instant:o.instant!=null?!!o.instant:ev||mic||em,replace:o.replace!=null?!!o.replace:ev,t0:performance.now(),onStart:o.onStart};
       const no=why=>{lg("reject",m,why);res(false);};
-      if(!S.on||K.off||!K.ready&&!o.force)return no("off");
+      if((!S.on&&!o.zz)||K.off||!K.ready&&!o.force)return no("off");
+      /* red de seguridad: en «calladita» no sale ningún texto con letras si no la tocaron ni le pidieron ayuda */
+      if(S.mode==="quiet"&&!m.words&&LETTERS.test(m.text))return no("quiet-words");
       if(m.key&&(cd[m.key]||0)>now())return no("cd");
       if(blocked(m))return no(busy()?"busy-user":"quiet");
       if(mic&&K.mode==="hop")return no("hop");
@@ -420,6 +453,7 @@ function boot(){
   }
   /* o.line = frase propia (p. ej. un consejo de la parte 4); si no, la frase de siempre de esa carpeta */
   async function visitFolder(id,o={}){
+    if(!S.on||K.snooze)return false;                    /* (4b) dormida: no visita carpetas */
     const line=o.line||folderLine(id);if(!line)return false;
     if(o.line){o=Object.assign({},o);delete o.line;}
     if(isPC()){
@@ -439,10 +473,11 @@ function boot(){
     save();const total=allIds().length;
     emit("folder",{id,first,state:st,count:S.opened.length,total});
     K.tour=null;
+    if(!S.on)return;                                    /* (4b) dormida: no visita carpetas */
     if(S.opened.length>=total&&!S.allDone){S.allDone=1;save();emit("allfolders",{total});say(T.allDone,{p:3,mood:"happy"});return;}
     if(!isPC()&&st==="max"){K.pend=id;return;}
     if(searching())return;                  /* (parte 2) buscar abre todas las ventanas: no saltar de carpeta en carpeta */
-    if(S.fc[id]<=2||Math.random()<.18)visitFolder(id,{p:first?2:1,key:"fold:"+id,cd:30000});
+    if(S.fc[id]<=2||Math.random()<.18)visitFolder(id,{p:first?2:1,key:"fold:"+id,cd:30000,emo:"folder"});
   }
 
   /* ---------- cerebro: qué hace cuando nadie le dice nada ---------- */
@@ -463,7 +498,7 @@ function boot(){
     const g=geo(K.stage);
     if(!g||!usable(K.stage)&&!free(K.stage)){await relocate();brain();return;}
     if(K.game){brain(4000);return;}
-    if(now()>=nextChat&&idle<240000){chatter();brain(5000);return;}
+    if(now()>=nextChat&&idle<240000&&S.mode!=="quiet"){chatter();brain(5000);return;}   /* (4b) «calladita»: ninguna visita ni frase espontánea */
     const r=Math.random();
     if(g.b-g.a>40&&r<.62)await walk(rnd(g.a,g.b));
     else if(r<.92){const c=candidates().filter(i=>i!==K.stage);if(c.length)await hop(c[Math.floor(Math.random()*c.length)]);}
@@ -490,6 +525,7 @@ function boot(){
     if(!S.first)S.first=now();S.last=now();save();
     emit("visit",{n:S.visits,first,prev,again});
     if(again)return;
+    if(S.mode==="quiet"){say(GREET.morning,{p:2,emo:"greet",key:"greet"});return;}      /* (4b) «calladita»: ni tour ni saludo con texto, solo un emoji */
     if(first){await tour();return;}
     const h=new Date().getHours(),days=Math.floor((now()-prev)/864e5);
     const m=days>=3?T_fmt(GREET.away,{d:days}):h<5||h>=23?GREET.night:h<12?GREET.morning:h<19?GREET.afternoon:GREET.evening;
@@ -507,7 +543,7 @@ function boot(){
     if(!S.on||K.off)return;
     /* (parte 2) ya no espera a llegar a la barra: salta sin esperar y la frase sale al aterrizar (o ya, si está cerca) */
     if(usable("search")&&K.stage!=="search"&&alive())hop("search");
-    say(n===0?T_fmt(T.noRes,{q:v}):n===1?T_fmt(T.oneRes,{a}):T_fmt(T.manyRes,{n,q:v}),{p:2,key:"search",cd:2500,ctx:"search",ttl:2500,always:true});
+    say(n===0?T_fmt(T.noRes,{q:v}):n===1?T_fmt(T.oneRes,{a}):T_fmt(T.manyRes,{n,q:v}),{p:2,key:"search",cd:2500,ctx:"search",ttl:2500,always:true,emo:n===0?"noRes":"search"});
   }
   q.addEventListener("input",()=>{
     clearTimeout(sT);K.tour=null;
@@ -525,25 +561,25 @@ function boot(){
     if(!e.target.closest(".star"))return;
     setTimeout(()=>{
       const n=favCount(),added=n>prevFav;prevFav=n;emit("fav",{n,added});
-      say(!added?T.favDel:n===1?T.fav1:n%5===0?T_fmt(T.fav5,{n}):T.favAdd,{p:2,key:"fav",cd:4000,mood:added&&(n===1||n%5===0)?"happy":undefined});
+      say(!added?T.favDel:n===1?T.fav1:n%5===0?T_fmt(T.fav5,{n}):T.favAdd,{p:2,key:"fav",cd:4000,emo:added?"fav":"favDel",mood:added&&(n===1||n%5===0)?"happy":undefined});
     },40);
   });
   let prevTheme=root.getAttribute("data-theme");
   new MutationObserver(()=>{
     const t=root.getAttribute("data-theme");if(t===prevTheme)return;prevTheme=t;emit("theme",{dark:t==="dark"});
-    if(K.mode==="sleep"){setMode("idle");frame("idle");}
-    if(K.ready)say(t==="dark"?T.night:T.day,{p:2,cat:"ui",opt:true,key:"theme",cd:8000,ttl:2500});
+    if(K.mode==="sleep"&&!K.snooze){setMode("idle");frame("idle");}
+    if(K.ready)say(t==="dark"?T.night:T.day,{p:2,cat:"ui",opt:true,key:"theme",cd:8000,ttl:2500,emo:"theme"});
   }).observe(root,{attributes:true,attributeFilter:["data-theme"]});
   let prevBg=window.KXB?KXB.label():"";
   addEventListener("kixki-bg",()=>{
     if(!window.KXB)return;const l=KXB.label();if(l===prevBg)return;prevBg=l;
     const auto=/^Auto/.test(l),k=auto?"auto":(root.getAttribute("data-bg")||"");emit("bg",{k});
-    if(K.ready&&T.bg[k])say(T.bg[k],{p:1,key:"bg",cd:5000});
+    if(K.ready&&T.bg[k])say(T.bg[k],{p:1,key:"bg",cd:5000,emo:"bg"});
   });
   let prevMus=!!(window.KXM&&KXM.on);
   document.addEventListener("click",e=>{
     if(!e.target.closest("#rd,#s-mus"))return;
-    setTimeout(()=>{const on=!!(window.KXM&&KXM.on);if(on===prevMus)return;prevMus=on;emit("music",{on});say(on?T.musOn:T.musOff,{p:1,key:"mus",cd:10000});},80);
+    setTimeout(()=>{const on=!!(window.KXM&&KXM.on);if(on===prevMus)return;prevMus=on;emit("music",{on});say(on?T.musOn:T.musOff,{p:1,key:"mus",cd:10000,emo:"music"});},80);
   });
   addEventListener("kixki-game",e=>onGame(e.detail||{}));
   function onGame(d){
@@ -551,7 +587,7 @@ function boot(){
     if(!S.on)return;
     if(d.t==="start"||d.t==="retry"){
       K.game=true;el.classList.add("kk-top");K.tour=null;idle0();
-      if(d.t==="start")setTimeout(async()=>{if(!K.game)return;if(K.stage!=="game"&&usable("game"))await hop("game");
+      if(d.t==="start")setTimeout(async()=>{if(!K.game)return;await enter("game");if(!K.game)return;
         say(d.rec>0?T_fmt(T.gStartRec,{rec:d.rec}):T.gStart,{p:2,key:"gstart",cd:15000,always:true});},350);
     }else if(d.t==="record")say(T.gRecord,{p:3,mood:"happy",key:"grec",cd:6000});
     else if(d.t==="over"){
@@ -562,17 +598,17 @@ function boot(){
   /* idioma: avisa y traduce sus textos fijos */
   function labels(){
     const L=lang()==="en"?1:0;
-    body.setAttribute("aria-label",UI.aria[L]);bx.setAttribute("aria-label",UI.close[L]);
+    body.setAttribute("aria-label",(K.snooze?UI.zzAria:UI.aria)[L]);bx.setAttribute("aria-label",UI.close[L]);
     const t=$("#s-kx-tip"),o=$("#s-kx-on"),md=$("#s-kx-mode");if(t)t.textContent=UI.tip[L];if(o)o.textContent=(S.on?UI.onT:UI.offT)[L];
     if(md){md.textContent=UI.modeT[S.mode in MODES?S.mode:"normal"][L];md.hidden=!S.on;}
   }
-  if(window.KXI&&!KXI._kk){KXI._kk=1;const o=KXI.set;KXI.set=function(l){o.call(KXI,l);labels();emit("lang",{lang:l});interrupt();if(K.ready)say(T.lang[l==="en"?"en":"es"],{p:2,key:"lang",cd:2500});};}
+  if(window.KXI&&!KXI._kk){KXI._kk=1;const o=KXI.set;KXI.set=function(l){o.call(KXI,l);labels();emit("lang",{lang:l});interrupt();if(K.ready)say(T.lang[l==="en"?"en":"es"],{p:2,key:"lang",cd:2500,emo:"lang"});};}
   /* volver a la pestaña */
   let hiddenAt=0;
   document.addEventListener("visibilitychange",()=>{
     if(document.hidden){hiddenAt=Date.now();return;}
     const away=hiddenAt?Date.now()-hiddenAt:0;
-    if(K.ready&&away>=25000)say(T.back,{p:2,cat:"ui",opt:true,key:"back",cd:60000,ttl:3000});
+    if(K.ready&&away>=25000)say(T.back,{p:2,cat:"ui",opt:true,key:"back",cd:60000,ttl:3000,emo:"back"});
     else if(K.ready&&away>=6000)micro("back",{key:"backm",cd:20000});
     resync();
   });
@@ -581,8 +617,8 @@ function boot(){
   const hasWord=t=>/\p{L}/u.test(t);
   /* kind → MIC[kind]; en modo «calladita» solo salen las de emoji; devuelve la promesa de say() */
   function micro(kind,o={}){
-    let pool=MIC[kind];if(!pool)return Promise.resolve(false);
-    if(!MD().words)pool=pool.filter(m=>!hasWord(m[0]));
+    let pool=(MIC[kind]||[]).slice();
+    if(!MD().words)pool=pool.concat(EMO[kind]||[]).filter(m=>!hasWord(m[0]));      /* «calladita»: solo emoji (los de MIC y los de EMO) */
     if(!pool.length)return Promise.resolve(false);
     return say(pick(pool,"mic-"+kind),Object.assign({p:1,micro:true,cd:0},o));
   }
@@ -594,7 +630,7 @@ function boot(){
     const kind=/^(descarga|apk|play|google play)/i.test(t)?"dl":/github|gitlab|repositorio|fuente|source|cr[eé]ditos/i.test(t)?"src":"";
     if(!kind)return;
     emit("click-"+kind,{a});
-    say(pick(FAST[kind],"fast-"+kind),{p:2,cat:"ui",opt:true,key:"fast-"+kind,cd:6000,ttl:2500,vars:{a}});
+    say(pick(FAST[kind],"fast-"+kind),{p:2,cat:"ui",opt:true,key:"fast-"+kind,cd:6000,ttl:2500,vars:{a},emo:kind});
   },true);
   /* ratón 3 s sobre la misma app (solo con ratón) */
   if(matchMedia("(hover:hover)").matches){
@@ -620,19 +656,21 @@ function boot(){
   function checkWins(){
     if(!isPC()||searching()){manyShown=false;return;}
     const n=$$("#app .cat:not(.min):not(.max)").filter(x=>!x.hidden).length;
-    if(n>=5&&!manyShown){manyShown=true;if(K.ready&&S.on&&!K.off)say(pick(FAST.wins,"fast-wins"),{p:2,cat:"ui",opt:true,key:"manywin",cd:90000,ttl:3000,vars:{n}});}
+    if(n>=5&&!manyShown){manyShown=true;if(K.ready&&S.on&&!K.off)say(pick(FAST.wins,"fast-wins"),{p:2,cat:"ui",opt:true,key:"manywin",cd:90000,ttl:3000,vars:{n},emo:"wins"});}
     else if(n<=3)manyShown=false;
   }
 
   /* ---------- tocar a Kixki ---------- */
   let taps=[];
   body.addEventListener("click",()=>{
-    act();const t=now();taps=taps.filter(x=>t-x<4000);taps.push(t);emit("tap",{n:taps.length});
+    if(K.enter)return;                                  /* (4b) entrando en una ventana: no se le habla */
+    act();if(K.snooze){poke();return;}                  /* (4b) dormida: se despierta un instante (😠/😴) y vuelve a dormir */
+    const t=now();taps=taps.filter(x=>t-x<4000);taps.push(t);emit("tap",{n:taps.length});
     if(window.KXS)try{KXS.baa();}catch(e){}
-    if(taps.length>=7){taps=[];say(T.dizzy,{p:3,key:"dizzy",cd:9000});setTimeout(()=>{if(alive()){const c=candidates().filter(i=>i!==K.stage);if(c.length)hop(c[0]);}},2600);return;}
+    if(taps.length>=7){taps=[];say(T.dizzy,{p:3,key:"dizzy",cd:9000,words:true});setTimeout(()=>{if(alive()){const c=candidates().filter(i=>i!==K.stage);if(c.length)hop(c[0]);}},2600);return;}
     if(cur)done(cur,"user");
     const r=Math.random();
-    say(r<.5?pickTip():r<.78?pick(T.tap,"tap"):praise(),{p:2});
+    say(r<.5?pickTip():r<.78?pick(T.tap,"tap"):praise(),{p:2,words:true});    /* (4b) tocarla = permiso para hablar con texto, incluso en «calladita» */
   });
   bub.addEventListener("click",()=>{if(cur&&!finishTyping(cur))done(cur,"user");});
   if(matchMedia("(hover:hover)").matches){
@@ -644,6 +682,7 @@ function boot(){
   /* ---------- actividad del visitante (para dormir y despertar) ---------- */
   function act(){
     lastAct=now();
+    if(K.snooze)return;                                 /* (4b) dormida por la opción del menú: solo la despierta tocarla a ella */
     if(K.mode==="sleep"){setMode("idle");frame("idle");say(T.wake,{p:1,key:"wake",cd:60000});}
   }
   ["pointerdown","keydown","touchstart"].forEach(ev=>addEventListener(ev,act,{passive:true,capture:true}));
@@ -659,9 +698,9 @@ function boot(){
     sm.addEventListener("click",e=>{
       const b=e.target.closest("#s-kx-tip,#s-kx-on,#s-kx-mode");if(!b)return;
       if(b.id==="s-kx-mode"){setTalk(null);return;}
-      if(b.id==="s-kx-on"){S.on=!S.on;save();applyOn();labels();if(S.on)setTimeout(()=>say(praise(),{p:2}),700);}
-      else if(S.on){setTimeout(()=>say(pickTip(),{p:3}),250);}
-      else{S.on=true;save();applyOn();labels();setTimeout(()=>say(pickTip(),{p:3}),700);}
+      if(b.id==="s-kx-on"){S.on=!S.on;save();const r=applyOn();labels();if(S.on)r.then(()=>setTimeout(()=>say(praise(),{p:2}),500));}
+      else if(S.on){setTimeout(()=>say(pickTip(),{p:3,words:true}),250);}          /* pedir un consejo = petición directa: puede hablar con texto */
+      else{S.on=true;save();const r=applyOn();labels();r.then(()=>setTimeout(()=>say(pickTip(),{p:3,words:true}),300));}
     });
   }
   /* charlatana → normal → calladita (m = nombre para fijarlo; null = siguiente) */
@@ -672,9 +711,159 @@ function boot(){
     nextChat=now()+rnd(8000,16000)*MD().chat;
     if(S.on&&K.ready&&!K.off)say(FAST.mode[S.mode],{p:3,key:"modemsg",cd:0});
   }
-  function applyOn(){
-    if(!S.on){interrupt();stopMove();el.classList.add("kk-gone");}
-    else{el.classList.remove("kk-gone");if(K.ready){const g=geo(K.stage);if(!g||!usable(K.stage))relocate(true);else resync();}}
+  /* ---------- (parte 4b) quitar a Kixki = que se duerma ----------
+     Ya no desaparece: se acuesta (sprite de dormir + «zZ») donde no estorba y se queda así, visible. Dormida no camina, no habla,
+     no reacciona al entorno ni visita carpetas (todo eso ya comprueba S.on). Una sola frase de buenas noches al irse a dormir
+     (T.sleepNow). Si la tocan se despierta un instante con 😠/😴 y vuelve a dormir. Al reactivar la opción: bostezo, se estira y vuelve.
+     Estado: S.on (localStorage «kixki-k») · pose: K.snooze + clases kk-snooze/kk-lie. Lector de pantalla: «Kixki está durmiendo», una vez. */
+  const REST_RE=/^(search|dock|floor|tiles\d)$/;
+  const restId=()=>isPC()?(usable("floor")?"floor":"search"):"dock";
+  const restX=(id,g)=>id==="floor"?clamp(innerWidth*.84,g.a,g.b):id==="dock"?Math.max(g.a,g.b-12):(g.a+g.b)/2;
+  const announce=t=>{sr.textContent="";setTimeout(()=>{sr.textContent=t;},60);};
+  let zzTok=0,pokeT=0;
+  function pose(on){
+    K.snooze=on;el.classList.toggle("kk-snooze",on);el.classList.toggle("kk-lie",on);
+    if(on){setMode("sleep");frame("sleep");}else{if(K.mode==="sleep")setMode("idle");frame("idle");}
+    labels();
+  }
+  async function goSleep(silent){
+    const tok=++zzTok,wasHop=K.mode==="hop";
+    clearTimeout(pokeT);K.poking=false;el.classList.remove("kk-stretch");
+    cancelEnter();K.tour=null;interrupt();stopMove();
+    if(K.mode==="hop"||K.mode==="walk"){setMode("idle");frame("idle");}
+    /* una sola frase de buenas noches (en «calladita», un emoji) */
+    if(!silent&&K.ready&&!K.off&&!document.hidden){
+      await say(T.sleepNow,{p:3,cat:"ui",zz:true,always:true,replace:true,key:"zz-bye",ttl:3000});
+      if(tok!==zzTok)return;
+    }
+    /* si no está en un sitio que no estorba (barra, filas, barra de tareas), se va a uno; si lo está, se queda donde está */
+    const keep=!wasHop&&REST_RE.test(K.stage||"")&&usable(K.stage);
+    if(!keep&&K.ready&&!K.off){const rid=restId();if(usable(rid)){const g=geo(rid);await hop(rid,restX(rid,g));if(tok!==zzTok)return;}}
+    pose(true);announce(UI.zzSr[lang()==="en"?1:0]);emit("sleep",{on:true});
+  }
+  async function wakeUp(){
+    const tok=++zzTok,was=K.snooze;
+    clearTimeout(pokeT);K.poking=false;
+    if(!was||K.off||!K.ready){pose(false);if(K.ready&&!K.off){const g=geo(K.stage);if(!g||!usable(K.stage)&&!free(K.stage))relocate(true);else resync();brain(2500);}return;}
+    emit("sleep",{on:false});
+    interrupt();el.classList.remove("kk-snooze","kk-lie");K.snooze=false;setMode("idle");frame("talk");labels();     /* bostezo: boca abierta */
+    emo("yawn",{p:2});setTimeout(()=>{if(tok===zzTok&&!K.snooze&&K.mode==="talk"||K.mode==="idle"&&tok===zzTok)frame("talk");},260);
+    await wait(RM()?250:900);if(tok!==zzTok)return;
+    if(!RM()){el.classList.add("kk-stretch");beep(300);setTimeout(()=>beep(380),200);await wait(750);if(tok!==zzTok)return;el.classList.remove("kk-stretch");}   /* se estira */
+    frame("idle");
+    const id=candidates()[0]||home();                   /* y vuelve a lo suyo */
+    if(id!==K.stage&&usable(id)&&!K.game)await hop(id);else resync();
+    if(tok===zzTok)brain(2500);
+  }
+  /* la tocan mientras duerme: se levanta un instante enfadada o somnolienta y vuelve a dormir */
+  function poke(){
+    if(!K.snooze||K.poking)return;
+    K.poking=true;clearTimeout(pokeT);emit("poke",{});
+    el.classList.remove("kk-lie");setMode("idle");frame("idle");
+    if(window.KXS)try{KXS.baa();}catch(e){}
+    emo("poke",{p:3,zz:true,ttl:700});
+    pokeT=setTimeout(()=>{K.poking=false;if(!K.snooze)return;interrupt();el.classList.add("kk-lie");setMode("sleep");frame("sleep");},1500);
+  }
+  function applyOn(){return S.on?wakeUp():goSleep();}
+
+  /* ---------- (parte 4b) entrar en la ventana de un minijuego ----------
+     enter(id,{fall,hide,target,onImpact}) → promesa: true = lista para jugar (o no hacía falta animar), false = cancelada.
+     · Salta Vallas («game»): salta y se sube al borde de la ventana (lo de siempre).
+     · Básquet («bask», fall:true): sube, camina hasta el borde, se tropieza y CAE dentro de la ventana (golpe + estrellitas);
+       target() = dónde caen sus pies (la cancha lo calcula en vivo); hide:true la esconde al llegar (la cancha dibuja su propia Kixki).
+     · prefers-reduced-motion: sin saltos ni caída, solo un fundido corto.
+     · skipEnter() la salta (clic o tecla); cancelEnter() limpia TODO si cierran la ventana a medias (clases, temporizadores, estado). */
+  const kxs=(f,d)=>{if(window.KXS)try{KXS.beep(f,d);}catch(e){}};
+  const sfxAt=(E,list)=>list.forEach(([f,d,at])=>E.t.push(setTimeout(()=>kxs(f,d),at)));
+  const sfxTrip=E=>sfxAt(E,[[330,.05,0],[270,.06,110],[220,.07,230]]);
+  const sfxFall=E=>sfxAt(E,[[640,.06,0],[560,.06,60],[480,.06,120],[400,.06,180],[330,.06,240],[270,.06,300],[220,.06,360]]);
+  const sfxThud=E=>sfxAt(E,[[110,.12,0],[85,.14,70],[900,.04,190],[1180,.05,260]]);
+  function cleanEnter(){
+    el.classList.remove("kk-air","kk-dizzy","kk-sq");el.style.removeProperty("--tilt");
+    $$(".kk-sp",el).forEach(x=>x.remove());
+  }
+  function cancelEnter(){
+    const E=K.enter;if(!E)return false;
+    K.enter=null;cancelAnimationFrame(E.raf);E.t.forEach(clearTimeout);E.w.splice(0).forEach(f=>{try{f();}catch(e){}});
+    stopMove();cleanEnter();
+    if(K.mode==="hop"||K.mode==="walk")setMode(K.snooze?"sleep":"idle");
+    if(!K.snooze)frame("idle");
+    emit("enterend",{id:E.id,how:"cancel"});
+    return true;
+  }
+  function skipEnter(){
+    const E=K.enter;if(!E||E.skip)return false;
+    E.skip=true;cancelAnimationFrame(E.raf);E.t.forEach(clearTimeout);E.t.length=0;E.w.splice(0).forEach(f=>{try{f();}catch(e){}});stopMove();return true;
+  }
+  function sparks(){
+    if(RM())return;
+    for(let i=0;i<6;i++){const s=document.createElement("i");s.className="kk-sp";s.style.setProperty("--sx",Math.round((i-2.5)*15)+"px");s.style.setProperty("--sy",-(20+(i%2)*14)+"px");el.append(s);setTimeout(()=>s.remove(),640);}
+  }
+  async function enter(id,o={}){
+    cancelEnter();el.classList.remove("kk-in");
+    K.game=true;el.classList.add("kk-top");
+    const hideNow=()=>{if(o.hide)el.classList.add("kk-in");};
+    if(!K.ready||K.off||!S.on||!usable(id)){hideNow();return true;}      /* nada que animar: dormida, escondida o sin sitio */
+    const E={id,fall:!!o.fall,skip:false,raf:0,t:[],w:[]};
+    K.enter=E;K.tour=null;idle0();emit("enter",{id,fall:E.fall});
+    const gone=()=>K.enter!==E;
+    const nap=ms=>new Promise(r=>{E.t.push(setTimeout(r,ms));E.w.push(r);});
+    const tgt=()=>{try{return o.target?o.target():null;}catch(e){return null;}};
+    const fin=how=>{
+      const tg=E.fall&&tgt();if(tg){K.x=tg.x;K.y=tg.y;}
+      cleanEnter();if(!K.snooze){setMode("idle");frame("idle");}hideNow();place();
+      if(K.enter===E)K.enter=null;
+      emit("enterend",{id,how:how||(E.skip?"skip":"done")});return true;
+    };
+    try{
+      interrupt();
+      if(RM()){                                                       /* sin movimiento: fundido corto, sin caída */
+        if(E.fall){el.classList.add("kk-in");await nap(180);}
+        else if(K.stage!==id)await hop(id);
+        return gone()?false:fin();
+      }
+      /* 1) sube al borde de la ventana (para la caída, empieza lejos del borde por el que se va a caer) */
+      const edgeOf=g=>{const t=tgt();return t&&Math.abs(g.a-t.x)<Math.abs(g.b-t.x)?g.a:g.b;};
+      if(K.stage!==id){
+        const g=geo(id),ex=edgeOf(g),other=ex===g.b?g.a:g.b;
+        await hop(id,E.fall?ex+(other-ex)*.38:undefined);
+      }
+      if(gone())return false;if(E.skip)return fin();
+      if(!E.fall)return fin("up");
+      /* 2) camina hasta el borde */
+      const g1=geo(id);if(!g1)return gone()?false:fin();
+      const ex1=edgeOf(g1);
+      await walk(ex1,66);
+      if(gone())return false;if(E.skip)return fin();
+      /* 3) se tropieza */
+      setMode("idle");frame("jump");emo("stumble",{p:2});sfxTrip(E);
+      for(const d of [-10,7,-16]){el.style.setProperty("--tilt",d+"deg");await nap(130);if(gone())return false;if(E.skip)return fin();}
+      /* 4) cae dentro de la ventana */
+      const x0=K.x,y0=K.y,tg0=tgt()||{x:x0,y:y0+160},T=clamp(Math.sqrt(2*Math.max(60,tg0.y-y0)/1900)*1000+160,380,950);
+      el.classList.add("kk-air");setMode("hop");sfxFall(E);
+      await new Promise(res=>{
+        E.w.push(res);const t0=performance.now();
+        const tick=t=>{
+          if(K.enter!==E||E.skip){res();return;}
+          const tg=tgt()||tg0,u=Math.min(1,(t-t0)/T);
+          K.x=x0+(tg.x-x0)*(1-(1-u)*(1-u));K.y=y0+(tg.y-y0)*u*u;
+          el.style.setProperty("--tilt",Math.round(-330*u)+"deg");place();
+          if(u<1){E.raf=requestAnimationFrame(tick);return;}
+          res();
+        };
+        E.raf=requestAnimationFrame(tick);
+      });
+      if(gone())return false;if(E.skip)return fin();
+      /* 5) golpe: se chafa, polvo, estrellitas y mareo */
+      const tg=tgt()||tg0;K.x=tg.x;K.y=tg.y;el.style.removeProperty("--tilt");place();
+      setMode("idle");frame("idle");el.classList.remove("kk-air");el.classList.add("kk-sq","kk-dizzy");
+      dust();sparks();sfxThud(E);
+      if(o.onImpact)try{o.onImpact();}catch(e){}
+      emo("fall",{p:2});
+      await nap(950);
+      if(gone())return false;
+      return fin();
+    }catch(e){cancelEnter();return false;}
   }
   labels();
 
@@ -689,12 +878,12 @@ function boot(){
       else if(p&&p!=="min"&&st==="min"&&K.ready&&S.on&&!K.off&&K.stage!=="w:"+s.id&&now()>=(K.noMic||0))micro("close",{key:"micro-close",cd:900});
     });
     checkWins();
-    const gameOpen=!!($("#game")&&!$("#game").hidden);
-    if(K.game&&!gameOpen){K.game=false;el.classList.remove("kk-top");if(K.ready&&S.on)relocate();}
-    const off=!S.on||!!$(".cat.max")||!!$("#boot:not([hidden])")||!!$("#run:not([hidden])")||!!$("#qr:not([hidden])");
+    const gameOpen=!!($("#game")&&!$("#game").hidden)||!!($("#bask")&&!$("#bask").hidden);
+    if(K.game&&!gameOpen){K.game=false;cancelEnter();el.classList.remove("kk-top","kk-in");if(K.ready){if(S.on)relocate();else resync();}}   /* (4b) cierran la ventana, incluso a medias: todo limpio */
+    const off=!!$(".cat.max")||!!$("#boot:not([hidden])")||!!$("#run:not([hidden])")||!!$("#qr:not([hidden])");
     if(off!==wasOff){
       wasOff=off;K.off=off;
-      if(off){interrupt();stopMove();el.classList.add("kk-off");}
+      if(off){cancelEnter();interrupt();stopMove();el.classList.add("kk-off");}
       else if(K.ready){
         el.classList.remove("kk-off");
         const g=geo(K.stage);if(!g||!usable(K.stage)&&!free(K.stage))relocate(true);else resync();
@@ -716,6 +905,13 @@ function boot(){
     $$("#app .cat:not(.min)").forEach(x=>{if(!S.opened.includes(x.id))S.opened.push(x.id);});save();
     const id=home(),g=geo(id)||geo(candidates()[0]);
     K.ready=true;if(!g){return;}
+    if(!S.on){                                           /* (4b) la dejaron dormida: aparece ya acostada, sin tour ni saludo */
+      await wait(40);                                   /* deja que kixki3 registre «floor» */
+      const rid=restId(),sid=usable(rid)?rid:id,g2=geo(sid)||g;
+      K.stage=sid;K.x=restX(sid,g2);K.y=g2.y(K.x);place();
+      if(!K.off)el.classList.remove("kk-off");
+      pose(true);announce(UI.zzSr[lang()==="en"?1:0]);return;
+    }
     K.x=(g.a+g.b)/2;K.y=-70;place();
     if(S.on&&!K.off)el.classList.remove("kk-off");
     await wait(350);
@@ -743,7 +939,10 @@ function boot(){
     /* (parte 2) modo de charla y microreacciones */
     get mode(){return S.mode;},setTalk,micro,busy,busyWhy:()=>({typing:typing(),win:U.win,game:!!K.game}),recentList:()=>recent.slice(),
     /* (parte 3: travesuras y físicas, kixki3.js) */
-    ex:{place,land,setMode,frame,face,stopMove,R,topWin,say,layoutBubble}};
+    ex:{place,land,setMode,frame,face,stopMove,R,topWin,say,layoutBubble},
+    /* (parte 4b) dormir, solo emojis y entrada a ventanas */
+    enter,skipEnter,cancelEnter,get entering(){return !!K.enter;},emo,emoji:(kind)=>pick(EMO[kind]||EMO.ui,"emo-"+kind),get quiet(){return S.mode==="quiet";},
+    get sleeping(){return K.snooze;},setOn:v=>{S.on=!!v;save();const r=applyOn();labels();return r;},poke};
 }
 const run=()=>{try{boot();}catch(e){try{console.warn("Kixki:",e);const x=document.getElementById("kixki");if(x)x.remove();}catch(_){}}};
 window.KXR?run():addEventListener("kixki-ready",run,{once:true});

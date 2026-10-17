@@ -72,3 +72,34 @@
 /* (parte 2) microreacciones: globo pequeño, sin nombre ni botón de cerrar */
 .kk-bub.mic{min-width:0;padding:5px 11px 7px}
 .kk-bub.mic .kk-nm,.kk-bub.mic .kk-x{display:none}
+
+/* =========================================================
+   (parte 4b) dormir en vez de desaparecer · entrar en la ventana de un minijuego
+   ========================================================= */
+/* dormida (la opción «Kixki: no» del menú): acostada, visible y sin estorbar clics */
+#kixki.kk-snooze .kk-bub{pointer-events:none}
+#kixki.kk-snooze .kk-body{cursor:pointer;touch-action:manipulation}
+#kixki.kk-lie .kk-f{clip-path:inset(0 0 6px 0)}                          /* patitas recogidas */
+#kixki.kk-lie .kk-flip{transform:scaleX(var(--kd)) translateY(6px);animation:kkbr 3.2s steps(1,end) infinite}
+@keyframes kkbr{50%{transform:scaleX(var(--kd)) translateY(7px)}}       /* respira despacito */
+#kixki.kk-lie .kk-zz{top:-8px}
+/* se estira al despertar */
+#kixki.kk-stretch .kk-flip{transform-origin:50% 100%;animation:kkst .75s steps(5,end) 1}
+@keyframes kkst{0%{transform:scale(var(--kd),1)}35%{transform:scale(calc(var(--kd) * .9),1.22)}70%{transform:scale(calc(var(--kd) * 1.1),.9)}100%{transform:scale(var(--kd),1)}}
+/* escondida mientras el minijuego dibuja su propia Kixki (fundido corto) */
+#kixki.kk-in{opacity:0;visibility:hidden;transition:opacity .15s linear,visibility 0s linear .15s}
+/* golpe: estrellitas girando sobre la cabeza y chispas */
+.kk-stars{position:absolute;left:-24px;top:-30px;width:48px;height:14px;display:none;pointer-events:none}
+#kixki.kk-dizzy .kk-stars{display:block}
+.kk-stars i{position:absolute;top:0;font:700 14px/1 "Pixelify Sans",ui-monospace,monospace;font-style:normal;color:#ffc23a;text-shadow:1px 1px 0 #7a4b00;animation:kkstar .6s steps(4,end) infinite}
+.kk-stars i:nth-child(1){left:2px}.kk-stars i:nth-child(2){left:19px;animation-delay:-.2s}.kk-stars i:nth-child(3){left:36px;animation-delay:-.4s}
+@keyframes kkstar{50%{transform:translateY(-5px) scale(1.25)}}
+.kk-sp{position:absolute;left:0;bottom:6px;width:6px;height:6px;background:#ffc23a;pointer-events:none;animation:kksp .6s steps(6,end) forwards}
+@keyframes kksp{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--sx,0),var(--sy,-30px));opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  #kixki.kk-lie .kk-flip{animation:none}
+  #kixki.kk-stretch .kk-flip{animation:none}
+  #kixki[data-m="sleep"] .kk-zz{animation:none;opacity:1}
+  .kk-stars i{animation:none}
+  .kk-sp{display:none}
+}

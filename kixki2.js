@@ -79,7 +79,7 @@ const UI={
  sumDesc:["Míralos en el menú Kixki → Logros.","See them in the Kixki menu → Achievements."],
  many:["{n} logros nuevos de golpe","{n} new achievements at once"],
  manyDesc:["Toca para verlos todos.","Tap to see them all."],
- offNote:["Kixki está descansando. Enciéndela en el menú Kixki.","Kixki is resting. Turn her on in the Kixki menu."],
+ offNote:["Kixki está durmiendo. Despiértala en el menú Kixki. 💤","Kixki is sleeping. Wake her up from the Kixki menu. 💤"],
  pcOnly:["La ovejita de abajo solo vive en el modo PC. 🐑","The little sheep downstairs only lives in PC mode. 🐑"]
 };
 const CAT={e:["Explorar","Explore"],f:["Favoritas","Favorites"],g:["Salta Vallas","Fence Jump"],s:["A tu estilo","Your style"],w:["Clima","Weather"],k:["Kixki y amigas","Kixki & friends"],v:["Constancia","Loyalty"]};
@@ -573,7 +573,7 @@ function boot(){
   let fireOn=false,chatting=false,nextVisit=now()+rnd(45000,80000),tapTimes=[],lastTickle=0;
   async function petChat(kind){
     if(chatting||fireOn||!isPC()||!KK.ready||!S.on||K.off)return false;
-    if(kind==="auto"&&(K.tour||K.talking||K.mode!=="idle"))return false;
+    if(kind==="auto"&&(K.tour||K.talking||K.mode!=="idle"||KK.mode==="quiet"))return false;   /* (4b) «calladita»: sin visitas espontáneas */
     if(!petBox())return false;
     chatting=true;nextVisit=now()+rnd(100000,190000);
     const tok={};K.tour=tok;/* mientras charla, el cerebro de Kixki no la manda a otro sitio; si el visitante hace algo, la parte 1 lo pone a null */

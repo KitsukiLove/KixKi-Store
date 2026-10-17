@@ -4,7 +4,10 @@
      pegada al borde derecho de la pantalla. Al tocarla se abre «basquet.exe».
    - En la cancha: arrastra a Kixki hacia atrás y suéltala (como una resortera) para lanzarla
      a la canasta. Lejos del aro valen 3 puntos, cerca 2, y +1 si no toca el aro.
-   - Cada canasta: Kixki responde que Kitsuki pagará por esto.
+   - (parte 4b) Al abrir la ventana Kixki SE CAE dentro (kixki.js → KXK.enter, con tropiezo, golpe y estrellitas; un clic o tecla salta la
+     animación; con prefers-reduced-motion solo un fundido corto) y entonces empieza la partida: 5 tiros, con 6 puntos ganas.
+   - Kixki está MUY enfadada con quien la lanza: sus frases (inicio, cada lanzamiento, fallo, encesta, racha, último tiro, victoria,
+     derrota y despedida) viven en dialogs.js (KXD.TX.bk*, con variantes pícaras «P» y vengativas «V» según el ánimo). En «calladita» solo emojis.
    - Se apoya en kixki.js (KXK) y en kixki3.js, que avisa de cada lanzamiento con el evento «throw».
    - Memoria propia en localStorage («kixki-bk»). En la consola: KXBK.unlock() · KXBK.open() · KXBK.state
    ========================================================= */
@@ -33,27 +36,8 @@ const TX={
  zone3:["3 pts","3 pts"],zone2:["2 pts","2 pts"],
  clean:["¡Limpia!","Clean!"],
  unlock:[["¡Diez lanzamientos! Ya me duele hasta la lana. 😵 …Mira el borde de la pantalla: salió una pestañita.","Ten throws! Even my wool hurts. 😵 …Look at the edge of the screen: a little tab popped up."]],
- intro:[["Ejem. ¿De verdad vas a lanzarme a una canasta? 🏀","Ahem. Are you really going to throw me into a hoop? 🏀"]],
- /* al encestar: siempre dice que Kitsuki pagará */
- score:[
-  ["¡Kitsuki pagará por esto! 😤","Kitsuki is going to pay for this! 😤"],
-  ["¡Canasta! Y encima de pelota… ¡Kitsuki pagará por esto! 🏀","Basket! And as a ball, too… Kitsuki is going to pay for this! 🏀"],
-  ["Me lanzas, anoto y la factura es para Kitsuki. ¡Kitsuki pagará por esto! 💸","You throw me, I score, and Kitsuki gets the bill. Kitsuki is going to pay for this! 💸"],
-  ["¡Doble de lana y triple de rabia! Kitsuki pagará por esto. 🐑","Double the wool, triple the rage! Kitsuki is going to pay for this. 🐑"],
-  ["Anoté yo, pero el castigo es para Kitsuki: ¡Kitsuki pagará por esto! 😈","I scored, but the punishment is Kitsuki's: Kitsuki is going to pay for this! 😈"]
- ],
- scoreMany:[
-  ["¡{n} canastas! Una por cada vez que Kitsuki me dejó sin heno. ¡Kitsuki pagará por esto! 🔥","{n} baskets! One for every time Kitsuki left me without hay. Kitsuki is going to pay for this! 🔥"]
- ],
- miss:[
-  ["Fallé… pero la culpa es de Kitsuki, que no puso un aro más grande. 😒","I missed… but it's Kitsuki's fault for not building a bigger hoop. 😒"],
-  ["¡Auch! Eso también lo pagará Kitsuki. 🤕","Ouch! Kitsuki will pay for that too. 🤕"],
-  ["Cuidado con la lana, que se despeina. 💢","Careful with the wool, it gets messy. 💢"],
-  ["Tú apunta mejor y yo me quejo mejor. 😤","You aim better and I'll complain better. 😤"]
- ],
- closeSay:[
-  ["¡Qué partido! Anoté {p} puntos y Kitsuki pagará por esto. 🏀","What a game! I scored {p} points and Kitsuki is going to pay for this. 🏀"]
- ]
+ shots:["Tiros","Shots"],
+ hintMatch:[" Cada partida son 5 tiros: con 6 puntos ganas."," A game is 5 throws: score 6 points to win."]
 };
 const lastPick={};
 function pick(list,key){
@@ -70,19 +54,20 @@ const beep=(f,d)=>{try{if(window.KXS)KXS.beep(f,d);}catch(e){}};
 const W=400,H=260,FLOOR=236,R=11,RR=2.5,G=900;
 const RIM={x1:330,x2:386,y:112};                 /* aro: borde delantero y trasero */
 const BOARD={x:386,w:8,y1:52,y2:118};            /* tablero (pegado al borde derecho) */
+const SHOTS=5,WIN_PTS=6;                       /* una partida: 5 tiros; con 6 puntos o más se gana */
 const SPAWN_MIN=50,SPAWN_MAX=214,FAR_X=150;      /* a la izquierda de FAR_X valen 3 puntos */
 
 let box=null,court=null,spr=null,sprJ=null,sprH=null,say=null,sayTx=null,dots=[],stats={},wrap=null;
 let st=null,raf=0,scale=1,open=false;
-let game={pts:0,state:"ready",x0:100,x:100,y:FLOOR-R-2,vx:0,vy:0,ang:0,spin:0,scored:false,touched:false,restT:0,fly:0,pull:null,said:0};
-let sayT=0,tabEl=null;
+let game={pts:0,shot:1,taken:0,streak:0,state:"ready",x0:100,x:100,y:FLOOR-R-2,vx:0,vy:0,ang:0,spin:0,scored:false,touched:false,restT:0,fly:0,pull:null,said:0};
+let sayT=0,matchT=0,lastT=0,tabEl=null,skipOn=false;
 
 function build(){
   if(box)return;
   document.body.insertAdjacentHTML("beforeend",
   `<div id="bask" class="ovl" hidden><div class="box" role="dialog" aria-modal="true" aria-labelledby="bk-t">
      <div class="bt"><span id="bk-t"></span><button type="button" class="x" data-x="bask" id="bk-x">✕</button></div>
-     <div class="bk-hud"><span><small data-k="pts"></small><b id="bk-p">0</b></span><span><small data-k="best"></small><b id="bk-b">0</b></span><span><small data-k="hoops"></small><b id="bk-h">0</b></span></div>
+     <div class="bk-hud"><span><small data-k="pts"></small><b id="bk-p">0</b></span><span><small data-k="best"></small><b id="bk-b">0</b></span><span><small data-k="hoops"></small><b id="bk-h">0</b></span><span><small data-k="shots"></small><b id="bk-s">1/5</b></span></div>
      <div class="bk-wrap" id="bk-wrap"><div class="bk-court" id="bk-court">
         <i class="bk-wall"></i><i class="bk-floor"></i>
         <i class="bk-zone z3"><span data-k="zone3"></span></i><i class="bk-zone z2"><span data-k="zone2"></span></i>
@@ -95,7 +80,7 @@ function build(){
      <p class="hint" id="bk-hint"></p>
    </div></div>`);
   box=$("#bask");court=$("#bk-court");wrap=$("#bk-wrap");spr=$("#bk-k");say=$("#bk-say");sayTx=$("#bk-sx");
-  stats={p:$("#bk-p"),b:$("#bk-b"),h:$("#bk-h")};
+  stats={p:$("#bk-p"),b:$("#bk-b"),h:$("#bk-h"),s:$("#bk-s")};
   /* puntos de la trayectoria */
   for(let i=0;i<14;i++){const d=document.createElement("i");d.className="bk-dot";d.hidden=true;court.append(d);dots.push(d);}
   /* los dibujos de Kixki salen de la propia Kixki, así siempre son iguales (bufanda de tu color incluida) */
@@ -112,7 +97,7 @@ function labels(){
   if(!box)return;
   $("#bk-t").textContent=L(TX.title);$("#bk-x").setAttribute("aria-label",L(TX.close));
   box.querySelectorAll("[data-k]").forEach(e=>{e.textContent=L(TX[e.dataset.k]);});
-  $("#bk-hint").textContent=L(TX.hint);
+  $("#bk-hint").textContent=L(TX.hint)+L(TX.hintMatch);
 }
 function tabLabel(){if(tabEl){tabEl.setAttribute("aria-label",L(TX.tab));tabEl.title=L(TX.tab);}}
 function fit(){
@@ -124,21 +109,38 @@ function fit(){
   court.style.transform=`scale(${scale})`;
   wrap.style.height=Math.round(H*scale)+"px";
 }
-function stat(){stats.p.textContent=game.pts;stats.b.textContent=B.best;stats.h.textContent=B.hoops;}
+function stat(){stats.p.textContent=game.pts;stats.b.textContent=B.best;stats.h.textContent=B.hoops;stats.s.textContent=Math.min(game.shot,SHOTS)+"/"+SHOTS;}
 
 /* ---------- dibujar ---------- */
 function show(){
   spr.style.transform=`translate(${game.x-20}px,${game.y-15}px) rotate(${game.ang}rad)`;
-  const air=game.state==="fly";
-  if(sprJ)sprJ.style.display=air?"block":"none";
-  if(sprH)sprH.style.display=air?"none":"block";
+  const air=game.state==="fly",hid=game.state==="enter";     /* mientras cae la Kixki de verdad, la de la cancha espera */
+  if(sprJ)sprJ.style.display=!hid&&air?"block":"none";
+  if(sprH)sprH.style.display=!hid&&!air?"block":"none";
 }
-function newShot(){
-  game.x0=Math.round(rnd(SPAWN_MIN,SPAWN_MAX));
+function newShot(keepX){
+  if(!keepX)game.x0=Math.round(rnd(SPAWN_MIN,SPAWN_MAX));
+  game.shot=Math.min(game.taken+1,SHOTS);
   Object.assign(game,{state:"ready",x:game.x0,y:FLOOR-R-2,vx:0,vy:0,ang:0,spin:0,scored:false,touched:false,restT:0,fly:0,pull:null});
   hideDots();show();
 }
 function hideDots(){dots.forEach(d=>{d.hidden=true;});}
+/* ---- lo que dice Kixki (enfadada): fase → frase de dialogs.js, con ánimo (P pícara / V vengativa) y sin repetir; en «calladita», solo emoji ---- */
+const cap=w=>w[0].toUpperCase()+w.slice(1),lastTxt={};
+const quiet=()=>!!(window.KXK&&KXK.quiet);
+function phrase(phase,vars){
+  if(quiet()&&KXK.emoji)return KXK.emoji("bk"+cap(phase));
+  const T=(window.KXD&&KXD.TX)||{},k="bk"+cap(phase),md=window.KXK3&&KXK3.mood?KXK3.mood():0;
+  let list=T[k]||[];
+  if(md>=2&&T[k+"V"]&&Math.random()<.55)list=T[k+"V"];else if(md>=1&&T[k+"P"]&&Math.random()<.5)list=T[k+"P"];
+  if(!list.length)return null;
+  /* nunca la misma frase dos veces seguidas en una fase (la memoria de KXK.pick es de 30 y las listas son cortas) */
+  const free=list.filter(x=>x[0]!==lastTxt[phase]),pool=free.length?free:list;
+  const m=window.KXK&&KXK.pick?KXK.pick(pool,"bk-"+phase):pick(pool,"bk-"+phase),v=vars||{};
+  lastTxt[phase]=m[0];
+  return [fmt(m[0],v),fmt(m[1],v)];
+}
+function bkSay(phase,vars,ms){const p=phrase(phase,vars);if(p)talk(p,ms);}
 function talk(pair,ms){
   sayTx.textContent=L(pair);say.hidden=false;
   clearTimeout(sayT);sayT=setTimeout(()=>{say.hidden=true;},ms||4300);
@@ -176,9 +178,14 @@ function up(e){
   const p=game.pull;if(!p||e.pointerId!==p.id)return;game.pull=null;hideDots();
   const v=p.v;
   if(!v||v.m<14){game.ang=0;show();return;}                  /* un tironcito pequeño no lanza */
-  game.state="fly";game.vx=v.vx;game.vy=v.vy;game.spin=v.vx>0?5:-5;game.fly=0;game.restT=0;
-  B.shots++;save();
+  game.vx=v.vx;game.vy=v.vy;game.spin=v.vx>0?5:-5;
+  beginFlight();
   beep(300,.08);
+}
+/* un tiro sale (de verdad o simulado): cuenta, y Kixki protesta en el aire */
+function beginFlight(){
+  game.state="fly";game.fly=0;game.restT=0;game.scored=false;game.taken++;B.shots++;save();stat();
+  clearTimeout(lastT);bkSay("throw",null,2800);
 }
 
 /* ---------- física ---------- */
@@ -224,11 +231,9 @@ function scored(){
   $("#bk-net").classList.remove("sw");void $("#bk-net").offsetWidth;$("#bk-net").classList.add("sw");
   beep(660,.09);setTimeout(()=>beep(880,.12),110);
   /* Kixki responde: siempre que Kitsuki pagará */
-  const many=B.hoops>0&&B.hoops%5===0;
-  const m=many?TX.scoreMany[0]:pick(TX.score,"sc");
-  talk(many?[fmt(m[0],{n:B.hoops}),fmt(m[1],{n:B.hoops})]:m,5200);
-  game.said=1;
-  try{if(window.KXK)KXK.emit("hoop",{pts,n:B.hoops,clean});}catch(e){}
+  game.streak++;
+  if(game.streak>=2)bkSay("streak",{n:game.streak},4600);else bkSay("score",null,4600);
+  try{if(window.KXK)KXK.emit("hoop",{pts,n:B.hoops,clean,streak:game.streak});}catch(e){}
 }
 function loop(t){
   if(!open)return;
@@ -241,29 +246,93 @@ function loop(t){
     game.fly+=dt;
     const resting=game.y>=FLOOR-R-2-.5&&Math.abs(game.vx)<12&&Math.abs(game.vy)<20;
     game.restT=resting?game.restT+dt:0;
-    if(game.restT>.7||game.fly>8){
-      if(!game.scored&&!game.said&&Math.random()<.6)talk(pick(TX.miss,"ms"),3600);
-      game.said=0;newShot();
-    }
+    if(game.restT>.7||game.fly>8)endShot();
     show();
   }
 }
 
+/* ---------- partida: 5 tiros ---------- */
+function endShot(){
+  if(!game.scored){game.streak=0;bkSay("miss",null,3600);}
+  if(game.taken>=SHOTS){endMatch();return;}
+  newShot();
+  /* el último tiro: avisa un momento después, para no pisar la frase del fallo o la canasta */
+  if(game.taken===SHOTS-1){clearTimeout(lastT);lastT=setTimeout(()=>{if(open&&game.state==="ready")bkSay("last",null,3600);},1700);}
+}
+function endMatch(){
+  game.state="over";hideDots();show();
+  const win=game.pts>=WIN_PTS;
+  B.matches=(B.matches|0)+1;if(win)B.wins=(B.wins|0)+1;save();
+  bkSay(win?"win":"lose",{p:game.pts},4600);
+  try{if(window.KXK)KXK.emit("match",{pts:game.pts,win});}catch(e){}
+  clearTimeout(matchT);matchT=setTimeout(()=>{if(open)startMatch(true);},5000);
+}
+function startMatch(talkIt){
+  Object.assign(game,{pts:0,taken:0,streak:0,shot:1});
+  newShot();stat();
+  if(talkIt)bkSay("start",null,4200);
+}
+
+/* ---------- entrada: Kixki se cae dentro de la ventana (kixki.js → KXK.enter) ---------- */
+/* dónde caen sus pies, en pantalla: el suelo de la cancha bajo el punto de salida del tiro (se calcula en vivo) */
+function feet(){
+  if(!court||box.hidden)return null;
+  const r=court.getBoundingClientRect();
+  return {x:r.left+game.x0*scale,y:r.top+(game.y+15)*scale};
+}
+/* un clic o una tecla saltan la animación (Esc cierra la ventana, Tab y los modificadores no cuentan; la ✕ tampoco) */
+function skipEv(e){
+  if(game.state!=="enter"||!window.KXK)return;
+  if(e.type==="keydown"&&/^(Escape|Tab|Shift|Control|Alt|Meta|CapsLock)$/.test(e.key))return;
+  if(e.type==="pointerdown"&&e.target&&e.target.closest&&e.target.closest("#bk-x"))return;
+  if(e.type==="pointerdown"){e.stopPropagation();e.preventDefault();}      /* el clic que salta la animación no debe agarrar a Kixki ni lanzar un tiro */
+  KXK.skipEnter();
+}
+function hookSkip(on){
+  if(on===skipOn)return;skipOn=on;
+  const f=on?addEventListener:removeEventListener;
+  f.call(window,"pointerdown",skipEv,true);f.call(window,"keydown",skipEv,true);
+}
+function poof(){
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  for(let k=0;k<5;k++){const d=document.createElement("i");d.className="bk-poof";
+    d.style.cssText=`left:${Math.round(game.x0+(k-2)*7)}px;top:${FLOOR-18}px;--px:${(k-2)*9}px`;court.append(d);setTimeout(()=>d.remove(),560);}
+}
+function reveal(){
+  hookSkip(false);
+  if(!open||game.state!=="enter")return;
+  game.state="ready";show();
+  spr.classList.remove("in");void spr.offsetWidth;spr.classList.add("in");poof();
+  bkSay("start",null,4400);
+}
+
 /* ---------- abrir y cerrar ---------- */
 function openWin(){
-  build();labels();stat();
+  build();labels();
   box.hidden=false;open=true;
   fit();requestAnimationFrame(fit);
-  game.pts=0;game.said=0;newShot();stat();
-  if(!B.seen){B.seen=1;save();talk(TX.intro[0],4200);}
+  clearTimeout(matchT);clearTimeout(lastT);
+  Object.assign(game,{pts:0,taken:0,streak:0,shot:1});
+  newShot();stat();
   st=null;cancelAnimationFrame(raf);raf=requestAnimationFrame(loop);
   try{$("#bk-x").focus({preventScroll:true});}catch(e){}
+  /* la Kixki de la página se sube a la ventana, se tropieza y cae dentro; solo entonces empieza el juego */
+  game.state="enter";show();
+  if(window.KXK&&KXK.enter){
+    hookSkip(true);
+    KXK.enter("bask",{fall:true,hide:true,target:feet}).then(()=>{if(open&&game.state==="enter")reveal();}).catch(()=>{if(open&&game.state==="enter")reveal();});
+  }else reveal();
 }
 function closed(){
-  open=false;cancelAnimationFrame(raf);clearTimeout(sayT);say.hidden=true;
-  if(game.pts>0&&window.KXK&&KXK.ready){
-    const m=TX.closeSay[0];
-    try{KXK.say([fmt(m[0],{p:game.pts}),fmt(m[1],{p:game.pts})],{p:2,key:"bkclose",cd:0});}catch(e){}
+  open=false;cancelAnimationFrame(raf);clearTimeout(sayT);clearTimeout(matchT);clearTimeout(lastT);say.hidden=true;
+  hookSkip(false);
+  const played=game.taken>0||game.pts>0,pts=game.pts;
+  if(window.KXK&&KXK.cancelEnter)KXK.cancelEnter();         /* cerraron a medias: sin estados colgados */
+  game.state="idle";hideDots();
+  if(played&&window.KXK&&KXK.ready){
+    const m=phrase("end",{p:pts});
+    /* un momento después: al cerrar, Kixki vuelve a su sitio (relocate) y eso corta cualquier globo; así la despedida sale al llegar */
+    if(m)setTimeout(()=>{try{KXK.say(m,{p:2,key:"bkclose",cd:0,emo:"bkEnd"});}catch(e){}},160);
   }
 }
 /* Esc y tocar fuera de la ventana la cierran: ya lo hace app.js con la clase «ovl» */
@@ -295,7 +364,11 @@ function boot(){
     if(d.t==="throw"&&!B.u&&(d.n|0)>=NEED)unlock(true);
   });
   if(window.KXI&&!KXI._bk){KXI._bk=1;const o=KXI.set;KXI.set=function(l){o.call(KXI,l);labels();tabLabel();};}
-  window.KXBK={state:B,unlock:()=>unlock(true),open:openWin,need:NEED};
+  window.KXBK={state:B,unlock:()=>unlock(true),open:openWin,need:NEED,
+    /* para las pruebas automáticas: estado de la partida y un tiro simulado («score» o «miss») que pasa por el mismo código que uno real */
+    match:()=>({pts:game.pts,shot:game.shot,taken:game.taken,streak:game.streak,state:game.state,open}),
+    sim:kind=>{if(!open||game.state!=="ready")return false;beginFlight();if(kind==="score")setTimeout(()=>{if(open&&game.state==="fly"&&!game.scored)scored();},450);game.y=FLOOR-R-2;game.vx=0;game.vy=0;return true;},
+    shots:SHOTS,win:WIN_PTS,phrase};
 }
 const run=()=>{try{boot();}catch(e){try{console.warn("Kixki 4:",e);}catch(_){}}};
 window.KXK?run():addEventListener("kixki-ready",run,{once:true});

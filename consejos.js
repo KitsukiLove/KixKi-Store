@@ -208,7 +208,8 @@ function boot(){
     const line=advice(id);if(!line)return false;
     const my=++tok;
     KK.interrupt();K.tour=null;
-    return KK.visitFolder(id,{line,p:3,cat:"ui",always:true,replace:true,ttl:15000,ctx:"advice",
+    return KK.visitFolder(id,{line,p:3,cat:"ui",always:true,replace:true,ttl:15000,ctx:"advice",words:true,   /* pedir ayuda = permiso para hablar con texto, incluso en «calladita» */
+      
       onStart:()=>{if(my===tok)record(id);}});
   }
   function record(id){
