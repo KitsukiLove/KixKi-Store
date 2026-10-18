@@ -23,6 +23,19 @@ const tree=(x,y,r,c)=>R(x,y+r,1,6,"t")+disc(x,y,r,c);
 const flower=(x,y,c)=>R(x,y,1,1,c)+R(x,y+1,1,1,"p");
 const sunf=(x,y)=>R(x-1,y,3,3,"o")+R(x,y+1,1,1,"t")+R(x,y+3,1,4,"p");
 const ST=[[4,3],[12,8],[20,2],[27,10],[35,4],[44,9],[52,3],[58,11],[8,14],[40,15],[61,6],[31,16]].map(([x,y])=>R(x,y,1,1,"st")).join("");
+/* geometría de la Colina XP: cada capa = [x0,y0, curva, curva…] con curvas cúbicas [c1x,c1y,c2x,c2y,x,y]; viewBox 64x40 */
+const HL=[[0,24.5,[9,21.5,20,20.4,32,21.6],[44,22.8,54,23.4,64,21.4]],[0,27,[10,23,22,21.2,36,22.4],[50,23.6,56,25.6,64,23.6]],
+ [0,29,[7,20.5,18,14.8,30,15],[42,15.2,53,20.6,64,25.4]],[0,35,[12,30.5,30,29.6,46,31.4],[54,32.3,60,34,64,33.2]]];
+const hd=L=>`M${L[0]} ${L[1]}`+L.slice(2).map(c=>"C"+c.join(" ")).join("")+"V40H0Z";
+const hpath=(L,c)=>`<path class="${c}" d="${hd(L)}"/>`;
+const XST=(()=>{let o="",a=7;const r=()=>(a=(a*16807)%2147483647)/2147483647;for(let j=0;j<52;j++)o+=`<circle class="st" cx="${(r()*64).toFixed(1)}" cy="${(r()*17).toFixed(1)}" r="${(.06+r()*.12).toFixed(2)}"/>`;return o;})();
+const XPDEFS=`<defs><radialGradient id="xpcl"><stop offset="0" class="xcs"/><stop offset=".55" class="xcs" stop-opacity=".9"/><stop offset="1" class="xcs" stop-opacity="0"/></radialGradient></defs>`;
+const XPDEFS2=`<defs><linearGradient id="xph" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" class="xa"/><stop offset=".5" class="xb"/><stop offset="1" class="xc"/></linearGradient>`
+ +`<linearGradient id="xpf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="xb"/><stop offset="1" class="xc"/></linearGradient>`
+ +`<linearGradient id="xpsh" x1="0" y1="0" x2=".55" y2=".85"><stop offset="0" class="xp" stop-opacity=".7"/><stop offset=".55" class="xp" stop-opacity=".12"/><stop offset="1" class="xp" stop-opacity="0"/></linearGradient></defs>`;
+/* nube de algodón: varias bolitas con borde difuminado + base plana; s = escala */
+const xcloud=(x,y,k)=>{const P=[[-5,1.2,3],[-2,-.6,4.2],[2.4,.1,3.6],[5.8,1.4,2.8],[-3,1.9,3],[1.2,2,3.2]];
+  return `<g class="c">${P.map(([a,b,r])=>`<circle cx="${(x+a*k).toFixed(2)}" cy="${(y+b*k).toFixed(2)}" r="${(r*k).toFixed(2)}" fill="url(#xpcl)"/>`).join("")}<ellipse cx="${x}" cy="${(y+2.4*k).toFixed(2)}" rx="${(8*k).toFixed(2)}" ry="${(1.6*k).toFixed(2)}" fill="url(#xpcl)"/></g>`;};
 const SC={
  valle:{top:ST+disc(33,7,4,"a")+cloud(6,5)+cloud(20,12)+cloud(44,3),bot:hill(20,2.5,7,0,"g1")+hill(26,2,5,2,"g2")+hill(32,1.5,9,4,"g3")+[[6,34],[13,36],[22,35],[30,37],[41,34],[50,36],[58,35]].map(([x,y])=>R(x,y,1,1,"o")).join("")},
  halloween:{top:ST+disc(18,9,6,"a")+bat(26,5)+bat(33,12)+bat(40,6),bot:hill(24,2,8,1,"g1")+hill(29,1.5,6,3,"g2")+hill(34,1,10,0,"g3")+dead(32,12)+pump(8,31)+pump(15,33)+pump(24,34)+pump(38,32)},
@@ -31,12 +44,13 @@ const SC={
  verano:{top:ST+disc(14,8,6,"a")+cloud(38,5)+cloud(50,13),bot:hill(21,2,8,2,"g1")+hill(27,2,6,0,"g2")+hill(33,1.5,10,3,"g3")+[[7,29],[19,31],[33,28],[47,30],[58,32]].map(([x,y])=>sunf(x,y)).join("")},
  otono:{top:ST+disc(48,8,4,"a")+cloud(8,6)+cloud(26,12),bot:hill(24,2,8,1,"g1")+tree(12,15,5,"p")+tree(30,18,4,"o")+tree(52,14,5,"p")+hill(30,1.5,6,3,"g2")+hill(35,1,8,0,"g3")+[[6,36],[20,34],[40,36],[58,34]].map(([x,y])=>R(x,y,2,1,"o")).join("")},
  invierno:{top:ST+disc(48,7,3,"a")+cloud(10,6)+cloud(30,12),bot:hill(24,2,8,1,"g1")+dead(10,16)+dead(46,18)+pine(28,19,7)+hill(30,1.5,6,2,"g2")+hill(35,1,8,4,"g3")},
- /* «Colina XP»: cielo azul, nubes blandas y una colina verde grande. Dibujo propio en vectores (no es la imagen de Microsoft). */
+ /* «Colina XP» (parte 7b): una colina verde estilo «Bliss» dibujada a mano en vectores (no es la imagen de Microsoft).
+    Cuatro capas de colina (la geometría está en HL: la usan el dibujo, el pasto de xpbg.js y la lluvia de lluvia.js),
+    cielo degradado y nubes de algodón hechas con degradados radiales. Los colores salen de las variables de abajo (día/noche). */
  xp:{smooth:1,
-  top:ST+`<g class="c"><circle cx="12" cy="15" r="3.6"/><circle cx="17" cy="13" r="4.6"/><circle cx="23" cy="15" r="3.8"/><rect x="9" y="15" width="17" height="3.6" rx="1.8"/></g>`
-      +`<g class="c"><circle cx="40" cy="8" r="2.6"/><circle cx="44" cy="6.6" r="3.4"/><circle cx="49" cy="8.2" r="2.8"/><rect x="37.6" y="8.2" width="14" height="2.6" rx="1.3"/></g>`
-      +`<g class="c"><circle cx="54" cy="18" r="2.4"/><circle cx="58" cy="16.6" r="3.2"/><circle cx="62" cy="18.2" r="2.6"/><rect x="51.6" y="18.2" width="13" height="2.4" rx="1.2"/></g>`,
-  bot:`<path class="g2" d="M0 17C14 7 40 6 64 13V40H0Z"/><path class="g1" d="M0 17C14 7 40 6 64 13L64 17C40 10.5 15 11 0 21Z"/><path class="g3" d="M0 31C20 24.5 44 26.5 64 33V40H0Z"/>`}
+  top:XST+XPDEFS+`<circle class="st" cx="44" cy="4.6" r="1.9"/>`
+      +xcloud(14,8.6,1)+xcloud(46,5.2,.72)+xcloud(58,12.4,.55)+xcloud(3,13.6,.6),
+  bot:XPDEFS2+hpath(HL[0],"t")+hpath(HL[1],"o")+hpath(HL[2],"xm")+`<path fill="url(#xpsh)" d="${hd(HL[2])}"/>`+hpath(HL[3],"xf")}
 };
 /* Colores: s1-s4 cielo, g1-g3 colinas, a sol/luna, t tronco, o detalle, c nubes, p pino, k siluetas */
 const P={
@@ -46,7 +60,7 @@ const P={
  primavera:[["#8fd3f7","#b2e3fa","#d6f1fd","#f1fbff","#a5e682","#7fd16a","#5bb857","#fff09a","#7a4a2a","#ff8fc7","#ffffff","#3fa05a","#2f6f46"],["#0b1238","#142257","#233a7a","#36508f","#2f6a55","#245a47","#1a4a3a","#f4f1d0","#3b2a22","#ff9fd0","#6f86c8","#26734b","#0b1238"]],
  verano:[["#3fa8f0","#69bff6","#98d5fb","#c9ebfd","#b8e05a","#8fcf4a","#6db83d","#ffd23a","#7a4a2a","#ffc21a","#ffffff","#3d9b3d","#2a6a2a"],["#060a26","#0d1744","#1a2d6d","#2e4c94","#3d6a3a","#2f5a2f","#234a26","#fff3c4","#3b2a22","#ffe27a","#5a74b8","#2b6b30","#060a26"]],
  otono:[["#e9a35c","#f2bf7c","#f8d9a3","#fdeccb","#d29a3c","#b9772c","#9a5a24","#ffe08a","#5a3a22","#e8742c","#fff1d6","#d9601f","#4a2a15"],["#1a0f2e","#2b1a3f","#45274a","#63364f","#4a3220","#3a2819","#2a1c12","#ffd9a0","#2e1d12","#e8742c","#7a5a8a","#a8461a","#10081a"]],
- xp:[["#2b6ad6","#4b8fe6","#7db5f0","#c5e3f7","#8be04a","#4cab25","#2f8a1a","#ffffff","#7a4a2a","#ffffff","#ffffff","#2f8f5b","#2a1650"],["#060d2e","#0e1d52","#1a3a82","#2c5aa8","#2d6a2f","#1f4f26","#153b1d","#fff3c4","#3b2a22","#fff3c4","#8aa2d8","#1f6b45","#070d2e"]],
+ xp:[["#2b6ad6","#4b8fe6","#7db5f0","#c5e3f7","#9fe04e","#58b52b","#2c8a1c","#fff3c4","#79b36f","#4fa535","#ffffff","#c9f27e","#1e6a16"],["#060d2e","#0e1d52","#1a3a82","#2c5aa8","#2f7a35","#22592a","#163f1f","#fff3c4","#2a5a55","#1d4a28","#7d93cc","#3e8e48","#0c2a12"]],
  vacas:[["#ffd9ee","#ffcbe6","#ffbde0","#ffb0da","#ffffff","#ffffff","#ffffff","#ffffff","#2a1650","#2a1650","#ffffff","#2a1650","#2a1650"],["#e7a3d6","#e39ad2","#de90cd","#d986c8","#ffffff","#ffffff","#ffffff","#ffffff","#2a1650","#2a1650","#ffffff","#2a1650","#2a1650"]],
  invierno:[["#a9c8e8","#c3daf0","#dcebf8","#f1f7fd","#ffffff","#eaf2fc","#d6e5f6","#fff8d0","#5a4636","#a9c2ee","#c9d9ee","#2f7f5b","#4a3a30"],["#060a22","#0e1a46","#1c3068","#2f4c8e","#cfe0ff","#aac2ee","#88a4d8","#f4f6ff","#2e2a2a","#8aa6d8","#8aa6d8","#1f5f45","#1a1622"]]
 };
@@ -79,7 +93,7 @@ function apply(){
 }
 new MutationObserver(apply).observe(root,{attributes:true,attributeFilter:["data-theme"]});
 function restore(){X.cursed=0;const p=KEYS.indexOf(X.prev);i=p>=0&&okKey(X.prev)&&X.prev!=="vacas"?p:0;X.prev="";saveX();lastN=null;persist();apply();}
-window.KXB={label:()=>NAMES[i],
+window.KXB={label:()=>NAMES[i],hill:HL,
   /* desde «¡Vacas!» el botón de fondos te devuelve el que tenías; si no, pasa al siguiente que tengas disponible (los candados se saltan) */
   next(){if(KEYS[i]==="vacas"){restore();return;}
     do{i=(i+1)%KEYS.length;}while(KEYS[i]==="vacas"||!okKey(KEYS[i]));

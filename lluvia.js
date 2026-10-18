@@ -49,7 +49,13 @@ function mount(){
 const far=[],near=[];
 const MAXFAR=230,MAXNEAR=46;
 function mkFar(){const d={};resetFar(d,true);return d;}
-function resetFar(d,any){d.x=rnd(-10,W+10);d.y=any?rnd(-10,H):rnd(-24,-2);d.vy=rnd(3.2,5.4);d.vx=-d.vy*.16;d.l=Math.round(rnd(3,6));d.ly=xpOn?rnd(Math.max(H*.4,(innerHeight-Math.max(innerWidth,640)*.4375)/S),H-2):rnd(H*.5,H-2);d.a=rnd(.35,.7);d.s=0;}
+/* dónde aterriza una gota lejana: con la Colina XP, sobre la colina (KXG.hillY da el borde de la colina en píxeles); si no, en la mitad de abajo */
+const onHill=()=>xpOn&&root.getAttribute("data-bg")==="xp"&&window.KXG&&KXG.hillY;
+function landY(x){
+  if(onHill()){const top=KXG.hillY(x*S)/S;return rnd(Math.min(H-4,top+3),H-2);}
+  return xpOn?rnd(Math.max(H*.4,(innerHeight-Math.max(innerWidth,640)*.4375)/S),H-2):rnd(H*.5,H-2);
+}
+function resetFar(d,any){d.x=rnd(-10,W+10);d.y=any?rnd(-10,H):rnd(-24,-2);d.vy=rnd(3.2,5.4);d.vx=-d.vy*.16;d.l=Math.round(rnd(3,6));d.ly=landY(d.x);d.a=rnd(.35,.7);d.s=0;}
 function mkNear(){const d={};resetNear(d,true);return d;}
 function resetNear(d,any){d.x=rnd(-10,W+10);d.y=any?rnd(-20,H):rnd(-40,-4);d.vy=rnd(7,10.5);d.vx=-d.vy*.16;d.l=Math.round(rnd(6,10));d.a=rnd(.45,.8);}
 const splashes=[];
@@ -146,7 +152,11 @@ function frame(ts){
       xb.fillStyle=rc;
       for(let i=splashes.length-1;i>=0;i--){const s=splashes[i];s.t+=k;if(s.t>7){splashes.splice(i,1);continue;}
         xb.globalAlpha=Math.max(0,.8-s.t/9);
-        if(xpOn){xb.strokeStyle="#dff0ff";xb.lineWidth=.3;xb.beginPath();xb.ellipse(s.x,s.y,s.t*.35+.4,(s.t*.35+.4)*.38,0,0,6.283);xb.stroke();continue;}
+        if(xpOn){/* anillo suave + anillo interior + dos gotitas que saltan */
+          const rr=s.t*.4+.4;xb.strokeStyle="#eaf6ff";xb.lineWidth=.34;xb.beginPath();xb.ellipse(s.x,s.y,rr,rr*.36,0,0,6.283);xb.stroke();
+          if(s.t>1.4){xb.beginPath();xb.ellipse(s.x,s.y,rr*.55,rr*.2,0,0,6.283);xb.stroke();}
+          if(s.t<4.5){const j=Math.sin(s.t*.7)*2.2;xb.fillStyle="#ffffff";xb.fillRect(s.x-rr*.8,s.y-j,.55,.55);xb.fillRect(s.x+rr*.8,s.y-j*.8,.55,.55);}
+          continue;}
         const u=Math.floor(s.t/2)+1;
         xb.fillRect(s.x-u,s.y,1,1);xb.fillRect(s.x+u,s.y,1,1);xb.fillRect(s.x-u+1,s.y-1,1,1);xb.fillRect(s.x+u-1,s.y-1,1,1);}
       xb.globalAlpha=1;

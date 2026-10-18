@@ -27,7 +27,7 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 | `vacaboss.*`, `vaca.gif`, `vaca-jefa.*` | parte 6: vaca.exe se rebela |
 | `xpmode.js` + `xp.css`, `xp-icons.css`, `xp-games.*` | modo XP («Cambiar estilo») |
 | `apps.json` · `data/` · `logos/` · `fonts/` · `vendor/` | catálogo y recursos que descarga la Action |
-| `tools/` | pruebas y utilidades (no las carga la página): `sync.mjs`, `check-links.mjs`, `check-dialogs.mjs`, `test-dialogos.mjs`, `check-vaca.mjs`, `test-vaca.mjs`, `_harness.mjs`, `xp-lab.html` (laboratorio del kit XP) y `xp-fuente/` (scripts que dibujan `xp-icons.css`) |
+| `tools/` | pruebas y utilidades (no las carga la página): `sync.mjs`, `check-links.mjs`, `check-dialogs.mjs`, `test-dialogos.mjs`, `check-vaca.mjs`, `test-vaca.mjs`, `test-xpbg.mjs`, `_harness.mjs`, `xp-lab.html` (laboratorio del kit XP) y `xp-fuente/` (scripts que dibujan `xp-icons.css`) |
 | `.github/` | plantilla de sugerencias y Actions (`sync.yml`, `links.yml`) |
 
 ## Kixki, la oveja guía
@@ -160,7 +160,7 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 
 ## Kixki: «Cambiar estilo» — modo XP (premio por vencer a vaca.exe)
 
-**Archivos nuevos:** `xpmode.js` (la lógica) + el XP-Kit tal cual: `xp.css`, `xp-icons.css`, `xp-games.css`, `xp-games.js`. Están en `index.html` (solo `xpmode.js`, en el `<head>`, **sin defer y después de todos los CSS**) y en `SHELL` de `sw.js` (caché `kixki-v20`). No hace falta tocar la CSP.
+**Archivos nuevos:** `xpmode.js` (la lógica) + el XP-Kit tal cual: `xp.css`, `xp-icons.css`, `xp-games.css`, `xp-games.js`. Están en `index.html` (solo `xpmode.js`, en el `<head>`, **sin defer y después de todos los CSS**) y en `SHELL` de `sw.js` (caché `kixki-v22`). No hace falta tocar la CSP.
 
 - **Desbloqueo:** el modo XP es el premio de ganar a vaca.exe (el mismo que da el fondo «Colina XP»: `kixki-bgx`.xp). Mientras no lo ganes, `xpmode.js` no carga ningún CSS ni JS del kit y no sale ningún botón.
 - **El botón:** Ajustes (Kixki en PC · «Más» en móvil) → **«Cambiar estilo: Pixel / XP»**. Al ganar aparece además una pastilla flotante **«🎨 Cambiar estilo»** (con ✕) hasta que la usas o la cierras; después solo queda el botón de Ajustes.
@@ -171,7 +171,29 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 - **Si pierdes** contra la vaca no cambia nada del estilo: se activa el fondo «¡Vacas!» (ver parte 6) y se quita con «Restaurar fondo».
 
 
-## Kixki: parte 7 — Colina XP viva (pasto con viento y lluvia XP)
+## Kixki: parte 7b — «Kixki XP» Lila, menú Inicio nuevo y Colina Bliss
+
+**Archivos que cambian:** `xp.css` (rehecho) · `xpbg.js` + `xpbg.css` (rehechos) · `scenes.js` (entrada `xp` y paleta) · `lluvia.js` · `xpmode.js` · `sw.js` (caché `kixki-v22`) · `README.md` · `tools/test-xpbg.mjs` (nuevo). `xp-icons.css`, `xp-games.*` e `index.html` siguen igual.
+
+**Estilo «Lila» (`xp.css`).** Antes el modo XP lo cambiaba todo (fuente Tahoma, azul Luna, ventanas planas). Ahora **conserva tu página**: Pixelify Sans, bordes pixel con la esquina «mordida», tu lila, el color de cada carpeta, tu logo y tu oveja. Encima solo pone el brillo de XP: reflejo de cristal en barras de título, botones y botones de ventana (minimizar/maximizar/cerrar), barra de tareas Luna, botón Inicio verde, iconos vectoriales y un fondo/arranque XP. Todo sale de tus variables (`--surface`, `--ink`, `--line`, `--h`…): cambia solo con día/noche y con los 4 colores del menú. El acento del cromo es `--xp-a` (por color y por tema, al principio de `xp.css`).
+
+**Menú Inicio.** Cabecera con tu oveja y «Kixki Store», dos columnas con iconos y un pie con **Cerrar todas** y **Apagar**. Izquierda = lo que haces (Ejecutar, consejo, hablar con la ovejita · juegos · logros, sugerir, QR · opciones de Kixki). Derecha = ajustes (día/noche, color, fondo, lluvia, sonido, idioma…). Es solo CSS: cada botón se coloca por su `id` (`#s-run`, `#s-acc`…), así que si otro archivo añade un botón nuevo al menú cae solo en la columna derecha. En el móvil («Más») es una hoja de dos columnas con cabecera fija y desplazamiento. Para mover un botón de columna: `grid-column` y `order` en la sección 6 de `xp.css`.
+
+**Arranque.** Con el estilo XP, el arranque es negro con tu logo, «Kixki store» en naranja, la barrita de tres bloques y los créditos abajo.
+
+**Colina Bliss (`scenes.js` + `xpbg.*`).** La colina y las nubes están dibujadas a mano en vectores (sin imágenes). La geometría (`HL` en `scenes.js`, expuesta como `KXB.hill`) la comparten el dibujo, el pasto y la lluvia. `xpbg.js` genera ~1000 briznas (semilla fija, 500 en móvil) agrupadas en 84 grupos × 4 tonos: más pequeñas al fondo, más grandes delante. Se animan solo con `transform`: balanceo por franja y una ráfaga que cruza de izquierda a derecha cada 9 s. Con lluvia hay una segunda ráfaga, el viento sube (`--xw`, `--xg`, `--xr`), el cielo y las nubes se ponen grises y los verdes más oscuros (`--wg`, con transición de 5 s, vuelve poco a poco), y se forman charcos con ondas que se secan. Escucha `kixki-rain` (sin polling).
+
+**Lluvia XP (`lluvia.js`).** Las gotas lejanas aterrizan **sobre la colina** (`KXG.hillY`) y dejan anillos suaves con gotitas. Al cambiar `data-style`/`data-bg` vuelve a pixel sin recargar.
+
+**Al activar «Cambiar estilo»** si tenías el fondo Clásico se pone la Colina XP, y al volver a pixel se devuelve el Clásico (`kixki-xp-bg`).
+
+**Respeta** `prefers-reduced-motion` (imagen fija), `KXB.pause()` (`#bgx.kv-pause`), pestaña oculta y la CSP. Sin dependencias ni recursos externos.
+
+**Pruebas:** `node tools/test-xpbg.mjs [movil]` (pasto animado, el clima cambia las variables, pausa, movimiento reducido, lluvia XP/pixel y menú Inicio) y `node tools/test-vaca.mjs` sigue pasando.
+
+**Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXG.wet(true/false)` · `KXG.rebuild()` · `KXG.hillY(x)`.
+
+## Kixki: parte 7 — Colina XP viva (primera versión; la 7b la mejora)
 
 **Archivos nuevos:** `xpbg.js` + `xpbg.css` (en `index.html` y en `SHELL` de `sw.js`, caché `kixki-v21`). Cambios en `lluvia.js` y `lluvia.css`.
 

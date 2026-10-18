@@ -73,8 +73,11 @@ function set(v,quiet){
   if(v&&!unlocked())return false;                 /* sin ganar a la vaca no hay XP */
   if(v===on){sync();return on;}
   on=v;put(KEY,on?"1":"0");
-  if(on){R.setAttribute("data-style","xp");addCss();}
+  if(on){R.setAttribute("data-style","xp");addCss();
+    /* con el estilo XP, si tenías el fondo Clásico se pone la Colina XP (y al volver al pixel se devuelve el Clásico) */
+    try{if(window.KXB&&KXB.has("xp")&&!R.getAttribute("data-bg")){put("kixki-xp-bg","1");KXB.use("xp");}}catch(e){}}
   else{
+    try{if(get("kixki-xp-bg")==="1"&&R.getAttribute("data-bg")==="xp"&&window.KXB)KXB.use("");put("kixki-xp-bg","0");}catch(e){}
     try{if(window.XPGames)XPGames.list.forEach(function(n){XPGames.close(n);});}catch(e){}
     R.removeAttribute("data-style");dropCss();
   }
