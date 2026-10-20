@@ -49,10 +49,10 @@ function mount(){
 const far=[],near=[];
 const MAXFAR=230,MAXNEAR=46;
 function mkFar(){const d={};resetFar(d,true);return d;}
-/* dónde aterriza una gota lejana: con la Colina XP, sobre la colina (KXG.hillY da el borde de la colina en píxeles); si no, en la mitad de abajo */
-const onHill=()=>xpOn&&root.getAttribute("data-bg")==="xp"&&window.KXG&&KXG.hillY;
+/* dónde aterriza una gota lejana: con la Colina XP, sobre la colina (KXPAS.hillY da el borde de la colina en píxeles); si no, en la mitad de abajo */
+const onHill=()=>xpOn&&root.getAttribute("data-bg")==="xp"&&window.KXPAS&&KXPAS.hillY;
 function landY(x){
-  if(onHill()){const top=KXG.hillY(x*S)/S;return rnd(Math.min(H-4,top+3),H-2);}
+  if(onHill()){const top=KXPAS.hillY(x*S)/S;return rnd(Math.min(H-4,top+3),H-2);}
   return xpOn?rnd(Math.max(H*.4,(innerHeight-Math.max(innerWidth,640)*.4375)/S),H-2):rnd(H*.5,H-2);
 }
 function resetFar(d,any){d.x=rnd(-10,W+10);d.y=any?rnd(-10,H):rnd(-24,-2);d.vy=rnd(3.2,5.4);d.vx=-d.vy*.16;d.l=Math.round(rnd(3,6));d.ly=landY(d.x);d.a=rnd(.35,.7);d.s=0;}

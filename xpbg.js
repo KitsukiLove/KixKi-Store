@@ -10,7 +10,7 @@
    · Lluvia («kixki-rain» start/stop, sin polling): más viento, cielo y nubes grises, verdes
      más oscuros y saturados, charcos con ondas que se forman y se secan poco a poco.
    · Respeta: prefers-reduced-motion (imagen fija), #bgx.kv-pause (KXB.pause), pestaña oculta.
-   · API: window.KXG { wet(v), rebuild(), hillY(xPx), puddles() }
+   · API: window.KXPAS { wet(v), rebuild(), hillY(xPx), puddles() }
    ===================================================================== */
 (function(){
 "use strict";
@@ -124,7 +124,7 @@ function build(){
 addEventListener("kixki-bg",()=>{if(!isXP()){clearTimeout(pudT);clearTimeout(ringT);}else{build();if(wet){puddleLoop();ringLoop();}}});
 addEventListener("kixki-rain",e=>{const t=e.detail&&e.detail.t;if(t==="start")wetSet(1);else if(t==="stop")wetSet(0);});
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&wet){puddleLoop();ringLoop();}});
-window.KXG={wet:wetSet,hillY,puddles:()=>pd()?pd().childNodes.length:0,
+window.KXPAS={wet:wetSet,hillY,puddles:()=>pd()?pd().childNodes.length:0,
   rebuild(){const o=box.querySelector(".xp-grass");if(o)o.remove();build();}};
 /* si ya estaba lloviendo cuando carga la página */
 if(window.KXRAIN&&KXRAIN.raining)wet=false,wetSet(1);
