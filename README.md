@@ -1,218 +1,352 @@
-# Kixki Store
+<div align="center">
 
-**Añadir una app:** abre `apps.json`, copia una entrada de `apps` y cambia `name`, `tag`, `desc` y `links`.
-El logo se busca solo desde el repositorio (o pon `"logo": ["https://…"]`). Opcional: `"tip"` para un aviso.
-Al subir `apps.json`, la Action «Sincronizar logos y datos» descarga los logos, las estrellas de GitHub,
-las fuentes y el QR a la propia web, así los visitantes no contactan con terceros.
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-noche.svg">
+  <img src="assets/banner-dia.svg" alt="Kixki Store: una ovejita en una colina bajo el cielo" width="100%">
+</picture>
 
-Probar en local: `python3 -m http.server` y abrir http://localhost:8000
+### 🐑 Pequeña colección de apps para tu Android,<br>con guía básica y para qué sirve cada una
 
-**Categorías:** cada categoría de `apps.json` (`id`, `e`, `t`, `s`) sale como ventana, carpeta del escritorio y botón de la barra. Para mover una app de carpeta, corta su entrada y pégala en `apps` de otra categoría. Para crear una categoría nueva, además de `apps.json` hay que añadir su `id` en `META` (nombre corto y color) e `ICO` (icono pixel) de `app.js`, y su traducción al inglés en `i18n.js`; opcional: una frase en `FOLD` de `kixki.js`.
+<br>
 
-**Menús (Kixki en PC · «Más» en móvil):** solo llevan las opciones generales. Las carpetas se abren desde el escritorio y la barra de tareas (PC) o desde las filas de carpetas y la barra de abajo (móvil).
-**Packs:** las listas de «instalar varias apps de una vez» están en `PACKS` al final de `app.js` (icono, nombre, descripción y los nombres de las apps tal como están en `apps.json`). Si añades su texto en inglés a `i18n.js`, también se traduce.
-**Novedades:** añade `"added":"2026-10-13"` a una app para que salga como «Nueva» 12 días.
-**Vista:** la pestaña «Modo PC / Modo móvil» (abajo a la derecha) cambia el diseño; sirve para jugar con la oveja desde el móvil.
-**Idioma:** menú Kixki → Idioma (español / English).
+<a href="https://kitsukilove.github.io/KixKi-Store/"><img alt="Abrir la tienda" src="https://img.shields.io/badge/ABRIR-LA_TIENDA-6b3fe0?style=for-the-badge&labelColor=2a1650"></a>
+<img alt="71 apps" src="https://img.shields.io/badge/APPS-71-ffd36e?style=for-the-badge&labelColor=2a1650">
+<img alt="13 carpetas" src="https://img.shields.io/badge/CARPETAS-13-ff8fc7?style=for-the-badge&labelColor=2a1650">
+<img alt="Español e inglés" src="https://img.shields.io/badge/IDIOMA-ES_·_EN-7ef0c4?style=for-the-badge&labelColor=2a1650">
+<img alt="PWA instalable" src="https://img.shields.io/badge/PWA-INSTALABLE-6a52d8?style=for-the-badge&labelColor=2a1650">
+<br>
+<a href="https://github.com/kitsukilove/KixKi-Store/stargazers"><img alt="Estrellas" src="https://img.shields.io/github/stars/kitsukilove/KixKi-Store?style=for-the-badge&color=ffd36e&labelColor=2a1650"></a>
+<a href="https://github.com/kitsukilove/KixKi-Store/commits/main"><img alt="Último commit" src="https://img.shields.io/github/last-commit/kitsukilove/KixKi-Store?style=for-the-badge&color=ff8fc7&labelColor=2a1650"></a>
 
-## Estructura del proyecto
+<br>
 
-Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas del código son relativas y planas: no muevas estos archivos a carpetas).
+[**🌐 Visitar**](https://kitsukilove.github.io/KixKi-Store/) &nbsp;·&nbsp; [**🗂️ Carpetas**](#carpetas) &nbsp;·&nbsp; [**🎒 Packs**](#packs) &nbsp;·&nbsp; [**✨ Extras**](#extras) &nbsp;·&nbsp; [**📲 Instalar**](#instalar) &nbsp;·&nbsp; [**➕ Añadir una app**](#anadir) &nbsp;·&nbsp; [**📚 Catálogo**](#catalogo)
 
-| Dónde | Qué es |
+</div>
+
+---
+
+## 🪟 Un escritorio pixel lleno de apps
+
+Kixki Store es una página web (no una tienda de verdad: cada app se descarga desde su propia página) donde reúno **apps para Android** que me gustan, casi todas **open source**, y te cuento con palabras sencillas **qué hace cada una y cómo empezar a usarla**. Está hecha como un escritorio retro: cada carpeta es una ventana `.exe`, hay barra de tareas, día y noche, y una **oveja guía** llamada **Kixki** que pasea por la página. 🐑
+
+<div align="center">
+
+<table>
+  <tr>
+    <td align="center"><b>☀️ Día</b></td>
+    <td align="center"><b>🌙 Noche</b></td>
+  </tr>
+  <tr>
+    <td><a href="https://kitsukilove.github.io/KixKi-Store/"><img src="assets/preview-pc-dia.png" alt="Kixki Store en el ordenador, de día" width="420"></a></td>
+    <td><a href="https://kitsukilove.github.io/KixKi-Store/"><img src="assets/preview-pc-noche.png" alt="Kixki Store en el ordenador, de noche" width="420"></a></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td><img src="assets/preview-movil-dia.png" alt="Kixki Store en el móvil, de día" width="200"></td>
+    <td><img src="assets/preview-movil-noche.png" alt="Kixki Store en el móvil, de noche" width="200"></td>
+  </tr>
+</table>
+
+</div>
+
+<a id="carpetas"></a>
+## 🗂️ Carpetas
+
+**71 apps repartidas en 13 carpetas.** Ábrelas desde el escritorio (PC) o desde las filas de carpetas (móvil).
+
+| | Carpeta | Apps | Para qué |
+|:-:|---|:-:|---|
+| 🧺 | **Tiendas open source** | 9 | Para encontrar, instalar y actualizar apps |
+| 🔑 | **¡Importante!** | 2 | Hace que otras apps funcionen mejor |
+| 🧩 | **Control de apps** | 6 | Quita, limita y revisa lo que hacen tus apps |
+| 🛡️ | **Utilidad** | 5 | Automatiza, ajusta y conecta con tu PC |
+| 🔋 | **Pantalla y batería** | 6 | Ahorra batería y controla tu pantalla |
+| 🔒 | **Privacidad** | 10 | Protege tus datos, mensajes, llamadas y enlaces |
+| 🖼️ | **Fotos y archivos** | 5 | Edita, organiza y guarda tus archivos |
+| 🌐 | **Internet** | 4 | Navega, lee y comparte por la red |
+| 📅 | **Día a día** | 6 | Notas, IA, reloj y entrenamientos |
+| 🎮 | **Emulación** | 5 | Juega tus clásicos y optimiza tus juegos |
+| 🌈 | **Decoración** | 4 | Fondos y widgets para tu pantalla |
+| 🎧 | **Música** | 6 | Reproducir, descargar y crear |
+| ✍️ | **Teclados** | 3 | Escribe con más estilo y más privacidad |
+
+<a id="packs"></a>
+## 🎒 Packs
+
+¿No sabes por dónde empezar? Los **packs** son listas de apps que van bien juntas. Con un toque copias todos los enlaces de golpe.
+
+| | Pack | Apps |
+|:-:|---|---|
+| 🚀 | **Para empezar** · lo mínimo para instalar y actualizar apps sin Play Store | F-Droid, Droid-ify, Aurora Store, Komi Store, Universal Installer, Shizuku |
+| 🛡️ | **Privacidad** · menos rastreo y más control sobre lo que sale de tu móvil | Aurora Store, F-Droid, FireWall Blocks, PrivacyFlip, No More Background, LeanType, Exodus, Bitwarden |
+| 💬 | **Mensajes privados** · cifrado de extremo a extremo, con o sin número de teléfono | Signal, Session |
+| 🎨 | **Personalizar** · widgets, fondos y teclado para dejar el móvil a tu gusto | Widgets Pro, Photo Widget, GIF Live Wallpaper, Essentials, LeanType |
+| 🎧 | **Música** · para escuchar y descargar tu música | Poweramp, SpotiFLAC, ClassiPod |
+
+<a id="extras"></a>
+## ✨ Qué trae la página
+
+| Función | Qué hace |
 |---|---|
-| `index.html` · `manifest.webmanifest` · `sw.js` · iconos y `logo.png` | la página, la PWA y su caché (`SHELL` de `sw.js` lista todo lo que se guarda) |
-| `styles.css` y `app.js`, `i18n.js`, `scenes.js`, `music.js`, `eggs.js`, `vallas.js`, `lluvia.*` | tienda, idioma, fondos, música, easter eggs, Salta Vallas y lluvia |
-| `kixki*.js/css`, `dialogs.js`, `basket.*`, `consejos.*` | Kixki, la oveja guía (partes 1-4) |
-| `vacaboss.*`, `vaca.gif`, `vaca-jefa.*` | parte 6: vaca.exe se rebela |
-| `xpmode.js` + `xp.css`, `xp-icons.css`, `xp-games.*` | modo XP («Cambiar estilo») |
-| `apps.json` · `data/` · `logos/` · `fonts/` · `vendor/` | catálogo y recursos que descarga la Action |
-| `tools/` | pruebas y utilidades (no las carga la página): `sync.mjs`, `check-links.mjs`, `check-dialogs.mjs`, `test-dialogos.mjs`, `check-vaca.mjs`, `test-vaca.mjs`, `test-xpbg.mjs`, `_harness.mjs`, `xp-lab.html` (laboratorio del kit XP) y `xp-fuente/` (scripts que dibujan `xp-icons.css`) |
-| `.github/` | plantilla de sugerencias y Actions (`sync.yml`, `links.yml`) |
+| 🔍 **Buscador y etiquetas** | Busca por nombre o por lo que necesitas; filtra por *Open source*, *Compatible con Shizuku* y más. |
+| ⭐ **Favoritas** | Guarda tus apps preferidas en tu propio dispositivo. |
+| 🆕 **Novedades** | Las apps nuevas llevan una etiqueta «Nueva» durante unos días. |
+| 🌙 **Día y noche** | Cambia de tema y de fondo: valle, primavera, verano, otoño, invierno, Halloween, Navidad o automático según la temporada. |
+| 🌧️ **Ambiente** | Lluvia pixelada y sonido relajante, si quieres (se activan y desactivan a gusto). |
+| 🌍 **Español · English** | Menú *Kixki → Idioma*. |
+| 📱 **Móvil y PC** | Dos diseños: ventanas en ordenador, carpetas y barra inferior en móvil. |
+| 🔗 **Código QR** | «Ábrelo en tu móvil»: escanea y sigue en el teléfono. |
+| 🔒 **Sin terceros** | Logos, fuentes, estrellas de GitHub y el QR se guardan en la propia web: quien la visita no contacta con servidores ajenos. |
+| 🐑 **Kixki, la oveja guía** | Charla, reacciona, tiene logros, minijuegos y algunos secretos escondidos. ¿Los encuentras todos? 🤫 |
 
-## Kixki, la oveja guía
+<a id="instalar"></a>
+## 📲 Instalar como app
 
-- `kixki.js` + `kixki.css` (parte 1): Kixki pasea por la barra de búsqueda y las carpetas, habla y reacciona.
-- `kixki2.js` + `kixki2.css` (parte 2): **logros** (menú Kixki / Más → «Logros»), y en PC Kixki baja a charlar con la ovejita que camina abajo.
-- `kixki3.js` + `kixki3.css` (parte 3): **personalidad pícara, travesuras y físicas**.
-  - **Se puede agarrar:** arrastra a Kixki con el ratón o el dedo, por toda la página. Al soltarla cae, rebota y aterriza en la barra de búsqueda, en una ventana, en las filas de carpetas (móvil) o en el suelo. Si la lanzas, lo comenta.
-  - **Ventanas:** si está encima de una ventana y la mueves, la cierras o la minimizas, se cae y se enfada (💢) unos segundos.
-  - **Travesuras al azar** (menú → «Travesuras de Kixki: sí/no»): cambia el fondo si llevas ~6-10 min con el mismo (no lo hace con «Auto») y, en PC, «cierra» una ventana al azar (a veces estando ella encima).
-  - **Charla:** chismes, teorías conspirativas de la tienda, comentarios «del código» y el plan secreto «Lana Total» (sube un % cada vez que lo menciona y se guarda entre visitas). Todo está en el objeto `TX` al principio de `kixki3.js`: añade o cambia frases ahí, en `[español, English]`.
-  - En la consola: `KXK3.bg()`, `KXK3.close()`, `KXK3.scene("gossip"|"conspi"|"code"|"plan"|"sass")`, `KXK3.plan(50)`, `KXK3.state`.
-- `basket.js` + `basket.css` (parte 4): **cancha secreta de básquet**.
-  - `kixki3.js` cuenta los lanzamientos de verdad (soltarla con impulso) y avisa con el evento `throw`. A los **10** aparece una pestañita pegada al borde derecho de la pantalla (queda guardada en `kixki-bk`).
-  - Al tocarla se abre `basquet.exe`: arrastra a Kixki hacia atrás y suéltala (resortera, con guía de puntos). Lejos del aro valen 3 puntos, cerca 2, y +1 si no toca el aro. Kixki está enfadada con quien la lanza: sus frases están en `dialogs.js` (`KXD.TX.bk*`, ver etapa 4b).
-  - Logros nuevos: «Oveja voladora», «¡Canasta!» y «Estrella de la NBA (ovina)». En la consola: `KXBK.unlock()`, `KXBK.open()`, `KXBK.state`.
-- **Gestor de diálogos** (en `kixki.js`, sección «gestor de diálogos»): todas las frases pasan por `KXK.say(mensaje, opciones)`.
-  - Opciones: `p` (prioridad 1-3), `cat`, `key` + `cd` (enfriamiento), `ttl`, `replace`, `instant`, `ctx`, `mood`, `hl`, `vars`, `onStart`. Devuelve una promesa: `true` si se dijo entera, `false` si se descartó o la cortaron.
-  - Categorías: **`ev`** eventos físicos (agarrar, lanzar, caer, ventana): reemplazan al globo actual en vez de esperar, salen de golpe y caducan a los 600 ms si no pueden salir · **`sp`** charla espontánea: tiene presupuesto por minuto (`KXK.budget(n, pausaMs)`, por defecto 5 y 15 s) · `amb` (p1) y `ui` (p2-p3): reacciones normales, con cola de 4 y caducidad de 12 s.
-  - El **enfriamiento solo se gasta si la frase se dice de verdad**. `KXK.interrupt()` corta el globo y vacía la cola (`interrupt("ev")` solo la de ese contexto).
-  - **Lanzar** usa la misma condición que el contador de la cancha (`THROW_V`, 850 px/s, en `kixki3.js`): la frase sale al soltarla, vaya donde vaya, y al aterrizar solo a veces remata.
-  - Escritura: 14 ms por letra, pausa corta solo al final de una oración o cláusula (nunca por cada signo repetido); un clic en el globo muestra la frase entera y otro la cierra. El tamaño del globo se mide una vez por frase, no en cada fotograma.
-  - Depurar: `KXK.debug = true` (o `?kxdebug` en la URL) escribe en la consola la línea de tiempo de cada frase (`req → begin → typed → done`, con los ms desde que se pidió); `KXK.timeline()` la devuelve.
-  - **Prueba automática** (Chromium headless): `npm i -D playwright` y `node tools/test-dialogos.mjs` (o `... movil`). Suelta a Kixki con varias velocidades y direcciones y comprueba que la frase sale en menos de 400 ms (en las pruebas, 1-8 ms; antes 5-6 s o ninguna), más las pruebas del gestor.
-- `app.js` avisa a Kixki con los eventos `kixki-ready` y `kixki-game` (start · retry · score · record · over).
-- Los logros se guardan en `localStorage` (`kixki-a`). En la consola: `KXQ.list()`, `KXQ.grant("id")`, `KXQ.reset()`.
-- Verano: con el fondo de verano y de día, la ovejita de abajo a veces se incendia (PC). Tócala 3 veces para apagarla; si tardas ~14 s, Kixki baja a hacerlo. En la consola: `KXQ.fire()`.
+Kixki Store es una **PWA**: se puede instalar y, tras la primera visita, abre rápido incluso con mala conexión.
 
-## Novedades (Salta Vallas, lluvia y vaca)
+- **Android (Chrome):** abre la web → menú **⋮** → **Instalar app** (o *Añadir a la pantalla de inicio*).
+- **iPhone (Safari):** botón **Compartir** → **Añadir a pantalla de inicio**.
+- **Ordenador:** el icono de instalar en la barra de direcciones de Chrome o Edge.
 
-- **Salta Vallas** (`vallas.js`, antes «Saltaovejas»): la oveja corre por un valle (cielo, sol/luna, nubes, montañas, árboles, vallas lejanas, flores) y salta vallas de 1 a 3 tramos, bajas/altas. La velocidad sube poco a poco, ↓ baja rápido, si pulsas un pelín antes de aterrizar el salto queda en cola. Sigue avisando a Kixki con `kixki-game` y usa `kixki-rec` / `kixki-gp`.
-- **Clima de lluvia** (`lluvia.js` + `lluvia.css`): lluvia pixelada sobre cualquier fondo. Menú → «Lluvia: auto / sí / no» (en auto llueve de vez en cuando, nunca con el fondo de nieve). Si dejas la página quieta, las gotas chocan con la pantalla y se quedan pegadas; pasa el dedo o el ratón para limpiarlas. En la consola: `KXRAIN.start()`, `KXRAIN.stop()`, `KXRAIN.on()`.
-- **Lluvia + fuego de verano:** con lluvia no se incendia la ovejita, y si ya estaba ardiendo la lluvia la apaga sola.
-- **vaca.exe:** al llegar a los 1000 toques, Kixki sube a la ventana de la vaca y charlan. Acariciar la vaca (clic/toque en la imagen) 3 veces, o dejar que acabe la charla, desbloquea un **logro oculto** que no sale en la lista (ni cuenta en el total) hasta que lo consigues. En la consola: `KXQ.cow()`.
-- Logros nuevos de la categoría «Clima»: Día de lluvia, Gotas en la pantalla, Limpiaparabrisas y Bendita lluvia.
-- **Sonido de lluvia** (dentro de `lluvia.js`, sin archivos de audio): sonido relajante sintetizado (lluvia suave, murmullo de tejado y gotitas). Suena cuando llueve y el sonido de la página está activo (botón del altavoz); se apaga con «Sonido de lluvia: no» en el menú.
+<a id="local"></a>
+## 🧪 Probar en local
 
+No hay nada que compilar: es HTML, CSS y JavaScript puro.
 
-## Kixki: diálogos (partes 1-3)
+```bash
+git clone https://github.com/kitsukilove/KixKi-Store.git
+cd KixKi-Store
+python3 -m http.server
+# abre http://localhost:8000
+```
 
-**Archivos**: `dialogs.js` (todas las frases, se carga antes que `kixki.js`), `kixki.js` (gestor de diálogos, microreacciones, modos de charla), `kixki3.js` (físicas, travesuras y ánimo), `kixki.css`. Si añades un archivo, súmalo a `SHELL` en `sw.js` y sube la versión de caché (`V`).
+<a id="anadir"></a>
+## ➕ Añadir una app
 
-- **Gestor único de diálogos** (`say()` en `kixki.js`): prioridad, caducidad (`ttl`), categorías (`ev` eventos físicos, `sp` charla espontánea con presupuesto por minuto, `amb`, `ui`, `mic` microreacciones), enfriamiento que solo se gasta si la frase se dice y cola limpiable por contexto. Depurar: `KXK.debug = true` y `KXK.timeline()`.
-- **Microreacciones** (emoji o 2-3 palabras, ~1 s) para lo frecuente: agarrar, caer, cerrar ventana y volver a la pestaña. Las frases completas, para lo raro.
-- **No molesta**: Kixki no charla sola mientras escribes, arrastras una ventana o juegas.
-- **Menú «Kixki: charlatana / normal / calladita»**: cambia el presupuesto de frases espontáneas por minuto (9 / 5 / 1) y cada cuánto charla. En «calladita» solo salen emojis (ver etapa 4b).
-- **Memoria de no repetir**: las últimas 30 frases en `localStorage` (`kixki-k-rec`).
-- **Textos en `dialogs.js`**: cada frase es `[español, English]`; una clave con varias frases es una lista de pares. Para añadir variantes: `A(objeto,"clave",L(\`español || English\`))`, una frase por línea.
-- **Variables**: `{hora}`, `{app}` y `{carpeta}` valen en cualquier frase (se calculan con apps y carpetas reales de la página); `{n}`, `{q}`, `{a}`, `{rec}`, `{sc}`, `{d}` solo donde el código las pasa (tabla `VARS` de `dialogs.js`).
-- **Generador por piezas** (`KXD.gen("praise" | "grudge")`): apertura + cuerpo + remate, con piezas bilingües.
-- **Franja horaria**: `T.tod` (mañana, tarde, atardecer, noche) se mezcla con los datos curiosos.
-- **Ánimo** (`mood()` en `kixki3.js`): según cuánto la lanzas y cuánto avanza «el Plan», sale más pícara (`TX.<clave>P`) o vengativa (`TX.<clave>V`).
-- **Validar los textos**: `node tools/check-dialogs.mjs` (añade `--tabla` para ver cuántas variantes tiene cada evento). Comprueba español + English, variables, repetidas y mínimo de variantes (5 por defecto, 15 en lo más frecuente; tabla `MINV`).
-- **Probar en Chromium headless**: `node tools/test-dialogos.mjs` (PC) o `node tools/test-dialogos.mjs movil` (necesita `npm i -D playwright`). Mide la latencia al soltar a Kixki (objetivo < 400 ms) y comprueba el gestor, los modos y las reacciones.
+Todo el catálogo vive en [`apps.json`](apps.json). Para añadir una app, copia una entrada dentro de la carpeta que quieras y cambia sus datos:
 
+```json
+{
+  "name": "Mi app",
+  "tag": "Qué es en pocas palabras",
+  "desc": "Qué hace y cómo se usa, con palabras sencillas.",
+  "links": [["Descarga", "https://…"], ["GitHub", "https://github.com/…"]],
+  "tip": "Opcional: un aviso importante.",
+  "added": "2026-10-21"
+}
+```
 
-## Kixki: etapa 4 — pedirle consejo sobre una carpeta (+ soltarla con cuidado)
+El logo se busca solo desde el repositorio. Al subir `apps.json`, una GitHub Action descarga logos, estrellas, fuentes y QR a la propia web.
+La guía técnica completa (categorías nuevas, packs, estructura de archivos, Kixki y sus partes) está en **[docs/DESARROLLO.md](docs/DESARROLLO.md)**.
 
-**Archivos nuevos:** `consejos.js` + `consejos.css` (ya están en `index.html` y en `SHELL` de `sw.js`; caché `kixki-v19`). Los textos viven en `dialogs.js` (`KXD.ADV`).
+¿Falta alguna app? [Abre una sugerencia](https://github.com/kitsukilove/KixKi-Store/issues/new) y la miro. 💜
 
-- **Pedir ayuda:** mantén pulsada una carpeta (~500 ms; escritorio en PC, fichas en móvil) y aparece junto al icono el botón flotante **«🐑 Pedir ayuda a Kixki»**. En PC también sirve el clic derecho. Alternativa por teclado: con una carpeta enfocada, **tecla de menú o Mayús + F10** (el botón recibe el foco; Esc lo cierra y devuelve el foco a la carpeta). El botón se esconde solo a los ~9 s, al tocar fuera, al hacer scroll o al cambiar de idioma.
-- **Detalles:** el clic que sigue a mantener pulsado **no abre la carpeta**; si el dedo se mueve más de ~10 px (scroll) se cancela; se desactiva el menú contextual del móvil en las carpetas; el botón ignora el toque que lo acaba de abrir; con lector de pantalla las carpetas anuncian cómo pedir ayuda (`aria-describedby`) y el consejo se anuncia como cualquier otra frase de Kixki. Sin llamadas externas (la CSP no las permite). Solo funciona con Kixki activada.
-- **El consejo:** Kixki salta a la carpeta (`visitFolder`, que ahora acepta `{line}` con una frase propia) y dice UN consejo, distinto cada vez (la memoria de «no repetir» de `kixki-k-rec` también cuenta aquí). Sale de:
-  - `ADV.<id de carpeta>`: consejos escritos a mano (6-9 por carpeta; nombran apps reales y sus avisos).
-  - `ADV.gen`: plantillas con apps reales de esa carpeta, leídas de la página: `{carpeta}` `{n}` `{a1}` `{t1}` `{a2}` `{t2}` (nombre y etiqueta; las que llevan `{a2}`/`{n}` solo salen si hay ≥ 2 apps).
-  - `ADV.tipw`: Kixki relee el **aviso** que lleva una app («Necesita Shizuku…») cuando la carpeta tiene alguno.
-  - Carpetas especiales: `ADV.favs0/favsN` (según tus favoritas), `ADV.news0/newsN` (según lo nuevo) y `ADV.packs`.
-  - Si **renombras o mueves una app** que un consejo escrito a mano nombra, revisa ese consejo: `node tools/check-consejos.mjs` lo señala.
-- **Logros nuevos** (categoría «Explorar»): **«Consejera»** (pedir ayuda en 3 carpetas distintas) y **«Sabelotodo»** (en todas, las 16 incluidas Favoritas, Novedades y Packs). `consejos.js` avisa con el evento `advice` (`{id, n, count, total}`) y `kixki2.js` lo cuenta (`C.adv`). Ojo: «Eres muy pro» ahora también exige estos dos.
-- Los consejos de Kixki de siempre (`T.tips`) ahora también enseñan la función (PC y móvil).
-- En la consola: `KXK4.open("privacidad")` · `KXK4.ask("privacidad")` · `KXK4.advice("fotos")` · `KXK4.state` · `KXK4.reset()`.
+<a id="catalogo"></a>
+## 📚 Catálogo completo
 
-### Soltarla con cuidado (arreglo de los diálogos)
-- **Antes:** al soltar a Kixki sin lanzarla casi nunca hablaba: la frase entera salía 1 de cada 6 veces y la microreacción se descartaba si el globo de «agarrar»/«sostener» seguía en pantalla o no habían pasado 1,4 s. En las pruebas, **3 de 9** soltadas suaves tenían frase.
-- **Ahora (9 de 9):** soltarla sin lanzar siempre reacciona. Caída corta (≤ 140 px) → `TX.placed` («Cinco estrellas por el viaje, cuatro por el susto…», reseñas de taxi, entrega certificada…), con `TX.placedP/V` más pícaras o vengativas según el ánimo; caída media → `TX.soft`; desde muy alto → `TX.hard`. Según dónde cae, a veces comenta el sitio (`TX.onSearch/onWin/onFloor` y, en móvil, `TX.onTiles/onDock`). Entre frases largas hay una microreacción (`MIC.placed`) para no hacer un muro de texto; en «calladita» solo salen emojis y en «charlatana» casi siempre hay frase.
-- **Respiro entre líneas:** mientras la llevas, la siguiente frase no empieza hasta ~1,6 s después de que se cierre el globo anterior; al soltarla se cierra lo que dijo llevándola (y se descartan sus frases en cola); y entre un globo y el siguiente hay una pausa de ~0,4 s.
-- Las microreacciones aceptan `{replace:true, nogap:true}` (un evento físico no espera a la pausa entre micros).
-- **Pruebas** (Chromium headless; `npm i -D playwright` o `PW_PATH=ruta`): `node tools/test-etapa4.mjs` (PC) o `node tools/test-etapa4.mjs movil` — soltar suave a varias alturas, justo tras agarrar y tras mantenerla mucho rato; lanzarla (< 400 ms); y todo el flujo de pedir ayuda (pulsación larga, cancelar al mover, teclado, clic que no abre, consejos distintos, es/en, logros). Con `--solo=soltar|lanzar|consejos` y `--dir=ruta` (para comparar con otra copia).
-- **Validar textos nuevos:** `node tools/check-consejos.mjs [--tabla]`.
+Abre cada carpeta para ver sus apps. Los logos y nombres pertenecen a sus creadores.
 
-## Kixki: etapa 4b — dormir, «calladita» solo emojis y básquet con caída
+<details>
+<summary><b>🧺 Tiendas open source</b> · 9 apps — <i>Para encontrar, instalar y actualizar apps</i></summary>
 
-**Archivos cambiados** (ninguno nuevo en el sitio, así que `SHELL` de `sw.js` no cambia; caché `kixki-v19`): `kixki.js` + `kixki.css`, `kixki2.js` (aviso del menú, sin visitas solas a la ovejita en «calladita»), `kixki3.js`, `consejos.js`, `basket.js` + `basket.css`, `dialogs.js`.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/github.png" width="40" height="40" alt="GitHub"> | **GitHub**<br><sub>Repositorios</sub> | App oficial de GitHub: explora repositorios, lee código, sigue issues y pull requests y recibe notificaciones. | [Play](https://play.google.com/store/apps/details?id=com.github.android) |
+| <img src="logos/komi-store.png" width="40" height="40" alt="Komi Store"> | **Komi Store**<br><sub>Tienda de GitHub</sub> | Tienda gratuita y open source con los lanzamientos de GitHub, Codeberg y Forgejo para instalarlos con un toque. | [GitHub](https://github.com/komi-store/komi-store) |
+| <img src="logos/f-droid.jpg" width="40" height="40" alt="F-Droid"> | **F-Droid**<br><sub>Catálogo libre</sub> | Catálogo de apps libres compiladas desde su código fuente. | [Abrir](https://f-droid.org/es/) |
+| <img src="logos/droid-ify.png" width="40" height="40" alt="Droid-ify"> | **Droid-ify**<br><sub>Cliente de F-Droid</sub> | Cliente moderno para F-Droid y otros repositorios (como IzzyOnDroid): interfaz Material, búsqueda, instalación y avisos de actualización de apps libres. | [GitHub](https://github.com/Droid-ify/client) |
+| <img src="logos/aurora-store.png" width="40" height="40" alt="Aurora Store"> | **Aurora Store**<br><sub>Alternativa a Play</sub> | Cliente alternativo de Google Play: descarga apps del catálogo de Play sin iniciar sesión con tu cuenta y sin servicios de Google. | [Descarga](https://f-droid.org/packages/com.aurora.store) |
+| <img src="logos/librefind.png" width="40" height="40" alt="LibreFind"> | **LibreFind**<br><sub>Alternativas libres</sub> | Escanea en tu móvil las apps instaladas, detecta las de código cerrado y te sugiere alternativas libres. | [Abrir](https://github-store.org/app?repo=jksalcedo/librefind) |
+| <img src="logos/shizucorefetch.png" width="40" height="40" alt="ShizuCoreFetch"> | **ShizuCoreFetch**<br><sub>Tienda con Shizuku</sub> | Tienda de apps que usa Shizuku para instalar, desinstalar y actualizar apps a nivel de sistema, sin root.<br>⚠️ <sub>Necesita Shizuku instalado y en marcha.</sub> | [GitHub](https://github.com/elhizazi1/ShizuCoreFetch) |
+| <img src="logos/izzyondroid.png" width="40" height="40" alt="IzzyOnDroid"> | **IzzyOnDroid**<br><sub>Cliente de repositorio</sub> | Cliente no oficial del repositorio de apps libres IzzyOnDroid: interfaz Material con tu color de acento, temas claro y oscuro, categorías, instalador de APK integrado y avisos de actualización.<br>⚠️ <sub>Ten cuidado: revisa las apps antes de instalarlas.</sub> | [Descarga](https://f-droid.org/es/packages/in.sunilpaulmathew.izzyondroid/) |
+| <img src="logos/universal-installer.png" width="40" height="40" alt="Universal Installer"> | **Universal Installer**<br><sub>Instalador</sub> | Instala APK, APKS, XAPK y APKM (con sus OBB). | [Abrir](https://github-store.org/app?repo=pass-with-high-score/universal-installer) |
 
-### Quitar a Kixki = que se duerma
-- Menú → «Kixki: durmiendo 💤». Ya no desaparece: dice **una** frase de buenas noches (`T.sleepNow`), se queda donde no estorba (barra de búsqueda, filas, barra de tareas o barra de abajo; si estaba en una ventana, se va a la barra de tareas / barra de abajo) y se acuesta con el sprite de dormir y las «zZ». Se reutiliza el sueño nocturno (`K.mode="sleep"`, `.kk-zz`).
-- Dormida no camina, no habla, no reacciona al entorno ni visita carpetas (`say()` y `visitFolder()` la rechazan). Si la tocan se levanta un instante con 😠 o 😴 y vuelve a dormir. Al reactivar la opción: bostezo (🥱), se estira y vuelve.
-- El estado se guarda en `kixki-k.on`; al recargar aparece ya acostada, sin tour ni saludo. Lector de pantalla: «Kixki está durmiendo», una vez.
-- Clics: el globo no recibe clics, el cuerpo mide 60×45 y `touch-action` no bloquea el scroll. Con `prefers-reduced-motion`: sin respiración animada ni estiramiento.
-- Eventos `kixki-evt`: `sleep` (`{on}`), `poke`. En la consola: `KXK.setOn(false)` · `KXK.sleeping` · `KXK.poke()`.
+</details>
 
-### Modo «calladita» = SOLO EMOJIS
-- Ningún globo lleva texto salvo que **(a) la toquen** o **(b) le pidan ayuda** (botón «Pedir ayuda a Kixki», o «Pedirle un consejo» del menú). Esas llamadas pasan `words:true` a `say()`.
-- Todo lo demás: lo espontáneo y de ambiente se descarta (sin visitas, tours, chismes, travesuras ni comentarios) y las respuestas a lo que haces (agarrar, lanzar, caer, buscar, favoritas, tema, fondo, juegos, logros, fuego, minijuego…) se cambian por un emoji de la situación: `KXD.EMO.<situación>` en `dialogs.js` (≥ 6 por situación, solo emoji). Con `emo:"situación"` en `say()` el sitio que llama elige la lista; si no, se deduce de `key` (tabla `EKEY` de `kixki.js`).
-- Sigue viva: camina, salta, parpadea y se anima; solo calla el texto. Hay un seguro en `say()`: en «calladita» no sale ningún texto con letras sin permiso.
-- El mensaje de cambiar de modo ahora es solo 🤐.
+<details>
+<summary><b>🔑 ¡Importante!</b> · 2 apps — <i>Hace que otras apps funcionen mejor</i></summary>
 
-### Ventana de básquet: entrada con caída
-- `KXK.enter(id, {fall, hide, target, onImpact})` (en `kixki.js`) es la coreografía de entrar en una ventana de minijuego. **Salta Vallas** (`"game"`) la usa sin `fall` (sube al borde, como siempre); el **básquet** (`"bask"`) con `fall:true`: sube, camina hasta el borde, se tropieza (😲), cae dando vueltas, golpe (chafada + chispas + estrellitas ★ y 💥) y solo entonces empieza el juego. La caída suena con `KXS` (barrido descendente + golpe).
-- **Saltar:** un clic dentro de la ventana o cualquier tecla (Esc la cierra; Tab y modificadores no cuentan). El clic que salta no lanza tiro. `KXK.skipEnter()`.
-- **Reduced-motion:** fundido corto (~0,2 s), sin caminar, sin caída, sin sonido de golpe.
-- **Cerrar a medias:** `KXK.cancelEnter()` limpia temporizadores, clases (`kk-air`, `kk-dizzy`, `kk-sq`, `kk-in`, `kk-top`), `--tilt` y estado; Kixki vuelve a su sitio. Eventos `enter` y `enterend` (`{id, how: done|up|skip|cancel}`).
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/shizuku.png" width="40" height="40" alt="Shizuku"> | **Shizuku**<br><sub>Casi como root</sub> | Permite que otras apps usen funciones del sistema que normalmente requieren root o ADB, sin rootear ni perder garantía.<br>⚠️ <sub>Ojo: su desarrollador avisó que pausó el mantenimiento por ahora.</sub> | [Descarga](https://github.com/thedjchi/Shizuku) · [Tutorial](https://youtu.be/rHDu4BQz2Fw) |
+| <img src="logos/shizukuplus.jpg" width="40" height="40" alt="ShizukuPlus"> | **ShizukuPlus**<br><sub>Shizuku mejorado</sub> | Versión mejorada del fork de Shizuku, con otro paquete para convivir con el original.<br>⚠️ <sub>Las apps que buscan el Shizuku original pueden necesitar su modo de compatibilidad.</sub> | [GitHub](https://github.com/thejaustin/ShizukuPlus) |
 
-### Básquet: Kixki enfadada y partida de 5 tiros
-- Una partida son **5 tiros**; con **6 puntos o más** ganas. Luego empieza otra sola. Marcador nuevo «Tiros 1/5». Evento `match` (`{pts, win}`).
-- Frases (`dialogs.js`, `KXD.TX`): `bkStart` · `bkThrow` (cada lanzamiento) · `bkMiss` · `bkScore` · `bkStreak` (`{n}`, 2+ seguidas) · `bkLast` (último tiro) · `bkWin` / `bkLose` (`{p}`) · `bkEnd` (al cerrar). Cada fase: ≥ 6 base + `…P` (pícara, ≥ 3) + `…V` (vengativa, ≥ 3), es + en, según `mood()` de `kixki3.js`, y nunca la misma frase dos veces seguidas. El tono es teatral y vengativo pero nunca cruel, con ternura de fondo (el perdón se paga con heno).
-- En «calladita» la cancha muestra solo emojis (`EMO.bk*`).
-- En la consola: `KXBK.match()` · `KXBK.sim("score"|"miss")` (tiro simulado que pasa por el mismo código, para pruebas) · `KXBK.phrase("miss")`.
+</details>
 
-### Pruebas
-- `node tools/check-dialogs.mjs`: ahora también exige que `EMO` sea solo emoji (es = en) y las 9 fases del básquet con base + P + V.
-- `node tools/test-parte4b.mjs` (PC) o `node tools/test-parte4b.mjs movil` (`npm i -D playwright`, o `PW_PATH=ruta`): dormir (visible, quieta, muda, 😠/😴, persiste, anuncio, bostezo), «calladita» (ningún globo con letras sin tocarla ni pedir ayuda; con ellas, sí), entrada con caída (fases, sonido, saltar con clic y tecla, reduced-motion, cerrar saltando/caminando/cayendo/mareada), diálogos (fases, ánimo, no repetir, victoria/derrota, es/en), CSP y `sw.js`.
+<details>
+<summary><b>🧩 Control de apps</b> · 6 apps — <i>Quita, limita y revisa lo que hacen tus apps</i></summary>
 
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/canta.jpg" width="40" height="40" alt="Canta"> | **Canta**<br><sub>Quitar bloatware</sub> | Quita o desactiva las apps del sistema que no usas (bloatware) sin root, gracias a Shizuku.<br>⚠️ <sub>Necesita Shizuku. Quitar apps del sistema puede causar fallos: consulta antes ADL y no toques las marcadas como inseguras.</sub> | [Descarga](https://f-droid.org/packages/io.github.samolego.canta) |
+| <img src="logos/adl.jpg" width="40" height="40" alt="ADL"> | **ADL**<br><sub>Guía anti-bloatware</sub> | Android Debloat List: wiki siempre disponible sobre las apps preinstaladas de Android.<br>⚠️ <sub>Es una web, así que necesita internet. Mírala antes de quitar nada con Canta para no dañar tu móvil.</sub> | [Abrir](https://adl.muntashir.dev/index.html) |
+| <img src="logos/app-manager.jpg" width="40" height="40" alt="App Manager"> | **App Manager**<br><sub>Gestor avanzado</sub> | Gestor de apps avanzado y gratuito: ve y bloquea componentes (actividades, servicios…), detecta rastreadores y permisos, instala y exporta APK y haz copias de seguridad.<br>⚠️ <sub>Bloquear componentes puede romper apps: hazlo con cuidado.</sub> | [Descarga](https://f-droid.org/es/packages/io.github.muntashirakon.AppManager) |
+| <img src="logos/app-ops.jpg" width="40" height="40" alt="App Ops"> | **App Ops**<br><sub>Permisos finos</sub> | Controla los permisos de cada app con más detalle que los ajustes normales de Android (AppOps), incluidos algunos que el sistema oculta.<br>⚠️ <sub>Necesita Shizuku. Cambiar permisos del sistema puede hacer que algunas apps fallen.</sub> | [Play](https://play.google.com/store/apps/details?id=rikka.appops) |
+| <img src="logos/inure.png" width="40" height="40" alt="Inure"> | **Inure**<br><sub>Gestor de apps</sub> | Administrador de apps muy completo: lista apps instaladas o no, deja ver y tocar sus componentes internos y trae terminal, estadísticas de uso, instalador de APK divididos…<br>⚠️ <sub>Tiene una prueba de 15 días; después se desbloquea con su versión completa.</sub> | [GitHub](https://github.com/Hamza417/Inure) |
+| <img src="logos/sd-maid-se.jpg" width="40" height="40" alt="SD Maid SE"> | **SD Maid SE**<br><sub>Limpieza</sub> | Limpia archivos basura, restos de apps desinstaladas y duplicados, y analiza qué ocupa tu almacenamiento.<br>⚠️ <sub>Algunas funciones son de pago. Revisa bien qué vas a borrar antes de confirmar.</sub> | [Descarga](https://f-droid.org/es/packages/eu.darken.sdmse) |
 
-## Kixki: parte 6 — vaca.exe se rebela («Apuñalar por la espalda»)
+</details>
 
-**Archivos nuevos:** `vacaboss.js` + `vacaboss.css`, `vaca-jefa.gif` (la vaca bailando **con fondo transparente**, 109 KB) y `vaca-jefa.png` (primer fotograma quieto, 11 KB; para movimiento reducido y la pausa). Todo está en `index.html` y en `SHELL` de `sw.js` (caché `kixki-v20`). Cambios pequeños en `scenes.js` (fondos), `kixki2.js` (logros), `kixki3.js` (ganchos de la física) y `eggs.js` (`KXE.cow()`).
+<details>
+<summary><b>🛡️ Utilidad</b> · 5 apps — <i>Automatiza, ajusta y conecta con tu PC</i></summary>
 
-- **Cuándo pasa:** ya tienes el logro oculto de la amistad con vaca.exe **y** dejas su ventana abierta 75–110 s. Antes hay un aviso («vaca.exe está muy callada…», la ventana tiembla en rojo); si cierras la ventana a tiempo, no pasa nada ni se gasta intento. Hay una espera de 8 min entre intentos.
-- **El combate:** la ventana se rompe en pedazos y la vaca recorre el escritorio manchando carpetas (aparece `.kv-inf` con manchas). Arriba hay una barra con la **vida** de la vaca (5), la **infección** (cada carpeta manchada suma 6 % y además sube sola hasta +30 %) y el recuento de carpetas. Agarra a Kixki y **lánzala** contra la vaca (física de siempre). Golpe normal = 1; **por la espalda = 2** (la vaca mira al lado contrario de donde viene Kixki; lleva una estrellita roja en la espalda como pista). Tras un golpe queda aturdida un momento. Con 2 de vida se enfurece (más rápida). De vez en cuando se teletransporta. **Un clic en una carpeta manchada la limpia** (sin abrirla).
-- **Sin arrastrar:** botón **«Lanzar a Kixki»** y tecla **L** (apunta solos a la vaca; cuentan como lanzamientos).
-- **Ganas:** la vaca se deshace en píxeles + confeti, logro oculto **«Apuñalar por la espalda»** y se desbloquea el fondo **«Colina XP»** (vectores propios: colina, cielo y nubes; día/noche; no usa la imagen de Microsoft). Entra en el ciclo del botón de fondos.
-- **Pierdes** (infección al 100 % o todas las carpetas manchadas): aparece una manada, logro oculto **«Derrota vacuna»** y el fondo pasa a **«¡Vacas!»** (mosaico del GIF). **No es permanente:** botón **«Restaurar fondo»** en Ajustes y otro en la barra inferior (junto a **Pausar vacas**), o el botón de fondos de siempre (te devuelve el que tenías). El castigo se recuerda al recargar.
-- **Revancha:** los 1000 toques abren vaca.exe una sola vez, así que en Ajustes aparece **«Llamar a vaca.exe»** (tras ganar la amistad y mientras no la hayas vencido; respeta la espera). Si ganas la revancha estando castigado, se quita el castigo y se pone «Colina XP».
-- **Accesibilidad:** la barra es un grupo con nombre, la infección un `progressbar`, hay una zona `aria-live="polite"` que anuncia inicio, golpes, avisos de infección y final; la vaca es decorativa (`aria-hidden`). Con **movimiento reducido** la vaca y el mosaico usan la imagen quieta, la ventana no vuela en pedazos y no hay animaciones. El combate se pausa mientras haya una pantalla encima (Kixki «apagada» por ventana grande) y se cancela limpio (sin penalizar) si apagas a Kixki. Violencia solo de dibujos animados (bonk, estrellitas).
-- **Memoria:** `kixki-vb` (intentos, ganado/perdido, espera, golpes) y `kixki-bgx` (premio XP, castigo, fondo anterior, pausa). Si cierran la página a mitad, no queda nada colgado (las manchas son solo de la sesión) y el intento ya contó para la espera.
-- **Ajustes (consola):** `KXV.cfg` (tiempos, vida, velocidades…) · `KXV.start({force:1})` · `KXV.win()` · `KXV.lose()` · `KXV.state` · `KXV.reset()` · `KXB.use("xp")` (si ya lo ganaste).
-- **Pruebas** (Chromium headless; `npm i -D playwright` o `PW_PATH=ruta`): `node tools/test-vaca.mjs` (PC) o `node tools/test-vaca.mjs movil` — activación, golpes (espalda/frente), ganar, perder, restaurar, revancha, fondos, accesibilidad, inglés y movimiento reducido; `--solo=activar|combate|ganar|perder|fondos|a11y`, `--shots=carpeta` guarda capturas. **Textos:** `node tools/check-vaca.mjs` (es+en, variables, repetidas, mínimos).
-- **Nota sobre derechos:** el fondo XP es un dibujo original; la vaca es el `vaca.gif` que ya tenías, recortado (quitado el fondo blanco). Si lo cambias, usa uno con fondo transparente.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/essentials.png" width="40" height="40" alt="Essentials"> | **Essentials**<br><sub>Navaja suiza</sub> | Muchas funciones en una sola app: bloqueo de apps, luz nocturna por app, control de la frecuencia de pantalla, congelar apps, automatizaciones y personalización de pantalla, como la isla flotante. | [GitHub](https://github.com/sameerasw/essentials) |
+| <img src="logos/autopie.png" width="40" height="40" alt="AutoPie"> | **AutoPie**<br><sub>Automatizaciones</sub> | Centro de comandos y automatizaciones: ejecuta scripts de shell y Python con una interfaz sencilla, con un Termux integrado.<br>⚠️ <sub>Solo funciona en móviles arm64 (la mayoría de los recientes). Para tareas programadas, desactiva la optimización de batería de la app.</sub> | [GitHub](https://github.com/cryptrr/AutoPie) |
+| <img src="logos/termux.png" width="40" height="40" alt="Termux"> | **Termux**<br><sub>Terminal Linux</sub> | Terminal para Android con un entorno Linux: instalas paquetes con apt (Python, git, SSH, compiladores…) y trabajas desde la línea de comandos sin root.<br>⚠️ <sub>Instálalo desde F-Droid y no mezcles fuentes: sus complementos exigen la misma firma. Pide muchos permisos delicados.</sub> | [Descarga](https://f-droid.org/packages/com.termux) |
+| <img src="logos/scrcpy.png" width="40" height="40" alt="scrcpy"> | **scrcpy**<br><sub>Pantalla en la PC</sub> | Muestra y controla tu Android desde la computadora por USB o Wi-Fi, sin root y sin instalar nada en el móvil.<br>⚠️ <sub>Necesita la depuración USB activada en el móvil y se usa desde la PC.</sub> | [GitHub](https://github.com/Genymobile/scrcpy) |
+| <img src="logos/plain.png" width="40" height="40" alt="Plain"> | **Plain**<br><sub>Móvil desde el navegador</sub> | Maneja tu móvil desde el navegador de otro dispositivo por la red local: archivos, fotos, vídeos, música y más, sin nube.<br>⚠️ <sub>Pide muchos permisos (archivos, contactos…): dale solo los que uses y úsala en una red de confianza.</sub> | [Descarga](https://f-droid.org/es/packages/com.ismartcoding.plain) |
 
-## Kixki: «Cambiar estilo» — modo XP (premio por vencer a vaca.exe)
+</details>
 
-**Archivos nuevos:** `xpmode.js` (la lógica) + el XP-Kit tal cual: `xp.css`, `xp-icons.css`, `xp-games.css`, `xp-games.js`. Están en `index.html` (solo `xpmode.js`, en el `<head>`, **sin defer y después de todos los CSS**) y en `SHELL` de `sw.js` (caché `kixki-v22`). No hace falta tocar la CSP.
+<details>
+<summary><b>🔋 Pantalla y batería</b> · 6 apps — <i>Ahorra batería y controla tu pantalla</i></summary>
 
-- **Desbloqueo:** el modo XP es el premio de ganar a vaca.exe (el mismo que da el fondo «Colina XP»: `kixki-bgx`.xp). Mientras no lo ganes, `xpmode.js` no carga ningún CSS ni JS del kit y no sale ningún botón.
-- **El botón:** Ajustes (Kixki en PC · «Más» en móvil) → **«Cambiar estilo: Pixel / XP»**. Al ganar aparece además una pastilla flotante **«🎨 Cambiar estilo»** (con ✕) hasta que la usas o la cierras; después solo queda el botón de Ajustes.
-- **Qué cambia al activarlo:** `<html data-style="xp">` y los 3 CSS (`xp.css` → `xp-icons.css` → `xp-games.css`) se añaden **al final del `<head>`** para ganar la cascada. En Ajustes salen también **«Buscalobos (XP)»** y **«Parejas (XP)»** (`xp-games.js` se carga la primera vez que los abres). Todo respeta el día/noche y los 4 colores de siempre.
-- **Volver al pixel:** el mismo botón. Quita los `<link>` y el atributo y cierra los juegos XP; no deja rastro.
-- **Memoria:** `kixki-xp` ("1" = XP) y `kixki-xp-seen` (ya viste la pastilla). Al recargar, el estilo se aplica antes de pintar (sin parpadeo). Si se pierde el premio (`KXV.reset()`), vuelve solo al pixel; no se puede activar a mano sin haber ganado.
-- **Eventos y consola:** `kixki-style` (`{style: "xp" | "pixel"}`) cuando cambia · `KXXP.set(true|false)` · `KXXP.toggle()` · `KXXP.unlocked()` · `KXXP.on`. Los minijuegos XP avisan con el evento `xpgames` (win, lose, match…) por si algún día quieres enchufarles sonidos o logros.
-- **Si pierdes** contra la vaca no cambia nada del estilo: se activa el fondo «¡Vacas!» (ver parte 6) y se quita con «Restaurar fondo».
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/enforcedoze.png" width="40" height="40" alt="EnforceDoze"> | **EnforceDoze**<br><sub>Ahorro de batería</sub> | Fuerza el modo Doze en cuanto se apaga la pantalla (o tras un retraso) para ahorrar batería, desactiva los sensores de movimiento y te deja gestionar la lista blanca de Doze. | [GitHub](https://github.com/Akylas/EnforceDoze) |
+| <img src="logos/no-more-background.png" width="40" height="40" alt="No More Background"> | **No More Background**<br><sub>Segundo plano</sub> | Muestra todas tus apps en una sola pantalla y eliges cuáles pueden correr en segundo plano, para cuidar batería y datos.<br>⚠️ <sub>Algunas apps pueden seguir en segundo plano aunque las apagues.</sub> | [Abrir](https://github-store.org/app?repo=adil192/no_more_background) |
+| <img src="logos/batstats.png" width="40" height="40" alt="BatStats"> | **BatStats**<br><sub>Estadísticas de batería</sub> | Monitor de batería con estadísticas avanzadas, como el consumo por app en mAh.<br>⚠️ <sub>Algunos datos detallados no están disponibles en todos los móviles.</sub> | [Abrir](https://github-store.org/app?repo=mlm-games/BatStats) |
+| <img src="logos/extinguish.png" width="40" height="40" alt="Extinguish"> | **Extinguish**<br><sub>Pantalla apagada</sub> | Apaga la pantalla de verdad (no pone una capa negra) y mantiene el teléfono despierto para que otras apps sigan funcionando, por ejemplo al escuchar vídeos.<br>⚠️ <sub>En móviles modificados por la marca puede no funcionar bien. Ten a mano cómo volver a encender la pantalla.</sub> | [Play](https://play.google.com/store/apps/details?id=own.moderpach.extinguish) |
+| <img src="logos/display-toggle.png" width="40" height="40" alt="Display Toggle"> | **Display Toggle**<br><sub>Pantalla con Shizuku</sub> | Apaga y enciende la pantalla física sin bloquear el móvil ni detener las apps abiertas.<br>⚠️ <sub>Necesita Shizuku.</sub> | [Descarga](https://f-droid.org/packages/io.github.ulysseszh.displaytoggle) |
+| <img src="logos/orientationlock.jpg" width="40" height="40" alt="OrientationLock"> | **OrientationLock**<br><sub>Orientación</sub> | Fuerza la orientación de la pantalla (vertical, horizontal, automática…) aunque una app no te deje girarla. | [GitHub](https://github.com/tuyafeng/OrientationLock) |
 
+</details>
 
-## Kixki: parte 7c — Colina XP con estaciones, cielo vivo y lluvia nueva
+<details>
+<summary><b>🔒 Privacidad</b> · 10 apps — <i>Protege tus datos, mensajes, llamadas y enlaces</i></summary>
 
-**Estaciones** (`scenes.js` → `xpScene()`): Clásica (la Bliss de siempre), Primavera, Verano, Otoño, Invierno, Halloween y Navidad. Cada una trae paleta de día y de noche, sol o luna con resplandor y su paisaje (árboles en flor, arces, pinos nevados con luces que titilan, calabazas que brillan, tumbas, muñeco de nieve, cabaña con humo…). Se elige en el menú Inicio → **«Estación: Auto / Clásica / …»** (solo aparece con el fondo Colina XP). **Auto** sigue la fecha (hoy es Halloween). Se guarda en `kixki-xps`. El atributo `data-xps` del `<html>` dice cuál está puesta; `KXB.xps("otono")`, `KXB.xps("auto")`, `KXB.xpv()`.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/firewall-blocks.png" width="40" height="40" alt="FireWall Blocks"> | **FireWall Blocks**<br><sub>Cortafuegos</sub> | Te deja quitar el acceso a Wi-Fi o a datos móviles app por app, para cortar conexiones que no necesitas. | [Abrir](https://github-store.org/app?repo=shynoiddev/FireWall-Blocks) |
+| <img src="logos/privacyflip.png" width="40" height="40" alt="PrivacyFlip"> | **PrivacyFlip**<br><sub>Privacidad</sub> | Al bloquear el móvil apaga Wi-Fi, Bluetooth, datos, ubicación, NFC y hasta cámara y micrófono (Android 12+); al desbloquear reactiva solo lo que elijas. | [Abrir](https://github-store.org/app?repo=dorumrr/privacyFlip) |
+| 🔒 | **Alternate**<br><sub>Identificador de llamadas</sub> | Identifica quién te llama con una base de datos local, sin pasar esos números a tus contactos ni a tus apps de mensajes.<br>⚠️ <sub>Pide acceso al registro de llamadas y a mostrarse sobre otras apps. Solo arm64.</sub> | [Descarga](https://apt.izzysoft.de/fdroid/index/apk/com.lulu786.Alternate) |
+| <img src="logos/exodus.png" width="40" height="40" alt="Exodus"> | **Exodus**<br><sub>Detector de rastreadores</sub> | Muestra qué rastreadores y permisos lleva cada app instalada en tu móvil, usando los informes de la plataforma εxodus, de la ONG francesa Exodus Privacy. | [Descarga](https://f-droid.org/en/packages/org.eu.exodus_privacy.exodusprivacy) |
+| <img src="logos/bitwarden.png" width="40" height="40" alt="Bitwarden"> | **Bitwarden**<br><sub>Gestor de contraseñas</sub> | Guarda tus contraseñas y passkeys en una bóveda cifrada de extremo a extremo y las sincroniza entre tus dispositivos. | [Play](https://play.google.com/store/apps/details?id=com.x8bit.bitwarden) |
+| <img src="logos/signal.png" width="40" height="40" alt="Signal"> | **Signal**<br><sub>Mensajería privada</sub> | Mensajería privada con cifrado de extremo a extremo por defecto: chats, notas de voz, llamadas y videollamadas (grupos de hasta 1.000 personas y llamadas grupales de hasta 50).<br>⚠️ <sub>Para registrarte necesita un número de teléfono; después puedes ocultarlo a los demás con un nombre de usuario en Ajustes.</sub> | [Play](https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms) · [APK](https://signal.org/android/apk/) · [GitHub](https://github.com/signalapp/Signal-Android) |
+| <img src="logos/session.png" width="40" height="40" alt="Session"> | **Session**<br><sub>Mensajería privada</sub> | Mensajería privada y de código abierto que no pide número de teléfono ni correo: te registras solo con un ID de cuenta.<br>⚠️ <sub>Tu cuenta se guarda con una frase de recuperación: anótala en un lugar seguro, porque sin ella no se puede recuperar.</sub> | [Abrir](https://getsession.org/) · [GitHub](https://github.com/session-foundation/session-android) |
+| <img src="logos/snapsafe.png" width="40" height="40" alt="SnapSafe"> | **SnapSafe**<br><sub>Cámara privada</sub> | Cámara que guarda las fotos cifradas en el almacenamiento privado de la app y no tiene permiso de internet.<br>⚠️ <sub>Las fotos viven solo dentro de la app y no entran en copias de seguridad: guarda aparte las que quieras conservar.</sub> | [Descarga](https://f-droid.org/es/packages/com.darkrockstudios.app.securecamera) |
+| <img src="logos/tarnhelm.png" width="40" height="40" alt="Tarnhelm"> | **Tarnhelm**<br><sub>Limpia enlaces</sub> | Limpia los parámetros de rastreo de los enlaces que compartes desde otras apps, de forma natural.<br>⚠️ <sub>Pide varios permisos (mostrarse sobre otras apps, inicio automático): revísalos al instalar.</sub> | [Descarga](https://f-droid.org/packages/cn.ac.lz233.tarnhelm) |
+| <img src="logos/fake-traveler.png" width="40" height="40" alt="Fake Traveler"> | **Fake Traveler**<br><sub>Ubicación falsa</sub> | Cambia tu ubicación GPS a cualquier punto del mapa.<br>⚠️ <sub>Algunas apps detectan la ubicación falsa y pueden restringir tu cuenta: úsala con cuidado.</sub> | [Descarga](https://f-droid.org/es/packages/cl.coders.faketraveler) |
 
-**Cielo** (`xpbg.js` + `xpbg.css`): nubes en capas que cruzan toda la pantalla (las de lejos más pequeñas y lentas), hebras de viento, nubes grises de tormenta que aparecen con lluvia, y de vez en cuando una bandada de pájaros (gansos en V en otoño, murciélagos en Halloween) o una estrella fugaz de noche. Partículas por estación: pétalos, luciérnagas, hojas, nieve; niebla baja en Halloween. Pasto: más briznas, matas altas al frente, flores en primavera y verano, y un destello de luz que viaja con la ráfaga.
+</details>
 
-**Lluvia** (`lluvia.js`): en estilo XP, gotas en tres profundidades que se inclinan con la misma ráfaga del pasto, bruma sobre la colina, relámpagos con rayo ramificado y trueno que llega con retraso. En invierno y Navidad no llueve solo (cae nieve).
+<details>
+<summary><b>🖼️ Fotos y archivos</b> · 5 apps — <i>Edita, organiza y guarda tus archivos</i></summary>
 
-**Sonido de lluvia v2**: ya no son tonos; son cientos de impactos de gota por segundo (ráfagas de ruido cortas, en distintas posiciones del estéreo), siseo y cuerpo de lluvia, murmullo grave, viento que sube y baja, «plops» de charco, eco de espacio abierto y truenos lejanos. Sigue apagado hasta activar el altavoz y el menú «Sonido de lluvia».
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/image-toolbox.png" width="40" height="40" alt="Image Toolbox"> | **Image Toolbox**<br><sub>Editor de imágenes</sub> | Editor de imágenes muy completo: más de 500 filtros, conversión entre formatos (JPEG, PNG, WEBP, AVIF, HEIC, JXL…), recorte, dibujo, quitar fondo, marcas de agua, collages, edición de EXIF…<br>⚠️ <sub>La versión FOSS no lleva analíticas; la de Play sí.</sub> | [GitHub](https://github.com/T8RIN/ImageToolbox) |
+| <img src="logos/dejpeg.png" width="40" height="40" alt="DeJPEG"> | **DeJPEG**<br><sub>Mejora de fotos</sub> | Quita artefactos de compresión, ruido y fondos de tus fotos sin conexión, con modelos ONNX que descargas una vez (FBCNN, SCUNet, RMBG).<br>⚠️ <sub>Solo funciona en arm64.</sub> | [Descarga](https://apt.izzysoft.de/fdroid/index/apk/com.je.dejpeg) |
+| <img src="logos/ente-photos.png" width="40" height="40" alt="Ente Photos"> | **Ente Photos**<br><sub>Fotos cifradas</sub> | Copia de seguridad y álbumes de fotos con cifrado de extremo a extremo, sincronizados entre tus dispositivos y compartibles con quien quieras.<br>⚠️ <sub>Necesita internet y una cuenta; el espacio gratis es limitado.</sub> | [Descarga](https://f-droid.org/packages/io.ente.photos.fdroid) |
+| <img src="logos/tagspaces.png" width="40" height="40" alt="TagSpaces"> | **TagSpaces**<br><sub>Organizador de archivos</sub> | Organiza, etiqueta y explora tus archivos, fotos y documentos sin nube ni cuentas.<br>⚠️ <sub>Pide acceso a todo el almacenamiento, porque funciona como gestor de archivos.</sub> | [Descarga](https://apt.izzysoft.de/fdroid/index/apk/org.tagspaces.mobileapp) |
+| <img src="logos/gander.png" width="40" height="40" alt="Gander"> | **Gander**<br><sub>Visor de archivos</sub> | Abre PDF, Word, Excel, PowerPoint, fotos, video, audio, Markdown, texto y código en una sola app, con búsqueda dentro de los documentos. | [Abrir](https://github-store.org/app?repo=mokshablr/gander) |
 
-**Consola:** `KXPAS.bird("g")` · `KXPAS.star()` · `KXRAIN.lightning()` · `KXRAIN.thunder()`. Pruebas: `node tools/test-xpbg.mjs` (y `movil`).
+</details>
 
-**Aviso técnico:** el pasto vive en `window.KXPAS` (no `KXG`, que es del Salta Vallas).
+<details>
+<summary><b>🌐 Internet</b> · 4 apps — <i>Navega, lee y comparte por la red</i></summary>
 
-## Kixki: parte 7b — «Kixki XP» Lila, menú Inicio nuevo y Colina Bliss
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/iceraven.png" width="40" height="40" alt="Iceraven"> | **Iceraven**<br><sub>Navegador</sub> | Navegador no oficial basado en Firefox (Fenix) con GeckoView.<br>⚠️ <sub>Sin garantías de seguridad ni de actualizaciones: sus APK usan clave de depuración, trátalo como software alfa.</sub> | [GitHub](https://github.com/fork-maintainers/iceraven-browser) |
+| <img src="logos/librewolf.png" width="40" height="40" alt="LibreWolf"> | **LibreWolf**<br><sub>Navegador de PC</sub> | Navegador basado en Firefox con privacidad y seguridad reforzadas: sin telemetría y con uBlock Origin incluido.<br>⚠️ <sub>Es para computadora: no tiene versión oficial para Android.</sub> | [Abrir](https://librewolf.net/) |
+| <img src="logos/redreader.png" width="40" height="40" alt="RedReader"> | **RedReader**<br><sub>Alternativa a Reddit</sub> | Cliente libre y ligero para leer Reddit, sin anuncios. | [Descarga](https://f-droid.org/en/packages/org.quantumbadger.redreader) |
+| <img src="logos/localsend.png" width="40" height="40" alt="LocalSend"> | **LocalSend**<br><sub>Enviar archivos</sub> | Envía archivos y mensajes a dispositivos cercanos por tu Wi-Fi, sin internet, cuentas ni servidores, y con cifrado.<br>⚠️ <sub>Los dispositivos deben estar en la misma red Wi-Fi.</sub> | [Abrir](https://github-store.org/app?repo=localsend/localsend) |
 
-**Archivos que cambian:** `xp.css` (rehecho) · `xpbg.js` + `xpbg.css` (rehechos) · `scenes.js` (entrada `xp` y paleta) · `lluvia.js` · `xpmode.js` · `sw.js` (caché `kixki-v22`) · `README.md` · `tools/test-xpbg.mjs` (nuevo). `xp-icons.css`, `xp-games.*` e `index.html` siguen igual.
+</details>
 
-**Estilo «Lila» (`xp.css`).** Antes el modo XP lo cambiaba todo (fuente Tahoma, azul Luna, ventanas planas). Ahora **conserva tu página**: Pixelify Sans, bordes pixel con la esquina «mordida», tu lila, el color de cada carpeta, tu logo y tu oveja. Encima solo pone el brillo de XP: reflejo de cristal en barras de título, botones y botones de ventana (minimizar/maximizar/cerrar), barra de tareas Luna, botón Inicio verde, iconos vectoriales y un fondo/arranque XP. Todo sale de tus variables (`--surface`, `--ink`, `--line`, `--h`…): cambia solo con día/noche y con los 4 colores del menú. El acento del cromo es `--xp-a` (por color y por tema, al principio de `xp.css`).
+<details>
+<summary><b>📅 Día a día</b> · 6 apps — <i>Notas, IA, reloj y entrenamientos</i></summary>
 
-**Menú Inicio.** Cabecera con tu oveja y «Kixki Store», dos columnas con iconos y un pie con **Cerrar todas** y **Apagar**. Izquierda = lo que haces (Ejecutar, consejo, hablar con la ovejita · juegos · logros, sugerir, QR · opciones de Kixki). Derecha = ajustes (día/noche, color, fondo, lluvia, sonido, idioma…). Es solo CSS: cada botón se coloca por su `id` (`#s-run`, `#s-acc`…), así que si otro archivo añade un botón nuevo al menú cae solo en la columna derecha. En el móvil («Más») es una hoja de dos columnas con cabecera fija y desplazamiento. Para mover un botón de columna: `grid-column` y `order` en la sección 6 de `xp.css`.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/obsidian.png" width="40" height="40" alt="Obsidian"> | **Obsidian**<br><sub>Notas en Markdown</sub> | Editor de notas en Markdown que guarda todo como archivos en tu móvil y enlaza tus ideas entre sí. | [Abrir](https://github-store.org/app?repo=obsidianmd/obsidian-releases) |
+| 📅 | **My Brain**<br><sub>Segundo cerebro</sub> | App de productividad con tareas (prioridad, subtareas, recordatorios), notas en Markdown, diario con estado de ánimo, marcadores… | [Descarga](https://f-droid.org/en/packages/com.mhss.app.mybrain) |
+| <img src="logos/chrono.jpg" width="40" height="40" alt="Chrono"> | **Chrono**<br><sub>Reloj y alarmas</sub> | Reloj moderno con alarmas muy configurables (días, fechas, rangos, melodía, vibración, posponer y retos como resolver cálculos o reescribir texto), relojes mundiales… | [Descarga](https://f-droid.org/packages/com.vicolo.chrono) |
+| <img src="logos/librefit.png" width="40" height="40" alt="LibreFit"> | **LibreFit**<br><sub>Entrenamientos</sub> | Registro de entrenamientos con ejercicios, series, repeticiones y duración, gráficas de progreso, planes personalizables y más de 800 ejercicios con instrucciones e imágenes, filtrables por equipo… | [GitHub](https://github.com/LibreFitOrg/LibreFit) |
+| <img src="logos/switchai.png" width="40" height="40" alt="SwitchAI"> | **SwitchAI**<br><sub>Asistentes de IA</sub> | Elige y cambia entre más de 40 asistentes de IA (ChatGPT, Claude, Gemini, DeepSeek…) desde el gesto de asistente del sistema.<br>⚠️ <sub>Solo lanza las apps de IA que ya tengas instaladas.</sub> | [GitHub](https://github.com/WSTxda/SwitchAI) |
+| <img src="logos/euria.jpg" width="40" height="40" alt="Euria"> | **Euria**<br><sub>IA suiza</sub> | Asistente de IA de Infomaniak (Suiza): escribe, traduce, corrige, resume, transcribe audio, extrae texto de imágenes y busca en la web.<br>⚠️ <sub>Necesita internet y una cuenta (kSuite). Su servicio no es libre y envía informes de fallos anónimos.</sub> | [Descarga](https://f-droid.org/en/packages/com.infomaniak.euria) |
 
-**Arranque.** Con el estilo XP, el arranque es negro con tu logo, «Kixki store» en naranja, la barrita de tres bloques y los créditos abajo.
+</details>
 
-**Colina Bliss (`scenes.js` + `xpbg.*`).** La colina y las nubes están dibujadas a mano en vectores (sin imágenes). La geometría (`HL` en `scenes.js`, expuesta como `KXB.hill`) la comparten el dibujo, el pasto y la lluvia. `xpbg.js` genera ~1000 briznas (semilla fija, 500 en móvil) agrupadas en 84 grupos × 4 tonos: más pequeñas al fondo, más grandes delante. Se animan solo con `transform`: balanceo por franja y una ráfaga que cruza de izquierda a derecha cada 9 s. Con lluvia hay una segunda ráfaga, el viento sube (`--xw`, `--xg`, `--xr`), el cielo y las nubes se ponen grises y los verdes más oscuros (`--wg`, con transición de 5 s, vuelve poco a poco), y se forman charcos con ondas que se secan. Escucha `kixki-rain` (sin polling).
+<details>
+<summary><b>🎮 Emulación</b> · 5 apps — <i>Juega tus clásicos y optimiza tus juegos</i></summary>
 
-**Lluvia XP (`lluvia.js`).** Las gotas lejanas aterrizan **sobre la colina** (`KXPAS.hillY`) y dejan anillos suaves con gotitas. Al cambiar `data-style`/`data-bg` vuelve a pixel sin recargar.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/seedlessds.jpg" width="40" height="40" alt="SeedlessDS"> | **SeedlessDS**<br><sub>Nintendo DS</sub> | Emulador de Nintendo DS pensado para consolas portátiles y dispositivos de doble pantalla con botones físicos.<br>⚠️ <sub>Está en beta temprana y solo funciona en arm64. No incluye juegos ni BIOS: usa tus propias copias.</sub> | [GitHub](https://github.com/SapphireRhodonite/SeedlessDS) |
+| <img src="logos/droiddeck.png" width="40" height="40" alt="DroidDeck"> | **DroidDeck**<br><sub>Steam en Android</sub> | Ejecuta Steam en modo Big Picture en Android y te deja jugar juegos de Windows con Proton ARM64.<br>⚠️ <sub>Pide una GPU Adreno 730 o superior (Mali, Xclipse y PowerVR no funcionan) y unos 3 GB libres.</sub> | [Abrir](https://github-store.org/app?repo=Droid-Deck/DroidDeck) |
+| <img src="logos/lemuroid.jpg" width="40" height="40" alt="Lemuroid"> | **Lemuroid**<br><sub>Retro todo en uno</sub> | Emulador libre basado en Libretro que cubre NES, SNES, Game Boy, Genesis, N64, PlayStation, PSP, Nintendo DS y muchos sistemas más.<br>⚠️ <sub>No incluye juegos: añade tus propias ROMs.</sub> | [Abrir](https://github-store.org/app?repo=Swordfish90/Lemuroid) |
+| <img src="logos/kimu-x64.jpg" width="40" height="40" alt="Kimu X64"> | **Kimu X64**<br><sub>Buscar juegos</sub> | Página para buscar juegos para tus emuladores, hecha por Kimu X64, creador de contenido en YouTube que también habla de privacidad, Linux en equipos viejos y modding de consolas. | [Abrir](https://notkimu.github.io/kimu64/) · [Créditos](https://youtube.com/@kimu_x64) |
+| <img src="logos/catsmoker.jpg" width="40" height="40" alt="CatSmoker"> | **CatSmoker**<br><sub>Optimizador de juegos</sub> | Optimiza juegos compatibles: simula otros modelos de móvil para desbloquear más gráficos y FPS, cambia resolución y DPI, edita archivos de configuración del juego, muestra FPS, CPU…<br>⚠️ <sub>Modificar archivos o falsear el dispositivo puede romper las reglas de algunos juegos y causar baneos. El riesgo es tuyo.</sub> | [GitHub](https://github.com/catsmoker/com.catsmoker.app) |
 
-**Al activar «Cambiar estilo»** si tenías el fondo Clásico se pone la Colina XP, y al volver a pixel se devuelve el Clásico (`kixki-xp-bg`).
+</details>
 
-**Respeta** `prefers-reduced-motion` (imagen fija), `KXB.pause()` (`#bgx.kv-pause`), pestaña oculta y la CSP. Sin dependencias ni recursos externos.
+<details>
+<summary><b>🌈 Decoración</b> · 4 apps — <i>Fondos y widgets para tu pantalla</i></summary>
 
-**Pruebas:** `node tools/test-xpbg.mjs [movil]` (pasto animado, el clima cambia las variables, pausa, movimiento reducido, lluvia XP/pixel y menú Inicio) y `node tools/test-vaca.mjs` sigue pasando.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/gif-live-wallpaper.png" width="40" height="40" alt="GIF Live Wallpaper"> | **GIF Live Wallpaper**<br><sub>Fondo animado</sub> | Usa un GIF como fondo de pantalla animado. | [Descarga](https://f-droid.org/packages/net.redwarp.gifwallpaper) |
+| <img src="logos/widgets-pro.jpg" width="40" height="40" alt="Widgets Pro"> | **Widgets Pro**<br><sub>Widgets</sub> | Colección de widgets con estilo Nothing OS (Android 12+): reproductor de música que funciona con la mayoría de reproductores, seguimiento del sol, widget de deportes y, con Shizuku…<br>⚠️ <sub>Si los widgets no se actualizan, desactiva la optimización de batería para la app.</sub> | [Abrir](https://github-store.org/app?repo=preethamkmr3/WidgetsPro) |
+| <img src="logos/photo-widget.png" width="40" height="40" alt="Photo Widget"> | **Photo Widget**<br><sub>Widgets de fotos</sub> | Convierte imágenes de tu galería en widgets, con bastante personalización de estilo. | [Abrir](https://github-store.org/app?repo=fibelatti/photo-widget) |
+| <img src="logos/l-l-e.png" width="40" height="40" alt="L.L.E"> | **L.L.E**<br><sub>Efectos de bloqueo</sub> | Trae a móviles modernos los efectos clásicos de la pantalla de bloqueo (Legacy Lockscreen Effects): destello de lente, ondas de agua, acuarela, mosaicos, gotas de colores y burbujas brillantes.<br>⚠️ <sub>Está en beta, puede fallar. Usa el APK de 32 bits si tu móvil lo soporta.</sub> | [GitHub](https://github.com/Brazzo978/L.L.E-Legacy-Lockscreen-Effects) |
 
-**Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXPAS.wet(true/false)` · `KXPAS.rebuild()` · `KXPAS.hillY(x)`.
+</details>
 
-## Kixki: parte 7 — Colina XP viva (primera versión; la 7b la mejora)
+<details>
+<summary><b>🎧 Música</b> · 6 apps — <i>Reproducir, descargar y crear</i></summary>
 
-**Archivos nuevos:** `xpbg.js` + `xpbg.css` (en `index.html` y en `SHELL` de `sw.js`, caché `kixki-v21`). Cambios en `lluvia.js` y `lluvia.css`.
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/poweramp.png" width="40" height="40" alt="Poweramp"> | **Poweramp**<br><sub>Reproductor</sub> | Reproductor excelente, con ecualizador avanzado y widgets de música variados y muy personalizables. | [Play](https://play.google.com/store/apps/details?id=com.maxmpz.audioplayer) |
+| <img src="logos/spotiflac.png" width="40" height="40" alt="SpotiFLAC"> | **SpotiFLAC**<br><sub>Descargas</sub> | Open source, sin anuncios ni suscripción.<br>⚠️ <sub>Primero: en la pestaña Tienda pega el enlace de «Extensión» y luego instala las extensiones con un toque. Si una canción no se encuentra, activa más proveedores en Ajustes > Extensiones. Úsala solo con contenido que puedas descargar legalmente.</sub> | [Abrir](https://github.com/spotiflacapp/SpotiFLAC-Mobile) · [Extensión](https://raw.githubusercontent.com/zarzet/SpotiFLAC-Extension/main/registry.json) |
+| <img src="logos/wecho.jpg" width="40" height="40" alt="WEcho"> | **WEcho**<br><sub>Efectos de audio</sub> | Aplica efectos de audio a todo el sonido del sistema, no solo a un reproductor: ecualizador de 1 a 64 bandas, compresor, refuerzo de graves, reverb…<br>⚠️ <sub>Solo arm64. El agente de IA «Echo» necesita tu propia clave de un modelo de lenguaje.</sub> | [GitHub](https://github.com/qumolangmo/wecho) |
+| <img src="logos/classipod.jpg" width="40" height="40" alt="ClassiPod"> | **ClassiPod**<br><sub>Reproductor retro</sub> | Reproductor de la música guardada en tu móvil con el diseño del iPod Classic. | [Descarga](https://f-droid.org/en/packages/com.adeeteya.classipod) |
+| <img src="logos/helio.png" width="40" height="40" alt="Helio"> | **Helio**<br><sub>Crear música</sub> | Secuenciador musical libre para componer: editor por patrones, instrumentos SoundFont, escalas exóticas y control de versiones para sincronizar tus proyectos entre dispositivos.<br>⚠️ <sub>Sirve para crear música, no para reproducirla.</sub> | [Descarga](https://f-droid.org/es/packages/fm.helio) |
+| <img src="logos/ambient-music-mod.jpg" width="40" height="40" alt="Ambient Music Mod"> | **Ambient Music Mod**<br><sub>Ahora suena</sub> | Lleva «Ahora suena» de los Pixel a otros Android: reconoce la música de fondo con una base de datos local, con historial, favoritos, widget y reconocimiento manual.<br>⚠️ <sub>Con Shizuku hay que volver a iniciarlo tras cada reinicio. Para mostrar la canción en el bloqueo pide un servicio de accesibilidad.</sub> | [GitHub](https://github.com/KieronQuinn/AmbientMusicMod) |
 
-- **Pasto:** ~150 matas de pasto en vectores propios sobre las dos crestas y la colina de delante (colores de las variables `--g1/--g2`, así siguen día/noche). Cada mata se mece y una ráfaga cruza la colina de izquierda a derecha cada 7 s. Las nubes van a la deriva.
-- **Con lluvia:** el viento se intensifica (`--xw`, `--xg`), el cielo y las nubes se ponen grises, salen charcos y ondas sobre la colina, y las gotas caen/salpican sobre la colina. Al parar, todo vuelve poco a poco.
-- **Lluvia XP:** con `data-style="xp"` o `data-bg="xp"` la lluvia deja de ser pixelada: trazos azul Luna, gotas de cristal con brillo y salpicaduras en forma de ondas. Al volver al pixel vuelve la lluvia pixelada sin recargar.
-- **Accesibilidad:** con movimiento reducido no hay animaciones; `KXB.pause()` congela el pasto y las nubes.
-- **Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXPAS.wet(true/false)` · `KXPAS.rebuild()`.
+</details>
+
+<details>
+<summary><b>✍️ Teclados</b> · 3 apps — <i>Escribe con más estilo y más privacidad</i></summary>
+
+| | App | Para qué sirve | Enlaces |
+|:-:|---|---|---|
+| <img src="logos/leantype.png" width="40" height="40" alt="LeanType"> | **LeanType**<br><sub>Reemplazo de Gboard</sub> | Teclado open source basado en HeliBoard: temas y distribuciones personalizables, teclado flotante, modo a una mano y portapapeles con historial. | [Abrir](https://github-store.org/app?repo=LeanBitLab/LeanType) |
+| <img src="logos/irregular-expressions.png" width="40" height="40" alt="Irregular Expressions"> | **Irregular Expressions**<br><sub>Fuentes de texto</sub> | Teclado muy básico, pero ofrece distintas fuentes de texto para escribir con estilo, algo que normalmente dan apps de Play Store con rastreadores. | [Abrir](https://github-store.org/app?repo=MobileFirstLLC/irregular-expressions) |
+| <img src="logos/gifboard.png" width="40" height="40" alt="GifBoard"> | **GifBoard**<br><sub>Buscador de GIFs</sub> | Busca y comparte GIFs desde el teclado sin salir de la app.<br>⚠️ <sub>Ojo: usa la búsqueda de imágenes de Google, así que depende de ese servicio.</sub> | [Abrir](https://github-store.org/app?repo=gifboard/gifboard) |
+
+</details>
+
+---
+
+## ⚠️ Antes de instalar
+
+- **Revisa cada app antes de instalarla**, sobre todo si viene de una tienda de terceros (por ejemplo IzzyOnDroid).
+- Kixki Store **no es la autora ni la dueña** de ninguna de estas apps: solo las recopila y explica. Los nombres, logos y marcas son de sus respectivos creadores.
+- Algunas apps necesitan **Shizuku** y quitar apps del sistema puede causar fallos. Lee el aviso ⚠️ de cada ficha.
+
+## 🙏 Créditos
+
+- Hecho con 💜 por **[KitsukiLove](https://github.com/kitsukilove)**.
+- Fuentes: [Pixelify Sans](https://fonts.google.com/specimen/Pixelify+Sans) y [Jersey 10](https://fonts.google.com/specimen/Jersey+10) (SIL Open Font License).
+- Códigos QR: [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) de Kazuhiko Arase.
+- Gracias a todas las personas que crean y mantienen las apps de esta lista. 🐑
+
+<div align="center">
+<br>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-noche.svg">
+  <img src="assets/banner-dia.svg" alt="" width="40%">
+</picture>
+
+<sub>Kixki Store · Hecho con ♥ por KitsukiLove</sub>
+
+</div>
