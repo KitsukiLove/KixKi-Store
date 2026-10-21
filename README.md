@@ -171,6 +171,20 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 - **Si pierdes** contra la vaca no cambia nada del estilo: se activa el fondo «¡Vacas!» (ver parte 6) y se quita con «Restaurar fondo».
 
 
+## Kixki: parte 7c — Colina XP con estaciones, cielo vivo y lluvia nueva
+
+**Estaciones** (`scenes.js` → `xpScene()`): Clásica (la Bliss de siempre), Primavera, Verano, Otoño, Invierno, Halloween y Navidad. Cada una trae paleta de día y de noche, sol o luna con resplandor y su paisaje (árboles en flor, arces, pinos nevados con luces que titilan, calabazas que brillan, tumbas, muñeco de nieve, cabaña con humo…). Se elige en el menú Inicio → **«Estación: Auto / Clásica / …»** (solo aparece con el fondo Colina XP). **Auto** sigue la fecha (hoy es Halloween). Se guarda en `kixki-xps`. El atributo `data-xps` del `<html>` dice cuál está puesta; `KXB.xps("otono")`, `KXB.xps("auto")`, `KXB.xpv()`.
+
+**Cielo** (`xpbg.js` + `xpbg.css`): nubes en capas que cruzan toda la pantalla (las de lejos más pequeñas y lentas), hebras de viento, nubes grises de tormenta que aparecen con lluvia, y de vez en cuando una bandada de pájaros (gansos en V en otoño, murciélagos en Halloween) o una estrella fugaz de noche. Partículas por estación: pétalos, luciérnagas, hojas, nieve; niebla baja en Halloween. Pasto: más briznas, matas altas al frente, flores en primavera y verano, y un destello de luz que viaja con la ráfaga.
+
+**Lluvia** (`lluvia.js`): en estilo XP, gotas en tres profundidades que se inclinan con la misma ráfaga del pasto, bruma sobre la colina, relámpagos con rayo ramificado y trueno que llega con retraso. En invierno y Navidad no llueve solo (cae nieve).
+
+**Sonido de lluvia v2**: ya no son tonos; son cientos de impactos de gota por segundo (ráfagas de ruido cortas, en distintas posiciones del estéreo), siseo y cuerpo de lluvia, murmullo grave, viento que sube y baja, «plops» de charco, eco de espacio abierto y truenos lejanos. Sigue apagado hasta activar el altavoz y el menú «Sonido de lluvia».
+
+**Consola:** `KXPAS.bird("g")` · `KXPAS.star()` · `KXRAIN.lightning()` · `KXRAIN.thunder()`. Pruebas: `node tools/test-xpbg.mjs` (y `movil`).
+
+**Aviso técnico:** el pasto vive en `window.KXPAS` (no `KXG`, que es del Salta Vallas).
+
 ## Kixki: parte 7b — «Kixki XP» Lila, menú Inicio nuevo y Colina Bliss
 
 **Archivos que cambian:** `xp.css` (rehecho) · `xpbg.js` + `xpbg.css` (rehechos) · `scenes.js` (entrada `xp` y paleta) · `lluvia.js` · `xpmode.js` · `sw.js` (caché `kixki-v22`) · `README.md` · `tools/test-xpbg.mjs` (nuevo). `xp-icons.css`, `xp-games.*` e `index.html` siguen igual.
@@ -183,7 +197,7 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 
 **Colina Bliss (`scenes.js` + `xpbg.*`).** La colina y las nubes están dibujadas a mano en vectores (sin imágenes). La geometría (`HL` en `scenes.js`, expuesta como `KXB.hill`) la comparten el dibujo, el pasto y la lluvia. `xpbg.js` genera ~1000 briznas (semilla fija, 500 en móvil) agrupadas en 84 grupos × 4 tonos: más pequeñas al fondo, más grandes delante. Se animan solo con `transform`: balanceo por franja y una ráfaga que cruza de izquierda a derecha cada 9 s. Con lluvia hay una segunda ráfaga, el viento sube (`--xw`, `--xg`, `--xr`), el cielo y las nubes se ponen grises y los verdes más oscuros (`--wg`, con transición de 5 s, vuelve poco a poco), y se forman charcos con ondas que se secan. Escucha `kixki-rain` (sin polling).
 
-**Lluvia XP (`lluvia.js`).** Las gotas lejanas aterrizan **sobre la colina** (`KXG.hillY`) y dejan anillos suaves con gotitas. Al cambiar `data-style`/`data-bg` vuelve a pixel sin recargar.
+**Lluvia XP (`lluvia.js`).** Las gotas lejanas aterrizan **sobre la colina** (`KXPAS.hillY`) y dejan anillos suaves con gotitas. Al cambiar `data-style`/`data-bg` vuelve a pixel sin recargar.
 
 **Al activar «Cambiar estilo»** si tenías el fondo Clásico se pone la Colina XP, y al volver a pixel se devuelve el Clásico (`kixki-xp-bg`).
 
@@ -191,7 +205,7 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 
 **Pruebas:** `node tools/test-xpbg.mjs [movil]` (pasto animado, el clima cambia las variables, pausa, movimiento reducido, lluvia XP/pixel y menú Inicio) y `node tools/test-vaca.mjs` sigue pasando.
 
-**Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXG.wet(true/false)` · `KXG.rebuild()` · `KXG.hillY(x)`.
+**Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXPAS.wet(true/false)` · `KXPAS.rebuild()` · `KXPAS.hillY(x)`.
 
 ## Kixki: parte 7 — Colina XP viva (primera versión; la 7b la mejora)
 
@@ -201,4 +215,4 @@ Todo lo que la página necesita para funcionar vive en la **raíz** (las rutas d
 - **Con lluvia:** el viento se intensifica (`--xw`, `--xg`), el cielo y las nubes se ponen grises, salen charcos y ondas sobre la colina, y las gotas caen/salpican sobre la colina. Al parar, todo vuelve poco a poco.
 - **Lluvia XP:** con `data-style="xp"` o `data-bg="xp"` la lluvia deja de ser pixelada: trazos azul Luna, gotas de cristal con brillo y salpicaduras en forma de ondas. Al volver al pixel vuelve la lluvia pixelada sin recargar.
 - **Accesibilidad:** con movimiento reducido no hay animaciones; `KXB.pause()` congela el pasto y las nubes.
-- **Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXG.wet(true/false)` · `KXG.rebuild()`.
+- **Consola:** `KXB.use("xp")` · `KXRAIN.start(60000)` · `KXRAIN.stop()` · `KXXP.set(true/false)` · `KXPAS.wet(true/false)` · `KXPAS.rebuild()`.

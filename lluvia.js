@@ -3,7 +3,8 @@
    - Lluvia pixelada sobre cualquier fondo (capa de atrás con gotas lejanas + capa de delante con gotas cercanas).
    - Si no tocas nada durante un rato, las gotas "chocan" con la pantalla, se quedan pegadas y algunas resbalan.
      Pasa el dedo / el ratón por encima para limpiarlas (o espera a que se sequen).
-   - Sonido relajante de lluvia sintetizado (WebAudio, sin archivos): se activa con el altavoz de la página; menú «Sonido de lluvia: sí / no».
+   - Sonido de lluvia sintetizado (WebAudio, sin archivos): impactos de gota, viento, charcos, eco y truenos; se activa con el altavoz de la página; menú «Sonido de lluvia: sí / no».
+   - Con el estilo o el fondo XP: lluvia en tres profundidades que se inclina con las ráfagas (igual que el pasto), bruma sobre la colina y relámpagos con trueno que llega con retraso.
    - Menú: «Lluvia: auto / sí / no». En auto llueve de vez en cuando (no con nieve).
    - API: window.KXRAIN  { on(), raining, mode, set(m), start(ms), stop(), glass(), idle(ms) }
    - Avisa con el evento "kixki-rain" → e.detail = {t:"start"|"stop"|"glass"|"wipe", n}
@@ -47,7 +48,7 @@ function mount(){
 
 /* ---- gotas que caen ---- */
 const far=[],near=[];
-const MAXFAR=230,MAXNEAR=46;
+const MAXFAR=380,MAXNEAR=56,PXFAR=230,PXNEAR=46;/* los máximos de abajo valen para el estilo pixel; el XP usa más gotas */
 function mkFar(){const d={};resetFar(d,true);return d;}
 /* dónde aterriza una gota lejana: con la Colina XP, sobre la colina (KXPAS.hillY da el borde de la colina en píxeles); si no, en la mitad de abajo */
 const onHill=()=>xpOn&&root.getAttribute("data-bg")==="xp"&&window.KXPAS&&KXPAS.hillY;
@@ -55,9 +56,9 @@ function landY(x){
   if(onHill()){const top=KXPAS.hillY(x*S)/S;return rnd(Math.min(H-4,top+3),H-2);}
   return xpOn?rnd(Math.max(H*.4,(innerHeight-Math.max(innerWidth,640)*.4375)/S),H-2):rnd(H*.5,H-2);
 }
-function resetFar(d,any){d.x=rnd(-10,W+10);d.y=any?rnd(-10,H):rnd(-24,-2);d.vy=rnd(3.2,5.4);d.vx=-d.vy*.16;d.l=Math.round(rnd(3,6));d.ly=landY(d.x);d.a=rnd(.35,.7);d.s=0;}
+function resetFar(d,any){d.z=Math.random();d.x=rnd(-10,W+10);d.y=any?rnd(-10,H):rnd(-24,-2);d.vy=rnd(3.2,5.4);d.vx=-d.vy*.16;d.l=Math.round(rnd(3,6));d.ly=landY(d.x);d.a=rnd(.35,.7);d.s=0;}
 function mkNear(){const d={};resetNear(d,true);return d;}
-function resetNear(d,any){d.x=rnd(-10,W+10);d.y=any?rnd(-20,H):rnd(-40,-4);d.vy=rnd(7,10.5);d.vx=-d.vy*.16;d.l=Math.round(rnd(6,10));d.a=rnd(.45,.8);}
+function resetNear(d,any){d.z=Math.random();d.x=rnd(-10,W+10);d.y=any?rnd(-20,H):rnd(-40,-4);d.vy=rnd(7,10.5);d.vx=-d.vy*.16;d.l=Math.round(rnd(6,10));d.a=rnd(.45,.8);}
 const splashes=[];
 
 /* ---- gotas pegadas en el cristal ---- */
@@ -102,13 +103,41 @@ function impact(ctx,d,P){
 }
 
 /* ---- modo XP: trazos y gotas suaves con brillo azul Luna ---- */
-function xStreaks(ctx,arr,n,al){
+function xStreaks(ctx,arr,n,al,L,wm){
   ctx.lineCap="round";
-  [["rgba(43,106,214,.55)",.95],["rgba(214,236,255,.95)",.45]].forEach(([c,w])=>{
-    ctx.globalAlpha=al*.8;ctx.strokeStyle=c;ctx.lineWidth=w;ctx.beginPath();
-    for(let i=0;i<n;i++){const d=arr[i];ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-d.vx*d.l*.5,d.y-d.l);}
-    ctx.stroke();});
+  for(let b=0;b<3;b++){
+    const lo=b/3,hi=(b+1)/3+(b===2?1:0),wd=[.5,.75,1][b]*wm,aa=[.5,.78,1][b];
+    [["rgba(43,106,214,.5)",1],["rgba(222,240,255,.95)",.5]].forEach(([c,wf])=>{
+      ctx.globalAlpha=al*.8*aa;ctx.strokeStyle=c;ctx.lineWidth=wd*wf;ctx.beginPath();
+      for(let i=0;i<n;i++){const d=arr[i],z=d.z;if(z<lo||z>=hi)continue;const ln=d.l*(.7+.6*z);ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-L*ln,d.y-ln);}
+      ctx.stroke();});
+  }
   ctx.globalAlpha=1;
+}
+/* relámpago: un rayo que baja zigzagueando hasta la colina, con ramas y parpadeo; después llega el trueno */
+let bolt=null;
+const hillTop=x=>{const k=window.KXPAS&&KXPAS.hillY;return k?Math.max(H*.3,Math.min(H-8,KXPAS.hillY(x*S)/S)):H*.62;};
+function strike(power){
+  if(!raining&&inten<.3)return;
+  const delay=rnd(.45,3.3),pw=Math.max(.25,power!=null?power:1-delay*.18);
+  if(xpOn&&cb.isConnected){
+    const hx=rnd(.12,.88)*W,end=hillTop(hx)+rnd(-1,3),pts=[];let x=hx,y=0;
+    while(y<end){pts.push([x,y]);y+=rnd(2.5,6);x+=rnd(-4.2,4.2);}
+    pts.push([x,Math.min(end,y)]);
+    const br=[];for(let i=0;i<2;i++){const q=pts[Math.floor(rnd(2,Math.max(3,pts.length-3)))];if(!q)continue;let bx=q[0],by=q[1];const side=Math.random()<.5?-1:1,seg=[[bx,by]];for(let k=0;k<4;k++){bx+=side*rnd(2,6);by+=rnd(2,6);seg.push([bx,by]);}br.push(seg);}
+    bolt={p:pts,br,t:0};
+  }else frame.fl=5;
+  emit2("kixki-thunder",{delay,power:pw});
+}
+const emit2=(n,d)=>dispatchEvent(new CustomEvent(n,{detail:d}));
+function drawBolt(ctx,k){
+  if(!bolt)return;
+  bolt.t+=k;const t=bolt.t;if(t>14){bolt=null;return;}
+  const a=t<2?1:t<4?.3:t<6.5?.95:Math.max(0,.7*(1-(t-6.5)/7.5));
+  const line=(pts,w,al,col)=>{ctx.globalAlpha=Math.min(1,al);ctx.strokeStyle=col;ctx.lineWidth=w;ctx.lineJoin="round";ctx.lineCap="round";ctx.beginPath();pts.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.stroke();};
+  line(bolt.p,3.4,a*.22,"#9db8ff");line(bolt.p,1.5,a*.6,"#dbe6ff");line(bolt.p,.7,a,"#ffffff");
+  bolt.br.forEach(b=>{line(b,1.1,a*.35,"#cfdcff");line(b,.45,a*.8,"#ffffff");});
+  ctx.globalAlpha=a*(dark()?.22:.16);ctx.fillStyle="#eaf0ff";ctx.fillRect(0,0,W,H);ctx.globalAlpha=1;
 }
 function xpGlass(ctx,d){
   const a=d.tr;
@@ -124,6 +153,12 @@ function xpGlass(ctx,d){
     ctx.strokeStyle="rgba(255,255,255,.55)";ctx.lineWidth=.25;ctx.stroke();}
   ctx.globalAlpha=1;
 }
+/* bruma de lluvia pegada a la colina */
+function haze(ctx){
+  const hy=hillTop(W/2),y0=Math.max(0,hy-18),g=ctx.createLinearGradient(0,y0,0,H);
+  g.addColorStop(0,"rgba(215,230,250,0)");g.addColorStop(.3,dark()?"rgba(110,130,200,.15)":"rgba(228,240,255,.24)");g.addColorStop(1,"rgba(215,230,250,.05)");
+  ctx.globalAlpha=Math.min(1,inten);ctx.fillStyle=g;ctx.fillRect(0,y0,W,H-y0);ctx.globalAlpha=1;
+}
 function frame(ts){
   loop=0;
   if(document.hidden){loop=requestAnimationFrame(frame);return;}
@@ -136,17 +171,20 @@ function frame(ts){
   const rc=dark()?"#c4cfff":"#eaf2ff",sh=dark()?"#3d4aa8":"#2f4fae";
   xb.clearRect(0,0,W,H);xf.clearRect(0,0,W,H);
   const motion=!RM();
+  /* viento: inclinación de la lluvia (a la derecha, como el pasto) con una ráfaga cada 9 s */
+  const ct=(document.timeline&&document.timeline.currentTime)||performance.now(),ph=(ct/9000)%1,gu=ph>.05&&ph<.62?Math.sin((ph-.05)/.57*Math.PI):0;
+  const L=.1+.04*Math.sin(ct/2900)+.19*gu*(.6+.4*Math.min(1,inten));
 
   if(inten>.01){
     /* tinte gris-azulado */
     xb.globalAlpha=Math.min(1,inten);xb.fillStyle=dark()?"rgba(6,6,36,.24)":"rgba(40,55,110,.16)";xb.fillRect(0,0,W,H);xb.globalAlpha=1;
     if(motion){
-      const nf=Math.round(Math.min(MAXFAR,W*H/700)*inten),nn=Math.round(Math.min(MAXNEAR,W*H/3200)*inten);
+      const nf=Math.round((xpOn?Math.min(MAXFAR,W*H/430):Math.min(PXFAR,W*H/700))*inten),nn=Math.round((xpOn?Math.min(MAXNEAR,W*H/2600):Math.min(PXNEAR,W*H/3200))*inten);
       while(far.length<MAXFAR)far.push(mkFar());while(near.length<MAXNEAR)near.push(mkNear());
-      for(let i=0;i<nf;i++){const d=far[i];d.y+=d.vy*k;d.x+=d.vx*k;
+      for(let i=0;i<nf;i++){const d=far[i];d.y+=d.vy*k;d.x+=(xpOn?L*d.vy:d.vx)*k;
         if(d.y>=d.ly){if(splashes.length<120)splashes.push({x:Math.round(d.x),y:Math.round(d.ly),t:0});resetFar(d,false);}}
-      for(let i=0;i<nn;i++){const d=near[i];d.y+=d.vy*k;d.x+=d.vx*k;if(d.y>H+10)resetNear(d,false);}
-      if(xpOn){xStreaks(xb,far,nf,.8);xStreaks(xf,near,nn,.9);}
+      for(let i=0;i<nn;i++){const d=near[i];d.y+=d.vy*k;d.x+=(xpOn?L*d.vy:d.vx)*k;if(d.y>H+10)resetNear(d,false);}
+      if(xpOn){haze(xb);xStreaks(xb,far,nf,.8,L,1);xStreaks(xf,near,nn,.9,L,1.7);}
       else{streaks(xb,far,nf,rc,1,sh);streaks(xf,near,nn,rc,.8,sh);}
       /* salpicaduras al caer */
       xb.fillStyle=rc;
@@ -162,7 +200,8 @@ function frame(ts){
       xb.globalAlpha=1;
     }
     /* destello lejano muy de vez en cuando (solo con tormenta fuerte) */
-    if(motion&&inten>.9&&strength>=1&&Math.random()<.0007){frame.fl=5;}
+    if(motion&&inten>.9&&strength>=.85&&Math.random()<.0005)strike();
+    if(bolt)drawBolt(xb,k);
     if(frame.fl>0){frame.fl-=k;xb.globalAlpha=.16;xb.fillStyle="#fff";xb.fillRect(0,0,W,H);xb.globalAlpha=1;}
   }
 
@@ -222,7 +261,7 @@ function stopRain(){
   if(!raining)return;
   raining=false;rainEnd=0;nextRain=now()+rnd(150000,420000);emit("stop",{});react("stop");wake();
 }
-const snowBg=()=>{const b=root.getAttribute("data-bg");return b==="invierno"||b==="navidad";};
+const snowBg=()=>{const b=root.getAttribute("data-bg");return b==="invierno"||b==="navidad"||(b==="xp"&&/^(invierno|navidad)$/.test(root.getAttribute("data-xps")||""));};
 setInterval(()=>{
   if(document.hidden)return;
   if(mode==="auto"){
@@ -271,8 +310,10 @@ addEventListener("kixki-rain",e=>{
   if(d.t==="wipe"&&d.n>=8&&!wipe.said){wipe.said=1;try{K.say(["¡Cristal limpio y brillante! ✨","Squeaky clean glass! ✨"],{p:1,key:"rain-wipe",cd:180000});}catch(x){}}
 });
 
-/* ---- sonido de lluvia relajante (sintetizado, sin archivos) ----
-   Capas: «lavado» de ruido rosa en estéreo + murmullo de tejado (ruido marrón grave) + gotitas sueltas muy suaves.
+/* ---- sonido de lluvia (sintetizado, sin archivos) · versión 2 ----
+   Capas: lavado de ruido rosa en estéreo (siseo + cuerpo) · murmullo grave de tejado · viento que sube y baja ·
+   cientos de impactos de gota por segundo (ráfagas de ruido muy cortas, de distinto tamaño y posición en el estéreo) ·
+   «plops» de gotas en los charcos · eco suave de espacio abierto · truenos lejanos que llegan con retraso tras cada relámpago.
    Suena solo si el sonido de la página está activo (botón del altavoz / menú Efectos o Música) y «Sonido de lluvia» está en sí.
    Sube y baja con suavidad según la intensidad de la lluvia. */
 let rsOn=LS.g("kixki-rainsnd",true),au=null,auClose=0,sndHinted=false;
@@ -284,37 +325,96 @@ function noiseBuf(ctx,kind){
   for(let i=0;i<len;i++){const w=Math.random()*2-1;
     if(kind==="brown"){l=(l+.02*w)/1.02;d[i]=l*3.5;}
     else{b0=.99765*b0+w*.099046;b1=.963*b1+w*.2965164;b2=.57*b2+w*1.0526913;d[i]=(b0+b1+b2+w*.1848)*.11;}}
+  /* las puntas se funden para que el bucle no «clic» */
+  const f=Math.floor(ctx.sampleRate*.05);for(let i=0;i<f;i++){const k=i/f;d[i]*=k;d[len-1-i]*=k;}
   return buf;
 }
-function buildAudio(){
-  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw 0;
-  const ctx=new AC(),master=ctx.createGain(),comp=ctx.createDynamicsCompressor(),an=ctx.createAnalyser();
-  master.gain.value=0;an.fftSize=1024;master.connect(comp);comp.connect(ctx.destination);master.connect(an);
-  const pink=noiseBuf(ctx,"pink"),brown=noiseBuf(ctx,"brown"),lows=[];
-  const src=(buf,pan,off)=>{const n=ctx.createBufferSource();n.buffer=buf;n.loop=true;
-    const p=ctx.createStereoPanner?ctx.createStereoPanner():null;if(p)p.pan.value=pan;n.start(0,off);return {n,p};};
-  /* lavado estéreo */
-  [[-.55,0],[.55,2.7]].forEach(([pan,off])=>{
+/* eco de espacio abierto: ruido que se apaga en ~1.8 s, distinto en cada oído */
+function impulse(ctx,sec,pow){
+  const n=Math.floor(ctx.sampleRate*sec),b=ctx.createBuffer(2,n,ctx.sampleRate);
+  for(let c=0;c<2;c++){const d=b.getChannelData(c);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,pow);}
+  return b;
+}
+/* banco de impactos: ráfagas de ruido de 12 a 45 ms con filtro paso bajo distinto (superficie dura, hojas, hierba) + plops de agua */
+function dropBank(ctx){
+  const sr=ctx.sampleRate,hits=[],plops=[];
+  for(let k=0;k<14;k++){
+    const len=Math.floor(sr*rnd(.012,.045)),b=ctx.createBuffer(1,len,sr),d=b.getChannelData(0),cut=rnd(.1,.6),tau=len*rnd(.14,.3);
+    let y=0,y2=0,pk=0;
+    for(let i=0;i<len;i++){const w=Math.random()*2-1;y+=(w-y)*cut;y2+=(y-y2)*Math.min(1,cut*1.6);
+      const att=Math.min(1,i/(sr*.0006)),v=(y-y2*.55)*Math.exp(-i/tau)*att;d[i]=v;pk=Math.max(pk,Math.abs(v));}
+    for(let i=0;i<len;i++)d[i]/=pk||1;
+    hits.push(b);
+  }
+  for(let k=0;k<5;k++){
+    const len=Math.floor(sr*.11),b=ctx.createBuffer(1,len,sr),d=b.getChannelData(0),f0=rnd(520,980);let ph=0,pk=0;
+    for(let i=0;i<len;i++){const t=i/sr,f=f0*(1+.9*(1-Math.exp(-t/.018)));ph+=6.2832*f/sr;
+      const v=Math.sin(ph)*Math.exp(-t/.028)*Math.min(1,t/.002)+(Math.random()*2-1)*.12*Math.exp(-t/.004);d[i]=v;pk=Math.max(pk,Math.abs(v));}
+    for(let i=0;i<len;i++)d[i]/=pk||1;
+    plops.push(b);
+  }
+  return {hits,plops};
+}
+function buildAudio(ctxArg){
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC&&!ctxArg)throw 0;
+  const ctx=ctxArg||new AC(),master=ctx.createGain(),comp=ctx.createDynamicsCompressor(),an=ctx.createAnalyser(),bus=ctx.createGain(),bed=ctx.createGain(),verb=ctx.createConvolver(),vg=ctx.createGain();
+  master.gain.value=0;an.fftSize=1024;comp.threshold.value=-20;comp.ratio.value=3.5;comp.attack.value=.01;comp.release.value=.3;
+  bed.gain.value=.3;bed.connect(bus);bus.connect(master);verb.buffer=impulse(ctx,1.8,2.6);vg.gain.value=.2;bus.connect(vg);vg.connect(verb);verb.connect(master);
+  master.connect(comp);comp.connect(ctx.destination);master.connect(an);
+  const pink=noiseBuf(ctx,"pink"),brown=noiseBuf(ctx,"brown"),lows=[],mk=ctx.createStereoPanner?()=>ctx.createStereoPanner():null;
+  const src=(buf,pan,off)=>{const n=ctx.createBufferSource();n.buffer=buf;n.loop=true;const p=mk?mk():null;if(p)p.pan.value=pan;n.start(0,off);return {n,p};};
+  const out=(node,p)=>{if(p){node.connect(p);p.connect(bed);}else node.connect(bed);};
+  /* lavado estéreo: siseo agudo + cuerpo medio */
+  [[-.6,0],[.6,2.7]].forEach(([pan,off])=>{
     const a=src(pink,pan,off),hp=ctx.createBiquadFilter(),lp=ctx.createBiquadFilter(),g=ctx.createGain();
-    hp.type="highpass";hp.frequency.value=260;lp.type="lowpass";lp.frequency.value=5200;lp.Q.value=.4;g.gain.value=.5;lows.push(lp);
-    a.n.connect(hp);hp.connect(lp);lp.connect(g);(a.p?(g.connect(a.p),a.p.connect(master)):g.connect(master));
+    hp.type="highpass";hp.frequency.value=1800;lp.type="lowpass";lp.frequency.value=9500;lp.Q.value=.5;g.gain.value=.34;lows.push(lp);
+    a.n.connect(hp);hp.connect(lp);lp.connect(g);out(g,a.p);
+    const b=src(pink,pan*.7,off+1.9),bp=ctx.createBiquadFilter(),bg=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();
+    bp.type="bandpass";bp.frequency.value=1150;bp.Q.value=.55;bg.gain.value=.3;lfo.frequency.value=.09+pan*.02;lg.gain.value=.07;
+    lfo.connect(lg);lg.connect(bg.gain);lfo.start();b.n.connect(bp);bp.connect(bg);out(bg,b.p);
   });
-  /* gotas contra el suelo y las hojas: banda media que respira muy despacio */
-  {const a=src(pink,0,1.3),bp=ctx.createBiquadFilter(),g=ctx.createGain(),lfo=ctx.createOscillator(),lg=ctx.createGain();
-    bp.type="bandpass";bp.frequency.value=2300;bp.Q.value=.6;g.gain.value=.2;lfo.frequency.value=.11;lg.gain.value=.07;
-    lfo.connect(lg);lg.connect(g.gain);lfo.start();a.n.connect(bp);bp.connect(g);g.connect(master);}
-  /* murmullo grave de tejado */
+  /* murmullo grave del suelo y las hojas */
   {const a=src(brown,0,.7),lp=ctx.createBiquadFilter(),g=ctx.createGain();
-    lp.type="lowpass";lp.frequency.value=430;g.gain.value=.55;a.n.connect(lp);lp.connect(g);g.connect(master);}
-  const o={ctx,master,an,lows,on:false,dt:0};
-  /* gotitas sueltas, de tono suave y desafinadas a propósito */
-  o.drip=()=>{
-    if(!au||au!==o||!o.on)return;
-    try{const t=ctx.currentTime,f=rnd(1300,3400),os=ctx.createOscillator(),g=ctx.createGain(),p=ctx.createStereoPanner?ctx.createStereoPanner():null;
-      os.type="sine";os.frequency.setValueAtTime(f,t);os.frequency.exponentialRampToValueAtTime(f*1.35,t+.05);
-      g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(rnd(.006,.016),t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+rnd(.06,.13));
-      os.connect(g);if(p){p.pan.value=rnd(-.8,.8);g.connect(p);p.connect(master);}else g.connect(master);os.start(t);os.stop(t+.16);}catch(e){}
-    o.dt=setTimeout(o.drip,rnd(170,720)/Math.max(.35,inten));
+    lp.type="lowpass";lp.frequency.value=300;g.gain.value=.2;a.n.connect(lp);lp.connect(g);out(g,null);}
+  /* viento: ruido en banda media cuya fuerza y tono suben y bajan lento, como las ráfagas del pasto */
+  {const a=src(pink,0,3.1),bp=ctx.createBiquadFilter(),g=ctx.createGain(),l1=ctx.createOscillator(),l2=ctx.createOscillator(),lg1=ctx.createGain(),lg2=ctx.createGain(),lf=ctx.createGain();
+    bp.type="bandpass";bp.frequency.value=480;bp.Q.value=1.1;g.gain.value=.06;
+    l1.frequency.value=.075;lg1.gain.value=.07;l2.frequency.value=.19;lg2.gain.value=.04;
+    l1.connect(lg1);lg1.connect(g.gain);l2.connect(lg2);lg2.connect(g.gain);l1.start();l2.start();
+    const l3=ctx.createOscillator();l3.frequency.value=.11;lf.gain.value=170;l3.connect(lf);lf.connect(bp.frequency);l3.start();
+    a.n.connect(bp);bp.connect(g);out(g,null);}
+  /* posiciones fijas en el estéreo para los impactos (así no se crea un panner por gota) */
+  const lanes=[-.9,-.5,-.15,.15,.5,.9].map(v=>{if(!mk){return bus;}const p=mk();p.pan.value=v;p.connect(bus);return p;});
+  const bank=dropBank(ctx),o={ctx,master,an,lows,bus,verb,vg,on:false,tm:0,brown,pink,
+    /* cuánto suenan las capas de fondo (0 = llovizna, 1 = chaparrón) */
+    level(lv,t){const v=.18+.82*lv;if(t)bed.gain.setTargetAtTime(v,ctx.currentTime,t);else bed.gain.value=v;}};
+  /* programa los impactos de una ventana de tiempo: muchos y flojitos, pocos fuertes */
+  o.sched=(t0,dur,lv)=>{
+    const rate=(20+190*lv)*dur,n=Math.floor(rate)+(Math.random()<rate%1?1:0);
+    for(let i=0;i<n;i++){
+      const s=ctx.createBufferSource(),g=ctx.createGain();s.buffer=bank.hits[Math.floor(Math.random()*bank.hits.length)];
+      s.playbackRate.value=rnd(.65,1.6);g.gain.value=Math.pow(Math.random(),2.4)*.19+.01;
+      s.connect(g);g.connect(lanes[Math.floor(Math.random()*lanes.length)]);s.start(t0+Math.random()*dur);
+    }
+    const pr=(.55+1.6*lv)*dur,pn=Math.floor(pr)+(Math.random()<pr%1?1:0);
+    for(let i=0;i<pn;i++){
+      const s=ctx.createBufferSource(),g=ctx.createGain();s.buffer=bank.plops[Math.floor(Math.random()*bank.plops.length)];
+      s.playbackRate.value=rnd(.7,1.35);g.gain.value=rnd(.03,.085);
+      s.connect(g);g.connect(lanes[Math.floor(Math.random()*lanes.length)]);s.start(t0+Math.random()*dur);
+    }
+  };
+  /* trueno: un chasquido seco (solo si cae cerca) y un rumor grave que rueda varios segundos */
+  o.thunder=(delay,pw)=>{
+    const t=ctx.currentTime+Math.max(.05,delay),p=Math.max(.15,Math.min(1,pw==null?1:pw));
+    if(delay<1.4){const c=ctx.createBufferSource(),hp=ctx.createBiquadFilter(),g=ctx.createGain();
+      c.buffer=pink;hp.type="highpass";hp.frequency.value=900;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(.5*p,t+.006);g.gain.exponentialRampToValueAtTime(.0001,t+.28);
+      c.connect(hp);hp.connect(g);g.connect(bus);c.start(t,rnd(0,2),.3);}
+    const r=ctx.createBufferSource(),lp=ctx.createBiquadFilter(),g=ctx.createGain(),p2=mk?mk():null;
+    r.buffer=brown;lp.type="lowpass";lp.Q.value=.7;lp.frequency.setValueAtTime(520,t);lp.frequency.exponentialRampToValueAtTime(70,t+4.8);
+    const A=2.4*p;g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(A,t+.18);g.gain.linearRampToValueAtTime(A*.45,t+.8);g.gain.linearRampToValueAtTime(A*.9,t+1.25);
+    g.gain.linearRampToValueAtTime(A*.35,t+2.3);g.gain.linearRampToValueAtTime(A*.55,t+3.2);g.gain.exponentialRampToValueAtTime(.0001,t+6);
+    if(p2)p2.pan.value=rnd(-.5,.5);
+    r.connect(lp);lp.connect(g);if(p2){g.connect(p2);p2.connect(bus);}else g.connect(bus);r.start(t,rnd(0,.3),5.8);
   };
   return o;
 }
@@ -325,20 +425,33 @@ function syncSound(){
       try{au=buildAudio();}catch(e){au=null;return;}}
     clearTimeout(auClose);auClose=0;
     const c=au.ctx;if(c.state==="suspended")try{c.resume();}catch(e){}
-    const night=dark(),v=Math.min(1,inten)*(.3+.1*strength)*(night?.8:1)*(window.KXM&&KXM.on?.7:1);
-    au.master.gain.setTargetAtTime(v,c.currentTime,.9);
-    au.lows.forEach(l=>l.frequency.setTargetAtTime(night?3600:5200,c.currentTime,1));
-    if(!au.on){au.on=true;au.drip();}
+    const night=dark(),v=Math.min(1,inten)*(.34+.12*strength)*(night?.8:1)*(window.KXM&&KXM.on?.7:1);
+    au.master.gain.setTargetAtTime(v,c.currentTime,.9);au.level(Math.min(1,inten)*(.45+.55*strength),1.2);
+    au.lows.forEach(l=>l.frequency.setTargetAtTime(night?6500:9500,c.currentTime,1));
+    if(!au.on){au.on=true;
+      const o=au;o.tm=setInterval(()=>{if(au!==o||!o.on)return;o.sched(o.ctx.currentTime+.04,.1,Math.min(1,inten)*(.45+.55*strength));},100);}
   }else if(au){
-    au.on=false;clearTimeout(au.dt);
+    au.on=false;clearInterval(au.tm);
     au.master.gain.setTargetAtTime(0,au.ctx.currentTime,.5);
     if(!auClose)auClose=setTimeout(()=>{auClose=0;if(!wantSound()&&au){try{au.ctx.close();}catch(e){}au=null;}},3500);
   }
 }
 setInterval(syncSound,300);
+addEventListener("kixki-thunder",e=>{const d=e.detail||{};if(au&&au.on)try{au.thunder(d.delay||1,d.power);}catch(x){}});
 const rdBtn=()=>document.getElementById("rd");
 addEventListener("click",()=>setTimeout(syncSound,50),true);
 function levelNow(){if(!au)return 0;const a=new Uint8Array(au.an.fftSize);au.an.getByteTimeDomainData(a);let s=0;for(let i=0;i<a.length;i++){const x=(a[i]-128)/128;s+=x*x;}return Math.sqrt(s/a.length);}
+/* para pruebas: renderiza unos segundos de lluvia (y un trueno) a un WAV en base64, sin altavoz */
+async function renderWav(sec,lv,thunderAt){
+  sec=sec||8;lv=lv==null?1:lv;const sr=44100,oc=new OfflineAudioContext(2,sr*sec,sr),o=buildAudio(oc);
+  o.master.gain.value=.5;o.level(lv);for(let t=0;t<sec;t+=.1)o.sched(t,.1,lv);
+  if(thunderAt!=null)o.thunder(thunderAt,1);
+  const b=await oc.startRendering(),L=b.getChannelData(0),R=b.getChannelData(1),n=L.length,buf=new ArrayBuffer(44+n*4),v=new DataView(buf);
+  const ws=(p,s)=>{for(let i=0;i<s.length;i++)v.setUint8(p+i,s.charCodeAt(i));};
+  ws(0,"RIFF");v.setUint32(4,36+n*4,true);ws(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,2,true);v.setUint32(24,sr,true);v.setUint32(28,sr*4,true);v.setUint16(32,4,true);v.setUint16(34,16,true);ws(36,"data");v.setUint32(40,n*4,true);
+  for(let i=0;i<n;i++){v.setInt16(44+i*4,Math.max(-1,Math.min(1,L[i]))*32767,true);v.setInt16(46+i*4,Math.max(-1,Math.min(1,R[i]))*32767,true);}
+  let s="";const u=new Uint8Array(buf);for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s);
+}
 
 /* ---- menú ---- */
 let btn=null;
@@ -363,7 +476,8 @@ window.KXRAIN={
   get raining(){return raining;},get mode(){return mode;},get intensity(){return inten;},
   set:setMode,start:(ms,str)=>startRain(ms||0,str),stop:stopRain,
   sound:()=>({want:wantSound(),on:!!au,state:au&&au.ctx.state,level:levelNow()}),glass:gotas,idle(ms){if(ms>=0)idleMs=ms;return idleMs;},
-  drop:(x,y,r)=>{wake();return addDrop(x/S,y/S,r);}
+  drop:(x,y,r)=>{wake();return addDrop(x/S,y/S,r);},
+  lightning:p=>{wake();strike(p);},thunder:(d,p)=>{if(au)au.thunder(d||.5,p);},_render:renderWav
 };
 if(mode==="on")startRain(0,rnd(.8,1));
 })();

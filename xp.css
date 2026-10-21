@@ -383,3 +383,7 @@ a[href],button:not(.kk-body):not(:disabled),[role="button"],label,summary,select
   cursor:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='24'%20height='26'%20viewBox='0%200%2024%2026'%3E%3Cpath%20d='M8.5%201.5c1.2%200%202%20.8%202%202v7.2c.4-.5%201-.8%201.700-.8%201%200%201.600.5%201.900%201.200.4-.5%201-.8%201.700-.8%201.100%200%201.800.7%202%201.500.4-.4%201-.6%201.600-.6%201.300%200%202.100%201%202.100%202.300v5.300c0%203.200-2.200%206-5.300%206h-3.300c-2%200-3.300-.8-4.400-2.100L3.500%2016.300c-.700-.9-.5-1.900.3-2.400.8-.5%201.700-.3%202.300.3L6.600%2015V3.500c0-1.200.8-2%201.900-2Z'%20fill='%23fff'%20stroke='%23000'%20stroke-width='1.300'%20stroke-linejoin='round'/%3E%3Cpath%20d='M10.500%2011v4.500M13.700%2011.800v3.700M16.900%2012.800v2.700'%20stroke='%23000'%20stroke-width='1'%20stroke-linecap='round'/%3E%3C/svg%3E") 7 1,pointer!important}
 input[type="text"],input[type="search"],textarea{cursor:text!important}
 .dsk .cat:not(.max) .tb,.vh{cursor:grab!important}
+
+/* estación de la Colina XP (botón que añade xpbg.js, solo visible con ese fondo) */
+.dsk #sm #s-xps{order:3}
+#s-xps{--mi:var(--xpi-fotos)}
