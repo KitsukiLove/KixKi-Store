@@ -14,7 +14,9 @@ if(!okKey(KEYS[i]))i=0;
 const R=(x,y,w,h,c)=>`<rect class="${c}" x="${x}" y="${y}" width="${w}" height="${h}"/>`;
 const hill=(y,a,p,ph,c)=>{let s="";for(let x=0;x<64;x++)s+=R(x,Math.round(y+a*Math.sin(x/p+ph)),1,40,c);return s;};
 const disc=(cx,cy,r,c)=>{let s="";for(let y=-r;y<=r;y++){const w=Math.floor(Math.sqrt(r*r-y*y));s+=R(cx-w,cy+y,2*w+1,1,c);}return s;};
-const cloud=(x,y)=>R(x,y+1,7,2,"c")+R(x+1,y,4,1,"c")+R(x+3,y-1,2,1,"c");
+const Rn=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`;
+/* cada nube es un grupo: pxbg.css la hace cruzar el cielo a su ritmo (cd = duración, cl = punto de partida) */
+const cloud=(x,y)=>`<g class="c pcl" style="--cd:${200+(x*7+y*13)%140}s;--cl:-${(x*29+y*17)%200}s">`+Rn(x,y+1,7,2)+Rn(x+1,y,4,1)+Rn(x+3,y-1,2,1)+"</g>";
 const pine=(x,y,h)=>{let s=R(x,y+h,1,2,"t");for(let j=0;j<h;j++){const k=(j/2)|0;s+=R(x-k,y+j,1+2*k,1,"p");}return s+R(x,y+3,1,1,"o")+R(x-1,y+7,1,1,"o")+R(x+1,y+6,1,1,"o");};
 const pump=(x,y)=>R(x,y+1,5,3,"o")+R(x+1,y,3,1,"o")+R(x+2,y-1,1,1,"t")+R(x+1,y+2,1,1,"k")+R(x+3,y+2,1,1,"k");
 const bat=(x,y)=>R(x,y,1,1,"k")+R(x+4,y,1,1,"k")+R(x+2,y,1,1,"k")+R(x+1,y+1,3,1,"k");
@@ -22,7 +24,7 @@ const dead=(x,y)=>R(x,y,2,14,"k")+R(x-4,y+3,4,1,"k")+R(x-4,y+1,1,3,"k")+R(x+2,y+
 const tree=(x,y,r,c)=>R(x,y+r,1,6,"t")+disc(x,y,r,c);
 const flower=(x,y,c)=>R(x,y,1,1,c)+R(x,y+1,1,1,"p");
 const sunf=(x,y)=>R(x-1,y,3,3,"o")+R(x,y+1,1,1,"t")+R(x,y+3,1,4,"p");
-const ST=[[4,3],[12,8],[20,2],[27,10],[35,4],[44,9],[52,3],[58,11],[8,14],[40,15],[61,6],[31,16]].map(([x,y])=>R(x,y,1,1,"st")).join("");
+const ST=[[4,3],[12,8],[20,2],[27,10],[35,4],[44,9],[52,3],[58,11],[8,14],[40,15],[61,6],[31,16]].map(([x,y],j)=>R(x,y,1,1,"st tw"+(j%3))).join("");
 /* geometría de la Colina XP: cada capa = [x0,y0, curva, curva…] con curvas cúbicas [c1x,c1y,c2x,c2y,x,y]; viewBox 64x40 */
 const HL=[[0,24.5,[9,21.5,20,20.4,32,21.6],[44,22.8,54,23.4,64,21.4]],[0,27,[10,23,22,21.2,36,22.4],[50,23.6,56,25.6,64,23.6]],
  [0,29,[7,20.5,18,14.8,30,15],[42,15.2,53,20.6,64,25.4]],[0,35,[12,30.5,30,29.6,46,31.4],[54,32.3,60,34,64,33.2]]];
@@ -156,13 +158,38 @@ const SUN={invierno:[8,18],navidad:[8,18],otono:[7,19],halloween:[7,18],primaver
 const nightNow=()=>{const d=new Date(),h=d.getHours(),r=SUN[seasonKey(d)];return h<r[0]||h>=r[1];};
 const PT={navidad:[26,"",0],invierno:[40,"",0],otono:[16,"var(--o)",1],primavera:[12,"var(--o)",1]};
 let lastN=null;
+/* ===== Mundo (Pixel / Colina XP) y Estación (parte 8) =====
+   Dos ajustes que se entienden solos: «Fondo» elige el mundo (Pixel o Colina XP, si ya la ganaste) y «Estación» elige
+   la temporada DEL mundo activo. Al cambiar de mundo se conserva la estación (Otoño pixel ↔ Otoño XP).
+   Memoria: kixki-bg (clave del fondo pixel, o «xp») y kixki-xps (estación de la Colina XP). */
+const SEA={es:{auto:"Auto","":"Clásico",clasica:"Clásica",valle:"Valle",primavera:"Primavera",verano:"Verano",otono:"Otoño",invierno:"Invierno",halloween:"Halloween",navidad:"Navidad"},
+  en:{auto:"Auto","":"Classic",clasica:"Classic",valle:"Meadow",primavera:"Spring",verano:"Summer",otono:"Autumn",invierno:"Winter",halloween:"Halloween",navidad:"Christmas"}};
+const PXS=["auto","","valle","primavera","verano","otono","invierno","halloween","navidad"],XPL=["auto"].concat(XPV);
+const L2=()=>window.KXI&&KXI.lang==="en"?"en":"es";
+const worldOf=()=>KEYS[i]==="xp"?"xp":KEYS[i]==="vacas"?"vacas":"pixel";
+const seasonOf=()=>worldOf()==="xp"?XPS:(KEYS[i]===""?"clasica":KEYS[i]);
+const seaName=(id)=>{if(id==="clasica"&&worldOf()==="pixel")id="";return SEA[L2()][id]||id;};
+const seaEff=()=>{const w=worldOf();if(w==="xp")return xpv();const k=KEYS[i];return k==="auto"?seasonKey(new Date()):k;};
+const wName=w=>w==="xp"?"Colina XP":w==="vacas"?(L2()==="en"?"Cows!":"¡Vacas!"):"Pixel";
+function setSeason(id){
+  const w=worldOf();if(w==="vacas")return false;
+  if(w==="xp"){if(XPL.indexOf(id)<0)return false;XPS=id;try{localStorage.setItem("kixki-xps",JSON.stringify(id));}catch(e){}lastN=null;apply();return true;}
+  const k=id==="clasica"?"":id;if(PXS.indexOf(k)<0)return false;i=KEYS.indexOf(k);lastN=null;persist();apply();return true;
+}
+function setWorld(w){
+  const cur=worldOf();if(w===cur||cur==="vacas")return false;
+  if(w==="xp"){if(!X.xp)return false;const k=KEYS[i];XPS=k==="auto"?"auto":(k===""||k==="valle")?"clasica":k;
+    try{localStorage.setItem("kixki-xps",JSON.stringify(XPS));}catch(e){}i=KEYS.indexOf("xp");}
+  else{i=KEYS.indexOf(XPS==="auto"?"auto":XPS==="clasica"?"":XPS);if(i<0)i=0;}
+  lastN=null;persist();apply();return true;
+}
 /* En modo Auto el día/noche sigue la hora local; si lo cambias a mano, se respeta hasta el siguiente cambio de hora */
-function autoSync(){if(KEYS[i]!=="auto")return;const n=nightNow();if(n===lastN)return;lastN=n;
+function autoSync(){if(KEYS[i]!=="auto"&&!(KEYS[i]==="xp"&&XPS==="auto"))return;const n=nightNow();if(n===lastN)return;lastN=n;
   const t=n?"dark":"light";if(root.getAttribute("data-theme")!==t){root.setAttribute("data-theme",t);const m=document.getElementById("tc");if(m)m.setAttribute("content",n?"#150c33":"#efe6ff");}}
 let built="";
 function apply(){
   let k=KEYS[i];
-  if(k==="auto"){autoSync();k=seasonKey(new Date());}
+  if(k==="auto"){autoSync();k=seasonKey(new Date());}else if(k==="xp"&&XPS==="auto")autoSync();
   if(!k){root.removeAttribute("data-bg");box.innerHTML="";built="";dispatchEvent(new Event("kixki-bg"));return;}
   root.setAttribute("data-bg",k);
   const n=root.getAttribute("data-theme")==="dark"?1:0;
@@ -180,15 +207,25 @@ function apply(){
 }
 new MutationObserver(apply).observe(root,{attributes:true,attributeFilter:["data-theme"]});
 function restore(){X.cursed=0;const p=KEYS.indexOf(X.prev);i=p>=0&&okKey(X.prev)&&X.prev!=="vacas"?p:0;X.prev="";saveX();lastN=null;persist();apply();}
-window.KXB={label:()=>NAMES[i],hill:HL,
-  /* estaciones de la Colina XP: xps() = lo elegido («auto» o una), xpv() = la que se ve ahora, xps(v) la cambia */
-  XPV,xpv,xpn:v=>XPN[window.KXI&&KXI.lang==="en"?"en":"es"][XPV.indexOf(v)]||v,
+window.KXB={
+  /* label() = el MUNDO («Pixel», «Colina XP», «¡Vacas!») · full() = mundo + estación · season() = id de la estación del mundo activo */
+  label:()=>wName(worldOf()),
+  full:()=>wName(worldOf())+(worldOf()==="vacas"?"":" · "+(seasonOf()==="auto"?"Auto ("+seaName(seaEff())+")":seaName(seasonOf()))),
+  hill:HL,
+  world:worldOf,setWorld,
+  season:id=>id===undefined?seasonOf():setSeason(id),
+  seasons:()=>(worldOf()==="xp"?XPL:PXS).map(id=>({id:id===""?"clasica":id,name:seaName(worldOf()==="xp"?id:id)})),
+  seasonLabel:()=>worldOf()==="vacas"?"":seasonOf()==="auto"?"Auto · "+seaName(seaEff()):seaName(seasonOf()),
+  nextSeason(){const w=worldOf();if(w==="vacas"){restore();return;}const L=(w==="xp"?XPL:PXS).map(x=>x===""?"clasica":x),c=L.indexOf(seasonOf());setSeason(L[(c+1)%L.length]);},
+  /* estaciones de la Colina XP (compatibilidad): xps() = lo elegido, xpv() = la que se ve ahora, xps(v) la cambia */
+  XPV,xpv,xpn:v=>XPN[L2()][XPV.indexOf(v)]||v,
   xps(v){if(v===undefined)return XPS;if(v!=="auto"&&XPV.indexOf(v)<0)return XPS;XPS=v;try{localStorage.setItem("kixki-xps",JSON.stringify(v));}catch(e){}if(KEYS[i]==="xp")apply();else dispatchEvent(new Event("kixki-bg"));return XPS;},
   crest,
   /* desde «¡Vacas!» el botón de fondos te devuelve el que tenías; si no, pasa al siguiente que tengas disponible (los candados se saltan) */
+  /* botón «Fondo»: con la Colina XP ganada alterna Pixel ↔ XP; si no, recorre las estaciones pixel */
   next(){if(KEYS[i]==="vacas"){restore();return;}
-    do{i=(i+1)%KEYS.length;}while(KEYS[i]==="vacas"||!okKey(KEYS[i]));
-    lastN=null;persist();apply();},
+    if(X.xp){setWorld(worldOf()==="xp"?"pixel":"xp");return;}
+    KXB.nextSeason();},
   /* (parte 6) usados por vacaboss.js */
   has:k=>okKey(k),cursed:()=>!!X.cursed&&KEYS[i]==="vacas",paused:()=>!!X.pause,
   unlockXP(){X.xp=1;saveX();},

@@ -249,18 +249,18 @@ function build(){
   if(wet){puddleLoop();ringLoop();}
   birdLoop(true);starLoop();
 }
+/* Menú: «Fondo: Pixel / Colina XP» (solo si ya ganaste la colina) y «Estación: …», que cambia las estaciones del fondo activo */
 function menu(){
-  const ref=document.getElementById("s-bg");if(!ref||document.getElementById("s-xps")||!window.KXB||!KXB.xps)return;
-  ref.insertAdjacentHTML("afterend",'<button type="button" class="sm" id="s-xps" hidden></button>');
-  const b=document.getElementById("s-xps");
-  b.addEventListener("click",e=>{e.stopPropagation();
-    const L=["auto"].concat(KXB.XPV),cur=L.indexOf(KXB.xps());KXB.xps(L[(cur+1)%L.length]);label();});
+  const ref=document.getElementById("s-bg");if(!ref||document.getElementById("s-sea")||!window.KXB||!KXB.seasons)return;
+  ref.insertAdjacentHTML("afterend",'<button type="button" class="sm" id="s-sea"></button>');
+  document.getElementById("s-sea").addEventListener("click",e=>{e.stopPropagation();KXB.nextSeason();label();});
   label();
 }
 function label(){
-  const b=document.getElementById("s-xps");if(!b)return;
-  const cur=KXB.xps(),nm=cur==="auto"?(en()?"Auto":"Auto")+" · "+KXB.xpn(KXB.xpv()):KXB.xpn(cur);
-  b.textContent=(en()?"Season: ":"Estación: ")+nm;b.hidden=!isXP();
+  const b=document.getElementById("s-sea"),g=document.getElementById("s-bg");if(!b||!window.KXB)return;
+  const w=KXB.world();
+  b.textContent=(en()?"Season: ":"Estación: ")+KXB.seasonLabel();b.hidden=w==="vacas";
+  if(g){g.textContent=(en()?"Background: ":"Fondo: ")+KXB.label();g.hidden=!KXB.has("xp");}
 }
 addEventListener("kixki-bg",()=>{
   label();

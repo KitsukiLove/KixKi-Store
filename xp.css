@@ -385,5 +385,5 @@ input[type="text"],input[type="search"],textarea{cursor:text!important}
 .dsk .cat:not(.max) .tb,.vh{cursor:grab!important}
 
 /* estación de la Colina XP (botón que añade xpbg.js, solo visible con ese fondo) */
-.dsk #sm #s-xps{order:3}
-#s-xps{--mi:var(--xpi-fotos)}
+.dsk #sm #s-sea{order:3}
+#s-sea{--mi:var(--xpi-fotos)}

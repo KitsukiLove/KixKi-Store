@@ -366,14 +366,14 @@ function boot(){
   const updBgBtn=()=>{const b=$("#s-bg");if(b&&window.KXB)b.textContent="Fondo: "+KXB.label();};
 
   async function bgPrank(){
-    if(!window.KXB||/^Auto/.test(bgLabel())||(KXB.cursed&&KXB.cursed())||(window.KXV&&KXV.busy&&KXV.busy()))return false;
+    if(!window.KXB||KXB.season()==="auto"||(KXB.cursed&&KXB.cursed())||(window.KXV&&KXV.busy&&KXV.busy()))return false;
     P.busy=true;
     try{
       let early=null;const sp=say(pk(TX.bgPre,"k3bgp"),{p:2});sp.then(v=>{early=v;});
       await wait(1700);
       if(early===false){return false;}
       const n=1+Math.floor(rnd(0,3));
-      for(let i=0;i<n;i++)KXB.next();
+      for(let i=0;i<n;i++)KXB.nextSeason();
       updBgBtn();S3.bgs++;bumpPlan(2);save();KK.emit("prank",{k:"bg",n:S3.bgs});
       await sp;await wait(250);
       await say(pk(TX.bgPost,"k3bgq"),{p:2,mood:"happy"});

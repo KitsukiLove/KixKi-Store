@@ -690,8 +690,8 @@ rdIc();
 /* Botón discreto para cambiar de fondo */
 const BGI=["hhhhhhhhhh","h.....hh.h","h........h","h...h....h","h..hhh.h.h","h.hhhhhhhh","hhhhhhhhhh"];
 $("#bgb").innerHTML=`<svg viewBox="0 0 10 7" width="20" height="14" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">${BGI.map((l,y)=>[...l].map((c,x)=>c==="h"?`<rect x="${x}" y="${y}" width="1" height="1"/>`:"").join("")).join("")}</svg>`;
-const bgt=()=>{$("#bgb").title="Fondo: "+KXB.label();};bgt();
-$("#bgb").addEventListener("click",()=>{KXB.next();lab();bgt();toast("Fondo: "+KXB.label());});
+const bgt=()=>{$("#bgb").title="Fondo: "+KXB.full();};bgt();
+$("#bgb").addEventListener("click",()=>{KXB.next();lab();bgt();toast("Fondo: "+KXB.full());});
 /* Filtros por etiqueta (salen de las etiquetas de cada app) */
 const bc={};$$(".bdg span").forEach(x=>{const t=x.textContent;bc[t]=(bc[t]||0)+1;});
 const chips=document.createElement("div");chips.className="chips";chips.setAttribute("role","group");chips.setAttribute("aria-label","Filtros");

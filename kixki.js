@@ -570,10 +570,10 @@ function boot(){
     if(K.mode==="sleep"&&!K.snooze){setMode("idle");frame("idle");}
     if(K.ready)say(t==="dark"?T.night:T.day,{p:2,cat:"ui",opt:true,key:"theme",cd:8000,ttl:2500,emo:"theme"});
   }).observe(root,{attributes:true,attributeFilter:["data-theme"]});
-  let prevBg=window.KXB?KXB.label():"";
+  let prevBg=window.KXB?KXB.full():"";
   addEventListener("kixki-bg",()=>{
-    if(!window.KXB)return;const l=KXB.label();if(l===prevBg)return;prevBg=l;
-    const auto=/^Auto/.test(l),k=auto?"auto":(root.getAttribute("data-bg")||"");emit("bg",{k});
+    if(!window.KXB)return;const l=KXB.full();if(l===prevBg)return;prevBg=l;
+    const auto=KXB.season()==="auto",k=auto?"auto":(root.getAttribute("data-bg")==="xp"?KXB.xpv():(root.getAttribute("data-bg")||""));emit("bg",{k});
     if(K.ready&&T.bg[k])say(T.bg[k],{p:1,key:"bg",cd:5000,emo:"bg"});
   });
   let prevMus=!!(window.KXM&&KXM.on);
