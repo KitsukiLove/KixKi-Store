@@ -22,5 +22,5 @@ CÓMO INSTALAR (igual que la vez pasada)
 3. Abre la página. Si ves lo viejo, cierra y abre otra vez
    (la versión del caché ya cambió, se actualiza sola).
 
-NOTA: los archivos nuevos son pixel-ui.css, pxbg.css, pxbg.js y banner.png (la portada del README).
+NOTA: los archivos nuevos son pixel-ui.css, pxbg.css, pxbg.js, y la carpeta docs (las imágenes del README).
 Los demás reemplazan a los que ya tienes.

@@ -1,42 +1,45 @@
 <div align="center">
 
-<img src="banner.png" alt="Kixki Store — tienda de apps open source en un escritorio pixel" width="100%">
-
-<br>
-
-![HTML CSS JS](https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-sin%20dependencias-8b5cf6?style=for-the-badge)
-![PWA](https://img.shields.io/badge/PWA-instalable%20y%20offline-6d28d9?style=for-the-badge)
-![Idiomas](https://img.shields.io/badge/idioma-ES%20·%20EN-f472b6?style=for-the-badge)
-![Apps](https://img.shields.io/badge/apps-71%20en%2013%20carpetas-22c55e?style=for-the-badge)
-
-**[✨ Qué trae](#-qué-trae)** · **[🚀 Empezar](#-empezar-rápido)** · **[➕ Añadir una app](#-añadir-una-app)** · **[📁 Estructura](#-estructura-del-proyecto)** · **[🧪 Pruebas](#-pruebas)** · **[📚 Más detalles](#-documentación-técnica-detallada)**
+<img src="docs/portada.png" alt="Kixki Store: una tienda de apps open source dentro de un escritorio pixel, con una ovejita que te acompaña" width="100%">
 
 </div>
 
-<table>
-<tr>
-<td width="120" align="center"><img src="logo.png" alt="Kixki" width="100"></td>
-<td>
+<p align="center">
+  <b>Una tienda de apps open source que se disfraza de escritorio.</b><br>
+  Abres carpetas como ventanas, y una ovejita llamada Kixki te sigue por la página, charla y se mete en líos.
+</p>
 
-**Kixki Store** es una pequeña colección de apps para tu Android, con guía básica y «para qué sirve cada una». Se ve como un escritorio retro, y **Kixki**, la oveja guía, pasea por la página y charla contigo.
-<br>Todo es **HTML, CSS y JavaScript puros**: sin servidor, sin frameworks, sin rastreadores.
+<p align="center">
+  <a href="#que-trae">Qué trae</a> &nbsp;·&nbsp;
+  <a href="#empezar">Empezar</a> &nbsp;·&nbsp;
+  <a href="#anadir-una-app">Añadir una app</a> &nbsp;·&nbsp;
+  <a href="#estructura">Estructura</a> &nbsp;·&nbsp;
+  <a href="#pruebas">Pruebas</a> &nbsp;·&nbsp;
+  <a href="#mas-detalles">Más detalles</a>
+</p>
 
-</td>
-</tr>
-</table>
+<br>
 
-## ✨ Qué trae
+<a id="que-trae"></a>
+<img src="docs/bar-que-trae.png" alt="que-trae.exe" width="100%">
 
-- 🛍️ **71 apps en 13 carpetas**, con descripción, enlaces, avisos, buscador y «packs» para instalar varias de una vez.
-- 🌱 **Fondos y estaciones:** mundo **Pixel** o **Colina XP**, con Valle, las 4 estaciones, Halloween y Navidad (o **Auto**, según la fecha).
-- 🖥️ **Dos estilos:** Pixel (menú en columnas con iconos) o **Kixki XP**, con pasto al viento, nubes y pájaros.
-- 🌧️ **Lluvia, relámpagos y trueno**, con sonido sintetizado.
-- 🎵 **30 piezas de música original** que cambian con el fondo y el día/noche.
-- 🐑 **Kixki:** charla, travesuras, logros y minijuegos (**Salta Vallas** y más).
-- 📱 **PWA:** se instala, funciona sin conexión y no contacta con terceros.
-- 🌐 **Español / English** y vista «Modo PC / Modo móvil».
+La colección es pequeña y cuidada: **71 apps en 13 carpetas**, cada una con su descripción, enlaces y avisos, un buscador y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
 
-## 🚀 Empezar rápido
+- **Dos mundos, Pixel y Colina XP,** y en cada uno Valle, Primavera, Verano, Otoño, Invierno, Halloween y Navidad. «Auto» sigue la fecha real.
+- **Lluvia con relámpagos y trueno,** y sonido de lluvia sintetizado.
+- **30 piezas de música original** que cambian con el fondo, la estación y el día/noche. No hay archivos de audio: se genera todo en el navegador.
+- **Kixki,** la oveja guía: charla, hace travesuras, se deja agarrar y lanzar, da consejos y desbloquea logros. Español e inglés.
+- **Minijuegos:** Salta Vallas, una cancha secreta de básquet y varios juegos del modo XP.
+- **PWA:** se instala, funciona sin conexión y no contacta con terceros (logos, fuentes y QR viven en la propia web).
+
+<p align="center"><img src="docs/estaciones.png" alt="Las 14 estaciones: 7 en el mundo Pixel y 7 en la Colina XP" width="100%"></p>
+
+El botón **Fondo** del menú cambia de mundo (la Colina XP se gana venciendo a vaca.exe) y el botón **Estación** cambia la estación del mundo en que estés. Cada mundo recuerda la suya.
+
+<p align="center"><img src="docs/estilos.png" alt="El menú Inicio en estilo Pixel y en Kixki XP, en PC y en móvil" width="100%"></p>
+
+<a id="empezar"></a>
+<img src="docs/bar-empezar.png" alt="empezar.exe" width="100%">
 
 **Probarla en tu computadora**
 
@@ -47,13 +50,14 @@ python3 -m http.server
 
 **Publicarla con GitHub Pages**
 
-1. Sube todo el contenido del proyecto a tu repositorio, **en la raíz** (no muevas los archivos a carpetas: las rutas del código son planas).
+1. Sube todo el proyecto a tu repositorio, **en la raíz**. No muevas los archivos a carpetas: las rutas del código son planas.
 2. En el repositorio: **Settings → Pages → Deploy from a branch → `main` / `(root)`**.
-3. Listo: la web queda en `https://TU-USUARIO.github.io/KixKi-Store/`.
+3. La web queda en `https://TU-USUARIO.github.io/KixKi-Store/`.
 
-> 💡 **Si subes cambios y ves lo viejo:** cierra y abre la página. El caché de la PWA se renueva solo cuando cambia la versión `V` de `sw.js`.
+> **Si subes cambios y ves lo viejo:** cierra y abre la página. El caché de la PWA se renueva solo cuando cambia la versión `V` de `sw.js`.
 
-## ➕ Añadir una app
+<a id="anadir-una-app"></a>
+<img src="docs/bar-anadir.png" alt="anadir-una-app.exe" width="100%">
 
 Abre `apps.json`, copia una entrada dentro de `apps` de la categoría que quieras y cambia sus datos:
 
@@ -63,7 +67,7 @@ Abre `apps.json`, copia una entrada dentro de `apps` de la categoría que quiera
   "tag": "Casi como root",
   "desc": "Permite que otras apps usen funciones del sistema…",
   "links": [["Descarga", "https://github.com/thedjchi/Shizuku"], ["Tutorial", "https://youtu.be/…"]],
-  "tip": "Ojo: aviso opcional que se muestra en la app.",
+  "tip": "Ojo: aviso opcional que se muestra en la ficha.",
   "added": "2026-10-13"
 }
 ```
@@ -72,45 +76,40 @@ Abre `apps.json`, copia una entrada dentro de `apps` de la categoría que quiera
 |---|---|
 | `name` · `tag` · `desc` | Nombre, frase corta y descripción. |
 | `links` | Lista de `["Texto", "URL"]`. |
-| `logo` | Opcional. Si no lo pones, se busca solo desde el repositorio; o pon `"logo": ["https://…"]`. |
+| `logo` | Opcional. Si no lo pones se busca solo en el repositorio; o `"logo": ["https://…"]`. |
 | `tip` | Opcional: un aviso dentro de la ficha. |
 | `added` | Opcional: con una fecha, la app sale como **«Nueva»** durante 12 días. |
 
-**Categorías:** cada categoría (`id`, `e` emoji, `t` título, `s` subtítulo) sale como ventana, carpeta del escritorio y botón de la barra. Para mover una app de carpeta, corta su entrada y pégala en `apps` de otra categoría.
-**Packs:** las listas de «instalar varias apps de una vez» están en `PACKS` al final de `app.js` (icono, nombre, descripción y los nombres de las apps tal como están en `apps.json`). Si añades su texto en inglés a `i18n.js`, también se traduce.
+- **Categorías:** cada una (`id`, `e` emoji, `t` título, `s` subtítulo) sale como ventana, carpeta del escritorio y botón de la barra. Para mover una app, corta su entrada y pégala en `apps` de otra categoría.
+- **Packs:** las listas de «instalar varias apps de una vez» están en `PACKS` al final de `app.js`. Si añades su texto en inglés a `i18n.js`, también se traduce.
+- **Se actualiza solo:** al subir `apps.json`, la Action «Sincronizar logos y datos» descarga logos, estrellas de GitHub, fuentes y QR a la propia web (y se repite cada día). Otra Action revisa enlaces rotos cada lunes. Las sugerencias llegan por la plantilla de *issues*.
 
-### 🤖 Se actualiza solo
-Al subir `apps.json`, la Action **«Sincronizar logos y datos»** descarga los logos, las estrellas de GitHub, las fuentes y el QR a la propia web (y se repite cada día). Otra Action, **«Revisar enlaces rotos»**, corre cada lunes. Las sugerencias de apps llegan por una plantilla de *issues* (`.github/ISSUE_TEMPLATE`).
+<a id="estructura"></a>
+<img src="docs/bar-estructura.png" alt="estructura.exe" width="100%">
 
-## 🎛️ Menús
-
-- **Kixki** (en PC) y **Más** (en móvil) llevan solo las opciones generales: día/noche, color, **Fondo**, **Estación**, lluvia, sonido, música, idioma, vista y los ajustes de Kixki.
-- Las carpetas se abren desde el escritorio y la barra de tareas (PC) o desde las filas de carpetas y la barra de abajo (móvil).
-
-## 📁 Estructura del proyecto
-
-Todo lo que la página necesita vive en la **raíz** (las rutas del código son relativas y planas: no muevas estos archivos a carpetas).
+Todo lo que la página necesita vive en la **raíz**. Las imágenes de este README están en `docs/` (la página no las usa).
 
 | Dónde | Qué es |
 |---|---|
-| `index.html` · `manifest.webmanifest` · `sw.js` · iconos y `logo.png` | la página, la PWA y su caché (`SHELL` de `sw.js` lista todo lo que se guarda) |
-| `styles.css` · `pixel-ui.css` · `app.js` · `i18n.js` | tienda, estilo pixel organizado (menú Inicio en columnas) e idioma |
-| `scenes.js` · `pxbg.css` · `pxbg.js` | fondos, estaciones y los bichitos/animaciones de los fondos pixel |
+| `index.html` · `manifest.webmanifest` · `sw.js` · iconos y `logo.png` | la página, la PWA y su caché (`SHELL` de `sw.js` lista lo que se guarda) |
+| `styles.css` · `pixel-ui.css` · `app.js` · `i18n.js` | tienda, estilo pixel (menú Inicio en columnas) e idioma |
+| `scenes.js` · `pxbg.css` · `pxbg.js` | fondos, estaciones y los bichitos de los fondos pixel |
 | `music.js` | música original (30 piezas, Web Audio) |
-| `lluvia.*` · `xpbg.*` | lluvia y sonido de lluvia · Colina XP (pasto, cielo, pájaros) |
+| `lluvia.*` · `xpbg.*` | lluvia y su sonido · Colina XP (pasto, cielo, pájaros) |
 | `eggs.js` · `vallas.js` | easter eggs y Salta Vallas |
 | `kixki*.js/css`, `dialogs.js`, `basket.*`, `consejos.*` | Kixki, la oveja guía |
 | `vacaboss.*`, `vaca.gif`, `vaca-jefa.*` | vaca.exe se rebela |
 | `xpmode.js` + `xp.css`, `xp-icons.css`, `xp-games.*` | modo XP («Cambiar estilo») |
 | `apps.json` · `data/` · `logos/` · `fonts/` · `vendor/` | catálogo y recursos que descarga la Action |
-| `tools/` | pruebas y utilidades (no las carga la página); `tools/pixel-fuente/` y `tools/xp-fuente/` generan `pixel-ui.css` y `xp.css` |
+| `tools/` | pruebas y utilidades; `pixel-fuente/` y `xp-fuente/` generan `pixel-ui.css` y `xp.css` |
 | `.github/` | plantilla de sugerencias y Actions (`sync.yml`, `links.yml`) |
 
-> 📌 **Si añades un archivo nuevo**, súmalo a `SHELL` en `sw.js` y sube la versión de caché (`V`).
+> **Si añades un archivo nuevo**, súmalo a `SHELL` en `sw.js` y sube la versión de caché (`V`).
 
-## 🧪 Pruebas
+<a id="pruebas"></a>
+<img src="docs/bar-pruebas.png" alt="pruebas.exe" width="100%">
 
-Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego (todas aceptan `movil` al final):
+Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego, con `movil` al final para la vista de móvil:
 
 | Comando | Qué comprueba |
 |---|---|
@@ -121,15 +120,12 @@ Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego (todas aceptan
 | `node tools/test-dialogos.mjs` | los diálogos y la latencia de Kixki |
 | `node tools/check-dialogs.mjs` · `check-links.mjs` | textos válidos (es + en) · enlaces rotos |
 
-## 🛠️ Trucos de consola
+Trucos de consola: `KXB.next()` · `KXB.setWorld("pixel"|"xp")` · `KXB.season("otono")` · `KXRAIN.lightning()` · `KXQ.list()` · `KXK.say("hola")` · `KXM.toggle()`.
 
-`KXB.next()` (cambia fondo/estación) · `KXB.setWorld("pixel"|"xp")` · `KXB.season("otono")` · `KXRAIN.lightning()` · `KXQ.list()` (logros) · `KXK.say("hola")` · `KXM.toggle()` (música). Los detalles de cada parte están abajo.
+<a id="mas-detalles"></a>
+<img src="docs/bar-detalles.png" alt="mas-detalles.exe" width="100%">
 
----
-
-## 📚 Documentación técnica detallada
-
-Todo lo que se fue construyendo, parte por parte. Haz clic en una sección para abrirla.
+Todo lo que se fue construyendo, parte por parte. Abre una sección para leerla.
 
 <details>
 <summary><b>Kixki, la oveja guía</b></summary>
@@ -359,12 +355,6 @@ Todo lo que se fue construyendo, parte por parte. Haz clic en una sección para 
 
 </details>
 
----
+<br>
 
-<div align="center">
-
-<sub>▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄</sub>
-
-🐑 Hecho con ♥ por **KitsukiLove** · Si Kixki te cae bien, regálale una ⭐ al repositorio
-
-</div>
+<p align="center"><img src="docs/pie.png" alt="Dos ovejitas pixel en el pasto. Hecho con amor por KitsukiLove" width="100%"></p>
