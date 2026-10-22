@@ -1,0 +1,53 @@
+/* =========================================================
+   Pruebas del selector «Fondo» (Pixel ↔ Colina XP) y «Estación» (parte 8) en Chromium headless
+   node tools/test-fondos.mjs [movil]
+   ========================================================= */
+import {open,sleep} from "./_harness.mjs";
+const mobile=process.argv.slice(2).includes("movil");
+const out={ok:0,bad:0};
+const check=(c,msg,extra="")=>{if(c){out.ok++;console.log("  ✓ "+msg+(extra?"  "+extra:""));}else{out.bad++;console.log("  ✗ "+msg+(extra?"  "+extra:""));}};
+const t=await open({mobile,init:()=>{try{if(sessionStorage.getItem("t-ini"))return;sessionStorage.setItem("t-ini","1");localStorage.setItem("kixki-bgx",JSON.stringify({xp:0}));localStorage.setItem("kixki-bg",JSON.stringify("otono"));localStorage.removeItem("kixki-xps");}catch(e){}}});
+const pg=t.pg,ev=f=>pg.evaluate(f);
+console.log("\n1 · Sin la Colina XP ganada");
+check(await ev(()=>KXB.world())==="pixel","el mundo es Pixel");
+check(await ev(()=>KXB.season())==="otono","la estación es Otoño");
+await ev(()=>{KXB.next();});await sleep(200);
+check(await ev(()=>KXB.world())==="pixel"&&await ev(()=>KXB.season())==="verano"||await ev(()=>KXB.season())==="invierno","«Fondo» (bloqueado) solo cambia de estación pixel",await ev(()=>KXB.full()));
+check(await ev(()=>KXB.setWorld("xp"))===false,"no se puede entrar a la Colina XP sin ganarla");
+await ev(()=>{const m=document.getElementById("sm");m.hidden=false;});await sleep(200);
+const lock=await ev(()=>({bg:document.getElementById("s-bg").hidden,sea:document.getElementById("s-sea")&&document.getElementById("s-sea").hidden,t:document.getElementById("s-sea")&&document.getElementById("s-sea").textContent}));
+check(lock.bg===true,"el botón «Fondo» del menú se oculta mientras esté bloqueada");
+check(lock.sea===false&&/Estaci/.test(lock.t),"«Estación» sí aparece",lock.t);
+console.log("\n2 · Con la Colina XP ganada");
+await ev(()=>{KXB.unlockXP();KXB.use("");KXB.season("otono");});await sleep(200);
+check(await ev(()=>KXB.world())==="pixel"&&await ev(()=>document.documentElement.getAttribute("data-bg"))==="otono","pixel · Otoño");
+check(await ev(()=>!document.getElementById("s-bg").hidden),"«Fondo» aparece en el menú");
+await ev(()=>KXB.next());await sleep(400);
+check(await ev(()=>KXB.world())==="xp"&&await ev(()=>document.documentElement.getAttribute("data-xps"))==="otono","«Fondo» pasa a la Colina XP y conserva Otoño",await ev(()=>KXB.full()));
+check(await ev(()=>document.getElementById("s-bg").textContent)==="Fondo: Colina XP","el botón dice «Fondo: Colina XP»");
+await ev(()=>document.getElementById("s-sea").click());await sleep(400);
+check(await ev(()=>KXB.season())==="invierno"&&await ev(()=>document.documentElement.getAttribute("data-xps"))==="invierno","«Estación» avanza dentro de la Colina XP");
+await ev(()=>KXB.season("clasica"));await sleep(200);
+await ev(()=>KXB.next());await sleep(400);
+check(await ev(()=>KXB.world())==="pixel"&&await ev(()=>document.documentElement.getAttribute("data-bg")||"x")==="x","XP clásica → pixel Clásico (sin imagen)",await ev(()=>KXB.full()));
+await ev(()=>KXB.season("halloween"));await sleep(200);
+await ev(()=>KXB.next());await sleep(300);
+check(await ev(()=>KXB.world())==="xp"&&await ev(()=>KXB.season())==="halloween","pixel Halloween → XP Halloween");
+await ev(()=>KXB.season("auto"));await sleep(300);
+check((await ev(()=>KXB.seasonLabel())).startsWith("Auto"),"Auto muestra la estación real",await ev(()=>KXB.seasonLabel()));
+const lst=await ev(()=>KXB.seasons().map(s=>s.id));
+check(lst.length===8&&lst[0]==="auto","la lista XP tiene Auto + 7 estaciones",lst.join(","));
+await ev(()=>KXB.next());await sleep(300);
+const lp=await ev(()=>KXB.seasons().map(s=>s.id));
+check(lp.length===9&&lp.includes("valle"),"la lista pixel incluye Valle",lp.join(","));
+console.log("\n3 · Se recuerda al recargar");
+await ev(()=>{KXB.season("verano");KXB.next();});await sleep(300);
+await pg.reload();await pg.waitForFunction(()=>window.KXB&&KXB.world,null,{timeout:20000});await sleep(900);
+check(await ev(()=>KXB.world())==="xp"&&await ev(()=>KXB.season())==="verano","tras recargar sigue en Colina XP · Verano");
+console.log("\n4 · ¡Vacas! (castigo) sigue mandando");
+await ev(()=>KXB.curse());await sleep(200);
+check(await ev(()=>KXB.world())==="vacas"&&await ev(()=>document.getElementById("s-sea").hidden),"con el castigo no hay estaciones");
+await ev(()=>KXB.restore());await sleep(300);
+check(await ev(()=>KXB.world())!=="vacas","restore() vuelve al fondo anterior",await ev(()=>KXB.full()));
+check(t.errs.length===0,"sin errores en consola",t.errs.slice(0,2).join(" | "));
+console.log(`\n${out.ok} bien · ${out.bad} mal`);await t.close();process.exit(out.bad?1:0);

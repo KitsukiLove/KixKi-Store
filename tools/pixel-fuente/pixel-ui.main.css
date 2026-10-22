@@ -1,0 +1,86 @@
+/* =====================================================================
+   KIXKI STORE · ESTILO PIXEL, MEJOR ORGANIZADO (parte 8)
+   ---------------------------------------------------------------------
+   Mismo lenguaje de siempre (Pixelify Sans, bordes de píxel, tu lila), pero con la organización del modo XP:
+   · Menú Inicio en dos columnas: izquierda = lo que haces · derecha = tus ajustes · pie = Cerrar todas / Apagar.
+   · Cabecera con la oveja y el nombre, iconos pixel en cada fila, grupos separados con línea punteada.
+   · En el móvil («Más»): hoja con cabecera fija, dos columnas y desplazamiento (antes se salía de la pantalla).
+   Cada botón se coloca por su id, así que los botones nuevos que añadan otros archivos caen solos a la derecha.
+   Solo se aplica en estilo pixel (el modo XP trae su propio menú en xp.css). Generado desde tools/pixel-fuente/.
+   ===================================================================== */
+
+/* ---------- escritorio (PC) ---------- */
+@P.dsk #sm{
+  --bc:var(--line);left:10px;bottom:56px;width:580px;max-height:calc(100vh - 76px);
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) var(--surface2);
+  padding:0;gap:0;grid-template-columns:290px 1fr;grid-auto-flow:dense;align-content:start;
+  background:linear-gradient(90deg,var(--surface) 0,var(--surface) 290px,var(--surface2) 290px,var(--surface2) 100%);
+  box-shadow:0 -4px 0 var(--bc),0 4px 0 var(--bc),-4px 0 0 var(--bc),4px 0 0 var(--bc),0 8px 0 0 var(--sh),8px 12px 0 0 rgba(10,5,40,.22)}
+/* cabecera: marco con la oveja + nombre */
+@P.dsk #sm::before{content:"Kixki Store";grid-column:1/-1;grid-row:1;display:block;height:64px;padding:0 0 0 84px;
+  font:700 24px/64px "Pixelify Sans",monospace;color:#fff;text-shadow:3px 3px 0 rgba(10,5,40,.55);image-rendering:pixelated;
+  background:
+    var(--pxi-sheep) 14px 50%/54px 30px no-repeat,
+    linear-gradient(var(--surface),var(--surface)) 10px 50%/62px 42px no-repeat,
+    linear-gradient(var(--line),var(--line)) 6px 50%/70px 50px no-repeat,
+    repeating-linear-gradient(90deg,rgba(255,255,255,.09) 0 4px,transparent 4px 8px),
+    linear-gradient(90deg,var(--pri-bc),var(--pri) 72%,color-mix(in srgb,var(--pri) 70%,#fff));
+  border-bottom:4px solid var(--line);box-shadow:inset 0 -4px 0 rgba(0,0,0,.22)}
+/* pie con los botones de salida */
+@P.dsk #sm::after{content:"";grid-column:1/-1;grid-row:60;align-self:stretch;height:52px;border-top:4px solid var(--line);
+  background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(0,0,0,.05) 6px 8px),var(--surface2)}
+
+/* cada fila: sin marco, con icono; al pasar el ratón se rellena con tu color */
+@P #sm .sm{
+  --bc:transparent;position:relative;width:100%;min-height:36px;padding:0 12px 0 10px;gap:10px;border-radius:0;
+  background:transparent;box-shadow:none;color:var(--ink);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  grid-column:2;order:50}
+@P #sm .sm::before{content:"";flex:none;width:24px;height:24px;background:var(--mi,none) center/contain no-repeat;image-rendering:pixelated}
+@P.dsk #sm .sm:hover,@P.dsk #sm .sm:focus-visible{background:var(--pri);color:var(--pri-ink);outline:0;box-shadow:inset 0 0 0 2px var(--pri-bc)}
+@P.dsk #sm .sm:active{transform:translateY(1px)}
+@P #sm .sm .kq-dot{margin-left:auto}
+@P #sm #s-kv-call::before,@P #sm #s-kv-bg::before{display:none}
+
+/* columna izquierda: lo que haces */
+@P.dsk #sm #s-run,@P.dsk #sm #s-kx-tip,@P.dsk #sm #s-kx-pet{grid-column:1;min-height:48px;font-size:15px;font-weight:700;padding-left:12px}
+@P.dsk #sm #s-run::before,@P.dsk #sm #s-kx-tip::before,@P.dsk #sm #s-kx-pet::before{width:32px;height:32px}
+@P.dsk #sm #s-run{order:1}@P.dsk #sm #s-kx-tip{order:2}@P.dsk #sm #s-kx-pet{order:3}
+@P.dsk #sm #s-game,@P.dsk #sm #s-xpg1,@P.dsk #sm #s-xpg2,@P.dsk #sm #s-kx-ach,@P.dsk #sm #s-sug,@P.dsk #sm #s-qr,@P.dsk #sm #s-inst,@P.dsk #sm #s-kv-call,@P.dsk #sm #s-kx-on,@P.dsk #sm #s-kx-mode,@P.dsk #sm #s-kx-pr{grid-column:1;padding-left:16px}
+@P.dsk #sm #s-game{order:10;margin-top:6px;border-top:2px dotted var(--line)}
+@P.dsk #sm #s-xpg1{order:11}@P.dsk #sm #s-xpg2{order:12}
+@P.dsk #sm #s-kx-ach{order:20;margin-top:6px;border-top:2px dotted var(--line)}
+@P.dsk #sm #s-sug{order:21}@P.dsk #sm #s-qr{order:22}@P.dsk #sm #s-inst{order:23}@P.dsk #sm #s-kv-call{order:24}
+/* columna derecha: tus ajustes, en grupos (los de Kixki la oveja van abajo a la izquierda) */
+@P.dsk #sm #smt{order:1}@P.dsk #sm #s-acc{order:2}@P.dsk #sm #s-bg{order:3}@P.dsk #sm #s-sea{order:4}@P.dsk #sm #s-kv-bg{order:5}@P.dsk #sm #s-pix{order:6}@P.dsk #sm #s-xp{order:7}
+@P.dsk #sm #s-rain{order:10;margin-top:6px;border-top:2px dotted var(--line)}@P.dsk #sm #s-rainsnd{order:11}@P.dsk #sm #s-snd{order:12}@P.dsk #sm #s-mus{order:13}
+@P.dsk #sm #s-lang{order:20;margin-top:6px;border-top:2px dotted var(--line)}@P.dsk #sm #s-view{order:21}
+@P.dsk #sm #s-kx-on{order:30;margin-top:6px;border-top:2px dotted var(--line)}@P.dsk #sm #s-kx-mode{order:31}@P.dsk #sm #s-kx-pr{order:32}
+/* pie: Cerrar todas · Apagar */
+@P.dsk #sm #sma,@P.dsk #sm #s-off{grid-column:2;grid-row:60;align-self:center;justify-self:end;z-index:1;width:auto;min-height:34px;order:0;margin:0;border-top:0;
+  --bc:var(--line);background:var(--surface);box-shadow:0 -2px 0 var(--bc),0 2px 0 var(--bc),-2px 0 0 var(--bc),2px 0 0 var(--bc);font-weight:700}
+@P.dsk #sm #s-off{margin-right:12px}
+@P.dsk #sm #sma{margin-right:134px}
+@P.dsk #sm #sma:hover,@P.dsk #sm #sma:focus-visible{background:var(--pri);color:var(--pri-ink)}
+@P.dsk #sm #s-off:hover,@P.dsk #sm #s-off:focus-visible{background:#e8394d;color:#fff;box-shadow:0 -2px 0 #7a1020,0 2px 0 #7a1020,-2px 0 0 #7a1020,2px 0 0 #7a1020}
+@P.dsk #sm #s-off::before,@P.dsk #sm #sma::before{width:22px;height:22px}
+
+/* ---------- móvil («Más»): hoja con cabecera fija, dos columnas y desplazamiento ---------- */
+@P:not(.dsk) #sm:not([hidden]){left:10px;right:10px;bottom:calc(92px + env(safe-area-inset-bottom,0px));max-height:calc(100vh - 150px);max-height:calc(100dvh - 150px);
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;padding:0 0 4px;gap:0;grid-template-columns:1fr 1fr;align-content:start;
+  background:linear-gradient(90deg,transparent calc(50% - 1px),color-mix(in srgb,var(--line) 35%,transparent) calc(50% - 1px),color-mix(in srgb,var(--line) 35%,transparent) 50%,transparent 50%),var(--surface)}
+@P:not(.dsk) #sm::before{content:"Kixki Store";grid-column:1/-1;position:sticky;top:0;z-index:2;display:block;height:58px;padding:0 0 0 76px;
+  font:700 21px/58px "Pixelify Sans",monospace;color:#fff;text-shadow:3px 3px 0 rgba(10,5,40,.55);image-rendering:pixelated;
+  background:var(--pxi-sheep) 12px 50%/48px 27px no-repeat,linear-gradient(var(--surface),var(--surface)) 8px 50%/56px 38px no-repeat,linear-gradient(var(--line),var(--line)) 4px 50%/64px 46px no-repeat,
+    repeating-linear-gradient(90deg,rgba(255,255,255,.09) 0 4px,transparent 4px 8px),linear-gradient(90deg,var(--pri-bc),var(--pri) 72%,color-mix(in srgb,var(--pri) 70%,#fff));
+  border-bottom:4px solid var(--line)}
+@P:not(.dsk) #sm .sm{--bc:transparent;min-height:50px;padding:4px 8px;gap:8px;border-radius:0;background:transparent;box-shadow:none;
+  border-bottom:2px dotted color-mix(in srgb,var(--line) 40%,transparent);font-size:13px;line-height:1.15;white-space:normal;text-align:left;justify-content:flex-start;grid-column:auto}
+@P:not(.dsk) #sm .sm:active{background:var(--pri);color:var(--pri-ink)}
+@P:not(.dsk) #sm .sm::before{width:22px;height:22px}
+/* orden en el móvil: ajustes arriba, Kixki y salida al final */
+@P:not(.dsk) #sm #s-run{order:1}@P:not(.dsk) #sm #smt{order:2}@P:not(.dsk) #sm #s-acc{order:3}@P:not(.dsk) #sm #s-bg{order:4}@P:not(.dsk) #sm #s-sea{order:5}@P:not(.dsk) #sm #s-pix{order:6}@P:not(.dsk) #sm #s-xp{order:7}
+@P:not(.dsk) #sm #s-rain{order:10}@P:not(.dsk) #sm #s-rainsnd{order:11}@P:not(.dsk) #sm #s-snd{order:12}@P:not(.dsk) #sm #s-mus{order:13}
+@P:not(.dsk) #sm #s-lang{order:20}@P:not(.dsk) #sm #s-view{order:21}@P:not(.dsk) #sm #s-game{order:30}@P:not(.dsk) #sm #s-xpg1{order:31}@P:not(.dsk) #sm #s-xpg2{order:32}
+@P:not(.dsk) #sm #s-kx-ach{order:40}@P:not(.dsk) #sm #s-sug{order:41}@P:not(.dsk) #sm #s-kx-tip{order:50}@P:not(.dsk) #sm #s-kx-pet{order:51}@P:not(.dsk) #sm #s-kx-on{order:52}@P:not(.dsk) #sm #s-kx-mode{order:53}@P:not(.dsk) #sm #s-kx-pr{order:54}@P:not(.dsk) #sm #sma{order:99}
+/* tema oscuro: un halo claro para que los iconos oscuros (QR, Apagar…) no se pierdan */
+@P[data-theme="dark"] #sm .sm::before{filter:drop-shadow(1px 0 0 rgba(237,231,255,.9)) drop-shadow(-1px 0 0 rgba(237,231,255,.9)) drop-shadow(0 1px 0 rgba(237,231,255,.9)) drop-shadow(0 -1px 0 rgba(237,231,255,.9))}

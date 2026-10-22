@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kixki XP · laboratorio de diseño</title>
+<!-- Página de pruebas: NO toca tu tienda. Solo carga el kit para verlo y probarlo. -->
+<link rel="stylesheet" href="../xp.css">
+<link rel="stylesheet" href="../xp-icons.css">
+<link rel="stylesheet" href="../xp-games.css">
+<style>
+  html,body{min-height:100%}body{margin:0;padding:18px 14px 80px;background:linear-gradient(180deg,#2b64d8 0,#74a9ee 46%,#6dbb3c 46.2%,#3d8f1c 100%) fixed}
+  :root[data-theme="dark"] body{background:linear-gradient(180deg,#050a24 0,#16286a 46%,#124a2a 46.2%,#0a2a14 100%) fixed}
+  .lab{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px;max-width:1120px;margin:0 auto;align-items:start}
+  .lab .xp-window{margin:0}.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:4px;margin:0;padding:6px}
+  .ig button{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 2px 6px;font:11px/1.2 var(--xp-font);color:inherit;background:none;border:1px solid transparent;border-radius:3px;cursor:default}
+  .ig button:hover{background:rgba(49,106,197,.14);border-color:rgba(49,106,197,.4)}.ig button:focus{outline:0;background:var(--xp-sel);color:#fff}
+  .ig .xpi{--s:var(--sz,48px)}
+  .sizes{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px}.sizes label{display:flex;gap:4px;align-items:center}
+  .launch{display:flex;gap:10px;flex-wrap:wrap}
+  .launch button{display:flex;flex-direction:column;align-items:center;gap:6px;width:112px;padding:12px 6px;font:12px var(--xp-font);color:inherit;background:none;border:1px solid transparent;border-radius:3px;cursor:pointer}
+  .launch button:hover{background:rgba(49,106,197,.14);border-color:rgba(49,106,197,.4)}
+  .launch .xpi{--s:56px}
+  .tools{position:fixed;left:0;right:0;bottom:0;z-index:8000;display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px;background:var(--xp-task,#245edb);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
+  .tools .xpi{--s:22px}
+  h2{margin:0 0 8px;font:700 13px var(--xp-font-title)}
+  .xp-title .xpi{margin-right:6px}
+</style>
+</head>
+<body>
+<div class="lab">
+
+  <div class="xp-window">
+    <div class="xp-titlebar"><span class="xp-title"><i class="xpi xpi-folder" style="--s:16px"></i>Iconos · Luna Lana</span><span class="xp-controls"><button class="xp-min" aria-label="Minimizar"></button><button class="xp-max" aria-label="Maximizar"></button><button class="xp-close" aria-label="Cerrar"></button></span></div>
+    <div class="xp-body">
+      <div class="sizes"><b>Tamaño:</b>
+        <label><input type="radio" name="sz" value="16"> 16</label><label><input type="radio" name="sz" value="32"> 32</label>
+        <label><input type="radio" name="sz" value="48" checked> 48</label><label><input type="radio" name="sz" value="72"> 72</label></div>
+    </div>
+    <div class="xp-body white" style="padding:0"><div class="ig" id="ig"></div></div>
+    <div class="xp-status"><span id="ico-n">33 objetos</span><span>Set vectorial 48×48</span></div>
+  </div>
+
+  <div class="xp-window">
+    <div class="xp-titlebar"><span class="xp-title"><i class="xpi xpi-cartas" style="--s:16px"></i>Juegos</span><span class="xp-controls"><button class="xp-close" aria-label="Cerrar"></button></span></div>
+    <div class="xp-body white">
+      <div class="launch">
+        <button type="button" data-g="lobos"><i class="xpi xpi-lobo"></i>Buscalobos</button>
+        <button type="button" data-g="parejas"><i class="xpi xpi-cartas"></i>Parejas</button>
+      </div>
+      <p style="margin:12px 4px 0;color:var(--muted,#555);font-size:11px">Puedes abrir los dos a la vez, arrastrarlos por la barra de título y enrollarlos con doble clic. En el móvil, mantén pulsada una casilla para poner bandera.</p>
+    </div>
+    <div class="xp-status"><span>2 juegos</span><span>Listo</span></div>
+  </div>
+
+  <div class="xp-window">
+    <div class="xp-titlebar"><span class="xp-title"><i class="xpi xpi-info" style="--s:16px"></i>Cuadros de mensaje</span><span class="xp-controls"><button class="xp-close" aria-label="Cerrar"></button></span></div>
+    <div class="xp-body">
+      <div class="row">
+        <button class="xp-button" data-m="info">Información</button><button class="xp-button" data-m="check">Éxito</button>
+        <button class="xp-button" data-m="question">Pregunta</button><button class="xp-button" data-m="warning">Aviso</button><button class="xp-button" data-m="error">Error</button>
+      </div>
+      <p style="margin:12px 0 4px">Barra de progreso, globo y menú del kit:</p>
+      <div class="xp-progress"><i style="--v:68%"></i></div>
+      <div class="row" style="margin-top:10px"><div class="xp-balloon"><b>Kixki dice</b>¡Beee! Tu catálogo está al día.</div>
+      <ul class="xp-menu"><li>Abrir</li><li>Copiar enlace</li><hr><li>Propiedades</li></ul></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="tools" role="toolbar" aria-label="Pruebas">
+  <button class="xp-button" id="t-theme"><i class="xpi xpi-moon"></i> Día / noche</button>
+  <button class="xp-button" id="t-acc"><i class="xpi xpi-decoracion"></i> Color: <span id="t-accn">Lila</span></button>
+</div>
+
+<script src="../xp-games.js"></script>
+<script>
+(function(){
+var names=["tiendas","importante","control","utilidad","pantalla","privacidad","fotos","internet","dia","emulacion","decoracion","musica","teclados","favs","news","packs","search","home","moon","sun","more","sheep","folder","download","info","check","question","warning","error","lobo","bandera","cartas","trofeo"];
+var ig=document.getElementById("ig");
+ig.innerHTML=names.map(function(n){return '<button type="button"><i class="xpi xpi-'+n+'"></i>'+n+'</button>';}).join("");
+document.getElementById("ico-n").textContent=names.length+" objetos";
+document.querySelectorAll('input[name="sz"]').forEach(function(r){r.onchange=function(){ig.style.setProperty("--sz",r.value+"px");};});
+document.querySelectorAll("[data-g]").forEach(function(b){b.onclick=function(){XPGames.open(b.dataset.g);};});
+var M={info:["Kixki Store","Esto es un cuadro de información con el icono nuevo."],check:["Kixki Store","¡Listo! La app se añadió a tus favoritas."],
+ question:["Kixki Store","¿Quieres que Kixki te sugiera una app?"],warning:["Kixki Store","Revisa siempre la fuente de cada app antes de instalarla."],error:["Kixki Store","No se pudo cargar el catálogo. Revisa tu conexión."]};
+document.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){var m=M[b.dataset.m];XPGames.msg({title:m[0],text:m[1],icon:b.dataset.m,buttons:b.dataset.m==="question"?["Sí","No"]:["Aceptar"]});};});
+var R=document.documentElement;
+document.getElementById("t-theme").onclick=function(){R.dataset.theme=R.dataset.theme==="dark"?"light":"dark";};
+var acc=[["","Lila"],["mint","Menta"],["rose","Rosa"],["dusk","Atardecer"]],ai=0;
+document.getElementById("t-acc").onclick=function(){ai=(ai+1)%4;if(acc[ai][0])R.dataset.acc=acc[ai][0];else R.removeAttribute("data-acc");document.getElementById("t-accn").textContent=acc[ai][1];};
+})();
+</script>
+</body>
+</html>
