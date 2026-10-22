@@ -1,0 +1,105 @@
+/* =========================================================
+   KIXKI · la oveja guía  (parte 1)
+   Usa las mismas variables del tema (--surface, --line, --acc, --pri…)
+   para que combine con el modo día/noche y los colores elegidos.
+   ========================================================= */
+#kixki{position:fixed;left:0;top:0;width:0;height:0;z-index:4500;pointer-events:none;will-change:transform;--kd:1}
+:root:not(.dsk) #kixki{z-index:45}
+#kixki.kk-top{z-index:7650}
+#kixki.kk-off{visibility:hidden}
+#kixki.kk-gone{display:none}
+
+/* sombra bajo las patas */
+.kk-sh{position:absolute;left:-18px;bottom:-3px;width:36px;height:6px;background:rgba(20,10,50,.2);
+  clip-path:polygon(3px 0,calc(100% - 3px) 0,100% 50%,calc(100% - 3px) 100%,3px 100%,0 50%)}
+
+/* cuerpo: un botón (se puede tocar o activar con teclado) */
+.kk-body{position:absolute;left:-30px;bottom:0;width:60px;height:45px;padding:0;margin:0;border:0;background:none;color:inherit;
+  cursor:pointer;pointer-events:auto;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:visible}
+#kixki[data-m="walk"] .kk-body,#kixki[data-m="hop"] .kk-body{pointer-events:none}
+.kk-body:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.kk-flip{position:absolute;inset:0;transform:scaleX(var(--kd));transform-origin:50% 50%}
+.kk-f{position:absolute;left:0;top:0;display:none;image-rendering:pixelated}
+#kixki[data-f="idle"] .f-idle,#kixki[data-f="blink"] .f-blink,#kixki[data-f="talk"] .f-talk,#kixki[data-f="walkB"] .f-walkB,
+#kixki[data-f="walkC"] .f-walkC,#kixki[data-f="jump"] .f-jump,#kixki[data-f="happy"] .f-happy,#kixki[data-f="sleep"] .f-sleep{display:block}
+
+/* colores del sprite (la bufanda sigue el color de acento elegido) */
+.k-w{fill:#fffaf0}.k-s{fill:#d9c9f5}.k-f{fill:#f7b58a}.k-d{fill:#d98f66}.k-e{fill:#2b1a5e}.k-g{fill:#fff}
+.k-p{fill:#ff8fc7}.k-c{fill:#ff9fb8}.k-m{fill:#b3365e}.k-a{fill:var(--pri)}.k-b{fill:var(--pri-sh)}.k-y{fill:#ffc23a}.k-l{fill:#5a3d7a}
+
+/* movimiento: respira quieta, rebota al caminar, salta de alegría */
+#kixki[data-m="idle"] .kk-flip,#kixki[data-m="talk"] .kk-flip{animation:kkb 1.7s steps(1,end) infinite}
+@keyframes kkb{50%{transform:scaleX(var(--kd)) translateY(-2px)}}
+#kixki[data-m="walk"] .kk-flip{animation:kkw .34s steps(1,end) infinite}
+@keyframes kkw{50%{transform:scaleX(var(--kd)) translateY(-2px)}}
+#kixki.kk-cheer .kk-flip{animation:kkc .5s steps(2,end) infinite}
+@keyframes kkc{50%{transform:scaleX(var(--kd)) translateY(-9px)}}
+
+/* duerme de noche si llevas un rato sin tocar nada */
+.kk-zz{position:absolute;left:14px;top:-14px;display:none;color:var(--acc);font:700 16px/1 "Pixelify Sans",ui-monospace,monospace;pointer-events:none}
+#kixki[data-m="sleep"] .kk-zz{display:block;animation:kkz 2.4s steps(6,end) infinite}
+@keyframes kkz{0%{transform:translate(0,6px);opacity:0}20%{opacity:1}100%{transform:translate(14px,-22px);opacity:0}}
+
+/* polvito al aterrizar */
+.kk-d{position:absolute;bottom:0;left:var(--dx,0);width:6px;height:6px;background:var(--cl,#fff7e6);pointer-events:none;
+  animation:kkd .5s steps(5,end) forwards}
+@keyframes kkd{from{transform:translate(0,0);opacity:.9}to{transform:translate(var(--mx,6px),-14px);opacity:0}}
+
+/* globo de diálogo (mismo estilo de bordes pixelados que las ventanas) */
+.kk-bub{position:absolute;left:-110px;bottom:60px;width:max-content;min-width:92px;max-width:min(250px,calc(100vw - 20px));
+  padding:6px 26px 9px 11px;background:var(--surface);color:var(--ink);text-align:left;pointer-events:auto;cursor:pointer;
+  font:500 15px/1.35 "Pixelify Sans",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  box-shadow:0 -3px 0 0 var(--line),0 3px 0 0 var(--line),-3px 0 0 0 var(--line),3px 0 0 0 var(--line),0 6px 0 0 var(--sh);
+  animation:kkin .16s steps(3) both}
+@keyframes kkin{from{transform:translateY(6px) scale(.9);opacity:0}to{transform:none;opacity:1}}
+.kk-bub.below{bottom:auto;top:10px}
+.kk-nm{display:block;margin-bottom:1px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--acc)}
+.kk-x{position:absolute;right:3px;top:2px;width:22px;height:22px;padding:0;border:0;background:none;color:var(--muted);font:700 13px/1 monospace;cursor:pointer}
+.kk-x:hover,.kk-x:focus-visible{color:var(--ink)}
+.kk-tx{position:relative;margin:0;overflow-wrap:anywhere}
+.kk-tx .g{display:block;visibility:hidden}
+.kk-tx .v{position:absolute;left:0;top:0;right:0}
+.kk-tl{position:absolute;left:calc(var(--tx,40px) - 12px);bottom:-9px;display:block}
+.kk-tl .o{fill:var(--line)}.kk-tl .i{fill:var(--surface)}
+.kk-bub.below .kk-tl{bottom:auto;top:-9px;transform:scaleY(-1)}
+.kk-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* carpeta o ventana de la que Kixki está hablando */
+.kk-pt{outline:3px dashed var(--focus)!important;outline-offset:-3px;animation:kkpt .8s steps(1) infinite}
+@keyframes kkpt{50%{outline-offset:-6px}}
+
+@media (max-width:420px){.kk-bub{font-size:14px}}
+/* (parte 2) microreacciones: globo pequeño, sin nombre ni botón de cerrar */
+.kk-bub.mic{min-width:0;padding:5px 11px 7px}
+.kk-bub.mic .kk-nm,.kk-bub.mic .kk-x{display:none}
+
+/* =========================================================
+   (parte 4b) dormir en vez de desaparecer · entrar en la ventana de un minijuego
+   ========================================================= */
+/* dormida (la opción «Kixki: no» del menú): acostada, visible y sin estorbar clics */
+#kixki.kk-snooze .kk-bub{pointer-events:none}
+#kixki.kk-snooze .kk-body{cursor:pointer;touch-action:manipulation}
+#kixki.kk-lie .kk-f{clip-path:inset(0 0 6px 0)}                          /* patitas recogidas */
+#kixki.kk-lie .kk-flip{transform:scaleX(var(--kd)) translateY(6px);animation:kkbr 3.2s steps(1,end) infinite}
+@keyframes kkbr{50%{transform:scaleX(var(--kd)) translateY(7px)}}       /* respira despacito */
+#kixki.kk-lie .kk-zz{top:-8px}
+/* se estira al despertar */
+#kixki.kk-stretch .kk-flip{transform-origin:50% 100%;animation:kkst .75s steps(5,end) 1}
+@keyframes kkst{0%{transform:scale(var(--kd),1)}35%{transform:scale(calc(var(--kd) * .9),1.22)}70%{transform:scale(calc(var(--kd) * 1.1),.9)}100%{transform:scale(var(--kd),1)}}
+/* escondida mientras el minijuego dibuja su propia Kixki (fundido corto) */
+#kixki.kk-in{opacity:0;visibility:hidden;transition:opacity .15s linear,visibility 0s linear .15s}
+/* golpe: estrellitas girando sobre la cabeza y chispas */
+.kk-stars{position:absolute;left:-24px;top:-30px;width:48px;height:14px;display:none;pointer-events:none}
+#kixki.kk-dizzy .kk-stars{display:block}
+.kk-stars i{position:absolute;top:0;font:700 14px/1 "Pixelify Sans",ui-monospace,monospace;font-style:normal;color:#ffc23a;text-shadow:1px 1px 0 #7a4b00;animation:kkstar .6s steps(4,end) infinite}
+.kk-stars i:nth-child(1){left:2px}.kk-stars i:nth-child(2){left:19px;animation-delay:-.2s}.kk-stars i:nth-child(3){left:36px;animation-delay:-.4s}
+@keyframes kkstar{50%{transform:translateY(-5px) scale(1.25)}}
+.kk-sp{position:absolute;left:0;bottom:6px;width:6px;height:6px;background:#ffc23a;pointer-events:none;animation:kksp .6s steps(6,end) forwards}
+@keyframes kksp{from{transform:translate(0,0);opacity:1}to{transform:translate(var(--sx,0),var(--sy,-30px));opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  #kixki.kk-lie .kk-flip{animation:none}
+  #kixki.kk-stretch .kk-flip{animation:none}
+  #kixki[data-m="sleep"] .kk-zz{animation:none;opacity:1}
+  .kk-stars i{animation:none}
+  .kk-sp{display:none}
+}
