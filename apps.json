@@ -159,6 +159,32 @@
      ],
      "tip": "Las apps que buscan el Shizuku original pueden necesitar su modo de compatibilidad.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Dhizuku",
+     "tag": "Permisos sin root",
+     "desc": "Da a otras apps los permisos de dueño de dispositivo (Device Owner) sin root, parecido a lo que hace Shizuku. Komi Store lo usa para instalar apps sin pedirte confirmación. Código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=iamr0s/Dhizuku"
+      ]
+     ],
+     "tip": "Se activa con un comando ADB y, en muchos móviles, hay que quitar antes las cuentas.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "LADB",
+     "tag": "ADB desde el móvil",
+     "desc": "Terminal con ADB local: activa la depuración inalámbrica y ejecuta comandos de ADB sin conectar el móvil a una computadora. Sirve, por ejemplo, para arrancar Shizuku. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=tytydraco/LADB"
+      ]
+     ],
+     "tip": "Necesita Wi-Fi y la depuración inalámbrica activa; a veces hay que reconectarla tras reiniciar.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -337,6 +363,19 @@
      ],
      "tip": "Pide muchos permisos (archivos, contactos…): dale solo los que uses y úsala en una red de confianza.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Neo Backup",
+     "tag": "Copias de seguridad",
+     "desc": "Copia y restaura tus apps, sus datos y sus ajustes, con cifrado y programación automática. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=NeoApplications/Neo-Backup"
+      ]
+     ],
+     "tip": "Para copiar los datos de las apps necesita root.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -433,7 +472,7 @@
    "id": "privacidad",
    "e": "🔒",
    "t": "Privacidad",
-   "s": "Protege tus datos, mensajes, llamadas y enlaces",
+   "s": "Protege tus datos, tu ubicación y tus enlaces",
    "apps": [
     {
      "name": "FireWall Blocks",
@@ -501,44 +540,6 @@
      "added": "2026-10-15"
     },
     {
-     "name": "Signal",
-     "tag": "Mensajería privada",
-     "desc": "Mensajería privada con cifrado de extremo a extremo por defecto: chats, notas de voz, llamadas y videollamadas (grupos de hasta 1.000 personas y llamadas grupales de hasta 50). Tiene mensajes que desaparecen e historias de 24 horas. Es de código abierto, sin anuncios y se financia con donaciones.",
-     "links": [
-      [
-       "Play",
-       "https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms"
-      ],
-      [
-       "APK",
-       "https://signal.org/android/apk/"
-      ],
-      [
-       "GitHub",
-       "https://github.com/signalapp/Signal-Android"
-      ]
-     ],
-     "tip": "Para registrarte necesita un número de teléfono; después puedes ocultarlo a los demás con un nombre de usuario en Ajustes.",
-     "added": "2026-10-15"
-    },
-    {
-     "name": "Session",
-     "tag": "Mensajería privada",
-     "desc": "Mensajería privada y de código abierto que no pide número de teléfono ni correo: te registras solo con un ID de cuenta. Sus mensajes viajan por una red descentralizada con enrutamiento cebolla, pensada para proteger tu IP y con quién hablas. Tiene chats, grupos, comunidades de más de 100 personas y mensajes temporales, y no recopila ni vende tus datos.",
-     "links": [
-      [
-       "Abrir",
-       "https://getsession.org/"
-      ],
-      [
-       "GitHub",
-       "https://github.com/session-foundation/session-android"
-      ]
-     ],
-     "tip": "Tu cuenta se guarda con una frase de recuperación: anótala en un lugar seguro, porque sin ella no se puede recuperar.",
-     "added": "2026-10-15"
-    },
-    {
      "name": "SnapSafe",
      "tag": "Cámara privada",
      "desc": "Cámara que guarda las fotos cifradas en el almacenamiento privado de la app y no tiene permiso de internet. Galería con PIN aparte, borra los metadatos al compartir, desenfoca caras y te deja elegir qué ubicación añadir. Trae un PIN trampa que, al usarlo, borra tus fotos. Código abierto (MIT).",
@@ -585,6 +586,167 @@
      ],
      "tip": "Algunas apps detectan la ubicación falsa y pueden restringir tu cuenta: úsala con cuidado.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Orbot",
+     "tag": "Tor para tus apps",
+     "desc": "Pasa el tráfico de las apps que elijas (o de todo el móvil) por la red Tor mediante una VPN local, con puentes para zonas con censura. Hecho por Guardian Project. Código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=guardianproject/orbot-android"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "TrackerControl",
+     "tag": "Bloquear rastreadores",
+     "desc": "Cortafuegos local (por VPN) que detecta y bloquea los rastreadores de tus apps y te enseña con qué empresas y servidores habla cada una. Sin root ni cuentas. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=TrackerControl/tracker-control-android"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "AirGuard",
+     "tag": "Detector de rastreadores",
+     "desc": "Te avisa si un rastreador Bluetooth (AirTag, Find My, SmartTag o similares) te sigue sin que lo sepas y te ayuda a encontrarlo. Es un proyecto de investigación del laboratorio SEEMOO (TU Darmstadt). Código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=seemoo-lab/AirGuard"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Shelter",
+     "tag": "Aislar apps",
+     "desc": "Crea un perfil de trabajo de Android para instalar apps aisladas, clonar apps (dos cuentas en un móvil) y «congelar» las que no uses. Código abierto.",
+     "links": [
+      [
+       "F-Droid",
+       "https://f-droid.org/packages/net.typeblog.shelter"
+      ],
+      [
+       "Código",
+       "https://git.angry.im/PeterCxy/Shelter"
+      ]
+     ],
+     "logo": [
+      "https://github.com/PeterCxy.png?size=160"
+     ],
+     "tip": "Algunas ROMs (como MIUI) no admiten bien el perfil de trabajo. No es una caja fuerte total: no te protege de fallos de Android.",
+     "added": "2026-10-23"
+    }
+   ]
+  },
+  {
+   "id": "mensajeria",
+   "e": "💬",
+   "t": "Mensajería y correo",
+   "s": "Chats y correo con cifrado y sin rastreo",
+   "apps": [
+    {
+     "name": "Signal",
+     "tag": "Mensajería privada",
+     "desc": "Mensajería privada con cifrado de extremo a extremo por defecto: chats, notas de voz, llamadas y videollamadas (grupos de hasta 1.000 personas y llamadas grupales de hasta 50). Tiene mensajes que desaparecen e historias de 24 horas. Es de código abierto, sin anuncios y se financia con donaciones.",
+     "links": [
+      [
+       "Play",
+       "https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms"
+      ],
+      [
+       "APK",
+       "https://signal.org/android/apk/"
+      ],
+      [
+       "GitHub",
+       "https://github.com/signalapp/Signal-Android"
+      ]
+     ],
+     "tip": "Para registrarte necesita un número de teléfono; después puedes ocultarlo a los demás con un nombre de usuario en Ajustes.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Session",
+     "tag": "Mensajería privada",
+     "desc": "Mensajería privada y de código abierto que no pide número de teléfono ni correo: te registras solo con un ID de cuenta. Sus mensajes viajan por una red descentralizada con enrutamiento cebolla, pensada para proteger tu IP y con quién hablas. Tiene chats, grupos, comunidades de más de 100 personas y mensajes temporales, y no recopila ni vende tus datos.",
+     "links": [
+      [
+       "Abrir",
+       "https://getsession.org/"
+      ],
+      [
+       "GitHub",
+       "https://github.com/session-foundation/session-android"
+      ]
+     ],
+     "tip": "Tu cuenta se guarda con una frase de recuperación: anótala en un lugar seguro, porque sin ella no se puede recuperar.",
+     "added": "2026-10-15"
+    },
+    {
+     "name": "Molly",
+     "tag": "Signal reforzado",
+     "desc": "Versión alternativa de Signal con más seguridad: cifra la base de datos local con una frase, borra datos sensibles de la memoria y puede funcionar sin servicios de Google. Usa la red de Signal. Código abierto (AGPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=mollyim/molly-android"
+      ]
+     ],
+     "tip": "Es un proyecto independiente de Signal, aunque usa su misma red y cuenta.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Element (Matrix)",
+     "tag": "Chat descentralizado",
+     "desc": "Cliente de Matrix: chats, grupos y videollamadas cifrados de extremo a extremo en una red abierta y descentralizada. Puedes elegir servidor o alojar el tuyo. Código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=element-hq/element-x-android"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Proton Mail",
+     "tag": "Correo cifrado",
+     "desc": "Correo con cifrado de extremo a extremo de Proton (Suiza), con plan gratuito limitado. La app es de código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=ProtonMail/android-mail"
+      ],
+      [
+       "Web",
+       "https://proton.me/mail"
+      ]
+     ],
+     "tip": "La app es de código abierto, pero el servicio no se puede alojar por tu cuenta. Si no sale en Komi Store, usa su web oficial.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Tuta Mail",
+     "tag": "Correo cifrado",
+     "desc": "Correo, calendario y contactos con cifrado de extremo a extremo y plan gratuito. La app es de código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=tutao/tutanota"
+      ],
+      [
+       "Web",
+       "https://tuta.com/"
+      ]
+     ],
+     "tip": "Si no sale en Komi Store, usa su web oficial.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -666,6 +828,54 @@
       ]
      ],
      "added": "2026-10-15"
+    },
+    {
+     "name": "Material Files",
+     "tag": "Explorador de archivos",
+     "desc": "Gestor de archivos de código abierto y diseño Material: almacenamiento interno, tarjeta SD, FTP, SFTP, SMB y WebDAV, archivos comprimidos y un editor de texto básico. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=zhanghai/MaterialFiles"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Fossify Gallery",
+     "tag": "Galería",
+     "desc": "Galería de fotos y vídeos sin anuncios: álbumes, filtros, editor básico, papelera y colores personalizables. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=FossifyOrg/Gallery"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Open Camera",
+     "tag": "Cámara avanzada",
+     "desc": "Cámara libre y sin anuncios con control manual (ISO, exposición, enfoque), HDR, panorámica, ráfaga, estabilización y vídeo en muchas resoluciones. Código abierto (GPL-3.0+).",
+     "links": [
+      [
+       "F-Droid",
+       "https://f-droid.org/packages/net.sourceforge.opencamera"
+      ],
+      [
+       "Web",
+       "https://opencamera.org.uk/"
+      ],
+      [
+       "Código",
+       "https://sourceforge.net/projects/opencamera/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=opencamera.org.uk&sz=128"
+     ],
+     "tip": "No está en GitHub, así que no sale en Komi Store.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -673,7 +883,7 @@
    "id": "internet",
    "e": "🌐",
    "t": "Internet",
-   "s": "Navega, lee y comparte por la red",
+   "s": "Navega, lee, descarga y comparte por la red",
    "apps": [
     {
      "name": "Iceraven",
@@ -731,6 +941,174 @@
      ],
      "tip": "Los dispositivos deben estar en la misma red Wi-Fi.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "NewPipe",
+     "tag": "YouTube sin cuenta",
+     "desc": "Cliente ligero y libre para ver YouTube sin servicios de Google ni cuenta. Reproduce en segundo plano y en ventana flotante, descarga vídeo y audio y guarda tus suscripciones y listas en el móvil. También abre SoundCloud, PeerTube y Bandcamp. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=TeamNewPipe/NewPipe"
+      ]
+     ],
+     "tip": "No inicia sesión: tus suscripciones se guardan solo en el móvil y puedes exportarlas.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "LibreTube",
+     "tag": "YouTube alternativo",
+     "desc": "Cliente alternativo de YouTube sin anuncios ni cuenta de Google. Usa servidores de código abierto en vez de los de Google y trae reproducción en segundo plano, descargas, suscripciones y SponsorBlock. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=libre-tube/LibreTube"
+      ]
+     ],
+     "tip": "Depende de servidores públicos de terceros: si un vídeo no carga, prueba otra instancia en Ajustes.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Seal",
+     "tag": "Descargas (poco mantenido)",
+     "desc": "Interfaz sencilla para yt-dlp con diseño Material You: descarga vídeo y audio de muchísimos sitios, baja listas de reproducción de un toque, incrusta subtítulos, miniatura y metadatos y admite plantillas de comandos. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=JunkFood02/Seal"
+      ]
+     ],
+     "tip": "⚠ Tiene poco mantenimiento y las descargas de YouTube pueden fallar. Si no te funciona, prueba YTDLnis.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "YTDLnis",
+     "tag": "Descargas",
+     "desc": "Descargador de vídeo y audio basado en yt-dlp: cola y programación de descargas, listas de reproducción, comandos personalizados, cortes por tiempo y descargas en segundo plano. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=deniscerri/ytdlnis"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "AntennaPod",
+     "tag": "Podcasts",
+     "desc": "Reproductor y gestor de podcasts libre y sin anuncios: busca y suscríbete, descarga episodios, cambia la velocidad, programa un temporizador de sueño y sincroniza tus suscripciones con gpodder.net o Nextcloud. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=AntennaPod/AntennaPod"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Syncthing-Fork",
+     "tag": "Sincronizar archivos",
+     "desc": "Envoltorio de Syncthing para Android: sincroniza carpetas entre tus dispositivos directamente, con cifrado y sin nube ni cuentas. Código abierto (MPL-2.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=researchxxl/syncthing-android"
+      ]
+     ],
+     "tip": "La app oficial de Syncthing para Android está obsoleta; este fork es el que se sigue actualizando.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "KDE Connect",
+     "tag": "Móvil y PC",
+     "desc": "Conecta el móvil con tu computadora por la misma red: ves las notificaciones en el PC, compartes archivos y portapapeles, controlas la música y usas el móvil como ratón y teclado. Código abierto.",
+     "links": [
+      [
+       "F-Droid",
+       "https://f-droid.org/packages/org.kde.kdeconnect_tp"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=kdeconnect.kde.org&sz=128"
+     ],
+     "tip": "Los dos dispositivos deben estar en la misma Wi-Fi, y en la computadora hay que instalar KDE Connect (o GSConnect en GNOME).",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Tor Browser",
+     "tag": "Navegación anónima",
+     "desc": "Navegador basado en Firefox que envía tu tráfico por la red Tor para ocultar tu IP y proteger tu anonimato, bloquea rastreadores y borra las cookies al cerrar. Código abierto.",
+     "links": [
+      [
+       "Web oficial",
+       "https://www.torproject.org/download/"
+      ],
+      [
+       "F-Droid",
+       "https://guardianproject.info/fdroid/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=torproject.org&sz=128"
+     ],
+     "tip": "Es más lento que un navegador normal y algunos sitios lo bloquean. En F-Droid sale del repositorio de Guardian Project, que debes añadir antes.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Startpage",
+     "tag": "Buscador privado (cerrado)",
+     "desc": "Buscador que te da resultados de Google sin rastrear tu actividad; según la empresa, no guarda tu IP ni tu historial. Tiene vista anónima de las páginas y se usa desde el navegador.",
+     "links": [
+      [
+       "Web",
+       "https://www.startpage.com/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=startpage.com&sz=128"
+     ],
+     "tip": "⚠ Es de código cerrado: no puedes revisar cómo protege tu privacidad. Si buscas algo libre, mira SearXNG.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "SearXNG",
+     "tag": "Metabuscador libre",
+     "desc": "Metabuscador libre que reúne resultados de muchos buscadores sin rastrearte ni crear un perfil tuyo. Puedes usar una instancia pública o montar la tuya. Código abierto (AGPL-3.0).",
+     "links": [
+      [
+       "Proyecto",
+       "https://github.com/searxng/searxng"
+      ],
+      [
+       "Instancias",
+       "https://searx.space/"
+      ]
+     ],
+     "logo": [
+      "https://github.com/searxng.png?size=160"
+     ],
+     "tip": "Las instancias públicas las mantiene gente voluntaria: elige una de confianza en searx.space.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "CoMaps",
+     "tag": "Mapas sin conexión",
+     "desc": "Mapas y navegación basados en OpenStreetMap que funcionan sin internet: descargas regiones, buscas lugares y te guía a pie, en bici o en coche. Sin anuncios ni rastreo y sin ánimo de lucro (Apache-2.0). Nació como fork de Organic Maps.",
+     "links": [
+      [
+       "F-Droid",
+       "https://f-droid.org/packages/app.comaps.fdroid"
+      ],
+      [
+       "Codeberg",
+       "https://codeberg.org/comaps/comaps"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=comaps.app&sz=128"
+     ],
+     "tip": "Descarga los mapas de tu zona con Wi-Fi antes de salir.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -738,7 +1116,7 @@
    "id": "dia",
    "e": "📅",
    "t": "Día a día",
-   "s": "Notas, IA, reloj y entrenamientos",
+   "s": "Notas, tareas, calendario, IA y entrenamientos",
    "apps": [
     {
      "name": "Obsidian",
@@ -822,6 +1200,70 @@
      ],
      "tip": "Necesita internet y una cuenta (kSuite). Su servicio no es libre y envía informes de fallos anónimos.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "AnkiDroid",
+     "tag": "Tarjetas de estudio",
+     "desc": "Tarjetas de memoria con repetición espaciada para estudiar idiomas, carrera o lo que quieras. Importa mazos, sincroniza con AnkiWeb y admite imágenes, audio y LaTeX. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=ankidroid/Anki-Android"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Markor",
+     "tag": "Notas y Markdown",
+     "desc": "Editor de texto y Markdown ligero para notas, listas de tareas y diario, con vista previa y archivos que se quedan en tu móvil. Código abierto (Apache-2.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=gsantner/markor"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Breezy Weather",
+     "tag": "El tiempo",
+     "desc": "App del tiempo libre y sin anuncios con previsión por horas y días, alertas, calidad del aire, polen y widgets. Puedes elegir entre varias fuentes de datos. Código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=breezy-weather/breezy-weather"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Tasks.org",
+     "tag": "Tareas",
+     "desc": "Gestor de tareas libre y sin anuncios con recordatorios, listas, etiquetas y subtareas. Sincroniza con CalDAV (como Nextcloud), Google Tasks o Microsoft To Do. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=tasks/tasks"
+      ],
+      [
+       "F-Droid",
+       "https://f-droid.org/packages/org.tasks"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Fossify Calendar",
+     "tag": "Calendario",
+     "desc": "Calendario sencillo y sin anuncios con vistas por día, semana, mes y año, recordatorios, eventos repetidos, widgets y sincronización de calendarios. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=FossifyOrg/Calendar"
+      ]
+     ],
+     "added": "2026-10-23"
     }
    ]
   },
@@ -904,6 +1346,80 @@
      ],
      "tip": "Modificar archivos o falsear el dispositivo puede romper las reglas de algunos juegos y causar baneos. El riesgo es tuyo.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Azahar",
+     "tag": "Nintendo 3DS",
+     "desc": "Emulador de Nintendo 3DS de código abierto para Android y PC, heredero de Citra y Lime3DS: sube la resolución, admite mandos y guarda estados.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=azahar-emu/azahar"
+      ]
+     ],
+     "tip": "Usa solo juegos que hayas copiado de tus propios cartuchos.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Dolphin",
+     "tag": "GameCube y Wii",
+     "desc": "Emulador de GameCube y Wii para Android y PC con mejoras de resolución, soporte de mandos y guardado rápido. Código abierto (GPL-2.0+).",
+     "links": [
+      [
+       "Web oficial",
+       "https://dolphin-emu.org/download/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=dolphin-emu.org&sz=128"
+     ],
+     "tip": "Usa solo juegos que hayas copiado de tus propios discos.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "mGBA",
+     "tag": "Game Boy Advance",
+     "desc": "Emulador rápido y preciso de Game Boy, Game Boy Color y Game Boy Advance, con guardado de estados, filtros y trucos. Código abierto (MPL-2.0).",
+     "links": [
+      [
+       "Web oficial",
+       "https://mgba.io/downloads.html"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=mgba.io&sz=128"
+     ],
+     "tip": "Usa solo juegos que hayas copiado de tus propios cartuchos.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "PPSSPP",
+     "tag": "PlayStation Portable",
+     "desc": "Emulador de PSP para Android y PC: sube la resolución, guarda estados y admite mandos y trucos. Código abierto (GPL-2.0+).",
+     "links": [
+      [
+       "Web oficial",
+       "https://www.ppsspp.org/download/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=ppsspp.org&sz=128"
+     ],
+     "tip": "En Google Play hay una versión Gold de pago; la gratuita se descarga desde su web.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Vita3K",
+     "tag": "PlayStation Vita",
+     "desc": "Emulador experimental de PlayStation Vita de código abierto (GPLv2). Ejecuta casi todo el homebrew y algunos juegos comerciales.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=Vita3K/Vita3K-Android"
+      ]
+     ],
+     "tip": "Es experimental y exige un móvil potente con soporte Vulkan; usa solo juegos que hayas sacado de tu propia consola.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -963,6 +1479,54 @@
      ],
      "tip": "Está en beta, puede fallar. Usa el APK de 32 bits si tu móvil lo soporta.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Kvaesitso",
+     "tag": "Lanzador con buscador",
+     "desc": "Lanzador de código abierto donde la búsqueda es lo principal: apps, contactos, archivos, calendario, calculadora y más desde una sola barra, con widgets y muchas formas de personalizarlo.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=MM2-0/Kvaesitso"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Lawnchair",
+     "tag": "Lanzador estilo Pixel",
+     "desc": "Lanzador personalizable inspirado en el de los Pixel, con iconos temáticos, cajón de apps, gestos y ajustes por todas partes. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=LawnchairLauncher/lawnchair"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Olauncher",
+     "tag": "Lanzador minimalista",
+     "desc": "Lanzador de solo texto, sin anuncios ni distracciones, pensado para usar menos el móvil: pantalla de inicio con pocas apps y gestos. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=tanujnotes/Olauncher"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Muzei",
+     "tag": "Fondos de arte",
+     "desc": "Cambia tu fondo de pantalla automáticamente con obras de arte o con tus propias fotos, con desenfoque y atenuación para que los iconos se vean bien. Código abierto (Apache-2.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=muzei/muzei"
+      ]
+     ],
+     "added": "2026-10-23"
     }
    ]
   },
@@ -1058,6 +1622,44 @@
      ],
      "tip": "Con Shizuku hay que volver a iniciarlo tras cada reinicio. Para mostrar la canción en el bloqueo pide un servicio de accesibilidad.",
      "added": "2026-10-15"
+    },
+    {
+     "name": "Auxio",
+     "tag": "Reproductor local",
+     "desc": "Reproductor de música local, rápido y de diseño limpio: organiza tu biblioteca por artistas, álbumes y géneros, lee las etiquetas de tus archivos y reproduce sin pausas entre canciones. Sin anuncios ni cuentas. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=OxygenCobalt/Auxio"
+      ]
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "ArchiveTune",
+     "tag": "YouTube Music alternativo",
+     "desc": "Cliente alternativo de YouTube Music con interfaz Material You: reproduce en segundo plano, muestra letras, descarga canciones y guarda tu biblioteca, sin usar la app oficial. Código abierto.",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=koiverse/ArchiveTune"
+      ]
+     ],
+     "tip": "No es oficial: puede fallar cuando YouTube Music cambia algo por dentro.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Gramophone",
+     "tag": "Reproductor local",
+     "desc": "Reproductor de música sin conexión, ligero y con estilo Material You: lee .mp3, .flac, .ogg, .opus, .m4a, .mka y .wav, muestra letras .lrc, saca los colores de la carátula y acepta tarjeta SD. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=FoedusProgramme/Gramophone"
+      ]
+     ],
+     "tip": "Solo reproduce lo que tengas en el móvil: no descarga ni hace streaming.",
+     "added": "2026-10-23"
     }
    ]
   },
@@ -1100,6 +1702,131 @@
       ]
      ],
      "tip": "Ojo: usa la búsqueda de imágenes de Google, así que depende de ese servicio."
+    },
+    {
+     "name": "HeliBoard",
+     "tag": "Teclado privado",
+     "desc": "Teclado libre y sin internet basado en AOSP/OpenBoard: temas y colores a tu gusto, diccionarios para sugerencias, historial del portapapeles, escritura multilingüe y distribuciones personalizables. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=Helium314/HeliBoard"
+      ]
+     ],
+     "tip": "No trae escritura por deslizamiento: necesita una librería aparte, porque no hay una de código abierto compatible.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "FlorisBoard",
+     "tag": "Teclado libre",
+     "desc": "Teclado libre y moderno con temas, modo a una mano, portapapeles con historial, búsqueda de emojis y escritura por gestos. Código abierto (Apache-2.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=florisboard/florisboard"
+      ]
+     ],
+     "tip": "Sigue en desarrollo activo y puede tener fallos.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Simple Keyboard",
+     "tag": "Teclado mínimo",
+     "desc": "Teclado ligero (menos de 1 MB) y sin anuncios: altura ajustable, fila de números y colores propios, y solo pide permiso de vibración. Código abierto (Apache-2.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=rkkr/simple-keyboard"
+      ]
+     ],
+     "tip": "No tiene emojis, GIFs, corrector ni escritura por deslizamiento.",
+     "added": "2026-10-23"
+    }
+   ]
+  },
+  {
+   "id": "sistemas",
+   "e": "💿",
+   "t": "Sistemas",
+   "s": "Sistemas operativos para tu PC o tu móvil",
+   "apps": [
+    {
+     "name": "Fedora Linux",
+     "tag": "Linux actual",
+     "desc": "Distribución Linux libre y al día, apoyada por Red Hat. Su edición Workstation trae GNOME y es buena para uso diario y para programar.",
+     "links": [
+      [
+       "fedoraproject.org",
+       "https://fedoraproject.org/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=fedoraproject.org&sz=128"
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Linux Mint",
+     "tag": "Linux fácil",
+     "desc": "Distribución Linux basada en Ubuntu, pensada para quien viene de Windows: escritorio clásico (Cinnamon), todo listo para empezar y mucha estabilidad.",
+     "links": [
+      [
+       "linuxmint.com",
+       "https://linuxmint.com/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=linuxmint.com&sz=128"
+     ],
+     "added": "2026-10-23"
+    },
+    {
+     "name": "Qubes OS",
+     "tag": "Seguridad por aislamiento",
+     "desc": "Sistema que separa cada tarea en su propia máquina virtual («qubes»), así que si una se infecta, las demás siguen a salvo. Código abierto.",
+     "links": [
+      [
+       "qubes-os.org",
+       "https://www.qubes-os.org/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=qubes-os.org&sz=128"
+     ],
+     "tip": "Pide una computadora potente y bastante paciencia para aprenderlo.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "GrapheneOS",
+     "tag": "Android privado",
+     "desc": "Android reforzado y de código abierto, centrado en privacidad y seguridad: cada app va aislada, controlas permisos con más detalle y no incluye servicios de Google por defecto.",
+     "links": [
+      [
+       "grapheneos.org",
+       "https://grapheneos.org/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=grapheneos.org&sz=128"
+     ],
+     "tip": "En la práctica solo se instala en móviles Pixel. Haz copia de todo antes: instalarlo borra el móvil.",
+     "added": "2026-10-23"
+    },
+    {
+     "name": "LineageOS",
+     "tag": "Android sin Google",
+     "desc": "ROM libre basada en Android para muchísimos móviles. Sirve para dar años de actualizaciones a un móvil que el fabricante ya dejó atrás, sin apps de Google de serie.",
+     "links": [
+      [
+       "lineageos.org",
+       "https://lineageos.org/"
+      ]
+     ],
+     "logo": [
+      "https://www.google.com/s2/favicons?domain=lineageos.org&sz=128"
+     ],
+     "tip": "Desbloquear el bootloader borra el móvil: haz copia antes y sigue la guía de tu modelo en su web.",
+     "added": "2026-10-23"
     }
    ]
   }

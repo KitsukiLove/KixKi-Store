@@ -43,7 +43,9 @@ const META={
   pantalla:["Pantalla","#e8883b"],
   fotos:["Fotos","#b57cf0"],
   internet:["Internet","#4f7df0"],
-  dia:["Día a día","#d6a84a"]
+  dia:["Día a día","#d6a84a"],
+  mensajeria:["Mensajería","#d86ae0"],
+  sistemas:["Sistemas","#8e9aaf"]
 };
 
 /* ========= LOGOS =========
@@ -77,6 +79,10 @@ function rects(rows,ox=0,oy=0){
 const spr=(rows,scale,cls="")=>`<svg class="spr ${cls}" viewBox="0 0 ${rows[0].length} ${rows.length}" width="${rows[0].length*scale}" height="${rows.length*scale}" shape-rendering="crispEdges" aria-hidden="true" focusable="false">${rects(rows)}</svg>`;
 
 const ICO={
+  mensajeria:[
+    "............",".hhhhhhhhhs.","hhhhhhhhhhhs","hhwhhwhhwhhs","hhhhhhhhhhhs",".hhhhhhhhhs.","..hhsssssss.","..hss.......",".hs.........","............","............","............"],
+  sistemas:[
+    "............",".hhhhhhhhhs.",".hwwwwwwwhs.",".hwhwwwwwhs.",".hwwhwwwwhs.",".hwhwwwwwhs.",".hwwwwwwwhs.",".hhhhhhhhhs.","....hhhs....","..hhhhhhhhs.","............","............"],
   tiendas:[
     "....llll....","...l....l...","...l....l...",".hhhhhhhhhh.",".hllhhhhhhs.",".hllhhhhhhs.",
     ".hhhhhhhhhs.",".hhhhhhhhhs.",".hhhhhhhhhs.",".hhhhhhhhhs.",".ssssssssss.","............"],

@@ -294,6 +294,8 @@ img{-webkit-user-drag:none}
 .di[data-id="decoracion"],.tk[data-id="decoracion"],.tab[href="#decoracion"],.cat#decoracion{--xpi:var(--xpi-decoracion)}
 .di[data-id="musica"],.tk[data-id="musica"],.tab[href="#musica"],.cat#musica{--xpi:var(--xpi-musica)}
 .di[data-id="teclados"],.tk[data-id="teclados"],.tab[href="#teclados"],.cat#teclados{--xpi:var(--xpi-teclados)}
+.di[data-id="mensajeria"],.tk[data-id="mensajeria"],.tab[href="#mensajeria"],.cat#mensajeria{--xpi:var(--xpi-privacidad)}
+.di[data-id="sistemas"],.tk[data-id="sistemas"],.tab[href="#sistemas"],.cat#sistemas{--xpi:var(--xpi-utilidad)}
 .di[data-id="favs"],.tk[data-id="favs"],.tab[href="#favs"],.cat#favs{--xpi:var(--xpi-favs)}
 .di[data-id="news"],.tk[data-id="news"],.tab[href="#news"],.cat#news{--xpi:var(--xpi-news)}
 .di[data-id="packs"],.tk[data-id="packs"],.tab[href="#packs"],.cat#packs{--xpi:var(--xpi-packs)}

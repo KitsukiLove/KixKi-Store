@@ -108,9 +108,11 @@ const FOLD={
  control:["Control de apps: quita, limita y revisa lo que hacen tus apps. Mira ADL antes de quitar nada. 🧩","App control: remove, limit and check what your apps do. Check ADL before removing anything. 🧩"],
  pantalla:["Pantalla y batería: {n} apps para ahorrar batería y controlar tu pantalla. 🔋","Screen & battery: {n} apps to save battery and control your screen. 🔋"],
  fotos:["Fotos y archivos: {n} apps para editar, organizar y guardar. {a} es buena para empezar. 🖼️","Photos & files: {n} apps to edit, organize and store. {a} is a good place to start. 🖼️"],
- internet:["Internet: navegadores, Reddit y compartir por Wi-Fi. 🌐","Internet: browsers, Reddit and Wi-Fi sharing. 🌐"],
- dia:["Día a día: notas, IA, reloj y entrenamientos. 📅","Daily: notes, AI, clock and workouts. 📅"],
+ internet:["Internet: navegadores, YouTube sin cuenta, podcasts, mapas y compartir por Wi-Fi. 🌐","Internet: browsers, YouTube without an account, podcasts, maps and Wi-Fi sharing. 🌐"],
+ dia:["Día a día: notas, tareas, calendario, IA y entrenamientos. 📅","Daily: notes, tasks, calendar, AI and workouts. 📅"],
  privacidad:["Privacidad: {n} apps para cuidar tus datos. {a} es buena para empezar. 🔒","Privacy: {n} apps to look after your data. {a} is a good place to start. 🔒"],
+ mensajeria:["Mensajería y correo: {n} apps para chatear y escribir con más privacidad. {a} es buena para empezar. 💬","Messaging & mail: {n} apps to chat and write with more privacy. {a} is a good place to start. 💬"],
+ sistemas:["Sistemas: no son apps, son sistemas operativos para tu PC o tu móvil. Haz copia antes de instalar. 💿","Systems: not apps, these are operating systems for your PC or phone. Back up before installing. 💿"],
  emulacion:["Emulación: juega tus clásicos en el móvil. Recuerda usar solo tus propios juegos. 🎮","Emulation: play your classics on your phone. Remember to use only your own games. 🎮"],
  decoracion:["Decoración: fondos y widgets para que tu pantalla luzca linda. 🎨","Decor: wallpapers and widgets to make your screen look cute. 🎨"],
  musica:["Música: para escuchar y descargar tus canciones. 🎵","Music: to play and download your songs. 🎵"],
@@ -1236,14 +1238,26 @@ Para cuidar la batería: mide con BatStats y controla con No More Background. Pr
 `);
 ADV.privacidad=L(`
 Antes de confiar en una app, pásala por Exodus: te dice qué rastreadores y permisos lleva. 🕵️ || Before trusting an app, run it through Exodus: it tells you which trackers and permissions it carries. 🕵️
-Signal pide número de teléfono (luego puedes ocultarlo) y Session no pide ni número ni correo. Tú eliges. 💬 || Signal asks for a phone number (you can hide it later) and Session asks for neither number nor email. You choose. 💬
-Si usas Session, anota tu frase de recuperación en un lugar seguro: sin ella la cuenta no se recupera. 📝 || If you use Session, write your recovery phrase down somewhere safe: without it the account can't be recovered. 📝
 PrivacyFlip apaga Wi-Fi, Bluetooth, datos y ubicación al bloquear el móvil, y reactiva solo lo que elijas. 🔒 || PrivacyFlip turns off Wi-Fi, Bluetooth, data and location when you lock the phone, and re-enables only what you choose. 🔒
 Bitwarden guarda tus contraseñas en una bóveda cifrada de extremo a extremo. Menos «contraseña123», por favor. 🗝️ || Bitwarden keeps your passwords in an end-to-end encrypted vault. Less “password123”, please. 🗝️
 SnapSafe guarda las fotos cifradas y no tiene permiso de internet. Ojo: no entran en copias de seguridad, guarda aparte las que quieras conservar. 📷 || SnapSafe keeps photos encrypted and has no internet permission. Careful: they're not included in backups, so save the ones you want to keep elsewhere. 📷
 Tarnhelm limpia el rastreo de los enlaces que compartes. Pide varios permisos: revísalos al instalar. 🔗 || Tarnhelm strips the tracking from the links you share. It asks for several permissions: check them when installing. 🔗
 Fake Traveler cambia tu ubicación GPS, pero algunas apps lo detectan y pueden restringir tu cuenta. Con cuidado. 🗺️ || Fake Traveler changes your GPS location, but some apps detect it and may restrict your account. Careful. 🗺️
 FireWall Blocks corta el Wi-Fi o los datos app por app. Perfecto para las que no tienen por qué hablar con internet. 🚧 || FireWall Blocks cuts Wi-Fi or mobile data app by app. Perfect for those that have no business talking to the internet. 🚧
+`);
+ADV.mensajeria=L(`
+Signal pide número de teléfono (luego puedes ocultarlo) y Session no pide ni número ni correo. Tú eliges. 💬 || Signal asks for a phone number (you can hide it later) and Session asks for neither number nor email. You choose. 💬
+Si usas Session, anota tu frase de recuperación en un lugar seguro: sin ella la cuenta no se recupera. 📝 || If you use Session, write your recovery phrase down somewhere safe: without it the account can't be recovered. 📝
+Molly es Signal con capas extra de seguridad: cifra la base de datos local con una frase y usa la misma red. 🔐 || Molly is Signal with extra layers of security: it encrypts the local database with a passphrase and uses the same network. 🔐
+Element usa Matrix, una red abierta: puedes elegir tu servidor o montar el tuyo. Tus chats viven donde tú decidas. 🌐 || Element uses Matrix, an open network: you can pick your server or run your own. Your chats live where you decide. 🌐
+Proton Mail y Tuta cifran tu correo de extremo a extremo; sus apps son de código abierto, pero el servicio lo pones en manos de la empresa. 📬 || Proton Mail and Tuta encrypt your email end to end; their apps are open source, but you trust the company with the service. 📬
+`);
+ADV.sistemas=L(`
+Aquí no hay apps: son sistemas operativos. Instalarlos borra lo que haya en el equipo, así que haz copia antes. 💿 || No apps here: these are operating systems. Installing one wipes what's on the device, so back up first. 💿
+Linux Mint es la entrada más suave si vienes de Windows. Fedora va un poco más adelantada en novedades. 🐧 || Linux Mint is the gentlest way in if you come from Windows. Fedora is a bit ahead on new software. 🐧
+GrapheneOS solo se instala en móviles Pixel. Si tienes otro móvil, mira LineageOS y su lista de modelos. 📱 || GrapheneOS only installs on Pixel phones. If you have another phone, look at LineageOS and its list of devices. 📱
+LineageOS alarga la vida de un móvil viejo, pero desbloquear el bootloader borra todo. Sigue la guía de tu modelo. 🔓 || LineageOS extends the life of an old phone, but unlocking the bootloader wipes everything. Follow the guide for your model. 🔓
+Qubes OS separa cada tarea en su propia máquina virtual. Es muy seguro, pero pide una computadora potente y paciencia. 🧱 || Qubes OS separates each task in its own virtual machine. It's very secure, but needs a powerful computer and patience. 🧱
 `);
 ADV.fotos=L(`
 Image Toolbox tiene más de 500 filtros, quita fondos y hasta hace OCR. Si te pierdes, empieza por recortar o convertir. 🖼️ || Image Toolbox has over 500 filters, removes backgrounds and even does OCR. If you get lost, start with cropping or converting. 🖼️
