@@ -84,3 +84,11 @@
 @P:not(.dsk) #sm #s-kx-ach{order:40}@P:not(.dsk) #sm #s-sug{order:41}@P:not(.dsk) #sm #s-kx-tip{order:50}@P:not(.dsk) #sm #s-kx-pet{order:51}@P:not(.dsk) #sm #s-kx-on{order:52}@P:not(.dsk) #sm #s-kx-mode{order:53}@P:not(.dsk) #sm #s-kx-pr{order:54}@P:not(.dsk) #sm #sma{order:99}
 /* tema oscuro: un halo claro para que los iconos oscuros (QR, Apagar…) no se pierdan */
 @P[data-theme="dark"] #sm .sm::before{filter:drop-shadow(1px 0 0 rgba(237,231,255,.9)) drop-shadow(-1px 0 0 rgba(237,231,255,.9)) drop-shadow(0 1px 0 rgba(237,231,255,.9)) drop-shadow(0 -1px 0 rgba(237,231,255,.9))}
+
+/* sugerencia del buscador: «¿Quisiste decir …?» */
+.empty .dym{font:inherit;font-weight:700;color:var(--pri-ink);background:var(--pri);border:0;padding:4px 12px;margin:6px 4px 0;cursor:pointer;border-radius:0;box-shadow:0 -3px 0 var(--pri-bc),0 3px 0 var(--pri-bc),-3px 0 0 var(--pri-bc),3px 0 0 var(--pri-bc)}
+.empty .dym:hover,.empty .dym:focus-visible{filter:brightness(1.1);outline:0}
+/* PC: el aviso «No encontré…» ahora es una tarjeta con borde pixel, dentro del escritorio (antes se salía por debajo del panel de la derecha) */
+.dsk #empty:not([hidden]){position:fixed;left:340px;top:110px;width:min(470px,calc(100vw - 940px));min-width:300px;z-index:30;padding:16px 18px;text-align:left;line-height:1.5;color:var(--ink);font-weight:600;
+  background:var(--surface);box-shadow:0 -4px 0 var(--line),0 4px 0 var(--line),-4px 0 0 var(--line),4px 0 0 var(--line),8px 10px 0 0 rgba(10,5,40,.22)}
+.dsk #empty .dym{display:block;margin:12px 0 4px}
