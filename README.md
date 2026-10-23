@@ -23,7 +23,7 @@
 <a id="que-trae"></a>
 <img src="docs/bar-que-trae.png" alt="que-trae.exe" width="100%">
 
-La colección es pequeña y cuidada: **71 apps en 13 carpetas**, cada una con su descripción, enlaces y avisos, un buscador y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
+La colección es pequeña y cuidada: **71 apps en 13 carpetas**, cada una con su descripción, enlaces y avisos, un **buscador que perdona errores** (acentos, guiones y letras mal puestas; si no encuentra nada, sugiere «¿Quisiste decir…?») y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
 
 - **Dos mundos, Pixel y Colina XP,** y en cada uno Valle, Primavera, Verano, Otoño, Invierno, Halloween y Navidad. «Auto» sigue la fecha real.
 - **Lluvia con relámpagos y trueno,** y sonido de lluvia sintetizado.
@@ -34,7 +34,7 @@ La colección es pequeña y cuidada: **71 apps en 13 carpetas**, cada una con su
 
 <p align="center"><img src="docs/estaciones.png" alt="Las 14 estaciones: 7 en el mundo Pixel y 7 en la Colina XP" width="100%"></p>
 
-El botón **Fondo** del menú cambia de mundo (la Colina XP se gana venciendo a vaca.exe) y el botón **Estación** cambia la estación del mundo en que estés. Cada mundo recuerda la suya.
+El botón de la imagen de la ovejita (arriba a la derecha) y el botón **Estación** del menú cambian la estación del mundo en que estés. El botón **Fondo** del menú cambia de mundo (la Colina XP se gana venciendo a vaca.exe). Cada mundo recuerda su estación.
 
 <p align="center"><img src="docs/estilos.png" alt="El menú Inicio en estilo Pixel y en Kixki XP, en PC y en móvil" width="100%"></p>
 
@@ -114,6 +114,7 @@ Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego, con `movil` a
 | Comando | Qué comprueba |
 |---|---|
 | `node tools/test-fondos.mjs` | el selector Fondo / Estación y su memoria |
+| `node tools/test-buscador.mjs` | el buscador tolerante y el botón de estación |
 | `node tools/test-pixel-musica.mjs` | menú pixel, fondos con vida y las 30 piezas de música |
 | `node tools/test-xpbg.mjs` | Colina XP, lluvia, pausa y menú XP |
 | `node tools/test-vaca.mjs` | vaca.exe, combate y fondos de premio/castigo |

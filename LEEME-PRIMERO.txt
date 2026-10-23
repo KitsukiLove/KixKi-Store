@@ -1,0 +1,18 @@
+ARREGLO: BUSCADOR + BOTÓN DE FONDO
+==================================
+
+1) Buscador tolerante: ya no es tan literal.
+   - Perdona letras mal puestas, de más o de menos ("aurra stroe" encuentra Aurora Store).
+   - Ignora acentos, mayúsculas, guiones y espacios ("fdroid" = "F-Droid").
+   - Si no encuentra nada, sugiere "¿Quisiste decir ...?" (se puede tocar).
+   - También funciona en "Ejecutar..." (Ctrl+K).
+2) El botón de la imagen de la ovejita (abajo a la derecha, el del cuadro con montañas)
+   ahora cambia la ESTACIÓN (Valle, Primavera, Verano...), ya no cambia entre Pixel y XP.
+   El cambio Pixel <-> XP se queda en el menú, en el botón "Fondo".
+
+CÓMO INSTALAR
+1. Descomprime el zip.
+2. Sube TODO lo de la carpeta "ACTUALIZAR-Buscador" a tu repositorio
+   (con las mismas carpetas) y elige reemplazar si pregunta.
+   Son 6 archivos: app.js, pixel-ui.css, sw.js, README.md y dos en tools.
+3. Espera la palomita verde y recarga la página 2 veces.
