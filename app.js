@@ -143,6 +143,27 @@ const ICO={
     "............","..h......h..",".hhhhhhhhhhs",".hhhhhhhhhhs",".hwwwwwwwwhs",".hwhwhwhwwhs",
     ".hwwwwwwwwhs",".hwhwhyywwhs",".hwwwwwwwwhs",".hhhhhhhhhhs","..ssssssssss","............"]
 };
+/* Carpetas del escritorio: 16×14 con el símbolo de cada categoría (se generan con tools/pixel-fuente/folders.py) */
+const ICF={
+  tiendas:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhwwwwhhhhsk","klhhhwwsswwhhhsk","klhhwwwwwwwwhhsk","klhhwwwppwwwshsk","klhhwwwwwwwwshsk","klhhwwwwwwwwshsk","klhhwwwwwwwwshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  importante:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhhwwhhhhhsk","klhhhhhwwshhhhsk","klhhhhhwwshhhhsk","klhhhhhwwshhhhsk","klhhhhhhsshhhhsk","klhhhhhwwhhhhhsk","klhhhhhwwshhhhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  utilidad:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhhwwhhhhhsk","klhhhwhwwswhhhsk","klhhhhwwwwhshhsk","klhhwwwkkwwwhhsk","klhhhswwwwssshsk","klhhhwhwwswhhhsk","klhhhhswwshshhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  privacidad:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhwwwwhhhhsk","klhhhwhssswhhhsk","klhhhwshhhwshhsk","klhhwwwwwwwwhhsk","klhhwwwkkwwwshsk","klhhwwwkkwwwshsk","klhhwwwwwwwwshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  emulacion:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhwwwwwwhhhsk","klhhwwwwwwwwhhsk","klhhwwkwwkwwshsk","klhhwkkkwwkwshsk","klhhwwkwwkwwshsk","klhhwwwwwwwwshsk","klhhhwwsswwsshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  decoracion:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhwwwwhhhhsk","klhhhwwwwwwwhhsk","klhhwwypwwwwshsk","klhhwwwwwmwwshsk","klhhwwkwwwwwshsk","klhhhwwwwwwsshsk","klhhhhwwsssshhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  musica:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhhwwwwwhhsk","klhhhhhwssswshsk","klhhhhhwshhwshsk","klhhhhhwshhwshsk","klhhhwwwswwwshsk","klhhhwwwswwwshsk","klhhhhssshssshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  teclados:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhwwwwwwwwhhsk","klhhwkwkwkwkshsk","klhhwwwwwwwwhhsk","klhhwkwkwkwkshsk","klhhwwwwwwwwhhsk","klhhwkkkkkkwshsk","klhhwwwwwwwwshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  control:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhkkhhhhhhsk","klhhwwkkwwwwhhsk","klhhhskkhsssshsk","klhhhhhhhhhhhhsk","klhhhhhhkkhhhhsk","klhhwwwwkkwwhhsk","klhhhssskkhsshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  pantalla:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhwwwwwwwwhhsk","klhhwkkkkkkwshsk","klhhwkkykkkwshsk","klhhwkkkkkkwshsk","klhhwwwwwwwwshsk","klhhhsswwsssshsk","klhhhhwwwwhhhhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  fotos:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhwwwwwwwwhhsk","klhhwkkkkykwshsk","klhhwkkkkkkwshsk","klhhwkkmkkkwshsk","klhhwkmmmkmwshsk","klhhwmmmmmmwshsk","klhhwwwwwwwwshsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  internet:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhwwwwhhhhsk","klhhhwwkwwwhhhsk","klhhwwwkwwwwhhsk","klhhwkkkkkkwshsk","klhhwwwkwwwwshsk","klhhhwwkwwwsshsk","klhhhhwwwwsshhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  dia:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhwhhhhwhhhsk","klhhpppppppphhsk","klhhwwwwwwwwshsk","klhhwkwkwkwwshsk","klhhwwwwwwwwshsk","klhhwkwkwkwkshsk","klhhwwwwwwwwhhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  favs:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhhpphhhhhsk","klhhhhhppshhhhsk","klhhpppppppphhsk","klhhhppppppsshsk","klhhhhppppsshhsk","klhhhppsspphhhsk","klhhhpsshhpshhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  news:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhhwwhhhhhsk","klhhhhhwwshhhhsk","klhhhwwwwwwhhhsk","klhhwwwwwwwwhhsk","klhhhwwwwwwsshsk","klhhhhswwssshhsk","klhhhhhwwshhhhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  mensajeria:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhwwwwwwhhhsk","klhhwwwwwwwwhhsk","klhhwkwkwkwwshsk","klhhwwwwwwwwshsk","klhhhwwwwwwsshsk","klhhhhwwsssshhsk","klhhhwhsshhhhhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  sistemas:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhhwwwwhhhhsk","klhhhwwwwwwhhhsk","klhhwwwhhwwwhhsk","klhhwwwhhwwwshsk","klhhhwwwwwwsshsk","klhhhhwwwwsshhsk","klhhhhhsssshhhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+  packs:[".kkkkkk.........","kllllllk........","khhhhhhhkkkkkkk.","kllllllllllllllk","klhhhhhhhhhhhhsk","klhhhpphhpphhhsk","klhhhhppppsshhsk","klhhwwwppwwwhhsk","klhhhwwppwwsshsk","klhhhwwppwwshhsk","klhhhwwppwwshhsk","klhhhwwppwwshhsk","kssssssssssssssk",".kkkkkkkkkkkkkk."],
+};
 const UI={
   ext:["...x...","....x..","xxxxxxx","....x..","...x..."],
   play:["x....","xx...","xxx..","xxxx.","xxx..","xx...","x...."],
@@ -433,7 +454,7 @@ const SLEEP=["...wwww.wwww......","..wwwwwwwwwwww....",".wwwwwwwwwwwwwfff.","www
 const ZZ=["xxxxx","...x.","..x..",".x...","xxxxx"];
 secs.forEach(s=>{s.dataset.e=C.find(c=>c.id===s.id).e;});
 document.body.insertAdjacentHTML("beforeend",
-`<nav id="desk" aria-label="Escritorio">${C.map(c=>`<button type="button" class="di" data-id="${c.id}" data-e="${c.e}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],5)}<span>${META[c.id][0]}</span><em>${c.a.length} ${c.a.length===1?"app":"apps"}</em></button>`).join("")}</nav>
+`<nav id="desk" aria-label="Escritorio">${C.map(c=>`<button type="button" class="di" data-id="${c.id}" data-e="${c.e}" style="--h:${META[c.id][1]}">${spr(ICF[c.id]||ICO[c.id],ICF[c.id]?4:5)}<span>${META[c.id][0]}</span><em>${c.a.length} ${c.a.length===1?"app":"apps"}</em></button>`).join("")}</nav>
 <div id="pet" aria-hidden="true"><div class="pi"><span class="pa">${spr(SHEEP,4)}</span><span class="ps">${spr(SLEEP,4)}</span>${[2,3,4].map((n,i)=>`<i class="zz" style="--zd:-${i*1.2}s">${spr(ZZ,n)}</i>`).join("")}</div></div>
 <div id="sm" hidden><button type="button" class="sm" id="smt">Día / noche</button><button type="button" class="sm" id="sma">Cerrar todas</button></div>
 <div id="taskbar"><button type="button" class="start" id="st">${spr(SHEEP,2)}Kixki</button>${C.map(c=>`<button type="button" class="tk" data-id="${c.id}" title="${META[c.id][0]}" style="--h:${META[c.id][1]}">${spr(ICO[c.id],2)}<span>${META[c.id][0]}</span></button>`).join("")}<div class="tray"><span>Hecho con ♥ por KitsukiLove</span><b id="clk"></b></div></div>`);
