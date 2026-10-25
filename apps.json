@@ -94,7 +94,9 @@
       ]
      ],
      "tip": "Necesita Shizuku instalado y en marcha.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8,
+     "priv": 1
     },
     {
      "name": "IzzyOnDroid",
@@ -110,7 +112,8 @@
       "https://github.com/sunilpaulmathew.png?size=160"
      ],
      "tip": "Ten cuidado: revisa las apps antes de instalarlas.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 7
     },
     {
      "name": "Universal Installer",
@@ -158,7 +161,8 @@
       ]
      ],
      "tip": "Las apps que buscan el Shizuku original pueden necesitar su modo de compatibilidad.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 7
     },
     {
      "name": "Dhizuku",
@@ -171,7 +175,8 @@
       ]
      ],
      "tip": "Se activa con un comando ADB y, en muchos móviles, hay que quitar antes las cuentas.",
-     "added": "2026-10-23"
+     "added": "2026-10-23",
+     "priv": 1
     },
     {
      "name": "LADB",
@@ -208,7 +213,8 @@
       "https://github.com/samolego.png?size=160"
      ],
      "tip": "Necesita Shizuku. Quitar apps del sistema puede causar fallos: consulta antes ADL y no toques las marcadas como inseguras.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "priv": 1
     },
     {
      "name": "ADL",
@@ -256,7 +262,8 @@
       "https://github.com/RikkaApps.png?size=160"
      ],
      "tip": "Necesita Shizuku. Cambiar permisos del sistema puede hacer que algunas apps fallen.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "priv": 1
     },
     {
      "name": "Inure",
@@ -269,7 +276,8 @@
       ]
      ],
      "tip": "Tiene una prueba de 15 días; después se desbloquea con su versión completa.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "priv": 1
     },
     {
      "name": "SD Maid SE",
@@ -333,7 +341,8 @@
       "https://github.com/termux.png?size=160"
      ],
      "tip": "Instálalo desde F-Droid y no mezcles fuentes: sus complementos exigen la misma firma. Pide muchos permisos delicados.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 7
     },
     {
      "name": "scrcpy",
@@ -395,7 +404,8 @@
        "https://github.com/Akylas/EnforceDoze"
       ]
      ],
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 6
     },
     {
      "name": "No More Background",
@@ -407,7 +417,8 @@
        "https://github-store.org/app?repo=adil192/no_more_background"
       ]
      ],
-     "tip": "Algunas apps pueden seguir en segundo plano aunque las apagues."
+     "tip": "Algunas apps pueden seguir en segundo plano aunque las apagues.",
+     "priv": 1
     },
     {
      "name": "BatStats",
@@ -420,7 +431,8 @@
       ]
      ],
      "tip": "Algunos datos detallados no están disponibles en todos los móviles.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "priv": 1
     },
     {
      "name": "Extinguish",
@@ -452,7 +464,8 @@
       "https://github.com/UlyssesZh.png?size=160"
      ],
      "tip": "Necesita Shizuku.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 7
     },
     {
      "name": "OrientationLock",
@@ -494,7 +507,9 @@
        "Abrir",
        "https://github-store.org/app?repo=dorumrr/privacyFlip"
       ]
-     ]
+     ],
+     "min": 12,
+     "priv": 1
     },
     {
      "name": "Alternate",
@@ -507,7 +522,8 @@
       ]
      ],
      "tip": "Pide acceso al registro de llamadas y a mostrarse sobre otras apps. Solo arm64.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 7
     },
     {
      "name": "Exodus",
@@ -522,7 +538,8 @@
      "logo": [
       "https://github.com/Exodus-Privacy.png?size=160"
      ],
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 6
     },
     {
      "name": "Bitwarden",
@@ -569,7 +586,8 @@
       "https://github.com/lz233.png?size=160"
      ],
      "tip": "Pide varios permisos (mostrarse sobre otras apps, inicio automático): revísalos al instalar.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8
     },
     {
      "name": "Fake Traveler",
@@ -783,7 +801,8 @@
       "https://github.com/jeeneo.png?size=160"
      ],
      "tip": "Solo funciona en arm64.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8
     },
     {
      "name": "Ente Photos",
@@ -827,7 +846,8 @@
        "https://github-store.org/app?repo=mokshablr/gander"
       ]
      ],
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8
     },
     {
      "name": "Material Files",
@@ -1143,7 +1163,8 @@
        "https://f-droid.org/en/packages/com.mhss.app.mybrain"
       ]
      ],
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8
     },
     {
      "name": "Chrono",
@@ -1158,7 +1179,8 @@
      "logo": [
       "https://github.com/vicolo-dev.png?size=160"
      ],
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 5
     },
     {
      "name": "LibreFit",
@@ -1183,7 +1205,8 @@
       ]
      ],
      "tip": "Solo lanza las apps de IA que ya tengas instaladas.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8
     },
     {
      "name": "Euria",
@@ -1199,7 +1222,8 @@
       "https://github.com/Infomaniak.png?size=160"
      ],
      "tip": "Necesita internet y una cuenta (kSuite). Su servicio no es libre y envía informes de fallos anónimos.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8
     },
     {
      "name": "AnkiDroid",
@@ -1345,7 +1369,9 @@
       ]
      ],
      "tip": "Modificar archivos o falsear el dispositivo puede romper las reglas de algunos juegos y causar baneos. El riesgo es tuyo.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 8,
+     "priv": 1
     },
     {
      "name": "Azahar",
@@ -1454,7 +1480,8 @@
        "https://github-store.org/app?repo=preethamkmr3/WidgetsPro"
       ]
      ],
-     "tip": "Si los widgets no se actualizan, desactiva la optimización de batería para la app."
+     "tip": "Si los widgets no se actualizan, desactiva la optimización de batería para la app.",
+     "min": 12
     },
     {
      "name": "Photo Widget",
@@ -1577,7 +1604,8 @@
       ]
      ],
      "tip": "Solo arm64. El agente de IA «Echo» necesita tu propia clave de un modelo de lenguaje.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 10
     },
     {
      "name": "ClassiPod",
@@ -1608,7 +1636,8 @@
       "https://github.com/helio-fm.png?size=160"
      ],
      "tip": "Sirve para crear música, no para reproducirla.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 5
     },
     {
      "name": "Ambient Music Mod",
@@ -1621,7 +1650,9 @@
       ]
      ],
      "tip": "Con Shizuku hay que volver a iniciarlo tras cada reinicio. Para mostrar la canción en el bloqueo pide un servicio de accesibilidad.",
-     "added": "2026-10-15"
+     "added": "2026-10-15",
+     "min": 9,
+     "priv": 1
     },
     {
      "name": "Auxio",

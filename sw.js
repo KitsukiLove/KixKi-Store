@@ -1,7 +1,8 @@
-const V="kixki-v28",SHELL=["./","index.html","styles.css","pixel-ui.css","pxbg.css","pxbg.js","app.js","apps.json","data/meta.json","manifest.webmanifest","scenes.js","xpbg.js","xpbg.css","music.js","i18n.js","eggs.js","kixki.css","dialogs.js","kixki.js","kixki2.css","kixki2.js","kixki3.css","kixki3.js","basket.css","basket.js","consejos.css","consejos.js","vacaboss.css","vacaboss.js","vaca.gif","vaca-jefa.gif","vaca-jefa.png","xpmode.js","xp.css","xp-icons.css","xp-games.css","xp-games.js","vallas.js","lluvia.js","lluvia.css","logo.png","icon-32.png","icon-180.png","icon-192.png","icon-512.png","icon-maskable-192.png","icon-maskable-512.png"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.allSettled(SHELL.map(u=>c.add(u)))).then(()=>self.skipWaiting()));});
+const V="kixki-v29",SHELL=["./","index.html","styles.css","pixel-ui.css","pxbg.css","pxbg.js","app.js","tienda.js","tienda.css","apps.json","data/meta.json","fonts/fonts.css","fonts/f0.woff2","fonts/f1.woff2","fonts/f2.woff2","fonts/f3.woff2","fonts/f4.woff2","manifest.webmanifest","scenes.js","xpbg.js","xpbg.css","music.js","i18n.js","eggs.js","kixki.css","dialogs.js","kixki.js","kixki2.css","kixki2.js","kixki3.css","kixki3.js","basket.css","basket.js","consejos.css","consejos.js","vacaboss.css","vacaboss.js","vaca.gif","vaca-jefa.gif","vaca-jefa.png","xpmode.js","xp.css","xp-icons.css","xp-games.css","xp-games.js","vallas.js","lluvia.js","lluvia.css","logo.png","icon-32.png","icon-180.png","icon-192.png","icon-512.png","icon-maskable-192.png","icon-maskable-512.png"];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.allSettled(SHELL.map(u=>c.add(new Request(u,{cache:"reload"}))))).then(()=>self.skipWaiting()));});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()));});
-/* Mismo origen: responde al instante desde caché y se actualiza en segundo plano.
+/* Al instalar se pide cada archivo saltándose la caché del navegador (cache:"reload"), para no guardar versiones viejas en la caché nueva.
+   Mismo origen: responde al instante desde caché y se actualiza en segundo plano.
    Solo se guardan respuestas correctas (nunca 404/500). */
 self.addEventListener("fetch",e=>{
   const rq=e.request;

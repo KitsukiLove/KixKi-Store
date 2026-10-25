@@ -23,7 +23,7 @@
 <a id="que-trae"></a>
 <img src="docs/bar-que-trae.png" alt="que-trae.exe" width="100%">
 
-La colección es pequeña y cuidada: **71 apps en 13 carpetas**, cada una con su descripción, enlaces y avisos, un **buscador que perdona errores** (acentos, guiones y letras mal puestas; si no encuentra nada, sugiere «¿Quisiste decir…?») y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
+La colección es pequeña y cuidada: **121 apps en 15 carpetas**, cada una con su descripción, enlaces y avisos, un **buscador que perdona errores** (acentos, guiones y letras mal puestas; si no encuentra nada, sugiere «¿Quisiste decir…?») y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
 
 - **Dos mundos, Pixel y Colina XP,** y en cada uno Valle, Primavera, Verano, Otoño, Invierno, Halloween y Navidad. «Auto» sigue la fecha real.
 - **Lluvia con relámpagos y trueno,** y sonido de lluvia sintetizado.
@@ -118,15 +118,39 @@ Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego, con `movil` a
 | `node tools/test-pixel-musica.mjs` | menú pixel, fondos con vida y las 30 piezas de música |
 | `node tools/test-xpbg.mjs` | Colina XP, lluvia, pausa y menú XP |
 | `node tools/test-vaca.mjs` | vaca.exe, combate y fondos de premio/castigo |
+| `node tools/test-tienda.mjs` | bienvenida, «Para ti», orden, filtros, «Ya la tengo», enlace por app y accesibilidad |
 | `node tools/test-dialogos.mjs` | los diálogos y la latencia de Kixki |
 | `node tools/check-dialogs.mjs` · `check-links.mjs` | textos válidos (es + en) · enlaces rotos |
 
-Trucos de consola: `KXB.next()` · `KXB.setWorld("pixel"|"xp")` · `KXB.season("otono")` · `KXRAIN.lightning()` · `KXQ.list()` · `KXK.say("hola")` · `KXM.toggle()`.
+Trucos de consola: `KXT.open()` (abre las preguntas de bienvenida) · `KXT.reset()` (olvida tus respuestas) · `KXB.next()` · `KXB.setWorld("pixel"|"xp")` · `KXB.season("otono")` · `KXRAIN.lightning()` · `KXQ.list()` · `KXK.say("hola")` · `KXM.toggle()`.
 
 <a id="mas-detalles"></a>
 <img src="docs/bar-detalles.png" alt="mas-detalles.exe" width="100%">
 
 Todo lo que se fue construyendo, parte por parte. Abre una sección para leerla.
+
+<details>
+<summary><b>Tienda: bienvenida, «Para ti», orden y accesibilidad (tienda.js)</b></summary>
+
+- **Preguntas de bienvenida** (la primera vez, o desde el menú → «Mi perfil…»): cómo te describes, si tienes root/Shizuku/ADB, tu versión de Android y qué te interesa. Se puede **saltar**. Se guardan solo en tu navegador (`kixki-perfil`).
+- **«Para ti»**: hasta 6 apps según tus respuestas (nunca las que tu Android no soporta ni las que necesitan Shizuku/root si no lo tienes). Si empiezas, también te lleva al pack «Para empezar».
+- **Avisos en cada app**: «Pide Android N+» (la atenúa) y «Necesita Shizuku, root o ADB». Los datos salen de los campos `min` y `priv` de `apps.json`. El botón **«Solo las que puedo usar»** oculta las que no te sirven.
+- **Orden**: Original, A–Z, Más estrellas, Más actualizadas (usa `data/meta.json`).
+- **«Ya la tengo»** en cada app, y el filtro **«Me faltan (N)»**.
+- **«🔗 Enlace»**: copia un enlace que abre la tienda directo en esa app (`…/#app=Bitwarden`).
+- **Accesibilidad**: cada ☆ tiene el nombre de su app, las ventanas «Ejecutar», juego y QR son diálogos (el foco no se escapa y vuelve a su sitio al cerrar), los lectores de pantalla oyen «N apps encontradas» o «Sin resultados».
+- Los navegadores de prueba no ven la bienvenida salvo con `?bienvenida=1`.
+
+### Rendimiento (batería)
+- El parpadeo de las ovejas pasó de una animación CSS infinita a un temporizador: en reposo la página gasta **~4 % de CPU en vez de ~20 %** (en invierno, de 38 % a 5 %). Las estrellas titilan en 6 grupos y se pausan cuando no se ven.
+- Logos reducidos (de 3.5 MB a 0.6 MB) y `logo.png` de 1 MB a 100 KB.
+- El service worker pide los archivos nuevos saltándose la caché del navegador, para no guardar versiones viejas.
+
+### Arreglos
+- Datos guardados dañados (favoritas, vistas, logros) ya no impiden que la página arranque.
+- 11 logos que faltaban (daban 404) ahora son iconos pixel propios (`logos/*.svg`).
+
+</details>
 
 <details>
 <summary><b>Kixki, la oveja guía</b></summary>

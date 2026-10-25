@@ -17,7 +17,7 @@ html[data-bg]:not([data-bg="xp"]):not([data-bg="vacas"]) #pxfx{display:block}
 #pxfx .pb.u{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 7 3' shape-rendering='crispEdges'%3E%3Cpath fill='%232b1a5e' d='M0 1h1v1H0zM1 2h1v1H1zM2 1h1v1H2zM3 0h1v1H3zM4 1h1v1H4zM5 2h1v1H5zM6 1h1v1H6z'/%3E%3C/svg%3E")}
 @keyframes pxfly{to{transform:translateX(calc(100vw + 90px))}}
 #pxfx .pb{animation-name:pxfly,pxbob}
-@keyframes pxbob{0%,100%{margin-top:0}50%{margin-top:-6px}}
+@keyframes pxbob{0%,100%{translate:0 0}50%{translate:0 -6px}}/* translate (no margin-top): no obliga a recalcular el diseño en cada cuadro */
 /* mariposa / luciérnaga / murciélago */
 #pxfx .pm{width:15px;height:12px;animation:pxwander var(--d,18s) linear forwards;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 5 4' shape-rendering='crispEdges'%3E%3Cpath fill='%23ff9ad5' d='M0 0h2v2H0zM3 0h2v2H3zM0 3h1v1H0zM4 3h1v1H4z'/%3E%3Cpath fill='%232b1a5e' d='M2 1h1v3H2z'/%3E%3C/svg%3E")}

@@ -239,6 +239,6 @@ function back(){const w=document.createTreeWalker(document.body,NodeFilter.SHOW_
 new MutationObserver(ms=>{for(const m of ms){if(m.type==="characterData")tn(m.target);else if(m.type==="attributes")ta(m.target,m.attributeName);
   else m.addedNodes.forEach(n=>n.nodeType===3?tn(n):n.nodeType===1&&all(n));}}).observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:ATT});
 document.documentElement.lang=lang;all(document.body);
-window.KXI={get lang(){return lang;},set(l){lang=l;try{localStorage.setItem(LSK,JSON.stringify(l));}catch(e){}document.documentElement.lang=l;l==="en"?all(document.body):back();},
+window.KXI={get lang(){return lang;},set(l){lang=l;try{localStorage.setItem(LSK,JSON.stringify(l));}catch(e){}document.documentElement.lang=l;l==="en"?all(document.body):back();dispatchEvent(new Event("kixki-lang"));},
   orig(el){const n=el.firstChild;return n&&n._o!==undefined?n._o.trim():el.textContent.trim();}};
 })();

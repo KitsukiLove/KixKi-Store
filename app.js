@@ -200,14 +200,15 @@ const CLOUD2=["..cccc..",".cccccc.","cccccccc"];
   const R=(x,y,w,h,c)=>{s+=`<rect class="${c}" x="${x}" y="${y}" width="${w}" height="${h}"/>`;};
   // cielo en franjas, como en los juegos de 16 bits
   [0,7,12,16,20,23].forEach((y,i)=>R(0,y,W,H-y,"sk"+(i+1)));
-  // estrellas
+  // estrellas (en 6 grupos que titilan a destiempo: 6 animaciones en vez de 28, mucho más ligero para el celular)
   s+=`<g class="stars">`;
+  const stG=[[],[],[],[],[],[]];
   [[4,3],[10,9],[18,4,1],[25,8],[31,2],[33,5,1],[42,12],[58,12],[61,4],[14,14],[51,3],[8,17],[34,15],[60,17],[22,13],[2,10],[15,2],[28,13],[55,2,1],[62,9],[20,10],[7,6,1],[47,8],[50,15],[12,12],[57,7],[26,3],[38,13]].forEach(([x,y,big],i)=>{
-    const d=-((i*13)%9)/3;
-    s+=`<g class="tw" style="animation-delay:${d.toFixed(1)}s"><rect x="${x}" y="${y}" width="1" height="1"/>`;
-    if(big)s+=`<rect x="${x-1}" y="${y}" width="3" height="1"/><rect x="${x}" y="${y-1}" width="1" height="3"/>`;
-    s+=`</g>`;
+    let t=`<rect x="${x}" y="${y}" width="1" height="1"/>`;
+    if(big)t+=`<rect x="${x-1}" y="${y}" width="3" height="1"/><rect x="${x}" y="${y-1}" width="1" height="3"/>`;
+    stG[(i*13)%6].push(t);
   });
+  stG.forEach((g,j)=>{s+=`<g class="tw" style="animation-delay:-${(j*.53).toFixed(2)}s">${g.join("")}</g>`;});
   s+=`</g>`;
   // luna (noche) y sol (día)
   s+=`<g class="moon">`;
@@ -241,7 +242,12 @@ const CLOUD2=["..cccc..",".cccccc.","cccccccc"];
   // la oveja
   s+=rects(SHEEP,37,16);
   el.innerHTML=s;
+  const sc=el.closest(".scene");if(sc&&"IntersectionObserver" in window)new IntersectionObserver(es=>es.forEach(x=>sc.classList.toggle("off",!x.isIntersecting))).observe(sc);
 })();
+
+/* Parpadeo de las ovejas: cada 5,5 s los ojos se aclaran 0,17 s (un temporizador en vez de una animación infinita: ahorra mucha batería) */
+(function(){const r=document.documentElement;if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  const go=()=>{if(!document.hidden){r.classList.add("bk");setTimeout(()=>r.classList.remove("bk"),170);}setTimeout(go,5500);};setTimeout(go,5200);})();
 
 /* ========= RENDER ========= */
 const nav=document.getElementById("nav"),app=document.getElementById("app");
@@ -546,7 +552,8 @@ if(DSK())openWin(C[0].id);
 (function(){
 const {front,openWin,DSK,root,sm}=KX;
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const LS={g(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+/* LS.g solo devuelve el dato si tiene el mismo tipo que el valor por defecto (lista, número, objeto…); si está dañado o es de otra versión, usa el defecto */
+const LS={g(k,d){try{const v=localStorage.getItem(k);if(v==null)return d;const p=JSON.parse(v);return d!=null&&(p==null||typeof p!==typeof d||Array.isArray(p)!==Array.isArray(d))?d:p;}catch(e){return d;}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
 const SP=["favs","news","packs"],secOf=id=>document.getElementById(id);
 const origs=()=>$$("#app .cat:not(#favs):not(#news):not(#packs) .app"),nm=a=>a.querySelector("h3").textContent;
 const vib=(n=8)=>{try{navigator.vibrate&&navigator.vibrate(n);}catch(e){}};
@@ -593,7 +600,7 @@ function copyTxt(t,msg){const bad=()=>toast("No se pudo copiar. Cópialo a mano.
 
 /* --- mejoras por app --- */
 const repoOf=a=>{for(const l of a.querySelectorAll(".links a")){const m=l.href.match(/^https:\/\/github\.com\/([^\/]+)\/([^\/?#]+)/)||l.href.match(/[?&]repo=([^\/&]+)\/([^&]+)/);if(m)return m[1]+"/"+m[2];}return"";};
-const names=origs().map(nm),prev=LS.g("kixki-seen",null);let nw=null;
+const names=origs().map(nm);let prev=LS.g("kixki-seen",null);let nw=null;if(!Array.isArray(prev))prev=null;
 try{nw=JSON.parse(sessionStorage.getItem("kixki-news")||"null");}catch(e){}
 if(!nw){nw=prev?names.filter(n=>!prev.includes(n)):[];
   Object.entries(ADDED).forEach(([n,d])=>{if(Date.now()-Date.parse(d)<12096e5&&names.includes(n)&&!nw.includes(n))nw.push(n);});
@@ -771,8 +778,8 @@ const ago=d=>{const n=(Date.now()-Date.parse(d))/864e5;return n<1?"hoy":n<31?`ha
 function ghShow(r,d){const old=(Date.now()-Date.parse(d.p))/864e5>365,w=old||d.a;
   const t=`★ ${d.s>=1e3?(d.s/1e3).toFixed(1)+"k":d.s} · Actualizada ${ago(d.p)}`+(d.a?" · Archivada":old?" · sin cambios en más de un año":"");
   $$(`.app[data-repo="${r}"]`).forEach(a=>{const o=a.querySelector(".gh");if(o)o.remove();a.querySelector(".links").insertAdjacentHTML("beforebegin",`<div class="gh${w?" old":""}">${w?"⚠ ":""}${t}</div>`);});}
-(async()=>{const cache=LS.g("kixki-gh",{});
-  for(const r of new Set(origs().map(a=>a.dataset.repo).filter(Boolean))){if(M.repos[r]){ghShow(r,M.repos[r]);continue;}let d=cache[r];if(d)ghShow(r,d);if(d&&Date.now()-d.t<864e5)continue;
+(async()=>{const cache=LS.g("kixki-gh",{});let nf=0;/* máx. 10 consultas por visita: GitHub deja 60 por hora sin cuenta; el resto se completa en las siguientes visitas (o con tools/sync.mjs, que lo deja en data/meta.json) */
+  for(const r of new Set(origs().map(a=>a.dataset.repo).filter(Boolean))){if(M.repos[r]){ghShow(r,M.repos[r]);continue;}let d=cache[r];if(d)ghShow(r,d);if(d&&Date.now()-d.t<864e5)continue;if(nf++>=10)break;
     try{const j=await(await fetch("https://api.github.com/repos/"+r)).json();if(j.stargazers_count==null)break;
       d={t:Date.now(),s:j.stargazers_count,p:j.pushed_at,a:j.archived};cache[r]=d;LS.s("kixki-gh",cache);ghShow(r,d);}catch(e){break;}}})();
 

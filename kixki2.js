@@ -167,8 +167,10 @@ a("pro","crown","v",["Eres muy pro","You're so pro"],["Consigue todos los demás
 
 /* ---------- memoria de los logros ---------- */
 const LSK="kixki-a";
-let ST;try{ST=JSON.parse(localStorage.getItem(LSK)||"{}")||{};}catch(e){ST={};}
-ST.u=ST.u||{};ST.c=ST.c||{};ST.seenAt=+ST.seenAt||0;
+let ST;try{ST=JSON.parse(localStorage.getItem(LSK)||"{}");}catch(e){ST=null;}
+if(!ST||typeof ST!=="object"||Array.isArray(ST))ST={};/* dato dañado o de otro tipo: se empieza limpio en vez de romper */
+const isObj=v=>v&&typeof v==="object"&&!Array.isArray(v);
+ST.u=isObj(ST.u)?ST.u:{};ST.c=isObj(ST.c)?ST.c:{};ST.seenAt=+ST.seenAt||0;
 const C=ST.c;
 const save=()=>{try{localStorage.setItem(LSK,JSON.stringify(ST));}catch(e){}};
 const count=()=>A.reduce((n,x)=>n+(ST.u[x.id]?1:0),0);

@@ -1,0 +1,67 @@
+/* Kixki Store · tienda.css — estilos de tienda.js (orden, filtros, «Para ti», bienvenida, «Ya la tengo») */
+.kq-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 2px 0}
+.kq-lbl{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink)}
+.kq-sel{height:34px;padding:0 10px;border:0;border-radius:0;background:var(--surface);color:var(--ink);font:600 13px "Pixelify Sans",monospace;cursor:pointer;
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+.kq-sel:focus-visible,.kq-t:focus-visible,.kq-have:focus-visible,.kq-link:focus-visible,.pt-go:focus-visible,.pt-ed:focus-visible,.kq-o:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.kq-t{cursor:pointer;font:inherit;font-size:13px;color:var(--ink)}
+.kq-t[aria-pressed="true"]{outline:2px solid var(--acc)}
+.kq-t[hidden]{display:none}
+
+/* «Para ti» */
+.parati{--u:4px;margin:12px 2px 0;padding:12px 14px;background:var(--surface2);color:var(--ink);
+  box-shadow:0 -4px 0 var(--line),0 4px 0 var(--line),-4px 0 0 var(--line),4px 0 0 var(--line)}
+.parati[hidden]{display:none}
+.pt-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.pt-top b{font-size:17px}
+.pt-s{font-size:13px;color:var(--muted)}
+.pt-l{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+.pt-go{border:0;cursor:pointer;padding:5px 12px;background:var(--tag-bg);color:var(--tag-ink);font:600 14px "Pixelify Sans",monospace;border-radius:0;
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+.pt-go:hover{background:var(--pri);color:var(--pri-ink)}
+.pt-go.pk{background:var(--surface);color:var(--ink)}
+.pt-n{font-size:14px;color:var(--muted)}
+.pt-ed{margin-top:8px;border:0;background:none;color:var(--acc);font:600 13px "Pixelify Sans",monospace;text-decoration:underline;cursor:pointer;padding:2px 0}
+.srch .parati{display:none}
+
+/* avisos y botones dentro de cada app */
+.kq-bd{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}
+.kq-b{padding:1px 8px;font-size:12px;font-weight:700;color:var(--ink);background:var(--surface2);
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+.kq-b.warn{background:#ffe0a8;color:#5a2d00}
+.kq-b.info{background:#d8ecff;color:#0d3a63}
+:root[data-theme="dark"] .kq-b.warn{background:#5c3a0b;color:#ffe4b0}
+:root[data-theme="dark"] .kq-b.info{background:#173c63;color:#cfe6ff}
+.kq-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.kq-have,.kq-link{border:0;cursor:pointer;padding:4px 12px;min-height:30px;background:var(--surface);color:var(--ink);font:600 13px "Pixelify Sans",monospace;border-radius:0;
+  box-shadow:0 -2px 0 var(--line),0 2px 0 var(--line),-2px 0 0 var(--line),2px 0 0 var(--line)}
+.kq-have[aria-pressed="true"]{background:var(--pri);color:var(--pri-ink)}
+.app.have .logo{opacity:.7}
+.app.nope{opacity:.62}
+.app.nope:hover,.app.nope.sel{opacity:1}
+html.kq-us .app.nope,html.kq-td .app.have{display:none!important}
+.kq-none{margin:12px 14px;padding:10px;text-align:center;color:var(--muted);font-weight:600}
+
+/* ventana de bienvenida */
+.kq .kq-b0{padding:0 16px 4px;text-align:left}
+.kq-n{margin:0 0 4px;font-size:12px;font-weight:700;color:var(--muted)}
+.kq-q{margin:0 0 6px;font-size:21px;line-height:1.25;outline:0}
+.kq-note{margin:0 0 12px;font-size:14px;color:var(--muted);line-height:1.4}
+.kq-opts{display:grid;gap:10px}
+.kq-opts.g{grid-template-columns:1fr 1fr}
+.kq-o{width:100%;justify-content:flex-start;text-align:left;min-height:48px}
+.kq-e{font-size:22px;line-height:1}
+.kq-tx{display:flex;flex-direction:column;gap:2px;font-weight:700}
+.kq-tx small{font-weight:500;font-size:12px;opacity:.85}
+.kq-nav{display:flex;justify-content:space-between;gap:10px;margin-top:14px}
+.kq-nav .btn{min-height:40px}
+.kq-nav .p{margin-left:auto}
+@media (max-width:420px){.kq-q{font-size:19px}.kq-opts.g .kq-o{padding:7px 8px}}
+
+/* En modo PC la cabecera es una columna fija: si ahora tiene más cosas (orden, filtros, «Para ti»), se desplaza dentro de sí misma */
+.dsk .hero{top:12px;right:20px;width:392px;padding:6px;box-sizing:border-box;max-height:calc(100vh - 78px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.dsk .hero::-webkit-scrollbar{width:8px}
+.dsk .hero::-webkit-scrollbar-thumb{background:var(--line)}
+
+/* icono del botón «Mi perfil…» del menú Inicio (los demás vienen de pixel-ui.css) */
+html:not([data-style="xp"]) #sm #s-prf{--mi:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%208%208'%20shape-rendering='crispEdges'%3E%3Cpath%20fill='%235b2fd0'%20d='M2%200h4v1h-4zM1%201h6v1h-6zM1%202h6v1h-6zM2%203h4v1h-4zM3%204h2v1h-2zM1%205h6v1h-6zM0%206h8v1h-8zM0%207h8v1h-8z'/%3E%3C/svg%3E")}

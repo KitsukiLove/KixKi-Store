@@ -104,7 +104,9 @@ body::before{animation:twb 5s steps(1,end) infinite}
 .c-s{fill:color-mix(in srgb,var(--h,#888) 58%,#12082e)}
 .c-l{fill:color-mix(in srgb,var(--h,#888) 45%,#fff)}
 .c-y{fill:#ffd36e}.c-p{fill:#ff8fc7}.c-m{fill:#7ef0c4}.c-w{fill:#fff7e6}
-.c-g{fill:#cdbdf2}.c-f{fill:var(--face)}.c-e{fill:#2b1a5e;animation:blink 5.5s steps(1,end) infinite}
+.c-g{fill:#cdbdf2}.c-f{fill:var(--face)}.c-e{fill:#2b1a5e}
+/* parpadeo: lo activa app.js con un temporizador (una animación CSS de color infinita mantenía a la página repintando 60 veces por segundo) */
+html.bk .c-e{fill:var(--face)}
 .c-c{fill:var(--cl)}.c-k{fill:#2b1a5e}
 
 /* ---------- Cabecera / escena ---------- */
@@ -119,6 +121,9 @@ body::before{animation:twb 5s steps(1,end) infinite}
 .clouds{opacity:var(--cloud-o)}
 /* nubes que se deslizan de a un pixel, como en un juego antiguo */
 .cl{transform:translateX(var(--x0,0px));animation:drift 100s steps(86,end) infinite}
+/* Ahorro de batería: de día las estrellas no se ven y de noche las nubes tampoco, así que no se animan; fuera de pantalla la escena se pausa */
+html:not([data-theme="dark"]) .tw,html[data-theme="dark"] .cl{animation:none}
+.scene.off *{animation-play-state:paused!important}
 @keyframes drift{from{transform:translateX(-16px)}to{transform:translateX(70px)}}
 .hb{fill:var(--hb)}.hf{fill:var(--hf)}.gr{fill:var(--gr)}.fp{fill:#ff8fc7}.fy{fill:#ffd36e}
 .tg{--u:4px;--bc:var(--frame);position:absolute;top:14px;right:14px;width:40px;height:40px;display:grid;place-items:center;
@@ -233,7 +238,7 @@ footer small{display:block;margin:20px auto 0;max-width:40ch;color:var(--muted);
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 @keyframes tw{0%{opacity:1}50%{opacity:.15}}
-@keyframes blink{0%{fill:#2b1a5e}94%{fill:var(--face)}97%{fill:#2b1a5e}}
+
 
 @media (max-width:480px){
   .wrap,.pills{padding-left:18px;padding-right:18px}
