@@ -1,0 +1,43 @@
+{
+ "_leeme": "Apps que aún NO están en tu catálogo (las demás ya las agregaste). Dime cuáles quieres y las paso a apps.json. Datos verificados en F-Droid el 23-10-2026.",
+ "propuestas": [
+  {
+   "carpeta": "tiendas",
+   "name": "Obtainium",
+   "tag": "Actualizador",
+   "desc": "Instala y actualiza apps directo desde la página de lanzamientos de su autor (GitHub y otras), sin pasar por una tienda. Pegas el enlace de la app y te avisa cuando sale una versión nueva. Open source (GPLv3). Android 8+.",
+   "tip": "Muy buen complemento de Komi Store: úsalo para las apps que solo publican su APK en GitHub.",
+   "links": [
+    [
+     "F-Droid",
+     "https://f-droid.org/packages/dev.imranr.obtainium.fdroid/"
+    ],
+    [
+     "GitHub",
+     "https://github.com/ImranR98/Obtainium"
+    ]
+   ],
+   "min": 8,
+   "verificado": "F-Droid: v1.7.1, 22-oct-2026, Android 8.0+, GPL-3.0"
+  },
+  {
+   "carpeta": "privacidad",
+   "name": "Aegis Authenticator",
+   "tag": "Verificación en 2 pasos",
+   "desc": "Guarda tus códigos de verificación en dos pasos (2FA) cifrados en tu móvil, sin depender de la nube de nadie. Permite copias de seguridad cifradas y bloqueo con huella. Open source (GPLv3). Android 6+.",
+   "tip": "Haz una copia de seguridad cifrada y guárdala fuera del móvil: si lo pierdes, sin ella pierdes los códigos.",
+   "links": [
+    [
+     "F-Droid",
+     "https://f-droid.org/packages/com.beemdevelopment.aegis/"
+    ],
+    [
+     "GitHub",
+     "https://github.com/beemdevelopment/Aegis"
+    ]
+   ],
+   "min": 6,
+   "verificado": "F-Droid: v3.4.3, 9-sep-2026, Android 6.0+, GPL-3.0"
+  }
+ ]
+}

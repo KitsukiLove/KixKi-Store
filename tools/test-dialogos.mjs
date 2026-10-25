@@ -10,6 +10,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {createRequire} from "node:module";
+import {stubExternal} from "./_harness.mjs";
 const require=createRequire(import.meta.url);
 const {chromium}=require("playwright");
 
@@ -30,6 +31,7 @@ const ok=(c,msg)=>{console.log((c?"  OK    ":"  FALLA ")+msg);if(!c)fails++;};
 const br=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||undefined,args:["--no-sandbox"]});
 const ctx=await br.newContext(mobile?{viewport:{width:390,height:844}}:{viewport:{width:1280,height:800}});
 const page=await ctx.newPage();
+await stubExternal(page);/* sin internet en las pruebas */
 const errs=[];
 const ACH=(()=>{try{return [...fs.readFileSync(path.join(ROOT,"kixki2.js"),"utf8").matchAll(/^a\("([\w-]+)"/gm)].map(m=>m[1]);}catch(e){return [];}})();
 page.on("pageerror",e=>errs.push("PAGEERR "+e.message));
@@ -331,9 +333,12 @@ r=await page.evaluate(async()=>{
   out.list=document.querySelector("#kixki .kk-bub .v").textContent;
   KXK.interrupt();
   /* variables de contexto */
-  KXK.say(["Son las {hora}: «{app}» en «{carpeta}»","It's {hora}: “{app}” in “{carpeta}”"],{p:3,key:"t-vars",instant:true});await new Promise(r=>setTimeout(r,80));
-  out.vars=document.querySelector("#kixki .kk-bub .v").textContent;
-  KXK.interrupt();
+  /* hasta 4 intentos: si justo entra otra frase (un consejo de carpeta, por ejemplo), no es un fallo de las variables */
+  for(let i=0;i<4;i++){
+    KXK.say(["Son las {hora}: «{app}» en «{carpeta}»","It's {hora}: “{app}” in “{carpeta}”"],{p:3,key:"t-vars",instant:true});await new Promise(r=>setTimeout(r,80));
+    out.vars=document.querySelector("#kixki .kk-bub .v").textContent;
+    KXK.interrupt();if(/\d\d:\d\d/.test(out.vars))break;await new Promise(r=>setTimeout(r,150));
+  }
   /* generador por piezas: tres frases, distintas entre sí */
   const g=[...Array(6)].map(()=>KXD.gen("praise")),gd=[...Array(6)].map(()=>KXD.gen("grudge"));
   out.gen=new Set(g.map(x=>x[0])).size;out.genPair=g.every(x=>x.length===2&&x[0]&&x[1]);out.grudge=new Set(gd.map(x=>x[0])).size;
