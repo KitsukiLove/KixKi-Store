@@ -147,5 +147,5 @@ async function render(bg,xps,night,secs,sr){const P=(bg==="xp"?(XP[xps]||XP.clas
   for(let i=0;i<n;i++){u.setInt16(44+i*4,Math.max(-1,Math.min(1,L[i]))*32767,true);u.setInt16(46+i*4,Math.max(-1,Math.min(1,R[i]))*32767,true);}
   let s="";const by=new Uint8Array(u.buffer);for(let i=0;i<by.length;i+=8192)s+=String.fromCharCode.apply(null,by.subarray(i,i+8192));return btoa(s);}
 window.KXM={get on(){return on;},toggle(){on?stop():start();try{localStorage.setItem(LSK,on?"1":"0");}catch(e){}return on;},_render:render,_pieces:()=>({px:Object.keys(PX),xp:Object.keys(XP)})};
-try{if(localStorage.getItem(LSK)==="1"){on=true;addEventListener("pointerdown",()=>{if(on)start();},{once:true});}}catch(e){}
+try{const sv=localStorage.getItem(LSK);if(sv==="1"||sv===null){on=true;let g=0;const go=()=>{if(g||!on)return;g=1;start();};/* sin guardado = música activada; el navegador exige un toque o tecla para dejarla sonar */addEventListener("pointerdown",go,{once:true});addEventListener("keydown",go,{once:true});}}catch(e){}
 })();

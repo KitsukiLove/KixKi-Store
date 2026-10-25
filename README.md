@@ -119,6 +119,7 @@ Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego, con `movil` a
 | `node tools/test-xpbg.mjs` | Colina XP, lluvia, pausa y menú XP |
 | `node tools/test-vaca.mjs` | vaca.exe, combate y fondos de premio/castigo |
 | `node tools/test-tienda.mjs` | bienvenida, «Para ti», orden, filtros, «Ya la tengo», enlace por app y accesibilidad |
+| `node tools/test-inicio.mjs` | inicio sin carpetas ni silencio, logos en modo pixel y de reserva, globo de Kixki |
 | `node tools/test-dialogos.mjs` | los diálogos y la latencia de Kixki |
 | `node tools/check-dialogs.mjs` · `check-links.mjs` | textos válidos (es + en) · enlaces rotos |
 
@@ -132,7 +133,7 @@ Todo lo que se fue construyendo, parte por parte. Abre una sección para leerla.
 <details>
 <summary><b>Tienda: bienvenida, «Para ti», orden y accesibilidad (tienda.js)</b></summary>
 
-- **Preguntas de bienvenida** (la primera vez, o desde el menú → «Mi perfil…»): cómo te describes, si tienes root/Shizuku/ADB, tu versión de Android y qué te interesa. Se puede **saltar**. Se guardan solo en tu navegador (`kixki-perfil`).
+- **Preguntas de bienvenida** (la primera vez, o desde el menú → «Mi perfil…»): las hace Kixki en un globo (con su carita, sin ventana ni fondo oscuro; en PC abajo a la izquierda). Pregunta cómo te describes, si tienes root/Shizuku/ADB, tu versión de Android y qué te interesa. Se puede **saltar**. Se guardan solo en tu navegador (`kixki-perfil`).
 - **«Para ti»**: hasta 6 apps según tus respuestas (nunca las que tu Android no soporta ni las que necesitan Shizuku/root si no lo tienes). Si empiezas, también te lleva al pack «Para empezar».
 - **Avisos en cada app**: «Pide Android N+» (la atenúa) y «Necesita Shizuku, root o ADB». Los datos salen de los campos `min` y `priv` de `apps.json`. El botón **«Solo las que puedo usar»** oculta las que no te sirven.
 - **Orden**: Original, A–Z, Más estrellas, Más actualizadas (usa `data/meta.json`).
@@ -149,6 +150,9 @@ Todo lo que se fue construyendo, parte por parte. Abre una sección para leerla.
 ### Arreglos
 - Datos guardados dañados (favoritas, vistas, logros) ya no impiden que la página arranque.
 - 11 logos que faltaban (daban 404) ahora son iconos pixel propios (`logos/*.svg`).
+- **Logos de letras de reserva**: si el logo oficial de una app no carga, se usa `logos/<nombre>.svg` (dos letras sobre un color) antes de mostrar la inicial. Para apps nuevas: `python3 tools/logos-letras.py` crea los que falten.
+- **Modo pixel**: los logos ya no quedan en blanco si la carpeta se abre después de activarlo (antes las imágenes ocultas nunca se descargaban).
+- **Al entrar**: no se abre ninguna carpeta, y la música y los sonidos vienen activados (el navegador solo deja sonar tras el primer toque o tecla; si la apagas, se queda apagada).
 
 </details>
 

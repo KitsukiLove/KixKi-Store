@@ -53,7 +53,8 @@ const META={
    y después la imagen de perfil del autor. Si nada carga, se muestra la inicial. */
 function logos(a){
   if(M.logos[slug(a[0])])return [M.logos[slug(a[0])]];
-  if(a[5])return a[5];
+  const loc="logos/"+slug(a[0])+".svg";/* logo de letras de reserva (tools/logos-letras.py): solo se usa si el oficial no carga */
+  if(a[5])return [...a[5],loc];
   for(const l of a[3]){
     const m=l[1].match(/^https:\/\/github\.com\/([^\/]+)\/([^\/?#]+)/)||l[1].match(/[?&]repo=([^\/&]+)\/([^&]+)/);
     if(m){
@@ -61,11 +62,11 @@ function logos(a){
       return [
         `https://raw.githubusercontent.com/${o}/${r}/HEAD/fastlane/metadata/android/en-US/images/icon.png`,
         `https://raw.githubusercontent.com/${o}/${r}/HEAD/metadata/en-US/images/icon.png`,
-        `https://github.com/${o}.png?size=160`
+        `https://github.com/${o}.png?size=160`,loc
       ];
     }
   }
-  return [];
+  return [loc];
 }
 
 /* ========= SPRITES PIXEL =========
@@ -542,10 +543,10 @@ q.addEventListener("input",()=>{const v=q.value.trim();root.classList.toggle("sr
 mode();addEventListener("resize",mode);
 function setView(v){try{v==="auto"?localStorage.removeItem("kixki-view"):localStorage.setItem("kixki-view",v);}catch(e){}
   document.querySelector("meta[name=viewport]").content=v==="pc"?"width=1100, viewport-fit=cover":"width=device-width, initial-scale=1, viewport-fit=cover";
-  mode();secs.forEach(x=>setState(x,"min"));topS=null;sync();if(DSK())openWin(C[0].id);}
+  mode();secs.forEach(x=>setState(x,"min"));topS=null;sync();}
 document.getElementById("vw").addEventListener("click",()=>setView(DSK()?"movil":"pc"));
 window.KX={front,openWin,DSK,root,sm,setView};
-if(DSK())openWin(C[0].id);
+/* al entrar no se abre ninguna carpeta: el escritorio queda limpio */
 })();
 
 /* ========= KIXKI OS · parte 2 ========= */
@@ -558,7 +559,7 @@ const SP=["favs","news","packs"],secOf=id=>document.getElementById(id);
 const origs=()=>$$("#app .cat:not(#favs):not(#news):not(#packs) .app"),nm=a=>a.querySelector("h3").textContent;
 const vib=(n=8)=>{try{navigator.vibrate&&navigator.vibrate(n);}catch(e){}};
 const ADDED={};D.categories.forEach(c=>c.apps.forEach(a=>{if(a.added)ADDED[a.name]=a.added;}));/* "added":"2026-10-12" en apps.json → muestra «Nueva» 12 días */
-let SND=LS.g("kixki-snd",false),PX=LS.g("kixki-px",false),AC;
+let SND=LS.g("kixki-snd",true),PX=LS.g("kixki-px",false),AC;
 let lb=0,ln=-1,lbt=0,win=[],bq=[],FXO;
 /* Efectos: una sola cadena de audio compartida (volumen, filtro y compresor). Solo se crea tras un gesto del usuario,
    se calla con la pestaña oculta y cambia de escala/timbre según el fondo y la hora (día/noche). */

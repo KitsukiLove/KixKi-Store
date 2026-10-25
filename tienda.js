@@ -161,9 +161,9 @@ function renderParati(){
   const sum=[L("Soy ","I'm ")+(TIPO[p.t]?TIPO[p.t][L(0,1)]:"—"),
     p.a?"Android "+p.a+(p.a>=14?"+":""):L("Android: no sé","Android: not sure"),
     p.p==="si"?L("con root/Shizuku/ADB","with root/Shizuku/ADB"):L("sin root/Shizuku/ADB","no root/Shizuku/ADB")].join(" · ")+(ints.length?" · "+ints.join(", "):"");
-  pt.innerHTML=`<div class="pt-top"><b id="pt-h">🐑 ${L("Para ti","For you")}</b><span class="pt-s">${esc(sum)}</span></div>
+  pt.innerHTML=`<div class="pt-bar"><b id="pt-h">🐑 ${L("Para ti","For you")}</b></div><div class="pt-in"><p class="pt-s">${esc(sum)}</p>
     <div class="pt-l">${list.map(a=>`<button type="button" class="pt-go" data-go="${esc(nm(a))}">${esc(nm(a))}</button>`).join("")}${p.t==="ini"?`<button type="button" class="pt-go pk" data-open="packs">🎁 ${L("Pack «Para empezar»","«Getting started» pack")}</button>`:""}${list.length?"":`<span class="pt-n">${L("Con tus respuestas no encontré nada nuevo que sugerir.","Nothing new to suggest with your answers.")}</span>`}</div>
-    <button type="button" class="pt-ed" id="pt-ed">${L("Cambiar mis respuestas","Change my answers")}</button>`;
+    <button type="button" class="pt-ed" id="pt-ed">${L("Cambiar mis respuestas","Change my answers")}</button></div>`;
   pt.hidden=false;
 }
 
@@ -180,12 +180,24 @@ const STEPS=[
    [11,"",["Android 11","Android 11"]],[12,"",["Android 12","Android 12"]],[13,"",["Android 13","Android 13"]],[14,"",["Android 14 o más","Android 14 or higher"]],[0,"🤷",["No sé","Not sure"]]]},
  {k:"i",multi:1,q:["¿Qué te interesa?","What are you into?"],note:["Elige las que quieras, o ninguna.","Pick any, or none."],opts:INT.map(x=>[x[0],x[1],x[2]])}];
 let W=null,wi=0,lastOut=null;
+function sheepPic(){
+  /* la carita de Kixki: se copia de la Kixki de verdad (sus dibujos en vivo); si no está, una ovejita de emoji */
+  const f=$("#kixki .kk-flip svg.f-idle"),t=$("#kixki .kk-flip svg.f-talk");
+  const cp=(n,c)=>{if(!n)return"";const k=n.cloneNode(true);k.setAttribute("class","kq-f "+c);k.removeAttribute("width");k.removeAttribute("height");return k.outerHTML;};
+  return f?cp(f,"i")+cp(t||f,"t"):'<span class="kq-emo">🐑</span>';
+}
+let talkT=0;
+function talk(){
+  const pic=$("#kq .kq-pic");if(!pic||matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  clearInterval(talkT);let n=0;pic.classList.add("say");
+  talkT=setInterval(()=>{pic.classList.toggle("say");if(++n>=7){clearInterval(talkT);pic.classList.remove("say");}},140);
+}
 function ensureWizard(){
   let o=$("#kq");if(o)return o;
-  document.body.insertAdjacentHTML("beforeend",`<div id="kq" class="ovl" hidden><div class="box kq" role="dialog" aria-modal="true" aria-labelledby="kq-t"><div class="bt"><span id="kq-t"></span><button type="button" class="x" data-x="kq"></button></div><div id="kq-b" class="kq-b0"></div></div></div>`);
+  document.body.insertAdjacentHTML("beforeend",`<div id="kq" class="ovl" hidden><div class="box kq" role="dialog" aria-modal="true" aria-labelledby="kq-t"><div class="kq-pic" aria-hidden="true">${sheepPic()}</div><div class="kq-bub"><span class="kk-nm" id="kq-t"></span><button type="button" class="x" data-x="kq"></button><div id="kq-b" class="kq-b0"></div><svg class="kk-tl kq-tl" viewBox="0 0 8 4" width="24" height="12" shape-rendering="crispEdges" aria-hidden="true"><path class="o" d="M0 0h8v1H0zM1 1h6v1H1zM2 2h4v1H2zM3 3h2v1H3z"/><path class="i" d="M1 0h6v1H1zM2 1h4v1H2zM3 2h2v1H3z"/></svg></div></div></div>`);
   o=$("#kq");
   /* si se cierra sin terminar (✕, Escape o tocar fuera), no se vuelve a preguntar */
-  new MutationObserver(()=>{if(o.hidden&&!PRF())LS.s("kixki-perfil",{v:1,skip:1});if(o.hidden){decorate();renderParati();labels();}}).observe(o,{attributes:true,attributeFilter:["hidden"]});
+  new MutationObserver(()=>{root.classList.toggle("kq-on",!o.hidden);if(o.hidden&&!PRF())LS.s("kixki-perfil",{v:1,skip:1});if(o.hidden){decorate();renderParati();labels();}}).observe(o,{attributes:true,attributeFilter:["hidden"]});
   return o;
 }
 function openWizard(){
@@ -195,14 +207,15 @@ function openWizard(){
 }
 function stepView(){
   const s=STEPS[wi],b=$("#kq-b"),x=$("#kq .x");
-  $("#kq-t").textContent=L("Conozcámonos 🐑","Let's get to know each other 🐑");
+  $("#kq-t").textContent=L("Kixki te pregunta","Kixki asks you");
   x.setAttribute("aria-label",L("Cerrar","Close"));x.textContent="✕";
   const cur=W[s.k],sel=v=>s.multi?W.i.includes(v):(cur!=null&&String(cur)===String(v));
   b.innerHTML=`<p class="kq-n">${L("Pregunta","Question")} ${wi+1} / ${STEPS.length}</p>
     <h2 class="kq-q" id="kq-q" tabindex="-1">${s.q[L(0,1)]}</h2><p class="kq-note">${s.note[L(0,1)]}</p>
-    <div class="kq-opts${s.grid?" g":""}" role="${s.multi?"group":"radiogroup"}" aria-labelledby="kq-q">${s.opts.map(([v,e,lab,sub])=>`<button type="button" class="btn kq-o${sel(v)?" p":""}" data-v="${v}" ${s.multi?"aria-pressed":"aria-checked"}="${sel(v)}" role="${s.multi?"button":"radio"}">${e?`<span class="kq-e" aria-hidden="true">${e}</span>`:""}<span class="kq-tx">${lab[L(0,1)]}${sub?`<small>${sub[L(0,1)]}</small>`:""}</span></button>`).join("")}</div>
+    <div class="kq-opts${s.grid?" g":""}${s.multi?" m":""}" role="${s.multi?"group":"radiogroup"}" aria-labelledby="kq-q">${s.opts.map(([v,e,lab,sub])=>`<button type="button" class="btn kq-o${sel(v)?" p":""}" data-v="${v}" ${s.multi?"aria-pressed":"aria-checked"}="${sel(v)}" role="${s.multi?"button":"radio"}">${e?`<span class="kq-e" aria-hidden="true">${e}</span>`:""}<span class="kq-tx">${lab[L(0,1)]}${sub?`<small>${sub[L(0,1)]}</small>`:""}</span></button>`).join("")}</div>
     <div class="kq-nav">${wi?`<button type="button" class="btn kq-back">← ${L("Atrás","Back")}</button>`:`<button type="button" class="btn kq-skip">${L("Saltar","Skip")}</button>`}${s.multi?`<button type="button" class="btn p kq-done">${L("Listo","Done")} ✓</button>`:(cur!=null?`<button type="button" class="btn p kq-next">${L("Siguiente","Next")} →</button>`:"")}</div>`;
   const q=$("#kq-q");if(q)q.focus({preventScroll:true});
+  talk();
 }
 function finish(){
   LS.s("kixki-perfil",{v:1,t:W.t||"dia",p:W.p||"?",a:W.a||0,i:W.i,ts:Date.now()});

@@ -24,7 +24,7 @@ export function serve(dir=root){
     }).listen(0,"127.0.0.1",()=>res({url:"http://127.0.0.1:"+s.address().port+"/",close:()=>s.close()}));
   });
 }
-export async function open({mobile=false,url,init,dir,query=""}={}){
+export async function open({mobile=false,url,init,dir,query="",sonido=false}={}){
   const srv=await serve(dir||root);
   const br=await chromium.launch({headless:true,args:["--no-sandbox"]});
   const ctx=await br.newContext(mobile?{viewport:{width:390,height:800},hasTouch:true,isMobile:true,deviceScaleFactor:2}:{viewport:{width:1280,height:800}});
@@ -32,6 +32,8 @@ export async function open({mobile=false,url,init,dir,query=""}={}){
   await stubExternal(pg);
   const errs=[];pg.on("pageerror",e=>errs.push(String(e)));pg.on("console",m=>{if(m.type()==="error")errs.push(m.text());});
   await pg.addInitScript(()=>{try{sessionStorage.setItem("kixki-boot","1");sessionStorage.setItem("kixki-k-s","1");localStorage.setItem("kixki-k",JSON.stringify({v:1,on:true,visits:5,first:1,last:Date.now(),opened:[],fc:{},allDone:0,mode:"normal"}));localStorage.setItem("kixki-k3",JSON.stringify({v:1,pr:false,plan:0,grabs:0,drops:0,closed:0,bgs:0,throws:0}));}catch(e){}});
+  /* las pruebas parten en silencio (la página real viene con música y sonido activados; sonido:true lo deja como viene) */
+  if(!sonido)await pg.addInitScript(()=>{try{localStorage.setItem("kixki-mus","0");localStorage.setItem("kixki-snd","false");}catch(e){}});
   if(init)await pg.addInitScript(init);
   await pg.goto(url||srv.url+"index.html"+query);
   await pg.waitForFunction(()=>window.KXK&&KXK.ready&&KXK3&&true,null,{timeout:20000});

@@ -1,44 +1,47 @@
-KIXKI STORE - ACTUALIZACIÓN UNIDA A TU VERSIÓN NUEVA (main10)
-==============================================================
+KIXKI STORE - ARREGLOS (sobre tu versión main10)
+=================================================
 
-IMPORTANTE: este zip REEMPLAZA a mis zips anteriores.
-NO subas "ACTUALIZAR-Tienda-Mejorada" ni "ACTUALIZAR-Logos-livianos":
-borrarían tus apps y carpetas nuevas. Éste ya tiene todo cruzado
-con tu versión nueva (121 apps, 15 carpetas).
+ESTE ZIP REEMPLAZA al zip anterior "ACTUALIZAR-Tienda-Unida-main10".
+Trae todo lo de antes MÁS los arreglos de ahora. Súbelo completo,
+da igual si ya subiste el anterior.
+(El zip opcional de "Logos livianos" sigue igual: no hace falta repetirlo.)
 
-QUÉ TRAE
-- Bienvenida con preguntas (tipo de usuaria, root, Android, intereses)
-- Sección "Para ti" con apps recomendadas
-- Orden (A-Z, estrellas, nuevas), "Solo las que puedo usar", "Me faltan"
-- Botón "Ya la tengo" y avisos "Pide Android N+" / "Necesita Shizuku, root o ADB"
-- Mejor teclado y lector de pantalla
-- Menos consumo de batería y CPU en el celular
-- 11 logos nuevos para las apps que no tenían
-- Arreglos de errores (datos guardados raros ya no rompen la página)
-- Tus carpetas nuevas (Mensajería y Sistemas) siguen igual
+QUÉ ARREGLÉ
+1. Logos en modo pixel: ya no se quedan en blanco si abres la carpeta
+   después de activar el modo pixel. (Antes las imágenes escondidas
+   nunca se descargaban.)
+2. Apps sin logo: las 52 apps que no tenían logo ahora tienen uno de
+   respaldo (dos letras sobre un color, estilo pixel). Si el logo
+   oficial carga, se ve ese; si no, sale el de letras.
+3. Preguntas de bienvenida: ahora las hace Kixki en un globo, con su
+   carita. Ya no es una ventana ni oscurece la página.
+   - En PC sale abajo a la izquierda y los botones son más ordenados.
+   - En móvil sale abajo, encima del menú, con las opciones en 2 columnas
+     donde caben.
+4. Tarjeta "Para ti" y barra de orden/filtros: más ordenadas
+   (botones en cuadrícula y la tarjeta con su barra de título).
+5. Al entrar a la página: ya NO se abre ninguna carpeta, y la música y
+   los sonidos vienen ACTIVADOS.
+   Nota: los navegadores no dejan sonar nada hasta que tocas la pantalla
+   o una tecla por primera vez. Es una regla de ellos, no se puede evitar.
+   Si apagas la música, se queda apagada para la próxima.
 
-CÓMO INSTALAR (desde el celular, en GitHub web)
+CÓMO INSTALAR (celular, GitHub web)
 1. Descomprime este zip.
-2. Entra a tu repositorio KixKi-Store > "Add file" > "Upload files".
-3. Sube TODO el contenido (con sus carpetas: logos, data, tools).
-   Son 28 archivos más este LEEME. Si pregunta, elige reemplazar.
-4. Escribe un mensaje corto y toca "Commit changes".
-5. Espera la palomita verde (1-2 minutos).
-6. Abre la página y recárgala 2 veces (la primera carga lo nuevo).
+2. En tu repositorio: "Add file" > "Upload files".
+3. Sube TODO el contenido (con sus carpetas: logos, tools, data).
+   Si pregunta, elige reemplazar.
+4. "Commit changes" y espera la palomita verde (1-2 minutos).
+5. Abre la página y recárgala 2 veces.
+   Para ver las preguntas de Kixki otra vez: menú Inicio > "Mi perfil...".
 
-OPCIONAL: el otro zip "Logos-livianos" hace las imágenes más ligeras.
-Súbelo igual (después de éste). No es obligatorio.
+ARCHIVOS NUEVOS
+- tools/logos-letras.py: crea logos de letras para apps nuevas que no
+  tengan logo (python3 tools/logos-letras.py).
+- tools/test-inicio.mjs: prueba automática de todo esto.
+- logos/*.svg: los 52 logos de respaldo.
 
-PENDIENTE (solo si tienes compu con internet)
-Tus apps nuevas aún no tienen logo ni estrellas en data/meta.json.
-La página funciona igual (usa los logos de GitHub), pero "Más estrellas"
-las pone al final. Para arreglarlo: en una compu, dentro de la carpeta,
-corre:  node tools/sync.mjs   y sube data/meta.json.
-
-OTRAS NOTAS
-- La página ahora pide como máximo 10 datos a GitHub por visita
-  (para no gastar el límite).
-- tools/apps-propuestas.json: solo quedan por agregar Obtainium
-  y Aegis Authenticator. Dime si las quieres.
-- Versión del caché: kixki-v29.
-- Probado: todas las pruebas automáticas pasan en escritorio y móvil.
+PENDIENTE (igual que antes)
+Con una compu con internet: node tools/sync.mjs y sube data/meta.json
+para que las apps nuevas tengan logo oficial y estrellas.
+Versión del caché: kixki-v30.
