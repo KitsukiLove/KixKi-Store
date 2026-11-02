@@ -1,0 +1,106 @@
+{
+  "block": 1,
+  "theme": "Social",
+  "questions": [
+    {
+      "id": 0,
+      "text": "Vas a organizar una reunión con tus amigos. ¿Cómo la planeas?",
+      "options": [
+        { "enchant": "irrompibilidad", "text": "Mantengo la tradición de siempre: mismo día, mismo lugar, pase lo que pase." },
+        { "enchant": "infinidad", "text": "Invento un tema nuevo, con juegos y dinámicas que a nadie se le han ocurrido." },
+        { "enchant": "eficiencia", "text": "Armo el grupo, reparto tareas y dejo todo listo en cinco minutos." },
+        { "enchant": "fortuna", "text": "Invito a todos sin darle tantas vueltas; seguro saldrá algo bueno y divertido." }
+      ]
+    },
+    {
+      "id": 1,
+      "text": "Entras a un servidor de Minecraft donde no conoces a nadie. ¿Qué haces primero?",
+      "options": [
+        { "enchant": "reparacion", "text": "Busco a quien parezca perdido o desanimado y le ofrezco una mano con lo que necesite." },
+        { "enchant": "botin", "text": "Recorro el mapa preguntando por aldeas, tesoros y rincones que valga la pena descubrir." },
+        { "enchant": "irrompibilidad", "text": "Sigo mi rutina de siempre, constante, hasta que todos se acostumbran a verme por ahí." },
+        { "enchant": "paso_helado", "text": "Observo cómo se llevan y me acomodo al ambiente de cada grupo con naturalidad." }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Llegas a una fiesta donde casi no conoces a nadie. ¿Qué haces?",
+      "options": [
+        { "enchant": "sigilo", "text": "Observo desde un rincón, escucho un rato y me acerco cuando entiendo el ambiente." },
+        { "enchant": "aspecto_igneo", "text": "Me lanzo a la pista, presento a todos y la energía se contagia sola." },
+        { "enchant": "lealtad", "text": "Busco al amigo que sí conozco y nos quedamos juntos toda la noche." },
+        { "enchant": "reparacion", "text": "Detecto a alguien que se ve incómodo y me siento a platicar con esa persona." }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "¿Cuál de estas frases te describe mejor dentro de un grupo de amigos?",
+      "options": [
+        { "enchant": "filo", "text": "Soy quien dice lo que piensa y siempre quiere ganar en cualquier juego." },
+        { "enchant": "proteccion", "text": "Soy quien se fija en que todos lleguen bien y nadie se quede atrás." },
+        { "enchant": "eficiencia", "text": "Soy quien organiza el plan y los horarios para que todo funcione sin enredos." },
+        { "enchant": "infinidad", "text": "Soy quien llega con ideas nuevas para cada salida, juego o broma." }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "En tu mundo compartido de Minecraft, un amigo destruye tu construcción a propósito. ¿Qué haces?",
+      "options": [
+        { "enchant": "reparacion", "text": "Lo hablamos con calma y le propongo reconstruirlo juntos para dejarlo mejor que antes." },
+        { "enchant": "espinas", "text": "Le dejo muy claro que no se repite, y si lo hace, se lo cobro." },
+        { "enchant": "irrompibilidad", "text": "Respiro, vuelvo a construir sin quejarme y sigo jugando como si nada me frenara." },
+        { "enchant": "fortuna", "text": "Me río; seguro fue un accidente y hasta nos sirve para rediseñarlo mejor." }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "¿Qué valoras más cuando conoces a una persona nueva?",
+      "options": [
+        { "enchant": "espinas", "text": "Que respete mis límites desde el principio y no intente cambiarme." },
+        { "enchant": "toque_seda", "text": "Que note los detalles y trate con cuidado lo que le confío." },
+        { "enchant": "lealtad", "text": "Que quiera quedarse a largo plazo y sea alguien con quien siempre pueda contar." },
+        { "enchant": "botin", "text": "Que tenga historias que contar y me abra la puerta a gente y lugares nuevos." }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Un amigo te invita por primera vez a su mundo de Minecraft. ¿Cómo te comportas?",
+      "options": [
+        { "enchant": "toque_seda", "text": "Camino con cuidado y no toco nada de su construcción sin preguntarle antes." },
+        { "enchant": "lealtad", "text": "Me quedo a su lado y lo acompaño a donde vaya, aunque sea aburrido." },
+        { "enchant": "botin", "text": "Exploro cada rincón del mundo buscando cuevas, aldeas y cosas que aún me faltan." },
+        { "enchant": "espinas", "text": "Pregunto cuáles son las reglas de su casa y también dejo claras las mías." }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Se cancela de último minuto el plan que tenías con tus amigos. ¿Cómo reaccionas?",
+      "options": [
+        { "enchant": "eficiencia", "text": "Propongo un plan B ahí mismo, con lugar y hora, y listo." },
+        { "enchant": "lealtad", "text": "Les digo que da igual el lugar; lo importante es que sigamos juntos." },
+        { "enchant": "paso_helado", "text": "Sin drama, me ajusto a lo que salga y encuentro otro plan sobre la marcha." },
+        { "enchant": "botin", "text": "Aprovecho para ir a conocer ese sitio nuevo que tenía pendiente desde hace tiempo." }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "En una reunión, alguien empieza a burlarse de un amigo tuyo. ¿Qué haces?",
+      "options": [
+        { "enchant": "proteccion", "text": "Me pongo entre los dos y cambio el tema para cuidar a mi amigo." },
+        { "enchant": "aspecto_igneo", "text": "Me enciendo y salto a defenderlo con toda la intensidad que tengo." },
+        { "enchant": "sigilo", "text": "Observo en silencio, entiendo qué pasa y actúo después, sin hacer escena." },
+        { "enchant": "filo", "text": "Le digo de frente, sin rodeos, que se está pasando de la raya." }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Tu grupo de amigos lleva meses sin verse. ¿Qué haces al respecto?",
+      "options": [
+        { "enchant": "reparacion", "text": "Los reúno y arreglo cualquier tensión pendiente para que vuelva la buena onda." },
+        { "enchant": "toque_seda", "text": "Organizo algo pequeño, cuidado al detalle, para que todo sea como lo recordamos." },
+        { "enchant": "aspecto_igneo", "text": "Lanzo un mensaje lleno de entusiasmo y armo una gran reunión esta misma semana." },
+        { "enchant": "proteccion", "text": "Reviso cómo está cada quien y me aseguro de que el grupo siga firme." }
+      ]
+    }
+  ]
+}

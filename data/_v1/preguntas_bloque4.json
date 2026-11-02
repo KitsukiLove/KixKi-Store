@@ -1,0 +1,106 @@
+{
+  "block": 4,
+  "theme": "Creatividad",
+  "questions": [
+    {
+      "id": 30,
+      "text": "Alguien te pide cambiar tu diseño para que quede a su gusto. ¿Qué haces?",
+      "options": [
+        { "enchant": "toque_seda", "text": "Intento convencerlo de dejarlo tal cual lo pensé; cada detalle tiene su razón." },
+        { "enchant": "espinas", "text": "Le aclaro con firmeza que mi diseño no se toca, o que busque a otra persona." },
+        { "enchant": "paso_helado", "text": "Lo escucho con calma y busco una versión que funcione para los dos." },
+        { "enchant": "botin", "text": "Veo qué puedo ganar con el cambio: más presupuesto, nuevos proyectos o contactos." }
+      ]
+    },
+    {
+      "id": 31,
+      "text": "Te dan un mundo nuevo de Minecraft sin límites. ¿Cuál es tu plan ideal?",
+      "options": [
+        { "enchant": "infinidad", "text": "Empiezo varias construcciones a la vez; ideas me sobran para llenar todo el mapa." },
+        { "enchant": "eficiencia", "text": "Hago una lista, organizo mi base y construyo lo esencial lo antes posible." },
+        { "enchant": "irrompibilidad", "text": "Elijo una obra enorme y la sigo día tras día hasta terminarla." },
+        { "enchant": "paso_helado", "text": "Recorro el terreno con calma y adapto mis planes a lo que ofrece." }
+      ]
+    },
+    {
+      "id": 32,
+      "text": "Tu proyecto lleva semanas atorado. ¿Cómo lo sacas adelante?",
+      "options": [
+        { "enchant": "fortuna", "text": "Confío en que la solución aparece si sigo probando cosas; casi siempre pasa." },
+        { "enchant": "lealtad", "text": "Se lo cuento a mis amigos; juntos siempre encontramos cómo avanzar." },
+        { "enchant": "infinidad", "text": "Lo replanteo con otras diez ideas; siempre tengo algo más por intentar." },
+        { "enchant": "irrompibilidad", "text": "Trabajo un poco cada día hasta que ceda; no pienso soltarlo." }
+      ]
+    },
+    {
+      "id": 33,
+      "text": "Tu equipo presenta una idea nueva en una reunión. ¿Cuál es tu papel?",
+      "options": [
+        { "enchant": "fortuna", "text": "Soy quien dice que va a salir genial y anima a probarla." },
+        { "enchant": "aspecto_igneo", "text": "Hablo con tanta pasión que a todos les dan ganas de empezar ya." },
+        { "enchant": "sigilo", "text": "Escucho y observo primero; hablo después, cuando ya vi el panorama completo." },
+        { "enchant": "proteccion", "text": "Señalo los riesgos y propongo un plan B para que nadie salga perjudicado." }
+      ]
+    },
+    {
+      "id": 34,
+      "text": "En Minecraft te retan a construir una casa en una hora con materiales al azar.",
+      "options": [
+        { "enchant": "toque_seda", "text": "Elijo cada bloque con cuidado; prefiero entregar algo pequeño pero impecable." },
+        { "enchant": "paso_helado", "text": "Miro qué me tocó y le encuentro la forma de que funcione." },
+        { "enchant": "infinidad", "text": "Empiezo a inventar mil combinaciones; con lo que sea se me ocurre algo." },
+        { "enchant": "fortuna", "text": "Confío en que algo genial va a salir, aunque aún no sepa qué." }
+      ]
+    },
+    {
+      "id": 35,
+      "text": "Anuncian un concurso de diseño. ¿Cuál es tu primera reacción?",
+      "options": [
+        { "enchant": "filo", "text": "Me apunto para ganar; no voy a fingir que me conformo con participar." },
+        { "enchant": "infinidad", "text": "Se me ocurren tantas ideas que preparo varias propuestas distintas a la vez." },
+        { "enchant": "aspecto_igneo", "text": "Me emociono y se lo cuento a todos; me lanzo con toda la energía." },
+        { "enchant": "botin", "text": "Reviso las bases y los premios; quiero conseguir todo lo que pueda ofrecerme." }
+      ]
+    },
+    {
+      "id": 36,
+      "text": "Tras semanas construyendo en Minecraft, una explosión abre un hueco enorme en tu obra.",
+      "options": [
+        { "enchant": "eficiencia", "text": "Tapo el hueco rápido con lo que tenga a la mano y sigo adelante." },
+        { "enchant": "reparacion", "text": "Reconstruyo con paciencia cada rincón hasta que vuelva a lucir sana como antes." },
+        { "enchant": "espinas", "text": "Averiguo quién fue y dejo trampas: quien se meta con mi obra, se arrepiente." },
+        { "enchant": "proteccion", "text": "Refuerzo muros e ilumino todo alrededor para que no vuelva a pasar nada." }
+      ]
+    },
+    {
+      "id": 37,
+      "text": "Un compañero te pide opinión sobre su trabajo creativo. ¿Cómo lo haces?",
+      "options": [
+        { "enchant": "filo", "text": "Le digo directo qué falla y qué cambiaría, sin rodeos." },
+        { "enchant": "toque_seda", "text": "Reviso hasta el último detalle y lo ayudo a pulirlo sin cambiar su estilo." },
+        { "enchant": "irrompibilidad", "text": "Le propongo repetirlo cuantas veces haga falta; la práctica constante siempre lo mejora." },
+        { "enchant": "eficiencia", "text": "Le doy tres cambios concretos que mejoran más el resultado con menos esfuerzo." }
+      ]
+    },
+    {
+      "id": 38,
+      "text": "Un amigo quiere sacar adelante su idea y te pide ayuda. ¿Qué haces?",
+      "options": [
+        { "enchant": "eficiencia", "text": "Armo un plan con pasos y fechas para terminarla sin perder tiempo." },
+        { "enchant": "lealtad", "text": "Me quedo a su lado el tiempo que haga falta, hasta el final." },
+        { "enchant": "aspecto_igneo", "text": "Me emociono tanto con su idea que le contagio las ganas desde el primer minuto." },
+        { "enchant": "toque_seda", "text": "Le ayudo a cuidar cada detalle para que quede exactamente como la imaginó." }
+      ]
+    },
+    {
+      "id": 39,
+      "text": "Cuando terminas una obra de la que estás orgulloso, ¿qué haces con ella?",
+      "options": [
+        { "enchant": "sigilo", "text": "La enseño poco, solo a una o dos personas de total confianza." },
+        { "enchant": "aspecto_igneo", "text": "La muestro a todos con entusiasmo y no paro de hablar de ella." },
+        { "enchant": "filo", "text": "La pongo a competir; quiero saber si de verdad supera a las demás." },
+        { "enchant": "reparacion", "text": "La uso para alegrarle el día a alguien que lo necesita." }
+      ]
+    }
+  ]
+}

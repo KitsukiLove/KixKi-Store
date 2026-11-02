@@ -1,0 +1,106 @@
+{
+  "block": 6,
+  "theme": "Tiempo libre y gustos",
+  "questions": [
+    {
+      "id": 50,
+      "text": "Tienes un sábado completamente libre y sin compromisos. ¿Cómo lo vives?",
+      "options": [
+        { "enchant": "infinidad", "text": "Arranco tres proyectitos nuevos a la vez y veo cuál se me enciende." },
+        { "enchant": "irrompibilidad", "text": "Avanzo otro poco en ese proyecto largo que llevo meses sin soltar." },
+        { "enchant": "eficiencia", "text": "Resuelvo mis pendientes en una hora y me quedo con el resto del día." },
+        { "enchant": "fortuna", "text": "Salgo sin plan, seguro que algo bueno se cruza en mi camino." }
+      ]
+    },
+    {
+      "id": 51,
+      "text": "Cuando juegas algo muy difícil, ¿cuál te describe mejor?",
+      "options": [
+        { "enchant": "irrompibilidad", "text": "Pierdo veinte veces y vuelvo a intentarlo; no suelto el reto hasta lograrlo." },
+        { "enchant": "eficiencia", "text": "Busco la estrategia más rápida y la practico hasta que me sale limpia." },
+        { "enchant": "aspecto_igneo", "text": "Me emociono muchísimo, celebro cada avance y arrastro a todos a mirar." },
+        { "enchant": "paso_helado", "text": "Cambio de enfoque con calma hasta encontrar otra ruta que sí funcione." }
+      ]
+    },
+    {
+      "id": 52,
+      "text": "Noche de juegos de mesa con amigos. ¿Qué papel tomas?",
+      "options": [
+        { "enchant": "proteccion", "text": "Cuido que nadie se quede atrás y que el juego sea parejo." },
+        { "enchant": "filo", "text": "Voy por la victoria y les aviso de frente que pienso ganar." },
+        { "enchant": "eficiencia", "text": "Leo las reglas rápido y organizo turnos para que todo fluya sin pausas." },
+        { "enchant": "paso_helado", "text": "Me acomodo a lo que salga y disfruto tranquilo cualquier giro." }
+      ]
+    },
+    {
+      "id": 53,
+      "text": "Es domingo y toca ordenar tu espacio de pasatiempos. ¿Qué haces?",
+      "options": [
+        { "enchant": "espinas", "text": "Dejo clara mi regla: este espacio es mío y nada se toca sin permiso." },
+        { "enchant": "toque_seda", "text": "Acomodo cada pieza con cuidado, justo como debe estar, sin rayar ni doblar nada." },
+        { "enchant": "filo", "text": "Tiro sin dudar lo que sobra y me digo la verdad: ya no lo uso." },
+        { "enchant": "reparacion", "text": "Pego, coso y compongo lo que estaba roto; casi todo tiene salvación." }
+      ]
+    },
+    {
+      "id": 54,
+      "text": "Tienes una tarde libre dentro de tu mundo de Minecraft. ¿Qué haces?",
+      "options": [
+        { "enchant": "irrompibilidad", "text": "Sigo con mi túnel larguísimo, bloque a bloque, hasta ver el final." },
+        { "enchant": "reparacion", "text": "Recorro la aldea restaurando casas dañadas y cuidando que todos estén bien." },
+        { "enchant": "lealtad", "text": "Invito a mis amigos a mi mundo; jugar acompañado es lo mejor." },
+        { "enchant": "sigilo", "text": "Exploro solo y en silencio, observando todo antes de decidir qué hacer." }
+      ]
+    },
+    {
+      "id": 55,
+      "text": "Planean un viaje de fin de semana con amigos. ¿Cuál es tu papel?",
+      "options": [
+        { "enchant": "proteccion", "text": "Reviso que todos lleven lo necesario y que exista siempre un plan B." },
+        { "enchant": "botin", "text": "Quiero ver, probar y traerme de vuelta todo lo que pueda descubrir." },
+        { "enchant": "toque_seda", "text": "Elijo con cuidado cada lugar para que todo salga justo como lo imaginé." },
+        { "enchant": "espinas", "text": "Aviso mis límites desde el inicio: lo que no quiero hacer, no lo hago." }
+      ]
+    },
+    {
+      "id": 56,
+      "text": "Noche de películas con amigos. ¿Cómo participas?",
+      "options": [
+        { "enchant": "filo", "text": "Digo sin rodeos si la película está floja; mi opinión siempre es honesta." },
+        { "enchant": "infinidad", "text": "Propongo mil ideas: maratón temático, juegos de adivinar, hasta inventar otro final." },
+        { "enchant": "fortuna", "text": "Elijo una al azar; algo me dice que hoy nos va a encantar." },
+        { "enchant": "reparacion", "text": "Me aseguro de que todos estén cómodos y animo a quien llegó decaído." }
+      ]
+    },
+    {
+      "id": 57,
+      "text": "Aparece una cueva enorme junto a tu base y tienes todo el día. ¿Cómo la tomas?",
+      "options": [
+        { "enchant": "proteccion", "text": "Primero ilumino la entrada y aseguro la zona antes de que alguien pase." },
+        { "enchant": "aspecto_igneo", "text": "Entro corriendo, emocionadísimo, y llamo a todos a gritos para que me sigan." },
+        { "enchant": "sigilo", "text": "Me asomo despacio, escucho y observo antes de dar un paso adentro." },
+        { "enchant": "fortuna", "text": "Entro confiado: hoy es de esos días en que todo sale a mi favor." }
+      ]
+    },
+    {
+      "id": 58,
+      "text": "Tus amigos arman un partido improvisado. ¿Cómo juegas?",
+      "options": [
+        { "enchant": "filo", "text": "Juego fuerte para ganar y digo claro quién estuvo mejor al final." },
+        { "enchant": "lealtad", "text": "Lo que importa es mi equipo; me quedo con ellos hasta el último minuto." },
+        { "enchant": "sigilo", "text": "Observo cómo se mueven todos y entro a la jugada en el momento justo." },
+        { "enchant": "paso_helado", "text": "Me adapto a cualquier posición y sigo tranquilo aunque se complique el marcador." }
+      ]
+    },
+    {
+      "id": 59,
+      "text": "Tienes un cofre grande y vacío en tu base de Minecraft. ¿Qué haces con él?",
+      "options": [
+        { "enchant": "botin", "text": "Lo lleno con todo lo raro que encuentre; quiero tener de todo siempre." },
+        { "enchant": "infinidad", "text": "Lo vuelvo mi taller de ideas: cada semana invento algo nuevo que construir." },
+        { "enchant": "lealtad", "text": "Lo dejo abierto para mis amigos, con regalos que sé que les servirán." },
+        { "enchant": "espinas", "text": "Lo dejo bien cerrado y aviso: quien lo abra sin permiso se las ve conmigo." }
+      ]
+    }
+  ]
+}

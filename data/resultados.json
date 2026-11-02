@@ -1,0 +1,296 @@
+{
+  "reparacion": {
+    "nombre": "Reparación",
+    "subtitulo": "Encantamiento del cuidado",
+    "frase": "Si algo se rompe, me remango y lo dejo mejor que antes.",
+    "descripcion": "Eres de las personas que notan el mal día de alguien antes de que lo diga. Te sale natural pegar lo que se quebró, ya sea un proyecto, una amistad o un ánimo por los suelos. Te recuperas rápido de los tropiezos y, cuando te caes, te levantas con una curita y sin drama. Eso sí, a veces te cuesta aceptar que no todo tiene arreglo.",
+    "fortalezas": [
+      "Sabes escuchar y consolar sin hacer sentir mal a nadie",
+      "Te levantas rápido después de un error o un golpe",
+      "Encuentras soluciones pacientes donde otros ya tirarían la toalla"
+    ],
+    "debilidades": [
+      "Te cargas con los problemas ajenos y se te olvida cuidarte a ti",
+      "Insistes en arreglar cosas o vínculos que quizá ya cumplieron su ciclo"
+    ],
+    "como_te_ven": "Te ven como la persona a la que se le llama cuando todo sale mal, porque contigo el desastre se siente más chiquito.",
+    "combina_con": [
+      { "id": "lealtad", "razon": "Los dos cuidan a su gente, y juntos nadie se queda sin apoyo." },
+      { "id": "infinidad", "razon": "Ella inventa mil cosas y tú las rescatas cuando se tuercen." }
+    ],
+    "herramienta_ideal": "Pico de hierro, porque con tantas horas de minería y un poco de mantenimiento nunca te deja tirado."
+  },
+  "irrompibilidad": {
+    "nombre": "Irrompibilidad",
+    "subtitulo": "Encantamiento de la constancia",
+    "frase": "Puedo tardar más, pero yo no me rindo a la mitad.",
+    "descripcion": "Cuando decides algo, ahí te quedas, con lluvia, con sueño o con todos diciéndote que mejor lo dejes. Tu fuerza no hace ruido: es la de quien sigue caminando mientras los demás se sientan a quejarse. Prefieres las cosas probadas y los hábitos que funcionan. A veces tu terquedad se pasa de la raya y sigues empujando una puerta que decía jalar.",
+    "fortalezas": [
+      "Terminas lo que empiezas, aunque se ponga pesado",
+      "Mantienes la calma y el ritmo cuando todos se desesperan",
+      "Eres confiable: si dices que sí, es que sí"
+    ],
+    "debilidades": [
+      "Te cuesta cambiar de plan aunque ya no esté funcionando",
+      "Aguantas tanto que a veces nadie se entera de que ya estás cansado"
+    ],
+    "como_te_ven": "Te ven como una roca amable: nadie sabe cómo lo haces, pero siempre sigues ahí.",
+    "combina_con": [
+      { "id": "proteccion", "razon": "Entre los dos arman un muro que ninguna tormenta mueve." },
+      { "id": "paso_helado", "razon": "Ella te enseña a rodear el obstáculo cuando no hay que chocar con él." }
+    ],
+    "herramienta_ideal": "Pala de diamante, porque cava el mismo hoyo mil veces y ni se inmuta."
+  },
+  "fortuna": {
+    "nombre": "Fortuna",
+    "subtitulo": "Encantamiento de la buena racha",
+    "frase": "Algo bueno viene en camino, solo hay que seguir moviéndose.",
+    "descripcion": "Tú ves una puerta cerrada y piensas que seguro hay una ventana abierta. Tu optimismo no es ingenuo, es una forma de estar atento a lo que otros dejan pasar: la oportunidad, el contacto, la casualidad que sale a favor. Contagias ganas con facilidad. Pero a veces confías tanto en que todo saldrá bien que se te escapan los detalles aburridos que sí importaban.",
+    "fortalezas": [
+      "Detectas oportunidades donde otros solo ven problemas",
+      "Levantas el ánimo del grupo sin esforzarte",
+      "Te atreves a probar cosas nuevas sin quedarte paralizado"
+    ],
+    "debilidades": [
+      "Dejas pendientes importantes porque supones que se arreglarán solos",
+      "Te cuesta tomarte en serio los avisos de que algo podría salir mal"
+    ],
+    "como_te_ven": "Te ven como la persona con suerte de la que todos quieren estar cerca, aunque tú sabes que también te lanzas a buscarla.",
+    "combina_con": [
+      { "id": "botin", "razon": "Juntos salen a explorar y siempre vuelven con algo brillante." },
+      { "id": "sigilo", "razon": "Ella mira antes de saltar y tú pones las ganas de saltar." }
+    ],
+    "herramienta_ideal": "Caña de pescar, porque lanzas el anzuelo con una sonrisa y casi siempre algo muerde."
+  },
+  "toque_seda": {
+    "nombre": "Toque de seda",
+    "subtitulo": "Encantamiento del cuidado fino",
+    "frase": "Hay cosas que valen la pena hacerse despacio y bien.",
+    "descripcion": "Para ti los detalles no son un capricho, son la diferencia entre algo bonito y algo que solo funciona. Te gusta que las cosas se conserven tal cual son, sin rasguños ni apuros, y lo notas cuando algo está fuera de lugar por un milímetro. Tu delicadeza se nota en cómo tratas objetos, proyectos y personas. El riesgo es que te quedes puliendo para siempre algo que ya estaba listo.",
+    "fortalezas": [
+      "Tu trabajo se nota cuidado, con acabados que dan gusto",
+      "Tratas a las personas y a sus cosas con mucho tacto",
+      "Notas errores pequeños que a todos los demás se les pasan"
+    ],
+    "debilidades": [
+      "Te cuesta entregar algo si sientes que todavía no está perfecto",
+      "Te incomoda que alguien más toque tu orden o cambie tus cosas"
+    ],
+    "como_te_ven": "Te ven como alguien de buen gusto y mano suave, a quien da miedo y honor prestarle algo valioso.",
+    "combina_con": [
+      { "id": "sigilo", "razon": "Los dos observan antes de tocar, y se entienden sin hablar mucho." },
+      { "id": "eficiencia", "razon": "Ella aporta rapidez y tú las ganas de que todo salga bonito." }
+    ],
+    "herramienta_ideal": "Pico de oro, porque nadie lo usa para romper rápido y todos lo usan para sacar algo intacto."
+  },
+  "eficiencia": {
+    "nombre": "Eficiencia",
+    "subtitulo": "Encantamiento del buen sistema",
+    "frase": "Dame una lista, un plan y veinte minutos, y ya acabé.",
+    "descripcion": "Tu cerebro busca el camino más corto casi sin querer. Armas listas, atajos y pequeños sistemas que hacen que todo fluya y que los demás se pregunten cómo es que te da tiempo. Odias el trabajo dado vueltas y las reuniones que pudieron ser un mensaje. Solo ten cuidado, porque a veces la prisa te hace pasar por encima de quienes todavía iban pensando.",
+    "fortalezas": [
+      "Organizas el caos en pasos claros que se pueden seguir",
+      "Resuelves rápido sin perderte en detalles que no importan",
+      "Ahorras tiempo a todos con tus atajos y tus sistemas"
+    ],
+    "debilidades": [
+      "Puedes verte impaciente con quien necesita más tiempo para decidir",
+      "A veces sacrificas el paseo y la sorpresa por llegar más rápido"
+    ],
+    "como_te_ven": "Te ven como la persona que ya lo tenía resuelto desde antes de que el grupo terminara de preguntar.",
+    "combina_con": [
+      { "id": "infinidad", "razon": "Ella trae ideas por montones y tú las conviertes en proyectos terminados." },
+      { "id": "filo", "razon": "Los dos van directo al grano y no pierden tiempo en rodeos." }
+    ],
+    "herramienta_ideal": "Hacha de netherita, porque tala un árbol entero antes de que otro acomode su inventario."
+  },
+  "filo": {
+    "nombre": "Filo",
+    "subtitulo": "Encantamiento de la franqueza",
+    "frase": "Digo lo que pienso, y lo digo para que me hagan mejor.",
+    "descripcion": "Contigo no hay que adivinar nada: lo que piensas lo dices, con la cara de frente y sin vueltas. Te gusta competir, medirte y ganar, y eso te impulsa a mejorar más que a casi nadie. Valoras que la gente sea clara contigo igual que tú con ella. A veces tu honestidad llega más rápido que tu tacto, y alguien sale raspado sin que lo hayas querido.",
+    "fortalezas": [
+      "Eres claro y honesto, así que nadie tiene que adivinar contigo",
+      "Tu espíritu competitivo te empuja a superarte una y otra vez",
+      "Tomas decisiones sin darle vueltas eternas al asunto"
+    ],
+    "debilidades": [
+      "Dices las cosas tan directo que a veces hieres sin querer",
+      "Te cuesta perder con elegancia cuando de verdad te importaba ganar"
+    ],
+    "como_te_ven": "Te ven como alguien que no se anda con rodeos, que a veces asusta un poco, pero a quien todos creen.",
+    "combina_con": [
+      { "id": "lealtad", "razon": "Ella suaviza tus aristas y tú le das valor para decir lo que calla." },
+      { "id": "eficiencia", "razon": "Los dos quieren resultados, y juntos los consiguen antes del almuerzo." }
+    ],
+    "herramienta_ideal": "Espada de diamante, porque no tiene dudas sobre lo que quiere cortar."
+  },
+  "proteccion": {
+    "nombre": "Protección",
+    "subtitulo": "Encantamiento del escudo",
+    "frase": "Yo me adelanto al problema para que nadie tenga que sufrirlo.",
+    "descripcion": "Antes de salir, ya revisaste que todos tengan lo necesario, y por eso el grupo se siente seguro contigo cerca. Prefieres prevenir que lamentar, y eso te hace estable en medio del desorden. Piensas en el \"y si pasa\" para que los demás no tengan que hacerlo. Lo difícil es soltar el control: no todo riesgo se puede evitar, y a veces sobreprotegerlos los priva de aprender.",
+    "fortalezas": [
+      "Piensas en los riesgos antes de que se vuelvan problemas",
+      "Das estabilidad y calma a quienes están a tu alrededor",
+      "Pones a tu gente por delante cuando se pone difícil"
+    ],
+    "debilidades": [
+      "Te cuesta dejar que otros se equivoquen y aprendan por su cuenta",
+      "Cargas con demasiada responsabilidad y te olvidas de pedir ayuda"
+    ],
+    "como_te_ven": "Te ven como el escudo del grupo: quien dice que no pasará nada porque sabe que tú ya revisaste.",
+    "combina_con": [
+      { "id": "irrompibilidad", "razon": "Los dos son firmes, y juntos aguantan cualquier temporal." },
+      { "id": "aspecto_igneo", "razon": "Ella pone la chispa y tú te aseguras de que nadie se queme." }
+    ],
+    "herramienta_ideal": "Escudo, porque su razón de ser es que los demás avancen mientras tú cubres la retaguardia."
+  },
+  "botin": {
+    "nombre": "Botín",
+    "subtitulo": "Encantamiento del coleccionista",
+    "frase": "Siempre hay un rincón más por explorar y algo más que guardar.",
+    "descripcion": "Tu curiosidad no se apaga: abres el cajón que no era tuyo, pruebas el camino que nadie tomó y vuelves con los bolsillos llenos de cosas que a lo mejor servirán. Disfrutas coleccionar, ya sea objetos, datos, experiencias o logros. Tienes hambre de más y eso te mantiene en movimiento. Lo complicado es saber cuándo ya tienes suficiente, porque tu cuarto, tu lista de pendientes y tu inventario lo saben.",
+    "fortalezas": [
+      "Exploras con ganas y descubres cosas que nadie más vio",
+      "Tu ambición te empuja a buscar siempre un siguiente nivel",
+      "Sabes reunir recursos y contactos que luego le sirven a todos"
+    ],
+    "debilidades": [
+      "Acumulas tanto que te cuesta soltar o decidir qué sí vale la pena",
+      "Te distrae lo nuevo y dejas a medias lo que ya tenías en la mano"
+    ],
+    "como_te_ven": "Te ven como el explorador que siempre regresa con una historia y algo curioso en el bolsillo.",
+    "combina_con": [
+      { "id": "fortuna", "razon": "Los dos creen que lo mejor está a la vuelta, así que van juntos a buscarlo." },
+      { "id": "proteccion", "razon": "Ella cuida el campamento mientras tú te lanzas a descubrir." }
+    ],
+    "herramienta_ideal": "Espada de hierro, porque te acompaña a cada mazmorra y siempre vuelve con algo extra."
+  },
+  "espinas": {
+    "nombre": "Espinas",
+    "subtitulo": "Encantamiento de los límites",
+    "frase": "Soy amable hasta que cruzas la raya, y esa raya es firme.",
+    "descripcion": "Eres suave por defecto, pero con bordes bien puestos: sabes dónde acaba lo que toleras y no te da pena decirlo. Si alguien te falta al respeto, tu respuesta le llega de vuelta, rápido y sin pedir permiso. Eso te protege de que te pisoteen y hace que los demás te respeten. A veces levantas las espinas antes de tiempo y alguien con buenas intenciones sale pinchado.",
+    "fortalezas": [
+      "Pones límites claros y los sostienes sin perder la calma",
+      "No te dejas manipular ni presionar para hacer lo que no quieres",
+      "Defiendes tu espacio y el de los tuyos con mucha firmeza"
+    ],
+    "debilidades": [
+      "Te pones a la defensiva incluso cuando nadie quería lastimarte",
+      "Te cuesta bajar la guardia y dejar que alguien se acerque de verdad"
+    ],
+    "como_te_ven": "Te ven como alguien a quien conviene tratar con cariño, porque si te hacen daño, el recuerdo les pica.",
+    "combina_con": [
+      { "id": "lealtad", "razon": "Ella te enseña que bajar la guardia con la gente correcta es seguro." },
+      { "id": "paso_helado", "razon": "Con su calma, ayuda a que no levantes las espinas por cualquier cosa." }
+    ],
+    "herramienta_ideal": "Armadura de hierro, porque la gente se lo piensa dos veces antes de tocarla."
+  },
+  "infinidad": {
+    "nombre": "Infinidad",
+    "subtitulo": "Encantamiento de las mil ideas",
+    "frase": "Tengo más ideas que horas, y cada una merece intentarse.",
+    "descripcion": "Tu cabeza es una fábrica que no cierra: dibujas, programas, inventas y mezclas cosas que nadie había juntado antes. Cuando te quedas sin un recurso, creas otro, y cuando se acaba un proyecto ya traes tres más en la mochila. Tu energía creativa es difícil de agotar y contagia. El problema es que no todas esas ideas llegan a la meta, y a veces te distraes con la siguiente antes de terminar la de hoy.",
+    "fortalezas": [
+      "Se te ocurren soluciones y mezclas que a nadie más se le ocurrirían",
+      "Nunca te quedas sin recursos ni sin ganas de intentar algo",
+      "Inspiras a los demás a atreverse a crear sin miedo"
+    ],
+    "debilidades": [
+      "Dejas proyectos a medias porque ya te emocionó otro",
+      "Te cuesta elegir una sola idea cuando todas te parecen geniales"
+    ],
+    "como_te_ven": "Te ven como la persona que siempre trae algo nuevo entre manos y cuyas ideas hay que escuchar hasta el final.",
+    "combina_con": [
+      { "id": "eficiencia", "razon": "Ella ordena tus ideas y las lleva hasta la línea de meta." },
+      { "id": "reparacion", "razon": "Tú creas sin miedo y ella te ayuda a recoger los pedazos si algo sale mal." }
+    ],
+    "herramienta_ideal": "Arco, porque dispara flechas que no se acaban y siempre encuentras otra forma de usarlas."
+  },
+  "paso_helado": {
+    "nombre": "Paso helado",
+    "subtitulo": "Encantamiento de la calma que adapta",
+    "frase": "Si no hay camino, lo congelo y cruzo por encima del lago.",
+    "descripcion": "Donde otros ven un obstáculo, tú ves un terreno distinto al que hay que acostumbrarse. Mantienes la cabeza fría cuando todo se mueve y encuentras el paso que nadie había visto. Te adaptas a gente, planes y cambios de último minuto sin hacer un drama. A veces tanta flexibilidad te hace parecer indeciso, o te lleva a ceder más de lo que querías con tal de que fluya.",
+    "fortalezas": [
+      "Te adaptas rápido a cambios de plan sin perder la serenidad",
+      "Encuentras rutas alternativas cuando el camino principal se cierra",
+      "Tu calma ayuda a que los demás respiren y piensen mejor"
+    ],
+    "debilidades": [
+      "Cedes con facilidad y a veces callas lo que de verdad prefieres",
+      "Te cuesta comprometerte con una sola ruta si hay varias abiertas"
+    ],
+    "como_te_ven": "Te ven como alguien tranquilo que siempre sale bien parado, aunque nadie sepa cómo lo hiciste.",
+    "combina_con": [
+      { "id": "espinas", "razon": "Ella pone los límites que tú a veces olvidas y tú le bajas la tensión." },
+      { "id": "aspecto_igneo", "razon": "Su fuego y tu frescura se equilibran cuando uno se pasa de intensidad." }
+    ],
+    "herramienta_ideal": "Botas de diamante, porque te llevan por cualquier terreno sin que lo pienses dos veces."
+  },
+  "aspecto_igneo": {
+    "nombre": "Aspecto ígneo",
+    "subtitulo": "Encantamiento de la pasión",
+    "frase": "Si algo me importa, lo vivo a tope y se lo contagio a todos.",
+    "descripcion": "Tú no haces las cosas a medias: cuando algo te late, se nota en tus ojos, en tu voz y en la energía con la que te lanzas. Tu entusiasmo enciende a los demás y convierte planes aburridos en aventuras. Sientes fuerte, ríes fuerte y también te enojas fuerte. Eso a veces te quema por dentro o a quien está cerca, y se te va rápido la llama cuando algo deja de emocionarte.",
+    "fortalezas": [
+      "Tu entusiasmo contagia y pone en marcha a todo el grupo",
+      "Te entregas por completo a lo que te apasiona",
+      "Tienes un carisma que hace que los demás quieran seguirte"
+    ],
+    "debilidades": [
+      "Te enciendes con tanta intensidad que a veces te pasas de la raya",
+      "Pierdes interés rápido cuando la emoción inicial se apaga"
+    ],
+    "como_te_ven": "Te ven como la chispa de cada reunión: imposible no notarte, difícil no contagiarse.",
+    "combina_con": [
+      { "id": "proteccion", "razon": "Ella cuida que tu fuego caliente a todos sin quemar a nadie." },
+      { "id": "paso_helado", "razon": "Su serenidad enfría los momentos en que la intensidad se desborda." }
+    ],
+    "herramienta_ideal": "Espada de netherita, porque brilla más cuando la agitas con ganas y deja una estela a su paso."
+  },
+  "lealtad": {
+    "nombre": "Lealtad",
+    "subtitulo": "Encantamiento del vínculo",
+    "frase": "Puedo irme lejos, pero siempre vuelvo con mi gente.",
+    "descripcion": "Tus amistades no son un número, son un hogar al que siempre tienes ganas de regresar. Recuerdas lo que le importa a cada quien, apareces cuando hace falta y no abandonas a nadie por conveniencia. Valoras más un vínculo que una victoria. Pero tanta fidelidad a veces te hace aguantar relaciones que ya no te hacen bien, o sentirte herido si no te corresponden igual.",
+    "fortalezas": [
+      "Estás presente en los momentos difíciles de la gente que quieres",
+      "Recuerdas detalles que hacen sentir especial a cada persona",
+      "Construyes relaciones que duran años y se sienten seguras"
+    ],
+    "debilidades": [
+      "Te cuesta soltar vínculos que ya no te hacen bien",
+      "Te duele en silencio cuando sientes que das más de lo que recibes"
+    ],
+    "como_te_ven": "Te ven como el amigo con el que siempre se puede contar, aunque pase el tiempo y cambie todo.",
+    "combina_con": [
+      { "id": "filo", "razon": "Con su franqueza te ayuda a decir lo que callas por cuidar a todos." },
+      { "id": "reparacion", "razon": "Los dos sostienen a su gente y juntos arreglan lo que se enreda." }
+    ],
+    "herramienta_ideal": "Tridente, porque siempre regresa a tu mano por más lejos que lo lances."
+  },
+  "sigilo": {
+    "nombre": "Sigilo veloz",
+    "subtitulo": "Encantamiento de la mirada atenta",
+    "frase": "Observo primero, y cuando me muevo ya sé a dónde voy.",
+    "descripcion": "Antes de hablar, miras; antes de actuar, piensas. Notas cosas que otros pasan por alto, como un gesto, un detalle o un cambio de humor, y las guardas para cuando de verdad importen. Te mueves por el mundo sin hacer ruido y eso te permite llegar a donde otros tropiezan. Pero tu reserva a veces se confunde con frialdad, y algunas veces piensas tanto que la oportunidad pasa de largo.",
+    "fortalezas": [
+      "Observas y entiendes situaciones antes de meterte en ellas",
+      "Piensas con calma, así que rara vez tomas decisiones a ciegas",
+      "Sabes guardar secretos y moverte sin llamar la atención"
+    ],
+    "debilidades": [
+      "Piensas tanto que a veces la oportunidad se va antes de que actúes",
+      "Tu reserva puede hacer que los demás no sepan qué sientes de verdad"
+    ],
+    "como_te_ven": "Te ven como alguien misterioso y tranquilo que se entera de todo sin que nadie le haya dicho nada.",
+    "combina_con": [
+      { "id": "fortuna", "razon": "Su optimismo te empuja a dar el salto que tu cabeza tarda en aprobar." },
+      { "id": "toque_seda", "razon": "Los dos aprecian el silencio y los detalles, y trabajan sin estorbarse." }
+    ],
+    "herramienta_ideal": "Botas de cuero, porque con ellas caminas sin que nadie te escuche llegar."
+  }
+}

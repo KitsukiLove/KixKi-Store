@@ -1,0 +1,106 @@
+{
+  "block": 2,
+  "theme": "Estrés y problemas",
+  "questions": [
+    {
+      "id": 10,
+      "text": "Se cancela de golpe tu plan del fin de semana. ¿Qué haces?",
+      "options": [
+        { "enchant": "eficiencia", "text": "Aprovecho para tachar pendientes de mi lista y dejar todo ordenado." },
+        { "enchant": "botin", "text": "Busco algo nuevo que nunca haya probado y me lanzo a explorarlo." },
+        { "enchant": "paso_helado", "text": "Respiro, suelto el plan original y me dejo llevar por lo que salga." },
+        { "enchant": "lealtad", "text": "Llamo a mis amigos para ver quién se apunta a un plan distinto." }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Cometes un error que afecta a todo tu equipo. ¿Qué haces?",
+      "options": [
+        { "enchant": "reparacion", "text": "Reconozco mi parte y me pongo a arreglarlo para que todos queden bien." },
+        { "enchant": "sigilo", "text": "Guardo silencio un rato, analizo qué falló y solo entonces hablo." },
+        { "enchant": "proteccion", "text": "Reviso que nadie salga perjudicado y dejo medidas para que no se repita." },
+        { "enchant": "infinidad", "text": "Se me ocurren mil formas de salir del paso y pruebo la más original." }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Toda una semana te sale mal. ¿Cuál de estas actitudes te describe mejor?",
+      "options": [
+        { "enchant": "irrompibilidad", "text": "Sigo adelante un día a la vez, sin soltar lo que empecé." },
+        { "enchant": "lealtad", "text": "Me apoyo en mi gente y también estoy ahí para la suya." },
+        { "enchant": "filo", "text": "Digo lo que me molesta sin rodeos y ataco el problema de frente." },
+        { "enchant": "fortuna", "text": "Confío en que algo bueno viene y estoy atento a la primera oportunidad." }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "En Minecraft cae la noche y estás lejos de casa, sin refugio. ¿Qué haces?",
+      "options": [
+        { "enchant": "eficiencia", "text": "Cavo un refugio rápido, lo tapo y sigo con lo que tenía pendiente." },
+        { "enchant": "toque_seda", "text": "Me refugio con mucho cuidado, procurando no estropear nada de lo que ya tengo." },
+        { "enchant": "paso_helado", "text": "Observo el terreno con calma y encuentro un camino que otros pasarían por alto." },
+        { "enchant": "aspecto_igneo", "text": "Enciendo antorchas por todos lados y convierto la noche en una fiesta de luz." }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Alguien te presiona para que cedas en algo que no quieres. ¿Qué haces?",
+      "options": [
+        { "enchant": "infinidad", "text": "Propongo una alternativa original que cambia por completo la conversación." },
+        { "enchant": "espinas", "text": "Le dejo claro mi límite y, si insiste, le respondo igual de firme." },
+        { "enchant": "irrompibilidad", "text": "Mantengo mi postura con paciencia, aunque me insistan durante días enteros." },
+        { "enchant": "proteccion", "text": "Cuido a los míos y busco un acuerdo estable que no se repita." }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Te piden presentar algo importante sin tiempo para prepararlo. ¿Cómo respondes?",
+      "options": [
+        { "enchant": "paso_helado", "text": "Me adapto, respiro hondo y voy encontrando el camino mientras hablo." },
+        { "enchant": "toque_seda", "text": "Pido unos minutos para cuidar cada detalle, aunque sea algo pequeño." },
+        { "enchant": "irrompibilidad", "text": "Lo hago paso a paso hasta terminar, sin importar cuánto me cueste." },
+        { "enchant": "fortuna", "text": "Confío en que saldrá bien y lo veo como una oportunidad de lucirme." }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Un creeper aparece justo al lado de tu casa en Minecraft. ¿Qué haces?",
+      "options": [
+        { "enchant": "reparacion", "text": "Si explota, reconstruyo con calma y dejo todo mejor que antes." },
+        { "enchant": "sigilo", "text": "Me quedo quieto, observo sus movimientos y me alejo sin hacer ruido." },
+        { "enchant": "proteccion", "text": "Me pongo entre él y mi casa para que nada se dañe." },
+        { "enchant": "filo", "text": "Voy directo a enfrentarlo y lo derroto antes de que reaccione." }
+      ]
+    },
+    {
+      "id": 17,
+      "text": "Alguien rompe una promesa que te había hecho. ¿Cuál es tu reacción más típica?",
+      "options": [
+        { "enchant": "lealtad", "text": "Le doy otra oportunidad; un vínculo importa más que un error." },
+        { "enchant": "aspecto_igneo", "text": "Me enciendo, se lo digo con pasión y luego se me pasa rápido." },
+        { "enchant": "botin", "text": "Me lanzo a buscar nuevas opciones y a conocer gente que aporte más." },
+        { "enchant": "espinas", "text": "Le dejo claro que eso no se repite o pierde mi confianza." }
+      ]
+    },
+    {
+      "id": 18,
+      "text": "Te quedas sin comida en lo más profundo de una cueva de Minecraft. ¿Qué haces?",
+      "options": [
+        { "enchant": "eficiencia", "text": "Calculo la ruta más corta a la superficie y salgo sin desviarme." },
+        { "enchant": "fortuna", "text": "Sigo avanzando convencido de que encontraré algo útil a la vuelta." },
+        { "enchant": "espinas", "text": "Si algo me bloquea el paso, le devuelvo el golpe y sigo firme." },
+        { "enchant": "botin", "text": "Aprovecho para explorar más hondo; seguro hay minerales y tesoros por descubrir." }
+      ]
+    },
+    {
+      "id": 19,
+      "text": "Cuando estás muy estresado, ¿qué te ayuda más a recuperar el ánimo?",
+      "options": [
+        { "enchant": "botin", "text": "Salir a descubrir un lugar nuevo o conseguir algo que llevaba tiempo queriendo." },
+        { "enchant": "aspecto_igneo", "text": "Ponerme música a todo volumen y mover el cuerpo hasta soltar la energía." },
+        { "enchant": "proteccion", "text": "Volver a mi rutina estable y rodearme de lo que me da seguridad." },
+        { "enchant": "paso_helado", "text": "Caminar sin prisa, dejar que la mente se enfríe y ver con claridad." }
+      ]
+    }
+  ]
+}

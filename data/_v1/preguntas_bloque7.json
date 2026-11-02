@@ -1,0 +1,106 @@
+{
+  "block": 7,
+  "theme": "Valores y decisiones",
+  "questions": [
+    {
+      "id": 60,
+      "text": "El grupo está dividido y te toca tomar una decisión importante. ¿Qué haces?",
+      "options": [
+        { "enchant": "filo", "text": "Digo claramente lo que pienso y defiendo mi postura hasta convencerlos." },
+        { "enchant": "irrompibilidad", "text": "Mantengo mi decisión firme, aunque tarde más y se ponga difícil." },
+        { "enchant": "sigilo", "text": "Escucho a todos en silencio y decido después de pensarlo a solas." },
+        { "enchant": "infinidad", "text": "Propongo una tercera opción que a nadie se le había ocurrido." }
+      ]
+    },
+    {
+      "id": 61,
+      "text": "¿Qué es lo que más valoras en alguien que lidera un equipo?",
+      "options": [
+        { "enchant": "filo", "text": "Que diga la verdad aunque incomode y no le tema a competir." },
+        { "enchant": "infinidad", "text": "Que tenga ideas nuevas y siempre encuentre otra manera de hacerlo." },
+        { "enchant": "proteccion", "text": "Que cuide a todos y piense en los riesgos antes de avanzar." },
+        { "enchant": "eficiencia", "text": "Que organice bien, sea rápido y vaya directo a lo que funciona." }
+      ]
+    },
+    {
+      "id": 62,
+      "text": "Te ofrecen mudarte a otra ciudad por una gran oportunidad. ¿Cómo decides?",
+      "options": [
+        { "enchant": "botin", "text": "Me emociona todo lo nuevo que podría conocer y conseguir; quiero más." },
+        { "enchant": "paso_helado", "text": "Me imagino adaptándome a lo que venga; siempre se encuentra el camino." },
+        { "enchant": "lealtad", "text": "Pienso primero en la gente que dejaría atrás y cuánto la extrañaría." },
+        { "enchant": "toque_seda", "text": "Evalúo con calma qué cosas buenas de mi vida actual quiero conservar intactas." }
+      ]
+    },
+    {
+      "id": 63,
+      "text": "En tu servidor, alguien vació tu cofre sin avisarte. ¿Qué haces?",
+      "options": [
+        { "enchant": "reparacion", "text": "Hablo con calma y propongo cómo arreglarlo juntos para recuperar la confianza." },
+        { "enchant": "botin", "text": "Negocio para recuperar lo mío y, si se puede, sacar algo extra." },
+        { "enchant": "espinas", "text": "Le marco un límite firme; si lo vuelve a cruzar, se lo devuelvo." },
+        { "enchant": "infinidad", "text": "Lo dejo pasar; puedo conseguir más y ya tengo otro proyecto en mente." }
+      ]
+    },
+    {
+      "id": 64,
+      "text": "Antes de decidir algo importante, ¿cuál es tu criterio principal?",
+      "options": [
+        { "enchant": "fortuna", "text": "Confío en que saldrá bien; casi siempre aparece una buena oportunidad." },
+        { "enchant": "eficiencia", "text": "Elijo lo más práctico y rápido, porque mi tiempo vale mucho." },
+        { "enchant": "aspecto_igneo", "text": "Elijo lo que me apasiona, con todo el corazón y sin medias tintas." },
+        { "enchant": "lealtad", "text": "Elijo lo que no me aleje de las personas que quiero." }
+      ]
+    },
+    {
+      "id": 65,
+      "text": "Te llega un dinero extra e inesperado. ¿Qué haces con él?",
+      "options": [
+        { "enchant": "proteccion", "text": "Guardo buena parte como colchón para que nada me tome desprevenido." },
+        { "enchant": "irrompibilidad", "text": "Sigo mi plan de ahorro mes tras mes, sin rendirme aunque cueste." },
+        { "enchant": "fortuna", "text": "Apuesto por una oportunidad que me emociona; confío en que valdrá la pena." },
+        { "enchant": "infinidad", "text": "Lo uso para arrancar un proyecto creativo nuevo; siempre hay otra idea." }
+      ]
+    },
+    {
+      "id": 66,
+      "text": "Te invitan a un servidor con reglas que no te convencen del todo. ¿Qué decides?",
+      "options": [
+        { "enchant": "botin", "text": "Entro de todos modos a curiosear; seguro hay cosas interesantes por descubrir." },
+        { "enchant": "espinas", "text": "Pongo mis condiciones claras y, si no las respetan, me retiro." },
+        { "enchant": "paso_helado", "text": "Me adapto con calma a su forma de jugar y busco mi lugar." },
+        { "enchant": "toque_seda", "text": "No toco nada hasta entender bien cómo cuidan lo que ya construyeron." }
+      ]
+    },
+    {
+      "id": 67,
+      "text": "Descubres que un compañero hizo trampa y nadie más lo sabe. ¿Qué haces?",
+      "options": [
+        { "enchant": "filo", "text": "Lo enfrento directamente y le digo lo que pienso, sin rodeos." },
+        { "enchant": "proteccion", "text": "Me aseguro de que nadie salga perjudicado y prevengo que vuelva a pasar." },
+        { "enchant": "reparacion", "text": "Hablo con él en privado para ayudarle a enmendarlo y recomponer todo." },
+        { "enchant": "sigilo", "text": "Observo en silencio un tiempo y reúno datos antes de actuar." }
+      ]
+    },
+    {
+      "id": 68,
+      "text": "Eres responsable de una aldea con pocos recursos. ¿En qué los inviertes primero?",
+      "options": [
+        { "enchant": "fortuna", "text": "En crecer hacia donde se ven más oportunidades; confío en que resultará." },
+        { "enchant": "reparacion", "text": "En curar y reconstruir lo que se dañó antes de seguir creciendo." },
+        { "enchant": "proteccion", "text": "En murallas y vigilancia para que nadie de la aldea corra peligro." },
+        { "enchant": "irrompibilidad", "text": "En un proyecto largo y sólido que siga firme pase lo que pase." }
+      ]
+    },
+    {
+      "id": 69,
+      "text": "¿Qué te haría cambiar de opinión sobre algo que ya habías decidido?",
+      "options": [
+        { "enchant": "reparacion", "text": "Notar que mi decisión lastimó a alguien; prefiero corregir el rumbo y sanar eso." },
+        { "enchant": "lealtad", "text": "Que alguien de mi gente me pida sinceramente que lo reconsidere." },
+        { "enchant": "sigilo", "text": "Notar con calma un detalle importante que antes no había visto." },
+        { "enchant": "aspecto_igneo", "text": "Encontrar algo que me apasione más y me encienda de verdad." }
+      ]
+    }
+  ]
+}

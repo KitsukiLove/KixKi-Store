@@ -1,0 +1,106 @@
+{
+  "block": 3,
+  "theme": "Estudio y trabajo",
+  "questions": [
+    {
+      "id": 20,
+      "text": "Te asignan un proyecto grande y con pocas instrucciones. ¿Cómo lo empiezas?",
+      "options": [
+        { "enchant": "fortuna", "text": "Me emociona: seguro sale algo bueno y en el camino aparecerán oportunidades." },
+        { "enchant": "toque_seda", "text": "Reviso cada detalle con calma para que el primer borrador ya quede impecable." },
+        { "enchant": "irrompibilidad", "text": "Fijo un ritmo diario y avanzo sin soltarlo hasta terminarlo, cueste lo que cueste." },
+        { "enchant": "paso_helado", "text": "Respiro, miro con qué cuento y voy ajustando el plan sobre la marcha." }
+      ]
+    },
+    {
+      "id": 21,
+      "text": "Hay un concurso entre equipos en tu escuela o trabajo. ¿Cómo lo vives?",
+      "options": [
+        { "enchant": "filo", "text": "Voy a ganar y lo digo claro; competir me saca lo mejor." },
+        { "enchant": "sigilo", "text": "Observo en silencio a los demás y planeo mi jugada antes de moverme." },
+        { "enchant": "aspecto_igneo", "text": "Me emociono tanto que le contagio las ganas a todo el equipo." },
+        { "enchant": "reparacion", "text": "Cuido que mi equipo descanse y se levante el ánimo después de cada ronda." }
+      ]
+    },
+    {
+      "id": 22,
+      "text": "En Minecraft, tú y tus amigos empiezan una base nueva. ¿Qué haces primero?",
+      "options": [
+        { "enchant": "proteccion", "text": "Levanto muros y pongo antorchas alrededor para que todos duerman tranquilos." },
+        { "enchant": "filo", "text": "Propongo un reto: quien construya mejor su parte gana, y yo voy por ese título." },
+        { "enchant": "fortuna", "text": "Elijo un lugar al azar, confiado en que cerca habrá algo bueno." },
+        { "enchant": "eficiencia", "text": "Hago una lista de materiales, reparto tareas y empiezo a construir de inmediato." }
+      ]
+    },
+    {
+      "id": 23,
+      "text": "Faltan dos días para la fecha límite y el trabajo va atrasado. ¿Qué haces?",
+      "options": [
+        { "enchant": "sigilo", "text": "Me aparto un rato, analizo qué falta exactamente y actúo en silencio, sin alboroto." },
+        { "enchant": "eficiencia", "text": "Priorizo lo esencial, descarto lo demás y trabajo en bloques cortos y rápidos." },
+        { "enchant": "lealtad", "text": "Me quedo con mi equipo hasta el final; nadie carga solo con el pendiente." },
+        { "enchant": "irrompibilidad", "text": "Trabajo sin parar hasta acabarlo, aunque la noche se alargue y me canse." }
+      ]
+    },
+    {
+      "id": 24,
+      "text": "Es la lluvia de ideas del equipo. ¿Cuál es tu papel natural?",
+      "options": [
+        { "enchant": "infinidad", "text": "Suelto una idea tras otra, aunque la mitad sean locuras que luego se afinan." },
+        { "enchant": "sigilo", "text": "Escucho todo con atención y al final propongo una sola idea, muy pensada." },
+        { "enchant": "fortuna", "text": "Apoyo cualquier propuesta con entusiasmo: confío en que alguna va a funcionar." },
+        { "enchant": "espinas", "text": "Si alguien descarta mi idea sin escucharla, se lo hago notar con firmeza." }
+      ]
+    },
+    {
+      "id": 25,
+      "text": "En una mina compartida, un jugador se lleva los minerales que tú marcaste. ¿Qué haces?",
+      "options": [
+        { "enchant": "espinas", "text": "Le advierto una sola vez; si insiste, se lo cobro sin dudarlo." },
+        { "enchant": "aspecto_igneo", "text": "Me enciendo y lo encaro con toda la intensidad: ¡esto se resuelve ya!" },
+        { "enchant": "lealtad", "text": "Llamo a mi equipo y lo enfrentamos juntos: nadie toca lo que es nuestro." },
+        { "enchant": "botin", "text": "Lo dejo y busco una veta todavía mejor; siempre quiero encontrar algo más." }
+      ]
+    },
+    {
+      "id": 26,
+      "text": "Tienes una tarde libre para estudiar o investigar algo. ¿Cómo la usas?",
+      "options": [
+        { "enchant": "fortuna", "text": "Abro algo al azar, convencido de que encontraré justo lo que me sirve." },
+        { "enchant": "toque_seda", "text": "Elijo un tema pequeño y lo estudio a fondo, sin dejar ningún detalle." },
+        { "enchant": "botin", "text": "Abro mil pestañas y guardo todo lo que encuentro; siempre quiero saber más." },
+        { "enchant": "reparacion", "text": "Repaso lo que antes entendí a medias hasta dejarlo bien firme." }
+      ]
+    },
+    {
+      "id": 27,
+      "text": "Un amigo te pide ayuda con su tarea justo cuando tienes la tuya pendiente.",
+      "options": [
+        { "enchant": "proteccion", "text": "Lo ayudo a organizarse primero, para que no vuelva a quedar en aprietos." },
+        { "enchant": "lealtad", "text": "Dejo lo mío un rato: él cuenta conmigo y yo con él." },
+        { "enchant": "infinidad", "text": "Le propongo un método original que se me acaba de ocurrir para resolverla." },
+        { "enchant": "toque_seda", "text": "Reviso su trabajo con mucho cuidado y le señalo cada detalle, respetando su estilo." }
+      ]
+    },
+    {
+      "id": 28,
+      "text": "Debes recoger materiales para tu equipo en Minecraft y la única cueva está llena de mobs. ¿Cómo entras?",
+      "options": [
+        { "enchant": "sigilo", "text": "Avanzo despacio, pegado a las paredes, observando y evitando que me noten." },
+        { "enchant": "paso_helado", "text": "Busco otra ruta o armo un puente; siempre hay otro camino." },
+        { "enchant": "espinas", "text": "Entro tranquilo: quien me ataque se lleva el golpe de vuelta." },
+        { "enchant": "filo", "text": "Voy de frente con la espada: prefiero el combate directo y ganarlo." }
+      ]
+    },
+    {
+      "id": 29,
+      "text": "Entregas un trabajo y recibes una crítica fuerte. ¿Cómo reaccionas?",
+      "options": [
+        { "enchant": "toque_seda", "text": "Releo todo con calma y pulo cada punto señalado hasta que quede perfecto." },
+        { "enchant": "aspecto_igneo", "text": "Me prende la motivación y lo rehago con más pasión que antes." },
+        { "enchant": "reparacion", "text": "Me tomo un respiro para recuperar el ánimo y luego arreglo lo que falle." },
+        { "enchant": "botin", "text": "Pido opiniones a cuanta gente pueda: quiero juntar el máximo de mejoras posibles." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1296 @@
+{
+ "enchantments": [
+  "reparacion",
+  "irrompibilidad",
+  "fortuna",
+  "toque_seda",
+  "eficiencia",
+  "filo",
+  "proteccion",
+  "botin",
+  "espinas",
+  "infinidad",
+  "paso_helado",
+  "aspecto_igneo",
+  "lealtad",
+  "sigilo"
+ ],
+ "max": {
+  "reparacion": 77,
+  "irrompibilidad": 77,
+  "fortuna": 72,
+  "toque_seda": 78,
+  "eficiencia": 77,
+  "filo": 75,
+  "proteccion": 75,
+  "botin": 74,
+  "espinas": 76,
+  "infinidad": 74,
+  "paso_helado": 74,
+  "aspecto_igneo": 74,
+  "lealtad": 79,
+  "sigilo": 73
+ },
+ "questions": [
+  [
+   {
+    "main": "irrompibilidad",
+    "second": "proteccion"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   },
+   {
+    "main": "eficiencia",
+    "second": "filo"
+   },
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   }
+  ],
+  [
+   {
+    "main": "sigilo",
+    "second": "paso_helado"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "reparacion",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "proteccion"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   },
+   {
+    "main": "fortuna",
+    "second": "botin"
+   }
+  ],
+  [
+   {
+    "main": "espinas",
+    "second": "filo"
+   },
+   {
+    "main": "toque_seda",
+    "second": "sigilo"
+   },
+   {
+    "main": "lealtad",
+    "second": "reparacion"
+   },
+   {
+    "main": "botin",
+    "second": "infinidad"
+   }
+  ],
+  [
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "botin",
+    "second": "infinidad"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "lealtad",
+    "second": "proteccion"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "sigilo",
+    "second": "espinas"
+   },
+   {
+    "main": "filo",
+    "second": "eficiencia"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "paso_helado"
+   },
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "botin"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "filo"
+   },
+   {
+    "main": "botin",
+    "second": "infinidad"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "proteccion"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   }
+  ],
+  [
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "fortuna",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "filo"
+   },
+   {
+    "main": "toque_seda",
+    "second": "sigilo"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   }
+  ],
+  [
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "espinas",
+    "second": "proteccion"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "paso_helado",
+    "second": "infinidad"
+   },
+   {
+    "main": "toque_seda",
+    "second": "eficiencia"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "proteccion"
+   },
+   {
+    "main": "fortuna",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   }
+  ],
+  [
+   {
+    "main": "lealtad",
+    "second": "reparacion"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "fortuna",
+    "second": "botin"
+   },
+   {
+    "main": "espinas",
+    "second": "filo"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "botin",
+    "second": "infinidad"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "fortuna",
+    "second": "botin"
+   },
+   {
+    "main": "toque_seda",
+    "second": "eficiencia"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "proteccion"
+   },
+   {
+    "main": "paso_helado",
+    "second": "infinidad"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "eficiencia"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   },
+   {
+    "main": "reparacion",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "fortuna",
+    "second": "paso_helado"
+   },
+   {
+    "main": "eficiencia",
+    "second": "irrompibilidad"
+   }
+  ],
+  [
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   }
+  ],
+  [
+   {
+    "main": "infinidad",
+    "second": "botin"
+   },
+   {
+    "main": "sigilo",
+    "second": "paso_helado"
+   },
+   {
+    "main": "fortuna",
+    "second": "botin"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "espinas",
+    "second": "proteccion"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   },
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   },
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "lealtad",
+    "second": "reparacion"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "toque_seda",
+    "second": "eficiencia"
+   }
+  ],
+  [
+   {
+    "main": "sigilo",
+    "second": "espinas"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   },
+   {
+    "main": "espinas",
+    "second": "proteccion"
+   },
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   }
+  ],
+  [
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "botin"
+   },
+   {
+    "main": "reparacion",
+    "second": "paso_helado"
+   },
+   {
+    "main": "botin",
+    "second": "infinidad"
+   }
+  ],
+  [
+   {
+    "main": "toque_seda",
+    "second": "eficiencia"
+   },
+   {
+    "main": "espinas",
+    "second": "filo"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "infinidad",
+    "second": "paso_helado"
+   },
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "fortuna",
+    "second": "botin"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   }
+  ],
+  [
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "paso_helado",
+    "second": "infinidad"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "fortuna",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "infinidad",
+    "second": "paso_helado"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   },
+   {
+    "main": "botin",
+    "second": "aspecto_igneo"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   },
+   {
+    "main": "espinas",
+    "second": "proteccion"
+   },
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "eficiencia"
+   },
+   {
+    "main": "toque_seda",
+    "second": "sigilo"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   },
+   {
+    "main": "eficiencia",
+    "second": "filo"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "lealtad",
+    "second": "proteccion"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   }
+  ],
+  [
+   {
+    "main": "sigilo",
+    "second": "espinas"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   },
+   {
+    "main": "filo",
+    "second": "eficiencia"
+   },
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "espinas",
+    "second": "proteccion"
+   },
+   {
+    "main": "toque_seda",
+    "second": "sigilo"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "botin"
+   }
+  ],
+  [
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   },
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   },
+   {
+    "main": "espinas",
+    "second": "filo"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   }
+  ],
+  [
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "proteccion"
+   },
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   }
+  ],
+  [
+   {
+    "main": "sigilo",
+    "second": "paso_helado"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   },
+   {
+    "main": "reparacion",
+    "second": "proteccion"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "botin",
+    "second": "infinidad"
+   },
+   {
+    "main": "fortuna",
+    "second": "botin"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   }
+  ],
+  [
+   {
+    "main": "toque_seda",
+    "second": "eficiencia"
+   },
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "espinas",
+    "second": "filo"
+   },
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   }
+  ],
+  [
+   {
+    "main": "paso_helado",
+    "second": "infinidad"
+   },
+   {
+    "main": "eficiencia",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "sigilo",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   },
+   {
+    "main": "eficiencia",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   }
+  ],
+  [
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "filo",
+    "second": "eficiencia"
+   }
+  ],
+  [
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   },
+   {
+    "main": "eficiencia",
+    "second": "filo"
+   },
+   {
+    "main": "fortuna",
+    "second": "botin"
+   }
+  ],
+  [
+   {
+    "main": "irrompibilidad",
+    "second": "proteccion"
+   },
+   {
+    "main": "eficiencia",
+    "second": "filo"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "espinas"
+   },
+   {
+    "main": "paso_helado",
+    "second": "infinidad"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "eficiencia",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "espinas",
+    "second": "proteccion"
+   },
+   {
+    "main": "toque_seda",
+    "second": "eficiencia"
+   },
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "reparacion",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "irrompibilidad",
+    "second": "reparacion"
+   },
+   {
+    "main": "reparacion",
+    "second": "paso_helado"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "botin",
+    "second": "fortuna"
+   },
+   {
+    "main": "toque_seda",
+    "second": "sigilo"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   },
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   },
+   {
+    "main": "reparacion",
+    "second": "proteccion"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "botin"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "eficiencia"
+   },
+   {
+    "main": "lealtad",
+    "second": "reparacion"
+   },
+   {
+    "main": "sigilo",
+    "second": "paso_helado"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   }
+  ],
+  [
+   {
+    "main": "botin",
+    "second": "fortuna"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   },
+   {
+    "main": "lealtad",
+    "second": "proteccion"
+   },
+   {
+    "main": "espinas",
+    "second": "filo"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   },
+   {
+    "main": "sigilo",
+    "second": "paso_helado"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "infinidad",
+    "second": "botin"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   }
+  ],
+  [
+   {
+    "main": "botin",
+    "second": "infinidad"
+   },
+   {
+    "main": "paso_helado",
+    "second": "sigilo"
+   },
+   {
+    "main": "lealtad",
+    "second": "proteccion"
+   },
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   },
+   {
+    "main": "botin",
+    "second": "infinidad"
+   },
+   {
+    "main": "espinas",
+    "second": "filo"
+   },
+   {
+    "main": "infinidad",
+    "second": "paso_helado"
+   }
+  ],
+  [
+   {
+    "main": "fortuna",
+    "second": "botin"
+   },
+   {
+    "main": "eficiencia",
+    "second": "toque_seda"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   },
+   {
+    "main": "lealtad",
+    "second": "reparacion"
+   }
+  ],
+  [
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   },
+   {
+    "main": "fortuna",
+    "second": "paso_helado"
+   },
+   {
+    "main": "infinidad",
+    "second": "fortuna"
+   }
+  ],
+  [
+   {
+    "main": "botin",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "espinas",
+    "second": "sigilo"
+   },
+   {
+    "main": "paso_helado",
+    "second": "reparacion"
+   },
+   {
+    "main": "toque_seda",
+    "second": "irrompibilidad"
+   }
+  ],
+  [
+   {
+    "main": "filo",
+    "second": "espinas"
+   },
+   {
+    "main": "proteccion",
+    "second": "lealtad"
+   },
+   {
+    "main": "reparacion",
+    "second": "proteccion"
+   },
+   {
+    "main": "sigilo",
+    "second": "espinas"
+   }
+  ],
+  [
+   {
+    "main": "fortuna",
+    "second": "infinidad"
+   },
+   {
+    "main": "reparacion",
+    "second": "proteccion"
+   },
+   {
+    "main": "proteccion",
+    "second": "irrompibilidad"
+   },
+   {
+    "main": "irrompibilidad",
+    "second": "eficiencia"
+   }
+  ],
+  [
+   {
+    "main": "reparacion",
+    "second": "lealtad"
+   },
+   {
+    "main": "lealtad",
+    "second": "aspecto_igneo"
+   },
+   {
+    "main": "sigilo",
+    "second": "toque_seda"
+   },
+   {
+    "main": "aspecto_igneo",
+    "second": "filo"
+   }
+  ]
+ ]
+}

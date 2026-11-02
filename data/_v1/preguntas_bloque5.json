@@ -1,0 +1,106 @@
+{
+  "block": 5,
+  "theme": "Emociones y vínculos",
+  "questions": [
+    {
+      "id": 40,
+      "text": "En plena discusión con alguien a quien quieres mucho, ¿qué haces?",
+      "options": [
+        { "enchant": "espinas", "text": "Puedo escuchar todo, pero que me falte al respeto no lo permito." },
+        { "enchant": "toque_seda", "text": "Elijo cada palabra con cuidado para no dañar lo que tenemos." },
+        { "enchant": "paso_helado", "text": "Respiro hondo, me pongo en su lugar y busco otra manera de entendernos." },
+        { "enchant": "aspecto_igneo", "text": "Digo lo que siento en el momento, con toda la intensidad y sin guardarme nada." }
+      ]
+    },
+    {
+      "id": 41,
+      "text": "Una amiga cercana atraviesa una racha muy mala. ¿Cómo la acompañas?",
+      "options": [
+        { "enchant": "irrompibilidad", "text": "Estoy ahí todos los días sin falta, el tiempo que haga falta." },
+        { "enchant": "fortuna", "text": "Le recuerdo que las rachas cambian y que algo bueno viene en camino." },
+        { "enchant": "infinidad", "text": "Le invento planes distintos y originales para sacarle una sonrisa." },
+        { "enchant": "proteccion", "text": "Me aseguro de que esté bien y le quito preocupaciones de encima." }
+      ]
+    },
+    {
+      "id": 42,
+      "text": "En tu mundo multijugador de Minecraft, alguien empieza a molestar a tu mejor amigo. ¿Qué haces?",
+      "options": [
+        { "enchant": "lealtad", "text": "Me pongo a su lado de inmediato y no lo suelto pase lo que pase." },
+        { "enchant": "paso_helado", "text": "Busco una salida tranquila que calme todo sin llegar a la pelea." },
+        { "enchant": "espinas", "text": "Le dejo claro que con mi amigo no se mete, y si insiste, responde." },
+        { "enchant": "sigilo", "text": "Observo en silencio quién es y qué quiere antes de mover ficha." }
+      ]
+    },
+    {
+      "id": 43,
+      "text": "¿Cuál de estas frases describe mejor cómo demuestras cariño?",
+      "options": [
+        { "enchant": "aspecto_igneo", "text": "Con entusiasmo: sorpresas, abrazos fuertes y muchísima energía cuando estamos juntos." },
+        { "enchant": "proteccion", "text": "Estando pendiente de que nada le falte y avisándole de posibles riesgos." },
+        { "enchant": "irrompibilidad", "text": "Con constancia: soy la misma persona confiable en los días buenos y malos." },
+        { "enchant": "filo", "text": "Con honestidad: le digo la verdad aunque cueste y lo animo a crecer." }
+      ]
+    },
+    {
+      "id": 44,
+      "text": "Conoces a alguien nuevo que te cae muy bien. ¿Cómo construyes esa amistad?",
+      "options": [
+        { "enchant": "sigilo", "text": "Lo observo un buen rato y me abro poco a poco, cuando confío." },
+        { "enchant": "espinas", "text": "Dejo claro desde el inicio qué cosas acepto y cuáles no." },
+        { "enchant": "reparacion", "text": "Si algo sale mal entre nosotros, me encargo de arreglarlo pronto." },
+        { "enchant": "botin", "text": "Le hago mil preguntas para descubrir qué historias, gustos y secretos guarda." }
+      ]
+    },
+    {
+      "id": 45,
+      "text": "En Minecraft quieres sorprender a un amigo con un regalo especial. ¿Qué haces?",
+      "options": [
+        { "enchant": "botin", "text": "Exploro cuevas hasta juntar algo raro y valioso que nadie más tenga." },
+        { "enchant": "fortuna", "text": "Salgo sin plan, confiado en que me toparé con el regalo perfecto." },
+        { "enchant": "sigilo", "text": "Observo qué necesita y lo dejo en su cofre sin que se entere." },
+        { "enchant": "infinidad", "text": "Invento algo único: una estatua, un juego o una sorpresa jamás vista." }
+      ]
+    },
+    {
+      "id": 46,
+      "text": "Un conocido te hace una broma pesada frente a todos. ¿Cómo reaccionas?",
+      "options": [
+        { "enchant": "toque_seda", "text": "Sonrío para no arruinar el ambiente y luego se lo comento con delicadeza." },
+        { "enchant": "filo", "text": "Le contesto ahí mismo, claro y directo, que no me pareció gracioso." },
+        { "enchant": "espinas", "text": "Le devuelvo una broma igual de picante para que no la repita." },
+        { "enchant": "reparacion", "text": "Lo dejo pasar y luego busco que quedemos bien, sin rencores." }
+      ]
+    },
+    {
+      "id": 47,
+      "text": "Tu mejor amigo se va a vivir muy lejos. ¿Cómo lo vives?",
+      "options": [
+        { "enchant": "paso_helado", "text": "Lo tomo con calma y buscamos nuevas formas de seguir cerca." },
+        { "enchant": "eficiencia", "text": "Armamos un calendario de llamadas y visitas para mantenernos siempre al día." },
+        { "enchant": "toque_seda", "text": "Guardo nuestros recuerdos con mucho cuidado y le escribo cartas hechas con esmero." },
+        { "enchant": "sigilo", "text": "Lo proceso en silencio y le escribo cuando tengo claras mis palabras." }
+      ]
+    },
+    {
+      "id": 48,
+      "text": "En Minecraft construyen juntos y tu amigo borra sin querer un muro importante. ¿Qué haces?",
+      "options": [
+        { "enchant": "paso_helado", "text": "Respiro y propongo adaptar el plano al nuevo hueco, sin drama." },
+        { "enchant": "eficiencia", "text": "Reparto tareas rápido y reconstruimos el muro en pocos minutos." },
+        { "enchant": "infinidad", "text": "Aprovecho para proponer algo nuevo: ¿y si ahí va una torre loca?" },
+        { "enchant": "irrompibilidad", "text": "Lo reconstruimos como sea, las veces que haga falta, hasta terminar." }
+      ]
+    },
+    {
+      "id": 49,
+      "text": "Alguien que quieres está muy nervioso por una presentación importante. ¿Cómo lo apoyas?",
+      "options": [
+        { "enchant": "eficiencia", "text": "Le ayudo a organizar su tiempo y a ir directo a lo importante." },
+        { "enchant": "aspecto_igneo", "text": "Lo lleno de ánimo con porras, abrazos y una energía contagiosa." },
+        { "enchant": "lealtad", "text": "Lo acompaño en persona y me quedo a su lado hasta que termine." },
+        { "enchant": "filo", "text": "Le digo con franqueza dónde flaquea y lo reto a demostrar lo que vale." }
+      ]
+    }
+  ]
+}
