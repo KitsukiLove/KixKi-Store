@@ -25,7 +25,7 @@ const nm=a=>{const h=a.querySelector("h3");return h?h.textContent.trim():"";};
 let EXT={},ST={};
 async function loadData(){
   const [d,m]=await Promise.all([getJ("apps.json"),getJ("data/meta.json")]);
-  if(d&&Array.isArray(d.categories))d.categories.forEach(c=>(c.apps||[]).forEach(a=>{EXT[a.name]={min:+a.min||0,priv:a.priv?1:0,added:a.added||""};}));
+  if(d&&Array.isArray(d.categories))d.categories.forEach(c=>(c.apps||[]).forEach(a=>{EXT[a.name]={min:+a.min||0,priv:a.priv?1:0,added:a.added||"",es:{tag:a.tag||"",desc:a.desc||"",tip:a.tip||""}};}));
   if(m&&m.repos&&typeof m.repos==="object")ST=m.repos;
 }
 const stat=a=>ST[a.dataset.repo]||null;
@@ -34,7 +34,7 @@ const stat=a=>ST[a.dataset.repo]||null;
 /* el perfil se limpia siempre: si algo viene dañado o de otra versión, se usa un valor seguro */
 const PRF=()=>{const p=LS.g("kixki-perfil",null);if(!p||typeof p!=="object"||Array.isArray(p)||p.v!==1)return null;
   if(p.skip)return {v:1,skip:1};
-  const ok=["priv","look","mus","game","ctl","day"];
+  const ok=["priv","look","mus","game","ctl","day","opt"];
   return {v:1,t:["ini","dia","pro"].includes(p.t)?p.t:"dia",p:["si","no","?"].includes(p.p)?p.p:"?",
     a:Number.isFinite(+p.a)&&+p.a>=0&&+p.a<=40?Math.round(+p.a):0,i:Array.isArray(p.i)?p.i.filter(x=>ok.includes(x)):[]};};
 const prof=()=>{const p=PRF();return p&&!p.skip?p:null;};
@@ -44,7 +44,9 @@ const INT=[
   ["mus","🎧",["Música","Music"],["musica"]],
   ["game","🎮",["Juegos","Games"],["emulacion"]],
   ["ctl","🧰",["Control y trucos","Control & tricks"],["control","utilidad","importante","sistemas"]],
-  ["day","📸",["Fotos y día a día","Photos & daily life"],["fotos","internet","dia"]]];
+  ["day","📸",["Fotos y día a día","Photos & daily life"],["fotos","internet","dia"]],
+  /* Optimización: no es una carpeta, es una lista de apps (la misma del pack «Optimización») */
+  ["opt","⚡",["Optimización","Optimization"],[],["SD Maid SE","EnforceDoze","Essentials","ADL","Canta","No More Background","BatStats"]]];
 const TIPO={ini:["empezando","just starting"],dia:["uso diario","everyday user"],pro:["avanzada/o","advanced"]};
 
 /* ---------- avisos en cada app + botones «Ya la tengo» y «Copiar enlace» ---------- */
@@ -134,11 +136,13 @@ function labels(){
   const u=$("#kq-usable");if(u){u.textContent=L("Solo las que puedo usar","Only ones I can use");const p=prof();u.hidden=!(p&&(p.a||p.p!=="si"));if(u.hidden&&root.classList.contains("kq-us")){root.classList.remove("kq-us");u.setAttribute("aria-pressed","false");}}
   const pr=$("#kq-prf");if(pr)pr.textContent=prof()?L("Mis respuestas","My answers"):L("Conócenos 🐑","Get to know me 🐑");
   const mi=$("#s-prf");if(mi)mi.textContent=L("Mi perfil…","My profile…");
+  axApply();decoratePacks();
   counters();
 }
 function recs(p){
   const have=haveSet(),cats=new Set();
-  (p.i||[]).forEach(k=>{const it=INT.find(x=>x[0]===k);if(it)it[3].forEach(c=>cats.add(c));});
+  const names=[];
+  (p.i||[]).forEach(k=>{const it=INT.find(x=>x[0]===k);if(it){it[3].forEach(c=>cats.add(c));(it[4]||[]).forEach(n=>names.push(n));}});
   const okApp=a=>{const n=nm(a),x=EXT[n]||{};
     if(have.has(n))return false;if(p.a&&x.min&&x.min>p.a)return false;if(x.priv&&p.p!=="si")return false;return true;};
   const score=a=>{const s=stat(a);return s?s.s:0;};
@@ -149,6 +153,7 @@ function recs(p){
   if(p.t==="ini")byCat("tiendas").slice(0,2).forEach(take);
   /* reparte por turnos entre las categorías elegidas */
   const lists=[...cats].map(byCat);
+  if(names.length)lists.unshift(names.map(n=>pool.find(a=>nm(a)===n)).filter(Boolean));
   for(let r=0;r<2;r++)lists.forEach(l=>{if(l[r])take(l[r]);});
   if(out.length<3)byCat("tiendas").concat(byCat("importante")).forEach(take);
   return out;
@@ -162,7 +167,7 @@ function renderParati(){
     p.a?"Android "+p.a+(p.a>=14?"+":""):L("Android: no sé","Android: not sure"),
     p.p==="si"?L("con root/Shizuku/ADB","with root/Shizuku/ADB"):L("sin root/Shizuku/ADB","no root/Shizuku/ADB")].join(" · ")+(ints.length?" · "+ints.join(", "):"");
   pt.innerHTML=`<div class="pt-bar"><b id="pt-h">🐑 ${L("Para ti","For you")}</b></div><div class="pt-in"><p class="pt-s">${esc(sum)}</p>
-    <div class="pt-l">${list.map(a=>`<button type="button" class="pt-go" data-go="${esc(nm(a))}">${esc(nm(a))}</button>`).join("")}${p.t==="ini"?`<button type="button" class="pt-go pk" data-open="packs">🎁 ${L("Pack «Para empezar»","«Getting started» pack")}</button>`:""}${list.length?"":`<span class="pt-n">${L("Con tus respuestas no encontré nada nuevo que sugerir.","Nothing new to suggest with your answers.")}</span>`}</div>
+    <div class="pt-l">${list.map(a=>`<button type="button" class="pt-go" data-go="${esc(nm(a))}">${esc(nm(a))}</button>`).join("")}${p.t==="ini"?`<button type="button" class="pt-go pk" data-open="packs">🎁 ${L("Pack «Para empezar»","«Getting started» pack")}</button>`:""}${packsFor(p).map(k=>`<button type="button" class="pt-go pk" data-guide="${esc(k)}">🧭 ${L("Guíame: ","Guide me: ")}${esc((packEl(k).querySelector("h3")||{}).textContent||k)}</button>`).join("")}${list.length?"":`<span class="pt-n">${L("Con tus respuestas no encontré nada nuevo que sugerir.","Nothing new to suggest with your answers.")}</span>`}</div>
     <button type="button" class="pt-ed" id="pt-ed">${L("Cambiar mis respuestas","Change my answers")}</button></div>`;
   pt.hidden=false;
 }
@@ -197,12 +202,12 @@ function ensureWizard(){
   document.body.insertAdjacentHTML("beforeend",`<div id="kq" class="ovl" hidden><div class="box kq" role="dialog" aria-modal="true" aria-labelledby="kq-t"><div class="kq-pic" aria-hidden="true">${sheepPic()}</div><div class="kq-bub"><span class="kk-nm" id="kq-t"></span><button type="button" class="x" data-x="kq"></button><div id="kq-b" class="kq-b0"></div><svg class="kk-tl kq-tl" viewBox="0 0 8 4" width="24" height="12" shape-rendering="crispEdges" aria-hidden="true"><path class="o" d="M0 0h8v1H0zM1 1h6v1H1zM2 2h4v1H2zM3 3h2v1H3z"/><path class="i" d="M1 0h6v1H1zM2 1h4v1H2zM3 2h2v1H3z"/></svg></div></div></div>`);
   o=$("#kq");
   /* si se cierra sin terminar (✕, Escape o tocar fuera), no se vuelve a preguntar */
-  new MutationObserver(()=>{root.classList.toggle("kq-on",!o.hidden);if(o.hidden&&!PRF())LS.s("kixki-perfil",{v:1,skip:1});if(o.hidden){decorate();renderParati();labels();}}).observe(o,{attributes:true,attributeFilter:["hidden"]});
+  new MutationObserver(()=>{root.classList.toggle("kq-on",!o.hidden);const wasG=!!G;if(o.hidden)G=null;if(o.hidden&&!PRF()&&!wasG)LS.s("kixki-perfil",{v:1,skip:1});if(o.hidden){decorate();renderParati();labels();}}).observe(o,{attributes:true,attributeFilter:["hidden"]});
   return o;
 }
 function openWizard(){
   const o=ensureWizard(),p=prof()||{};
-  W={t:p.t||null,p:p.p||null,a:p.a==null?null:p.a,i:Array.isArray(p.i)?p.i.slice():[]};wi=0;
+  G=null;W={t:p.t||null,p:p.p||null,a:p.a==null?null:p.a,i:Array.isArray(p.i)?p.i.slice():[]};wi=0;
   o.hidden=false;stepView();
 }
 function stepView(){
@@ -223,6 +228,13 @@ function finish(){
   toast(L("¡Listo! Preparé «Para ti» 🐑","Done! I prepared «For you» 🐑"));
 }
 document.addEventListener("click",e=>{
+  const gd=e.target.closest("[data-guide]");if(gd){const sm=$("#sm");if(sm)sm.hidden=true;openGuide(gd.dataset.guide);return;}
+  if(e.target.closest("#kq .kg-next")){G.i++;guideView();return;}
+  if(e.target.closest("#kq .kg-back")){G.i=Math.max(0,Math.min(G.i,G.items.length)-1);guideView();return;}
+  if(e.target.closest("#kq .kg-end")){$("#kq").hidden=true;return;}
+  const gh=e.target.closest("#kq .kg-have");
+  if(gh&&G){const n=gh.dataset.n,set=haveSet();if(!set.has(n)){set.add(n);G.got++;}LS.s("kixki-have",[...set]);decorate();G.i++;guideView();return;}
+  const ac=e.target.closest("#s-fs,#s-hc");if(ac){axClick(ac.id);return;}
   const o=e.target.closest("#kq .kq-o");
   if(o){const s=STEPS[wi],v=o.dataset.v;
     if(s.multi){const i=W.i.indexOf(v);i<0?W.i.push(v):W.i.splice(i,1);o.classList.toggle("p");o.setAttribute("aria-pressed",W.i.includes(v));}
@@ -243,6 +255,102 @@ document.addEventListener("click",e=>{
     const ok=()=>toast(L("Enlace copiado ✓","Link copied ✓")),bad=()=>toast(L("No se pudo copiar. Cópialo a mano:","Couldn't copy. Copy it by hand: ")+u);
     try{navigator.clipboard.writeText(u).then(ok,bad);}catch(x){bad();}return;}
 });
+
+
+/* ---------- letra grande y alto contraste (menú Inicio / Más) ---------- */
+const AXK="kixki-a11y";
+const ax=()=>{const a=LS.g(AXK,{});return {fs:[0,1,2].includes(a.fs)?a.fs:0,hc:a.hc===1||a.hc===0?a.hc:null};};
+const axHC=a=>a.hc==null?(window.matchMedia&&matchMedia("(prefers-contrast:more)").matches):a.hc===1;
+function axApply(){
+  const a=ax(),hc=axHC(a);
+  root.classList.toggle("kq-fs1",a.fs===1);root.classList.toggle("kq-fs2",a.fs===2);root.classList.toggle("kq-hc",hc);
+  const f=$("#s-fs");if(f)f.textContent=L("Letra: ","Text: ")+[L("normal","normal"),L("grande","large"),L("enorme","huge")][a.fs];
+  const c=$("#s-hc");if(c){c.textContent=L("Contraste: ","Contrast: ")+(hc?L("alto","high"):L("normal","normal"));c.setAttribute("aria-pressed",String(hc));}
+}
+function axClick(id){
+  const a=ax();
+  if(id==="s-fs"){a.fs=(a.fs+1)%3;LS.s(AXK,{fs:a.fs,hc:a.hc});}
+  else{const on=!axHC(a);LS.s(AXK,{fs:a.fs,hc:on?1:0});}
+  axApply();dispatchEvent(new Event("resize"));/* app.js recalcula «Leer más» */
+  toast(id==="s-fs"?L("Letra: ","Text: ")+[L("normal","normal"),L("grande","large"),L("enorme","huge")][a.fs]:L("Contraste: ","Contrast: ")+(axHC(ax())?L("alto","high"):L("normal","normal")));
+}
+axApply();/* se aplica en cuanto carga, sin esperar al resto */
+
+/* ---------- descripciones en inglés (data/en.json) ---------- */
+let EN=null,enP=null;
+const loadEN=()=>enP||(enP=getJ("data/en.json").then(j=>{EN=j&&typeof j==="object"&&!Array.isArray(j)?j:{};return EN;}));
+async function langApps(){
+  const en=L(0,1)===1;
+  if(en)await loadEN();
+  if(en!==(L(0,1)===1))return;/* cambió de idioma mientras cargaba */
+  $$("#app .cat .app").forEach(a=>{
+    const n=nm(a),x=EXT[n];if(!n||!x)return;
+    const t=en&&EN&&EN[n]?EN[n]:null;
+    [[a.querySelector(".tag"),"tag"],[a.querySelector(".desc"),"desc"],[a.querySelector(".tip > span:last-child"),"tip"]].forEach(([el,k])=>{
+      if(!el)return;const v=t&&t[k]?t[k]:x.es[k];if(v&&el.textContent!==v)el.textContent=v;});
+    /* la búsqueda también entiende las palabras en inglés */
+    if(t&&!a.dataset.en){a.dataset.en=1;a.dataset.s=(a.dataset.s||"")+" "+nrm((t.tag||"")+" "+(t.desc||""));}
+  });
+  dispatchEvent(new Event("resize"));
+}
+
+/* ---------- packs guiados: Kixki te lleva app por app ---------- */
+let G=null;
+const PACKFOR={ini:"Para empezar",priv:"Privacidad",look:"Personalizar",mus:"Música",opt:"Optimización"};
+const packEl=pk=>$$("#packs .app[data-pk]").find(x=>x.dataset.pk===pk)||null;
+function packsFor(p){
+  const out=[];if(p.t==="ini")out.push(PACKFOR.ini);
+  (p.i||[]).forEach(k=>{if(PACKFOR[k]&&!out.includes(PACKFOR[k]))out.push(PACKFOR[k]);});
+  return out.filter(packEl).slice(0,2);
+}
+function decoratePacks(){
+  $$("#packs .app[data-pk]").forEach(a=>{
+    let b=a.querySelector(".kg-open");
+    if(!b){b=document.createElement("button");b.type="button";b.className="btn kg-open";b.dataset.guide=a.dataset.pk;
+      const cp=a.querySelector("[data-cp]");cp?cp.before(b):a.querySelector(".links").append(b);}
+    b.textContent="🧭 "+L("Guíame","Guide me");b.setAttribute("aria-label",L("Guíame paso a paso: pack ","Guide me step by step: pack ")+a.querySelector("h3").textContent);
+  });
+}
+const firstSentences=(t,n)=>{t=String(t||"");if(t.length<=n)return t;const c=t.slice(0,n),i=Math.max(c.lastIndexOf(". "),c.lastIndexOf("; "));return (i>60?c.slice(0,i+1):c.replace(/\s+\S*$/,"")+"…");};
+function openGuide(pk){
+  const art=packEl(pk);if(!art)return;
+  const p=prof(),have=haveSet(),apps=origs(),items=[],skipped=[];
+  [...art.querySelectorAll("button[data-go]")].forEach(b=>{
+    const n=b.dataset.go,a=apps.find(x=>nm(x)===n);if(!a)return;
+    const x=EXT[n]||{};let why=null;
+    if(have.has(n))why="have";
+    else if(p&&p.a&&x.min&&x.min>p.a)why="min";
+    else if(p&&x.priv&&p.p!=="si")why="priv";
+    why?skipped.push([n,why]):items.push(n);
+  });
+  G={pk,title:art.querySelector("h3").textContent,items,skipped,i:0,got:0};
+  const o=ensureWizard();o.hidden=false;guideView();
+}
+function guideView(){
+  const b=$("#kq-b"),x=$("#kq .x");if(!G||!b)return;
+  x.setAttribute("aria-label",L("Cerrar","Close"));x.textContent="✕";
+  $("#kq-t").textContent=L("Kixki te guía","Kixki guides you");
+  const n=G.items.length;
+  if(!n||G.i>=n){
+    const why={have:L("ya la tienes","you already have it"),min:L("pide un Android más nuevo","needs a newer Android"),priv:L("necesita Shizuku, root o ADB","needs Shizuku, root or ADB")};
+    const sk=G.skipped.length?`<p class="kq-note">${L("No te mostré estas porque no son para tu celular o ya las tienes:","I skipped these because they aren't for your phone or you already have them:")}<br>${G.skipped.map(([a,w])=>esc(a)+" ("+why[w]+")").join(" · ")}</p>`:"";
+    b.innerHTML=`<p class="kq-n">${esc(G.title)}</p><h2 class="kq-q" id="kq-q" tabindex="-1">${n?L("¡Listo! 🎉","All done! 🎉"):L("No hay nada nuevo que instalar","Nothing new to install")}</h2>
+      <p class="kq-note">${n?L(`Marcaste ${G.got} de ${n} apps como instaladas.`,`You marked ${G.got} of ${n} apps as installed.`):L("Ya tienes todo lo de este pack, o no es para tu celular.","You already have everything in this pack, or it isn't for your phone.")}</p>${sk}
+      <div class="kq-nav">${n?`<button type="button" class="btn kg-back">← ${L("Atrás","Back")}</button>`:"<span></span>"}<button type="button" class="btn p kg-end">${L("Cerrar","Close")} ✓</button></div>`;
+    const q=$("#kq-q");if(q)q.focus({preventScroll:true});talk();return;
+  }
+  const name=G.items[G.i],a=origs().find(z=>nm(z)===name),e=EXT[name]||{};
+  const tag=a?(a.querySelector(".tag")||{}).textContent||"":"",desc=a?(a.querySelector(".desc")||{}).textContent||"":"",tip=a?((a.querySelector(".tip > span:last-child")||{}).textContent||""):"";
+  const lk=a?a.querySelector(".links a"):null;
+  b.innerHTML=`<p class="kq-n">${esc(G.title)} · ${L("paso","step")} ${G.i+1} / ${n}</p>
+    <h2 class="kq-q" id="kq-q" tabindex="-1">${esc(name)}</h2>
+    <p class="kq-note"><b>${esc(tag)}</b> — ${esc(firstSentences(desc,170))}</p>
+    ${tip?`<p class="kq-note kg-tip">💡 ${esc(firstSentences(tip,150))}</p>`:""}
+    <div class="kq-opts">${lk?`<a class="btn p kg-o" href="${esc(lk.href)}" target="_blank" rel="noopener noreferrer"><span class="kq-e" aria-hidden="true">↗</span><span class="kq-tx">${L("Abrir descarga","Open download")}<small>${esc(lk.textContent.trim())}</small></span></a>`:""}
+      <button type="button" class="btn kg-o kg-have" data-n="${esc(name)}"><span class="kq-e" aria-hidden="true">✓</span><span class="kq-tx">${L("Ya la instalé","I installed it")}<small>${L("La marco y paso a la siguiente","I'll mark it and go to the next")}</small></span></button></div>
+    <div class="kq-nav">${G.i?`<button type="button" class="btn kg-back">← ${L("Atrás","Back")}</button>`:`<button type="button" class="btn kg-end">${L("Cerrar","Close")}</button>`}<button type="button" class="btn kg-next">${L("Saltar","Skip")} →</button></div>`;
+  const q=$("#kq-q");if(q)q.focus({preventScroll:true});talk();
+}
 
 /* ---------- enlace directo #app=Nombre ---------- */
 function deepLink(){
@@ -286,7 +394,8 @@ document.addEventListener("keydown",e=>{
 /* ---------- arranque ---------- */
 function menuItem(){
   const sm=$("#sm");if(!sm||$("#s-prf"))return;
-  sm.insertAdjacentHTML("beforeend",`<button type="button" class="sm" id="s-prf"></button>`);
+  sm.insertAdjacentHTML("beforeend",`<button type="button" class="sm" id="s-prf"></button><button type="button" class="sm" id="s-fs"></button><button type="button" class="sm" id="s-hc" aria-pressed="false"></button>`);
+  axApply();
 }
 function maybeWelcome(){
   if(PRF())return;
@@ -300,9 +409,9 @@ async function start(){
   await loadData();
   menuItem();a11y();buildTools();labels();
   const ord=LS.g("kixki-ord","orig");if(ORD.includes(ord)&&ord!=="orig")sortApps(ord);
-  decorate();renderParati();
+  decorate();renderParati();decoratePacks();langApps();
   $("#q").addEventListener("input",announce);
-  addEventListener("kixki-lang",()=>{labels();decorate();renderParati();a11y();if($("#kq")&&!$("#kq").hidden)stepView();});
+  addEventListener("kixki-lang",()=>{labels();decorate();renderParati();a11y();langApps();if($("#kq")&&!$("#kq").hidden)G?guideView():stepView();});
   addEventListener("hashchange",deepLink);
   setTimeout(deepLink,500);
   maybeWelcome();

@@ -23,7 +23,7 @@
 <a id="que-trae"></a>
 <img src="docs/bar-que-trae.png" alt="que-trae.exe" width="100%">
 
-La colección es pequeña y cuidada: **121 apps en 15 carpetas**, cada una con su descripción, enlaces y avisos, un **buscador que perdona errores** (acentos, guiones y letras mal puestas; si no encuentra nada, sugiere «¿Quisiste decir…?») y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
+La colección es pequeña y cuidada: **123 apps en 15 carpetas**, cada una con su descripción, enlaces y avisos, un **buscador que perdona errores** (acentos, guiones y letras mal puestas; si no encuentra nada, sugiere «¿Quisiste decir…?») y «packs» para instalar varias de una vez. Lo que la hace distinta es la página:
 
 - **Dos mundos, Pixel y Colina XP,** y en cada uno Valle, Primavera, Verano, Otoño, Invierno, Halloween y Navidad. «Auto» sigue la fecha real.
 - **Lluvia con relámpagos y trueno,** y sonido de lluvia sintetizado.
@@ -119,6 +119,7 @@ Se hacen con Chromium sin pantalla: `npm i -D playwright` y luego, con `movil` a
 | `node tools/test-xpbg.mjs` | Colina XP, lluvia, pausa y menú XP |
 | `node tools/test-vaca.mjs` | vaca.exe, combate y fondos de premio/castigo |
 | `node tools/test-tienda.mjs` | bienvenida, «Para ti», orden, filtros, «Ya la tengo», enlace por app y accesibilidad |
+| `node tools/test-extras.mjs` | inglés, letra/contraste, packs guiados y Optimización |
 | `node tools/test-inicio.mjs` | inicio sin carpetas ni silencio, logos en modo pixel y de reserva, globo de Kixki |
 | `node tools/test-dialogos.mjs` | los diálogos y la latencia de Kixki |
 | `node tools/check-dialogs.mjs` · `check-links.mjs` | textos válidos (es + en) · enlaces rotos |
@@ -387,3 +388,12 @@ Todo lo que se fue construyendo, parte por parte. Abre una sección para leerla.
 <br>
 
 <p align="center"><img src="docs/pie.png" alt="Dos ovejitas pixel en el pasto. Hecho con amor por KitsukiLove" width="100%"></p>
+
+### Extras (noviembre 2026)
+
+- **Descripciones en inglés**: `data/en.json` guarda tag/desc/tip de cada app en inglés; `tienda.js` las pone al cambiar el idioma y la búsqueda también las entiende. Si agregas una app nueva, añade su entrada en `data/en.json` (si falta, se ve en español).
+- **Letra grande y alto contraste**: botones «Letra» y «Contraste» en el menú Inicio/Más (se guardan en `kixki-a11y`; el contraste sigue la preferencia del sistema si no lo tocas).
+- **Packs guiados**: el botón «🧭 Guíame» de cada pack (y en «Para ti») abre un globo de Kixki que va app por app: abrir descarga, «Ya la instalé» o saltar. Omite las que ya tienes o no son para tu celular.
+- **Optimización**: nueva opción en «¿Qué te interesa?» y nuevo pack (SD Maid SE, EnforceDoze, Essentials, ADL, Shizuku, Canta, No More Background, BatStats).
+- Agregadas Obtainium (Tiendas) y Aegis Authenticator (Privacidad): **123 apps**.
+- Prueba nueva: `node tools/test-extras.mjs` (PC y `movil`).

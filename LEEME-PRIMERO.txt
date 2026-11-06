@@ -1,47 +1,26 @@
-KIXKI STORE - ARREGLOS (sobre tu versión main10)
-=================================================
+KIXKI STORE - PÁGINA COMPLETA (versión de noviembre)
+=====================================================
+Este zip es TODA la página (tu main11 + las novedades). Reemplaza a los
+zips anteriores: no hace falta subir ninguno de los otros.
 
-ESTE ZIP REEMPLAZA al zip anterior "ACTUALIZAR-Tienda-Unida-main10".
-Trae todo lo de antes MÁS los arreglos de ahora. Súbelo completo,
-da igual si ya subiste el anterior.
-(El zip opcional de "Logos livianos" sigue igual: no hace falta repetirlo.)
+NOVEDADES: inglés en las descripciones, packs guiados ("Guíame"),
+opción y pack "Optimización", letra grande y alto contraste,
+Obtainium y Aegis Authenticator (123 apps), logos de reserva,
+preguntas de bienvenida con Kixki, inicio sin carpetas y con música.
 
-QUÉ ARREGLÉ
-1. Logos en modo pixel: ya no se quedan en blanco si abres la carpeta
-   después de activar el modo pixel. (Antes las imágenes escondidas
-   nunca se descargaban.)
-2. Apps sin logo: las 52 apps que no tenían logo ahora tienen uno de
-   respaldo (dos letras sobre un color, estilo pixel). Si el logo
-   oficial carga, se ve ese; si no, sale el de letras.
-3. Preguntas de bienvenida: ahora las hace Kixki en un globo, con su
-   carita. Ya no es una ventana ni oscurece la página.
-   - En PC sale abajo a la izquierda y los botones son más ordenados.
-   - En móvil sale abajo, encima del menú, con las opciones en 2 columnas
-     donde caben.
-4. Tarjeta "Para ti" y barra de orden/filtros: más ordenadas
-   (botones en cuadrícula y la tarjeta con su barra de título).
-5. Al entrar a la página: ya NO se abre ninguna carpeta, y la música y
-   los sonidos vienen ACTIVADOS.
-   Nota: los navegadores no dejan sonar nada hasta que tocas la pantalla
-   o una tecla por primera vez. Es una regla de ellos, no se puede evitar.
-   Si apagas la música, se queda apagada para la próxima.
-
-CÓMO INSTALAR (celular, GitHub web)
-1. Descomprime este zip.
+CÓMO SUBIRLO (celular, GitHub web)
+1. Descomprime el zip. Entra a la carpeta "KixKi-Store".
 2. En tu repositorio: "Add file" > "Upload files".
-3. Sube TODO el contenido (con sus carpetas: logos, tools, data).
-   Si pregunta, elige reemplazar.
+3. Sube TODO lo que hay dentro de esa carpeta (archivos y carpetas),
+   NO la carpeta "KixKi-Store" en sí. Si pregunta, reemplaza.
 4. "Commit changes" y espera la palomita verde (1-2 minutos).
-5. Abre la página y recárgala 2 veces.
-   Para ver las preguntas de Kixki otra vez: menú Inicio > "Mi perfil...".
+5. Recarga la página 2 veces.
 
-ARCHIVOS NUEVOS
-- tools/logos-letras.py: crea logos de letras para apps nuevas que no
-  tengan logo (python3 tools/logos-letras.py).
-- tools/test-inicio.mjs: prueba automática de todo esto.
-- logos/*.svg: los 52 logos de respaldo.
-
-PENDIENTE (igual que antes)
-Con una compu con internet: node tools/sync.mjs y sube data/meta.json
-para que las apps nuevas tengan logo oficial y estrellas.
-Versión del caché: kixki-v30.
+IMPORTANTE
+- No incluye la carpeta ".github" (la tuya queda como está).
+- Subir esto NO borra archivos que ya tengas de más en el repo.
+  Si subiste un archivo por error, bórralo en GitHub: ábrelo >
+  los tres puntitos > "Delete file". Dime cuál era si no estás segura.
+- Versión del caché: kixki-v31.
+- Pendiente (con compu e internet): node tools/sync.mjs y subir
+  data/meta.json, para logos oficiales y estrellas de apps nuevas.

@@ -96,3 +96,24 @@ html.kq-on #kixki{visibility:hidden}
 
 /* icono del botón «Mi perfil…» del menú Inicio (los demás vienen de pixel-ui.css) */
 html:not([data-style="xp"]) #sm #s-prf{--mi:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%208%208'%20shape-rendering='crispEdges'%3E%3Cpath%20fill='%235b2fd0'%20d='M2%200h4v1h-4zM1%201h6v1h-6zM1%202h6v1h-6zM2%203h4v1h-4zM3%204h2v1h-2zM1%205h6v1h-6zM0%206h8v1h-8zM0%207h8v1h-8z'/%3E%3C/svg%3E")}
+
+/* letra grande y alto contraste (menú → «Letra» / «Contraste») */
+html.kq-fs1{font-size:112.5%}
+html.kq-fs2{font-size:125%}
+html.kq-fs1 body,html.kq-fs2 body{font-size:1em}
+html.kq-fs1 .desc,html.kq-fs1 .tip,html.kq-fs1 .tag{font-size:1.06em}
+html.kq-fs2 .desc,html.kq-fs2 .tip,html.kq-fs2 .tag{font-size:1.12em}
+html.kq-hc{--muted:var(--ink);--sep:var(--line);--tag-bg:var(--surface);--tag-ink:var(--ink);--focus:#ff8a00}
+html.kq-hc:not([data-theme="dark"]){--ink:#000;--line:#000;--surface:#fff;--surface2:#fff;--acc:#2a0f9a}
+html.kq-hc[data-theme="dark"]{--ink:#fff;--line:#fff;--surface:#000;--surface2:#000;--acc:#ffe066}
+html.kq-hc .app,html.kq-hc .parati,html.kq-hc .kq-bub{border:2px solid var(--line)}
+html.kq-hc .kq-b.warn{background:#fff;color:#000;border:2px solid #000}
+html.kq-hc *:focus-visible{outline:4px solid var(--focus)!important;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){html.kq-hc *{animation-duration:.01ms!important}}
+
+/* paquetes guiados */
+.kg-open{font-weight:700}
+.kg-o{display:flex;align-items:center;gap:10px;text-decoration:none;text-align:left;justify-content:flex-start;min-height:48px;width:100%}
+.kg-tip{background:var(--surface2);padding:6px 8px}
+.kq-bub .kq-nav .btn{min-width:96px}
+html:not([data-style="xp"]) #sm #s-fs,html:not([data-style="xp"]) #sm #s-hc{--mi:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%208%208'%20shape-rendering='crispEdges'%3E%3Cpath%20fill='%235b2fd0'%20d='M3%200h2v1h-2zM2%201h1v1h-1zM5%201h1v1h-1zM1%202h1v1h-1zM6%202h1v1h-1zM1%203h1v1h-1zM6%203h1v1h-1zM1%204h1v1h-1zM6%204h1v1h-1zM2%205h1v1h-1zM5%205h1v1h-1zM3%206h2v1h-2zM3%201h2v5h-2z'/%3E%3C/svg%3E")}
