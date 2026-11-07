@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/img/portada-es-v2.gif" alt="Kixki Store: una tienda de apps open source dentro de un escritorio pixel, con una ovejita que te acompaña" width="100%">
+<img src="docs/img/portada-es-v3.gif" alt="Kixki Store: una tienda de apps open source dentro de un escritorio pixel, con una ovejita que te acompaña" width="100%">
 
 </div>
 
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/img/badge-es-apps.png" alt="123 apps" height="30">
+  <img src="docs/img/badge-es-apps-v2.png" alt="124 apps" height="30">
   <img src="docs/img/badge-es-carpetas.png" alt="15 carpetas" height="30">
   <img src="docs/img/badge-es-musica.png" alt="30 piezas de música" height="30">
   <img src="docs/img/badge-es-estaciones.png" alt="14 estaciones" height="30">
@@ -39,7 +39,7 @@
 <a id="que-trae"></a>
 <img src="docs/img/sec-que-trae.gif" alt="que-trae.exe" width="100%">
 
-La colección es pequeña y cuidada: **123 apps en 15 carpetas**, cada una con su descripción, enlaces y avisos. Lo que la hace distinta es la página:
+La colección es pequeña y cuidada: **124 apps en 15 carpetas**, cada una con su descripción, enlaces y avisos. Lo que la hace distinta es la página:
 
 <table>
 <tr>
@@ -102,7 +102,7 @@ El botón de la ovejita (arriba a la derecha) y el botón **Estación** del men�
 
 Cada carpeta se abre como una ventana del escritorio (y tiene su botón en la barra de abajo). Toca una para ver sus apps.
 
-<p align="center"><img src="docs/img/carpetas-es.png" alt="Qué hay en cada carpeta" width="100%"></p>
+<p align="center"><img src="docs/img/carpetas-es-v2.png" alt="Qué hay en cada carpeta" width="100%"></p>
 
 <details>
 <summary><b>Qué hay en cada carpeta</b></summary>
@@ -120,7 +120,7 @@ Cada carpeta se abre como una ventana del escritorio (y tiene su botón en la ba
 | 🌐 **Internet** | Navega, lee, descarga y comparte por la red | 15 |
 | 📅 **Día a día** | Notas, tareas, calendario, IA y entrenamientos | 11 |
 | 🎮 **Emulación** | Juega tus clásicos y optimiza tus juegos | 10 |
-| 🌈 **Decoración** | Fondos y widgets para tu pantalla | 8 |
+| 🌈 **Decoración** | Fondos y widgets para tu pantalla | 9 |
 | 🎧 **Música** | Reproducir, descargar y crear | 9 |
 | ✍️ **Teclados** | Escribe con más estilo y más privacidad | 6 |
 | 💿 **Sistemas** | Sistemas operativos para tu PC o tu móvil | 5 |

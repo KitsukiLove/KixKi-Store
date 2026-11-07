@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/img/portada-en-v2.gif" alt="Kixki Store: an open source app store inside a pixel desktop, with a little sheep that keeps you company" width="100%">
+<img src="docs/img/portada-en-v3.gif" alt="Kixki Store: an open source app store inside a pixel desktop, with a little sheep that keeps you company" width="100%">
 
 </div>
 
@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/img/badge-en-apps.png" alt="123 apps" height="30">
+  <img src="docs/img/badge-en-apps-v2.png" alt="124 apps" height="30">
   <img src="docs/img/badge-en-carpetas.png" alt="15 folders" height="30">
   <img src="docs/img/badge-en-musica.png" alt="30 music pieces" height="30">
   <img src="docs/img/badge-en-estaciones.png" alt="14 seasons" height="30">
@@ -39,7 +39,7 @@
 <a id="what-it-has"></a>
 <img src="docs/img/sec-what-it-has.gif" alt="what-it-has.exe" width="100%">
 
-The collection is small and curated: **123 apps in 15 folders**, each with a description, links and warnings. What makes it different is the page itself:
+The collection is small and curated: **124 apps in 15 folders**, each with a description, links and warnings. What makes it different is the page itself:
 
 <table>
 <tr>
@@ -102,7 +102,7 @@ The sheep button (top right) and the **Season** button in the menu change the se
 
 Each folder opens like a desktop window (and has its own button in the bottom bar). Tap one to see its apps.
 
-<p align="center"><img src="docs/img/carpetas-en.png" alt="What's in each folder" width="100%"></p>
+<p align="center"><img src="docs/img/carpetas-en-v2.png" alt="What's in each folder" width="100%"></p>
 
 <details>
 <summary><b>What's in each folder</b></summary>
@@ -120,7 +120,7 @@ Each folder opens like a desktop window (and has its own button in the bottom ba
 | 🌐 **Internet** | Browse, read, download and share online | 15 |
 | 📅 **Daily** | Notes, tasks, calendar, AI and workouts | 11 |
 | 🎮 **Emulation** | Play your classics and optimize your games | 10 |
-| 🌈 **Decor** | Wallpapers and widgets for your screen | 8 |
+| 🌈 **Decor** | Wallpapers and widgets for your screen | 9 |
 | 🎧 **Music** | Play, download and create | 9 |
 | ✍️ **Keyboards** | Type with more style and privacy | 6 |
 | 💿 **Systems** | Operating systems for your PC or phone | 5 |

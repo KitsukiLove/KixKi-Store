@@ -1537,6 +1537,28 @@
      ]
     },
     {
+     "name": "GifWidgets",
+     "tag": "Widgets de GIF",
+     "desc": "Convierte tus GIF en widgets animados para la pantalla de inicio (2×2, 4×2 y 4×4), con encuadre, esquinas, bordes y velocidad a tu gusto. Trae biblioteca con favoritos y colecciones, un editor sin IA (quita fondos, recorta y mide la memoria), cambio automático de GIF cada cierto tiempo y copia de seguridad. Funciona 100% local: sin internet, sin cuentas y sin anuncios. Código abierto (GPL-3.0).",
+     "links": [
+      [
+       "Komi Store",
+       "https://github-store.org/app?repo=KitsukiLove/GifWidgets"
+      ],
+      [
+       "GitHub",
+       "https://github.com/KitsukiLove/GifWidgets"
+      ]
+     ],
+     "logo": [
+      "https://raw.githubusercontent.com/KitsukiLove/KixKi-Store/HEAD/logos/gifwidgets.png",
+      "logos/gifwidgets.png"
+     ],
+     "tip": "El modo opcional «Máxima calidad» mueve el GIF fotograma a fotograma, sin el límite de memoria de los widgets, pero gasta más batería.",
+     "min": 8,
+     "added": "2026-11-07"
+    },
+    {
      "name": "L.L.E",
      "tag": "Efectos de bloqueo",
      "desc": "Trae a móviles modernos los efectos clásicos de la pantalla de bloqueo (Legacy Lockscreen Effects): destello de lente, ondas de agua, acuarela, mosaicos, gotas de colores y burbujas brillantes. Es compatible con plegables, con pantalla exterior e interior por separado. Necesita el servicio de accesibilidad y ADB para instalarse.",
