@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/img/portada-en.gif" alt="Kixki Store: an open source app store inside a pixel desktop, with a little sheep that keeps you company" width="100%">
+<img src="docs/img/portada-en-v2.gif" alt="Kixki Store: an open source app store inside a pixel desktop, with a little sheep that keeps you company" width="100%">
 
 </div>
 
@@ -59,7 +59,7 @@ The collection is small and curated: **123 apps in 15 folders**, each with a des
 <img src="docs/img/card-en-musica.png" alt="30 music pieces" width="100%"><br>
 <sub><b>30 music pieces</b><br>All original, and they change with the background, the season and day/night. They're synthesized in the browser: there are no audio files.</sub>
 </td><td align="center" valign="top" width="33%">
-<img src="docs/img/card-en-kixki.png" alt="Kixki, the guide sheep" width="100%"><br>
+<img src="docs/img/card-en-kixki-v2.png" alt="Kixki, the guide sheep" width="100%"><br>
 <sub><b>Kixki, the guide sheep</b><br>She chats, plays pranks, lets you grab and throw her, gives tips and unlocks achievements. In Spanish and English.</sub>
 </td><td align="center" valign="top" width="33%">
 <img src="docs/img/card-en-juegos.png" alt="Minigames" width="100%"><br>

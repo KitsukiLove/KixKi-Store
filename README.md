@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/img/portada-es.gif" alt="Kixki Store: una tienda de apps open source dentro de un escritorio pixel, con una ovejita que te acompaña" width="100%">
+<img src="docs/img/portada-es-v2.gif" alt="Kixki Store: una tienda de apps open source dentro de un escritorio pixel, con una ovejita que te acompaña" width="100%">
 
 </div>
 
@@ -59,7 +59,7 @@ La colección es pequeña y cuidada: **123 apps en 15 carpetas**, cada una con s
 <img src="docs/img/card-es-musica.png" alt="30 piezas de música" width="100%"><br>
 <sub><b>30 piezas de música</b><br>Originales, y cambian con el fondo, la estación y el día/noche. Se generan en el navegador: no hay archivos de audio.</sub>
 </td><td align="center" valign="top" width="33%">
-<img src="docs/img/card-es-kixki.png" alt="Kixki, la oveja guía" width="100%"><br>
+<img src="docs/img/card-es-kixki-v2.png" alt="Kixki, la oveja guía" width="100%"><br>
 <sub><b>Kixki, la oveja guía</b><br>Charla, hace travesuras, se deja agarrar y lanzar, da consejos y desbloquea logros. En español e inglés.</sub>
 </td><td align="center" valign="top" width="33%">
 <img src="docs/img/card-es-juegos.png" alt="Minijuegos" width="100%"><br>
