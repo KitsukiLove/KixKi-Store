@@ -1,0 +1,7 @@
+/* Clima de lluvia (lluvia.js) */
+#kr-bg,#kr-fg{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;image-rendering:pixelated;display:none}
+#kr-bg{z-index:-1}
+#kr-fg{z-index:9400}
+html.kr-on #kr-bg,html.kr-on #kr-fg{display:block}
+@media print{#kr-bg,#kr-fg{display:none!important}}
+html[data-style="xp"] #kr-bg,html[data-style="xp"] #kr-fg,html[data-bg="xp"] #kr-bg,html[data-bg="xp"] #kr-fg{image-rendering:auto}

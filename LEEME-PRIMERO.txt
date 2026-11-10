@@ -1,0 +1,52 @@
+KIXKI STORE - CORRECCIONES (página completa)
+=============================================
+Este zip es TODA la página con las correcciones de la auditoría.
+Reemplaza a los zips anteriores.
+
+QUÉ CAMBIÓ
+- Carga más rápida en celular: los módulos pesados de Kixki se cargan cuando
+  la página ya se ve (carga.js); fuentes y logo.png mucho más ligeros;
+  apps.json se descarga una sola vez.
+- Logos: orden local -> el de apps.json -> letras. La página ya no le pide
+  logos a GitHub/Google por su cuenta. Las apps nuevas muestran un logo de
+  letras al instante y sync.mjs les busca el oficial.
+- Estrellas de GitHub: solo de data/meta.json (sin consultas en vivo).
+- Kixki: ya no tapa "Hoy te sugiero" en móvil; Modo Hacker solo con atajo
+  (F12, Ctrl+Shift+I/J/C/K); arrastre con 2.º dedo; zarandearla en táctil;
+  menos trabajo en segundo plano; el globo ya no pasa por el traductor.
+- Aviso "Hay una versión nueva · Recargar" cuando subes cambios.
+- Borrados los restos del test de encantamientos (ver BORRAR-DEL-REPO.txt, que va junto a la carpeta, fuera de ella).
+
+CÓMO SUBIRLO
+1. Descomprime el zip y entra a la carpeta "KixKi-Store-Correcciones".
+2. Copia TODO lo que hay dentro sobre la carpeta de tu repositorio
+   (NO la carpeta en sí) y reemplaza. En GitHub web: "Add file" > "Upload files".
+3. Borra del repo lo que dice BORRAR-DEL-REPO.txt
+   (subir archivos NO borra los que ya existen). Con git: git rm -r <ruta>.
+4. Commit y espera la palomita verde (1-2 minutos).
+5. Entra a la página y recarga una vez.
+
+DESPUÉS DE CADA CAMBIO QUE HAGAS (con la compu)
+- node tools/bump-sw.mjs   -> sube la versión de caché sola (así a los
+  visitantes les sale el aviso de versión nueva). Hazlo antes de subir.
+
+AÑADIR UNA APP SIN BUSCAR LOGO
+1. Pega su bloque en apps.json (nombre, tag, desc, links...).
+2. node tools/sync.mjs  (baja SOLO lo que falta: logo oficial o, si no hay,
+   un logo de letras, y las estrellas). Si tu Action "Sincronizar logos y
+   datos" ya lo hace al subir apps.json, no hace falta.
+3. node tools/bump-sw.mjs y sube todo.
+Aunque no corras sync.mjs, la app sale con un logo de letras.
+Para renombrar una app sin perder favoritas: "old":["Nombre viejo"].
+
+PENDIENTES / NOTAS
+- 18 apps todavía piden su logo a GitHub/Google (traen la URL en apps.json):
+  Obtainium, Shelter, Aegis Authenticator, Open Camera, KDE Connect,
+  Tor Browser, Startpage, SearXNG, CoMaps, Dolphin, mGBA, PPSSPP, GifWidgets,
+  Fedora Linux, Linux Mint, Qubes OS, GrapheneOS, LineageOS.
+  Corre node tools/sync.mjs una vez y pasan a ser locales ("sin terceros" al 100 %).
+- Este zip no incluye la carpeta ".github" (la tuya queda como está).
+  sync.mjs ahora es incremental y NO baja fuentes/QR salvo con --fuentes;
+  si tu Action lo llama con otros argumentos, revísalo.
+- fonts/ conserva los 3 .ttf originales (Jersey10, PixelifySans-400/700):
+  la página ya no los usa; se pueden borrar o guardar de respaldo.

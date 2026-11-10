@@ -1,0 +1,135 @@
+/* =====================================================================
+   COLINA XP VIVA (partes 7b y 7c) — viento en el pasto, nubes a la deriva, pájaros, estaciones y clima.
+   Solo actúa con data-bg="xp". Todo se mueve con transform/opacity (nada de layout).
+   Variables registradas: dejan que el cambio de tiempo (seco ↔ lluvia) sea suave, sin saltos.
+   --xw  fuerza del balanceo     --xg  ráfaga principal     --xr  segunda ráfaga (solo con lluvia)
+   --wg  «mojado» 0 → 1 (cielo gris, verdes oscuros, nubes grises)
+   Estación: html[data-xps="clasica|primavera|verano|otono|invierno|halloween|navidad"]
+   ===================================================================== */
+@property --xw{syntax:"<number>";inherits:true;initial-value:1}
+@property --xg{syntax:"<number>";inherits:true;initial-value:1}
+@property --xr{syntax:"<number>";inherits:true;initial-value:0}
+@property --wg{syntax:"<number>";inherits:true;initial-value:0}
+
+html[data-bg="xp"] #bgx{--xw:1;--xg:1;--xr:0;--wg:0;transition:--xw 5s ease,--xg 5s ease,--xr 5s ease,--wg 5s ease;
+  /* a qué color tiende todo al mojarse (cada estación cambia el suyo) */
+  --wt:#4d7a7e;--wo:#25783e;--wa:#1f9448;--wb:#157a34;--wc:#0c4a20;--wcs:#8e99a9;--wp:#2f9d4c;--bc:#26324a}
+html[data-bg="xp"] #bgx.xp-wet{--xw:2.3;--xg:2.5;--xr:2.7;--wg:1}
+html[data-xps="invierno"] #bgx,html[data-xps="navidad"] #bgx{--wt:#7d8fb0;--wo:#aab9d4;--wa:#c9d6ea;--wb:#a8b8d4;--wc:#8a9cc0;--wp:#cbd8ec;--wcs:#8e99a9;--bc:#2a3550}
+html[data-xps="halloween"] #bgx{--wt:#241838;--wo:#1a1030;--wa:#3a2c58;--wb:#2a2046;--wc:#150e26;--wp:#4f7a3a;--bc:#0c0616}
+html[data-xps="otono"] #bgx{--wt:#6a5538;--wo:#5a3e22;--wa:#a07a30;--wb:#7a5424;--wc:#4a3016;--wp:#8a6a2a;--bc:#3a2a22}
+
+/* cielo y ambiente de tormenta: un velo gris-azulado que sube con --wg */
+html[data-bg="xp"] #bgx::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:var(--wg);
+  background:linear-gradient(rgba(62,76,100,.66),rgba(70,84,106,.3) 62%,rgba(28,56,40,.16))}
+
+/* ---- colina: colores que se oscurecen y saturan al mojarse ---- */
+html[data-bg="xp"] #bgx .t{fill:color-mix(in srgb,var(--t) calc(100% - var(--wg)*38%),var(--wt))}
+html[data-bg="xp"] #bgx .o{fill:color-mix(in srgb,var(--o) calc(100% - var(--wg)*42%),var(--wo))}
+html[data-bg="xp"] #bgx .xm{fill:url(#xph)}
+html[data-bg="xp"] #bgx .xf{fill:url(#xpf)}
+html[data-bg="xp"] #bgx .xa{stop-color:color-mix(in srgb,var(--g1) calc(100% - var(--wg)*40%),var(--wa))}
+html[data-bg="xp"] #bgx .xb{stop-color:color-mix(in srgb,var(--g2) calc(100% - var(--wg)*42%),var(--wb))}
+html[data-bg="xp"] #bgx .xc{stop-color:color-mix(in srgb,var(--g3) calc(100% - var(--wg)*40%),var(--wc))}
+html[data-bg="xp"] #bgx .xp{stop-color:var(--p)}
+html[data-bg="xp"] #bgx .xcs{stop-color:color-mix(in srgb,var(--c) calc(100% - var(--wg)*58%),var(--wcs))}
+html[data-bg="xp"] #bgx .xsa{stop-color:var(--a)}
+
+/* sol (de día) y luna (de noche) con resplandor */
+html[data-bg="xp"] #bgx .xs0{fill:var(--a);opacity:calc(1 - var(--so))}
+html[data-bg="xp"] #bgx .xglow{opacity:calc(1 - var(--wg)*.8)}
+html[data-theme="dark"][data-bg="xp"] #bgx .xglow{opacity:calc(.6 - var(--wg)*.5)}
+/* el paisaje (árboles, calabazas…) se oscurece de noche; lo que brilla (luces, ventanas, caras) va aparte */
+html[data-theme="dark"][data-bg="xp"] #bgx .xs{filter:brightness(.62) saturate(.9)}
+html[data-bg="xp"] #bgx .xl{animation:xptw 1.8s ease-in-out var(--ld,0s) infinite alternate}
+html[data-bg="xp"] #bgx .xg{animation:xpfk 2.6s ease-in-out infinite alternate}
+html[data-bg="xp"] #bgx .xw{animation:xpfk 3.4s ease-in-out infinite alternate}
+html[data-bg="xp"] #bgx .xsm{animation:xpsmoke 5.5s ease-out var(--ld,0s) infinite}
+@keyframes xptw{from{opacity:.35}to{opacity:1}}
+@keyframes xpfk{from{opacity:.72}to{opacity:1}}
+@keyframes xpsmoke{0%{transform:translate(0,0) scale(.6);opacity:0}15%{opacity:.75}100%{transform:translate(.8px,-3.6px) scale(2.1);opacity:0}}
+
+/* ---- pasto: ocho tonos (cuatro de verde y cuatro de flores), la misma paleta ---- */
+.xp-grass .b3{fill:color-mix(in srgb,var(--g3) calc(100% - var(--wg)*40%),var(--wc))}
+.xp-grass .b2{fill:color-mix(in srgb,var(--g2) calc(100% - var(--wg)*42%),var(--wb))}
+.xp-grass .b1{fill:color-mix(in srgb,var(--g1) calc(100% - var(--wg)*40%),var(--wa))}
+.xp-grass .bp{fill:color-mix(in srgb,var(--p) calc(100% - var(--wg)*44%),var(--wp))}
+.xp-grass .f1{fill:var(--f1,#ff8fc7)}.xp-grass .f2{fill:var(--f2,#fff)}.xp-grass .f3{fill:var(--f3,#ffe27a)}.xp-grass .f4{fill:var(--f4,#c7a6ff)}
+
+/* ---- viento ---- */
+.xp-grass .gw,.xp-grass .gt{transform-box:fill-box;transform-origin:50% 100%}
+.xp-grass .gw{animation:xpsw var(--sd,3s) ease-in-out var(--sl,0s) infinite alternate}
+.xp-grass .gt{animation:xpg 9s linear var(--dl,0s) infinite}
+@keyframes xpsw{from{transform:skewX(calc(var(--sa,1.5deg)*var(--xw)*-1))}to{transform:skewX(calc(var(--sa,1.5deg)*var(--xw)))}}
+@keyframes xpg{0%,18%,48%,66%,100%{transform:skewX(0deg)}
+  8%{transform:skewX(calc(var(--xg)*var(--gs,1)*-9deg))}13%{transform:skewX(calc(var(--xg)*var(--gs,1)*1.6deg))}
+  56%{transform:skewX(calc(var(--xr)*var(--gs,1)*-8deg))}61%{transform:skewX(calc(var(--xr)*var(--gs,1)*1.4deg))}}
+/* el destello de luz que recorre la colina con la ráfaga (mismo ritmo y velocidad que el pasto) */
+.xp-sheen{animation:xpsheen 9s linear infinite;opacity:calc(1 - var(--wg)*.7)}
+@keyframes xpsheen{from{transform:translateX(0)}to{transform:translateX(120px)}}
+
+/* ---- nubes a la deriva: cruzan todo el cielo, las de lejos más despacio y más pequeñas ---- */
+.xp-sky .c{animation:xpdrift var(--cd,240s) linear var(--cl,0s) infinite}
+html[data-bg="xp"] #bgx .xp-sky .c.cs{opacity:calc(var(--wg)*.95)}
+@keyframes xpdrift{from{transform:translateX(-24px)}to{transform:translateX(88px)}}
+/* rayas de viento: hebras largas que pasan por el cielo, más y más rápidas con tormenta */
+.xp-sky .xw1{fill:none;stroke:rgba(255,255,255,.7);stroke-width:1.4;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:0;
+  animation:xpwind var(--wd,11s) ease-in-out var(--wl,0s) infinite}
+@keyframes xpwind{0%{transform:translate(-14px,var(--wy,6px));opacity:0}12%{opacity:min(.7,calc(.28*var(--xw)))}88%{opacity:min(.7,calc(.28*var(--xw)))}100%{transform:translate(78px,calc(var(--wy,6px) - 1.2px));opacity:0}}
+/* pájaros, gansos y murciélagos: el grupo exterior cruza el cielo, las alas se mueven aparte */
+.xp-bd{animation:xpfly var(--t,16s) linear forwards}
+.xp-bd .bw{fill:none;stroke:var(--bc);stroke-width:.13;stroke-linecap:round;stroke-linejoin:round;transform-origin:0 0}
+.xp-bd .wl{animation:xpflapL var(--f,.5s) ease-in-out var(--fd,0s) infinite alternate}
+.xp-bd .wr{animation:xpflapR var(--f,.5s) ease-in-out var(--fd,0s) infinite alternate}
+.xp-bd.bat .bw{fill:var(--bc);stroke:var(--bc);stroke-width:.04}
+.xp-bd.bat{animation-name:xpbat;animation-timing-function:ease-in-out}
+@keyframes xpfly{from{transform:translate(var(--x0),var(--y0))}to{transform:translate(var(--x1),var(--y1))}}
+@keyframes xpbat{0%{transform:translate(var(--x0),var(--y0))}30%{transform:translate(calc(var(--x0) + (var(--x1) - var(--x0))*.3),var(--y2))}62%{transform:translate(calc(var(--x0) + (var(--x1) - var(--x0))*.62),var(--y3))}100%{transform:translate(var(--x1),var(--y1))}}
+@keyframes xpflapL{from{transform:rotate(-24deg)}to{transform:rotate(34deg)}}
+@keyframes xpflapR{from{transform:rotate(24deg)}to{transform:rotate(-34deg)}}
+/* estrella fugaz (de noche, muy de vez en cuando) */
+.xp-ss{stroke:#fff;stroke-width:1.6;stroke-linecap:round;vector-effect:non-scaling-stroke;fill:none;animation:xpss 1.15s ease-out forwards;opacity:0}
+@keyframes xpss{0%{transform:translate(0,0);opacity:0}12%{opacity:1}100%{transform:translate(var(--sx,-14px),var(--sy,7px));opacity:0}}
+
+/* ---- partículas: pétalos, hojas, nieve, luciérnagas ---- */
+.xp-fx{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.xp-fx .px{position:absolute;left:var(--x);top:0;width:var(--z,8px);height:var(--z,8px);animation:xpfall var(--d,14s) linear var(--dl,0s) infinite;will-change:transform}
+.xp-fx .px b{display:block;width:100%;height:100%;background:var(--c,#fff);animation:xpsway var(--sd,3s) ease-in-out var(--sl,0s) infinite alternate}
+.xp-fx .petal b{border-radius:75% 0 75% 0;box-shadow:inset -1px -1px 0 rgba(255,255,255,.35)}
+.xp-fx .leaf b{clip-path:polygon(50% 0,92% 28%,100% 62%,60% 100%,50% 82%,40% 100%,0 62%,8% 28%);border-radius:0}
+.xp-fx .snow b{border-radius:50%;background:radial-gradient(circle,#fff 35%,rgba(255,255,255,.75) 65%,rgba(255,255,255,0) 100%)}
+@keyframes xpfall{0%{transform:translate3d(0,-6vh,0) rotate(0deg)}100%{transform:translate3d(var(--dx,24vw),108vh,0) rotate(var(--rt,360deg))}}
+@keyframes xpsway{from{transform:translateX(calc(var(--sw,14px)*-1)) rotate(-18deg)}to{transform:translateX(var(--sw,14px)) rotate(18deg)}}
+.xp-fx .fly{top:var(--y);width:5px;height:5px;border-radius:50%;background:#e9ff9a;box-shadow:0 0 8px 3px rgba(214,255,110,.75);animation:xpfire var(--d,9s) ease-in-out var(--dl,0s) infinite alternate,xpblink var(--bk,2.4s) ease-in-out var(--dl,0s) infinite}
+@keyframes xpfire{from{transform:translate(0,0)}33%{transform:translate(var(--fx),var(--fy))}66%{transform:translate(calc(var(--fx)*-.4),calc(var(--fy)*1.6))}to{transform:translate(calc(var(--fx)*.7),calc(var(--fy)*-.8))}}
+@keyframes xpblink{0%,100%{opacity:.15}45%,60%{opacity:1}}
+html:not([data-theme="dark"]) .xp-fx .fly{display:none}
+/* niebla baja de Halloween */
+.xp-mist{position:absolute;left:0;right:0;bottom:0;height:46%;pointer-events:none;overflow:hidden;opacity:calc(1 - var(--wg)*.4)}
+.xp-mist i{position:absolute;inset:0 -50%;background:radial-gradient(38% 44% at 22% 72%,rgba(196,176,236,.3),transparent 70%),radial-gradient(34% 38% at 58% 58%,rgba(196,176,236,.22),transparent 70%),radial-gradient(40% 44% at 86% 74%,rgba(196,176,236,.28),transparent 70%);animation:xpmist 70s ease-in-out infinite alternate}
+.xp-mist i+i{animation-duration:95s;animation-direction:alternate-reverse;opacity:.7;transform:scaleX(-1)}
+@keyframes xpmist{from{transform:translateX(-8%)}to{transform:translateX(8%)}}
+
+/* ---- charcos y ondas (solo con lluvia) ---- */
+.xp-pud{fill:url(#xppd);stroke:rgba(255,255,255,.55);stroke-width:.04;transform-box:fill-box;transform-origin:center;
+  transform:scale(var(--ps,0));transition:transform 26s ease-out;opacity:.92}
+#bgx:not(.xp-wet) .xp-pud{transition-duration:34s;transition-timing-function:ease-in}
+:root[data-theme="dark"] .xp-pud{opacity:.5}
+.xp-ring{fill:none;stroke:rgba(240,249,255,.9);stroke-width:1;vector-effect:non-scaling-stroke;transform-box:fill-box;transform-origin:center;animation:xprip 1.5s ease-out forwards}
+@keyframes xprip{from{transform:scale(.3);opacity:.95}to{transform:scale(2.6);opacity:0}}
+
+/* ---- el fondo se congela con KXB.pause; sin movimiento = imagen fija ---- */
+#bgx.kv-pause .xp-grass *,#bgx.kv-pause .xp-sheen,#bgx.kv-pause .xp-sky *,#bgx.kv-pause .xp-fx *,#bgx.kv-pause .xp-mist *,#bgx.kv-pause .xp-ring,#bgx.kv-pause .xgl *{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){
+  html[data-bg="xp"] #bgx .c,.xp-grass .gw,.xp-grass .gt,.xp-ring,.xp-sheen,.xp-sky .xw1,.xp-bd,.xp-ss,.xp-mist i,#bgx .xl,#bgx .xg,#bgx .xw,#bgx .xsm{animation:none!important}
+  .xp-fx,.xp-sky .xw1,.xp-bd,.xp-ss{display:none!important}
+  html[data-bg="xp"] #bgx,.xp-pud{transition:none!important}
+}
+
+/* iconos del escritorio y textos sueltos: se leen sobre cielo y colina */
+html[data-bg="xp"] .dsk .di span{text-shadow:none}
+html[data-bg="xp"] .sub,html[data-bg="xp"] .count,html[data-bg="xp"] footer small,html[data-bg="xp"] .empty{color:#fff;text-shadow:2px 2px 0 rgba(10,5,40,.7)}
+/* con la colina nevada (de día) el texto blanco no se ve: pasa a azul oscuro con halo claro */
+html[data-xps="invierno"]:not([data-theme="dark"]) .sub,html[data-xps="invierno"]:not([data-theme="dark"]) .count,html[data-xps="invierno"]:not([data-theme="dark"]) footer small,html[data-xps="invierno"]:not([data-theme="dark"]) .empty,
+html[data-xps="navidad"]:not([data-theme="dark"]) .sub,html[data-xps="navidad"]:not([data-theme="dark"]) .count,html[data-xps="navidad"]:not([data-theme="dark"]) footer small,html[data-xps="navidad"]:not([data-theme="dark"]) .empty{
+  color:#1b2a66;text-shadow:1px 1px 0 rgba(255,255,255,.9),0 0 6px rgba(255,255,255,.7)}
