@@ -1,0 +1,43 @@
+/* =========================================================
+   KIXKI · parte 3 · físicas y travesuras
+   Estados de #kixki que añade kixki3.js:
+   .kk-held  → la tienes agarrada · .kk-air → en el aire (agarrada o cayendo)
+   .kk-sq    → chafada al aterrizar · .kk-mad → enfadada
+   ========================================================= */
+
+/* se puede agarrar también mientras camina o salta */
+#kixki[data-m="walk"] .kk-body,#kixki[data-m="hop"] .kk-body{pointer-events:auto}
+.kk-body{cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;
+  transform:rotate(var(--tilt,0deg));transform-origin:50% 12%}
+#kixki.kk-held .kk-body{cursor:grabbing}
+
+/* en el aire: por encima de todo, con las patitas colgando y sin sombra en el suelo */
+:root #kixki.kk-air{z-index:7700}
+#kixki.kk-air .kk-sh{opacity:0}
+#kixki.kk-air .kk-f{display:none!important}
+#kixki.kk-air .f-jump{display:block!important}
+#kixki.kk-air .kk-flip{animation:none}
+
+/* chafada al aterrizar */
+#kixki.kk-sq .kk-flip{transform-origin:50% 100%;animation:kksq .3s steps(3,end) 1}
+@keyframes kksq{
+  0%{transform:scale(calc(var(--kd) * 1.3),.62)}
+  55%{transform:scale(calc(var(--kd) * .92),1.12)}
+  100%{transform:scale(var(--kd),1)}
+}
+
+/* enfadada: tiembla un poquito y echa humo (💢) */
+#kixki.kk-mad .kk-flip{animation:kksk .14s steps(1,end) infinite}
+@keyframes kksk{
+  0%,100%{transform:scaleX(var(--kd)) translateX(0)}
+  25%{transform:scaleX(var(--kd)) translateX(-2px)}
+  75%{transform:scaleX(var(--kd)) translateX(2px)}
+}
+#kixki.kk-mad::after{content:"💢";position:absolute;left:6px;top:-40px;font-size:18px;line-height:1;pointer-events:none;
+  animation:kkmd .5s steps(2,end) infinite}
+@keyframes kkmd{50%{transform:translateY(-3px) scale(1.2)}}
+
+@media (prefers-reduced-motion:reduce){
+  #kixki.kk-sq .kk-flip,#kixki.kk-mad .kk-flip,#kixki.kk-mad::after{animation:none}
+  .kk-body{transform:none}
+}
