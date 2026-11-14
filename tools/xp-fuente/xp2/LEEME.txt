@@ -1,4 +1,0 @@
-Fuente de xp.css (v2 «Lila»). Para regenerarlo:
-  cd tools/xp-fuente/xp2 && python3 build2.py xp.src.css ../../../xp.css
-Edita xp.src.css (el CSS) o menuicons.py (iconos del menú Inicio) y vuelve a ejecutar el comando.
-Los iconos de carpetas viven en xp-icons.css (no se tocan aquí).
