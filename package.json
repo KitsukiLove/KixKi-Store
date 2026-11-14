@@ -1,0 +1,15 @@
+{
+  "name": "kixki-store",
+  "private": true,
+  "description": "KixKi Store · página estática (GitHub Pages). Este archivo solo sirve para las herramientas de desarrollo; la página no usa npm.",
+  "scripts": {
+    "calidad": "node tools/calidad.mjs",
+    "lint": "node tools/lint.mjs",
+    "formato": "prettier --write \"js/**/*.js\" \"tools/*.mjs\"",
+    "sw": "node tools/bump-sw.mjs"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.0",
+    "prettier": "^3.0.0"
+  }
+}

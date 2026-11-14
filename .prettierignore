@@ -1,0 +1,9 @@
+sw.js
+vendor/
+logos/
+data/
+docs/
+fonts/
+**/*.css
+**/*.json
+**/*.md
